@@ -22,7 +22,7 @@ else
     echo "-----git commit FAILED!!!----"
     exit 0
 fi
-git push origin aPaas:aPaas
+git push origin aPaaS:aPaaS
 # shellcheck disable=SC2181
 if [ $? -eq 0 ]; then
     echo "-----push code success!---"
