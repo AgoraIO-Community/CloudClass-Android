@@ -1,0 +1,73 @@
+def safeExtGet(prop, key, fallback) {
+    if (rootProject.ext.has(prop)) {
+        def map = rootProject.ext.get(prop)
+        if (map.containsKey(key)) {
+            return map.get(key)
+        }
+    }
+    return fallback
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion safeExtGet('android', 'compileSdkVersion', '29')
+    buildToolsVersion safeExtGet('android', 'buildToolsVersion', '29.0.3')
+
+    defaultConfig {
+        applicationId "io.agora.education"
+        minSdkVersion safeExtGet('android', 'minSdkVersion', '21')
+        targetSdkVersion safeExtGet('android', 'targetSdkVersion', '29')
+        versionCode 10
+        versionName "6.2.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+//            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+        normal {
+            dimension "app"
+            applicationId "io.agora.education"
+            buildConfigField 'String', 'CODE', '"edu-demo"'
+            buildConfigField 'String', 'EXTRA', '"AgoraEducation"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(path: ':edu')
+
+    implementation "com.google.android.material:material:${safeExtGet('dependencies', 'com.google.android.material:material', '1.2.1')}"
+    implementation "com.jakewharton:butterknife:${safeExtGet('dependencies', 'com.jakewharton:butterknife', '10.2.1')}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${safeExtGet('dependencies', 'com.jakewharton:butterknife-compiler', '10.2.1')}"
+
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    // RtmTokenBuilder need
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
+
+}

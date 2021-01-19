@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/portrait_ImageView"
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_28"
+        android:src="@drawable/ic_defaultportrait"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/cover_View"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:src="@drawable/ic_portraitcover"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/memberName_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:text="王五"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp_13"
+        app:layout_constraintEnd_toEndOf="@id/portrait_ImageView"
+        app:layout_constraintStart_toStartOf="@id/portrait_ImageView"
+        app:layout_constraintTop_toBottomOf="@id/portrait_ImageView" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/integral_ImageView"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="@dimen/dp_12"
+        android:src="@drawable/ic_integral_0"
+        app:layout_constraintBottom_toBottomOf="@id/reward_TextView"
+        app:layout_constraintEnd_toStartOf="@id/reward_TextView"
+        app:layout_constraintStart_toStartOf="@id/portrait_ImageView"
+        app:layout_constraintTop_toTopOf="@id/reward_TextView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reward_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:maxEms="2"
+        android:singleLine="true"
+        android:text="99999"
+        android:textColor="@color/gray_191919"
+        android:textSize="@dimen/dp_12"
+        app:layout_constraintEnd_toEndOf="@id/portrait_ImageView"
+        app:layout_constraintStart_toEndOf="@id/integral_ImageView"
+        app:layout_constraintTop_toBottomOf="@id/memberName_TextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

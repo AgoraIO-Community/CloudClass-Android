@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Agora Cloud Class</string>
+    <string name="powered_by_agora_io" translatable="false">Powered by agora.io</string>
+    <string name="hint_room_name">Room Name</string>
+    <string name="hint_room_type">Room Type</string>
+    <string name="hint_your_name">Your Name</string>
+    <string name="your_name_should_not_be_empty">Your name should not be empty.</string>
+    <string name="room_name_should_not_be_empty">Room name should not be empty.</string>
+    <string name="room_type_should_not_be_empty">Room type should not be empty.</string>
+    <string name="one2one_class">One to One Classroom</string>
+    <string name="small_class">Small Classroom</string>
+    <string name="large_class">Lecture Hall</string>
+    <string name="breakout">Breakout Classroom</string>
+    <string name="intermediate">Medium Classroom</string>
+    <string name="eye_care_mode">Eye protection</string>
+    <string name="join">Join</string>
+    <string name="setting">Setting</string>
+    <string name="no_enough_permissions">No enough permissions</string>
+    <string name="version" translatable="false">App:v%s   AgoraEduSDK:v%s</string>
+</resources>
