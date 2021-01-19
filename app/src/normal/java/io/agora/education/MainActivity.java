@@ -95,18 +95,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (data != null && requestCode == REQUEST_CODE_RTE && resultCode == BaseClassActivity.RESULT_CODE) {
-//            int code = data.getIntExtra(CODE, -1);
-//            String reason = data.getStringExtra(REASON);
-//            String msg = String.format(getString(R.string.function_error), code, reason);
-//            AgoraLog.e(TAG, msg);
-//            ToastManager.showShort(msg);
-//        }
-//    }
-
     @OnClick({R.id.iv_setting, R.id.et_room_type, R.id.btn_join, R.id.tv_one2one, R.id.tv_small_class,
             R.id.tv_large_class, R.id.tv_breakout_class, R.id.tv_intermediate_class})
     public void onClick(View view) {
