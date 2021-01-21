@@ -69,5 +69,5 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
 
-    implementation 'com.github.AgoraIO-Community:CloudClass-Android:0.0.0.2'
+    implementation 'com.github.AgoraIO-Community:CloudClass-Android:v1.0.0'
 }

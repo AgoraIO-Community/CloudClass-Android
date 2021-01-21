@@ -12,41 +12,13 @@ This page introduces how to run the Android sample project.
 
 ## Run the sample project
 
-Follow these steps to run the sample project:
+- Obtain the App ID in the agota.io console and configure it in string_config.xml.
+- Obtain the APP key in the agota.io console and configure it into Line 216 of MainActivity.java.
+- Sync and run the project.
+> *However, we strongly do not recommend this insecure solution for locally generating rtmToken. For specific security solutions, please refer to [Generate RTM Token](https://docs.agora.io/en/agora-class/agora_class_prep?platform=Android)。
 
-**1.Clone the repository to your local machine.**
-
-```
-git clone https://github.com/AgoraIO-Usecase/eEducation.git
-```
-
-**2.Enter the directory of the Android project.**
-
-```
-cd eEducation/education_Android/
-```
-
-**3.Open the Android project with Android Studio.**
-
-**4.Configure keys.**
-
-Pass the following parameters in `app/src/main/res/values/string_configs.xml`:
-- The Agora App ID that you get.
-- The Agora Customer ID that you get.
-- The Agora Customer Certificate that you get.
-- The WhiteBoard AppIdentifier that you get.
-
-```
-<string name="agora_app_id" translatable="false">Your AppId</string>
-<string name="agora_customer_id" translatable="false">Your customerId</string>
-<string name="agora_customer_cer" translatable="false">Your customerCer</string>
-
-<string name="whiteboard_app_id" translatable="false">Your whiteboard appId</string>
-```
-
-For details, see the [prerequisites](https://github.com/AgoraIO-Usecase/eEducation/blob/master/README.md#prerequisites) in Agora E-education Guide.
-
-**5.Run the project.**
+## Manually access the SDK
+- Reference [Quick Access](https://docs.agora.io/en/agora-class/agora_class_quickstart_android?platform=Android)
 
 ## Connect us
 

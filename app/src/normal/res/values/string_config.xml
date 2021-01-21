@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <string name="agora_app_id" translatable="false">f488493d1886435f963dfb3d95984fd4</string>-->
-
-    <!--    <string name="agora_customer_id" translatable="false">8bf35333520648558ad1b736cfa5d2f1</string>-->
-    <!--    <string name="agora_customer_cer" translatable="false">745421c81abb4ac9a1fc7c7e50e91999</string>-->
-
-    <string name="agora_app_id" translatable="false">47b7535dcb9a4bb4aa592115266eae98</string>
-
-    <string name="agora_customer_id" translatable="false">27bf8c2dd53a4d0da01d16c819e9a9c7</string>
-    <string name="agora_customer_cer" translatable="false">b367cb24b911442a89b59a7f7f4b359c</string>
-
-    <string name="whiteboard_app_id" translatable="false">646/P8Kb7e_DJZVAQw</string>
-
-
-    <!--    <string name="agora_app_id" translatable="false">Your AppId with devMode</string>-->
-
-    <!--    <string name="agora_customer_id" translatable="false">Your customerId with devMode</string>-->
-    <!--    <string name="agora_customer_cer" translatable="false">Your customerCer with devMode</string>-->
-
-    <!--    <string name="whiteboard_app_id" translatable="false">Your whiteboard appId</string>-->
+        <string name="agora_app_id" translatable="false">Your AppId with devMode</string>
 </resources>
