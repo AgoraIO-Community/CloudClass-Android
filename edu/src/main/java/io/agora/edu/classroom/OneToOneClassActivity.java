@@ -1,6 +1,5 @@
 package io.agora.edu.classroom;
 
-import android.util.Log;
 import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +29,7 @@ import io.agora.education.api.user.data.EduUserLeftType;
 import io.agora.education.api.user.data.EduUserRole;
 import io.agora.education.api.user.data.EduUserStateChangeType;
 import io.agora.edu.classroom.bean.channel.Room;
-import io.agora.edu.classroom.widget.RtcVideoView;
+import io.agora.edu.classroom.widget.video.RtcVideoView;
 
 import static io.agora.education.impl.Constants.AgoraLog;
 

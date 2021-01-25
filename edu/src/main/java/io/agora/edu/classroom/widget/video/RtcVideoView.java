@@ -1,9 +1,8 @@
-package io.agora.edu.classroom.widget;
+package io.agora.edu.classroom.widget.video;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.agora.edu.R;
 import io.agora.edu.R2;
 import io.agora.education.api.stream.data.EduStreamInfo;
 

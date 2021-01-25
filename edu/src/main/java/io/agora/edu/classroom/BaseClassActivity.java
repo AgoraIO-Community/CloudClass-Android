@@ -84,7 +84,7 @@ import io.agora.record.bean.RecordBean;
 import io.agora.record.bean.RecordMsg;
 import io.agora.edu.classroom.fragment.ChatRoomFragment;
 import io.agora.edu.classroom.fragment.WhiteBoardFragment;
-import io.agora.edu.classroom.widget.TitleView;
+import io.agora.edu.classroom.widget.title.TitleView;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.common.service.BoardService;
 import io.agora.edu.common.bean.ResponseBody;

@@ -1,4 +1,4 @@
-package io.agora.edu.classroom.widget;
+package io.agora.edu.classroom.widget.title;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +19,7 @@ import io.agora.edu.R2;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.agora.edu.R;
+import io.agora.edu.classroom.widget.classtime.TimeView;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.statistics.NetworkQuality;

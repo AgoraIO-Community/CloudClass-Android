@@ -1,4 +1,4 @@
-package io.agora.edu.classroom.widget;
+package io.agora.edu.classroom.widget.classtime;
 
 import android.content.Context;
 import android.content.res.Resources;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="io.agora.edu.classroom.OneToOneClassActivity">
 
-    <io.agora.edu.classroom.widget.TitleView
+    <io.agora.edu.classroom.widget.title.TitleView
         android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_30"
@@ -15,7 +15,7 @@
         android:paddingEnd="@dimen/dp_10"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <io.agora.edu.classroom.widget.RtcVideoView
+    <io.agora.edu.classroom.widget.video.RtcVideoView
         android:id="@+id/layout_video_teacher"
         android:layout_width="@dimen/dp_165"
         android:layout_height="0dp"
@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_view" />
 
-    <io.agora.edu.classroom.widget.RtcVideoView
+    <io.agora.edu.classroom.widget.video.RtcVideoView
         android:id="@+id/layout_video_student"
         android:layout_width="@dimen/dp_165"
         android:layout_height="0dp"

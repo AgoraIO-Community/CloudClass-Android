@@ -1,4 +1,4 @@
-package io.agora.edu.classroom.widget;
+package io.agora.edu.classroom.widget.video;
 
 import android.content.Context;
 import android.util.AttributeSet;

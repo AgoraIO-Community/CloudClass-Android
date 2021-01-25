@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="@id/view_bg_info"
         app:layout_goneMarginEnd="@dimen/dp_7" />
 
-    <io.agora.edu.classroom.widget.RtcAudioView
+    <io.agora.edu.classroom.widget.video.RtcAudioView
         android:id="@+id/ic_audio"
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
