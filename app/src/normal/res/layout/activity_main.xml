@@ -44,6 +44,7 @@
             app:layout_constraintTop_toBottomOf="@id/et_room_name" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:visibility="gone"
             android:id="@+id/et_room_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18"
             android:src="@drawable/ic_down"

@@ -182,14 +182,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String roomTypeStr = et_room_type.getText().toString();
-        if (TextUtils.isEmpty(roomTypeStr)) {
-            Toast.makeText(this, R.string.room_type_should_not_be_empty, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         /**userUuid和roomUuid需用户自己指定，并保证唯一性*/
-        int roomType = getClassType(roomTypeStr);
+        int roomType = AgoraEduRoomType.AgoraEduRoomType1V1.getValue();
         String userUuid = userName + AgoraEduRoleType.AgoraEduRoleTypeStudent.getValue();
         String roomUuid = roomName + roomType;
         int roleType = AgoraEduRoleType.AgoraEduRoleTypeStudent.getValue();
@@ -225,16 +219,6 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private int getClassType(String roomTypeStr) {
-        if (roomTypeStr.equals(getString(R.string.one2one_class))) {
-            return AgoraEduRoomType.AgoraEduRoomType1V1.getValue();
-        } else if (roomTypeStr.equals(getString(R.string.small_class))) {
-            return AgoraEduRoomType.AgoraEduRoomTypeSmall.getValue();
-        } else {
-            return AgoraEduRoomType.AgoraEduRoomTypeBig.getValue();
         }
     }
 

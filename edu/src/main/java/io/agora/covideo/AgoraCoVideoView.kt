@@ -90,7 +90,7 @@ class AgoraCoVideoView : LinearLayout {
 
     /**初始化时，图片是默认*/
     private fun initView(context: Context) {
-        inflate(context, R.layout.view_covideo_layout, this)
+        inflate(context, R.layout.covideo_view_covideo_layout, this)
         countdownLayout = findViewById(R.id.countdown_Layout)
         countDownTextView = findViewById(R.id.countDown_TextView)
         handImg = findViewById(R.id.handImg)

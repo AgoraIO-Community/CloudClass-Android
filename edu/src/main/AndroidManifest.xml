@@ -30,30 +30,8 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeFullScreen" />
         <activity
-            android:name=".classroom.SmallClassActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppThemeFullScreen" />
-        <activity
-            android:name=".classroom.LargeClassActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".classroom.ReplayActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppThemeFullScreen" />
-        <activity
-            android:name=".classroom.BreakoutClassActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppThemeFullScreen" />
-        <activity
-            android:name=".classroom.MediumClassActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeFullScreen" />
 

@@ -31,11 +31,7 @@ import io.agora.education.api.manager.EduManagerOptions;
 import io.agora.education.api.room.data.EduRoomState;
 import io.agora.education.api.room.data.RoomType;
 import io.agora.edu.classroom.BaseClassActivity;
-import io.agora.edu.classroom.BreakoutClassActivity;
-import io.agora.edu.classroom.LargeClassActivity;
-import io.agora.edu.classroom.MediumClassActivity;
 import io.agora.edu.classroom.OneToOneClassActivity;
-import io.agora.edu.classroom.SmallClassActivity;
 
 import static io.agora.edu.classroom.BaseClassActivity.setEduManager;
 
@@ -107,9 +103,15 @@ public class AgoraEduSDK {
             errorTips(context, msg);
         }
 
-        if(!AgoraEduRoomType.isValid(config.getRoomType())) {
+//        if(!AgoraEduRoomType.isValid(config.getRoomType())) {
+//            String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
+//                    "AgoraEduLaunchConfig.roomType is not expected, it must be 0 or 1 or 2!");
+//            errorTips(context, msg);
+//        }
+
+        if(config.getRoomType() != AgoraEduRoomType.AgoraEduRoomType1V1.getValue()) {
             String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
-                    "AgoraEduLaunchConfig.roomType is not expected, it must be 0 or 1 or 2!");
+                    "AgoraEduLaunchConfig.roomType is not expected, it must be 0 !");
             errorTips(context, msg);
         }
 
@@ -203,15 +205,16 @@ public class AgoraEduSDK {
         int roomType = config.getRoomType();
         if (roomType == RoomType.ONE_ON_ONE.getValue()) {
             intent.setClass(context, OneToOneClassActivity.class);
-        } else if (roomType == RoomType.SMALL_CLASS.getValue()) {
-            intent.setClass(context, SmallClassActivity.class);
-        } else if (roomType == RoomType.LARGE_CLASS.getValue()) {
-            intent.setClass(context, LargeClassActivity.class);
-        } else if (roomType == RoomType.BREAKOUT_CLASS.getValue()) {
-            intent.setClass(context, BreakoutClassActivity.class);
-        } else if (roomType == RoomType.MEDIUM_CLASS.getValue()) {
-            intent.setClass(context, MediumClassActivity.class);
         }
+//        else if (roomType == RoomType.SMALL_CLASS.getValue()) {
+//            intent.setClass(context, SmallClassActivity.class);
+//        } else if (roomType == RoomType.LARGE_CLASS.getValue()) {
+//            intent.setClass(context, LargeClassActivity.class);
+//        } else if (roomType == RoomType.BREAKOUT_CLASS.getValue()) {
+//            intent.setClass(context, BreakoutClassActivity.class);
+//        } else if (roomType == RoomType.MEDIUM_CLASS.getValue()) {
+//            intent.setClass(context, MediumClassActivity.class);
+//        }
         intent.putExtra(BaseClassActivity.LAUNCHCONFIG, config);
         return intent;
     }
