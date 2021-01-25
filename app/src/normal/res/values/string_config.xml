@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string name="agora_app_id" translatable="false">Your AppId with devMode</string>
+            <string name="agora_app_id" translatable="false">Your AppId</string>
 </resources>
