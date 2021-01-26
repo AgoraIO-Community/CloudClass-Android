@@ -43,4 +43,21 @@
     <color name="eye_care_color">#1Aff9900</color>
 
     <color name="C44A2FC">#44A2FC</color>
+
+
+
+
+
+    <color name="toast_classtime_count_down_time">#FE313F</color>
+    <color name="toast_classtime_count_down_bg">#000000</color>
+
+    <color name="dialog_bg_stroke">#75C0FF</color>
+    <color name="dialog_bg_solid">#75C0FF</color>
+    <color name="dialog_content_bg">#FFFFFFFF</color>
+    <color name="dialog_title_text">#FFFFFFFF</color>
+    <color name="dialog_content_text">#002591</color>
+    <color name="dialog_btn_sure_text">#FFFFFF</color>
+    <color name="dialog_btn_sure_bg">#DFB635</color>
+    <color name="dialog_btn_cancel_text">#FFFFFF</color>
+    <color name="dialog_btn_cancel_bg">#A7A7A7</color>
 </resources>

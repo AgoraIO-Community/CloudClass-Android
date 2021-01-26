@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toast_classtime_bg">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="@dimen/dp_24"
+            android:paddingBottom="@dimen/dp_24"
+            android:paddingStart="@dimen/dp_40"
+            android:alpha="0.8"
+            android:paddingEnd="@dimen/dp_40"
+            android:text="@string/toast_classtime_until_class_end"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
