@@ -54,7 +54,7 @@
     <string name="onstage">on stage</string>
     <string name="courseend">Class is over</string>
     <string name="noreplaydata">can not find replay data</string>
-    <string name="parametererrpr">parameter error:%s</string>
+    <string name="parametererror">parameter error:%s</string>
 
     <string name="covideo_accept_interactive">Teacher accept your interactive request!</string>
     <string name="covideo_reject_interactive">Teacher reject your interactive request!</string>
@@ -78,4 +78,8 @@
     <string name="video_window_wait_teacher">Waiting foreign teacher...</string>
     <string name="video_window_teacher_leave">Foreign teacher leave</string>
     <string name="video_window_no_camera">No cameras detected</string>
+
+    <!-- Chat Window -->
+    <string name="chat_window_title">Chat</string>
+    <string name="chat_window_input_hint">Input what you want to say</string>
 </resources>

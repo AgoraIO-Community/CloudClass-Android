@@ -51,12 +51,11 @@
     <string name="onstage">正在台上</string>
     <string name="courseend">课程已经结束</string>
     <string name="noreplaydata">暂无回放数据</string>
-    <string name="parametererrpr">参数错误:%s</string>
+    <string name="parametererror">参数错误:%s</string>
 
     <string name="covideo_accept_interactive">老师接受了你的连麦申请！</string>
     <string name="covideo_reject_interactive">老师拒绝了你的连麦申请！</string>
     <string name="covideo_abort_interactive">老师终止了你的连麦！</string>
-
 
     <!--  ClassToastManager  -->
     <string name="toast_classtime_until_class_end">距离教室结束还有%d分钟</string>
@@ -76,4 +75,8 @@
     <string name="video_window_wait_teacher">等待外教进入教室…</string>
     <string name="video_window_teacher_leave">外教已离开教室</string>
     <string name="video_window_no_camera">没有检测到摄像头</string>
+
+    <!-- Chat Window -->
+    <string name="chat_window_title">聊天</string>
+    <string name="chat_window_input_hint">请输入你想说的话</string>
 </resources>
