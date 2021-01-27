@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!-- Chat Window -->
+    <dimen name="chat_window_content_margin">8dp</dimen>
+    <dimen name="chat_window_content_padding">8dp</dimen>
+    <dimen name="chat_window_corner">16dp</dimen>
+    <dimen name="chat_window_item_corner_chat">8dp</dimen>
+    <dimen name="chat_window_item_corner_sys">16dp</dimen>
+    <dimen name="chat_window_icon_size_medium">28dp</dimen>
+    <dimen name="chat_window_icon_size_small">20dp</dimen>
+    <dimen name="chat_window_title_text_size">20dp</dimen>
+    <dimen name="chat_window_title_layout_height">44dp</dimen>
+    <dimen name="chat_window_input_height">44dp</dimen>
+    <dimen name="chat_window_input_corner">22dp</dimen>
+    <dimen name="chat_window_input_content_margin_start">16dp</dimen>
+    <dimen name="chat_window_input_send_btn_size">32dp</dimen>
+    <dimen name="chat_window_input_send_btn_margin">6dp</dimen>
+    <dimen name="chat_window_message_margin_top">6dp</dimen>
+    <dimen name="chat_window_message_margin_vertical">6dp</dimen>
+    <dimen name="chat_window_message_margin_bottom">8dp</dimen>
+    <dimen name="chat_window_min_icon_size">46dp</dimen>
+    <dimen name="chat_window_new_message_height">16dp</dimen>
+    <dimen name="chat_window_new_message_border">2dp</dimen>
+    <dimen name="chat_window_new_message_corner">8dp</dimen>
+    <dimen name="chat_window_new_message_padding">5dp</dimen>
+    <dimen name="chat_window_new_message_text_size">10dp</dimen>
+    <dimen name="chat_window_new_message_text_padding">-12dp</dimen>
+
     <dimen name="common_margin">@dimen/dp_15</dimen>
     <dimen name="dp_m_60">-60.0000dp</dimen>
     <dimen name="dp_m_30">-30.0000dp</dimen>
