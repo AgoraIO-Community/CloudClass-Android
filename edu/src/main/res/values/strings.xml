@@ -60,4 +60,8 @@
     <string name="covideo_abort_interactive">Teacher abort your interactive video!</string>
 
     <string name="parametererrpr">parameter error:%s</string>
+
+    <!-- Chat Window -->
+    <string name="chat_window_title">Chat</string>
+    <string name="chat_window_input_hint">Input what you want to say</string>
 </resources>
