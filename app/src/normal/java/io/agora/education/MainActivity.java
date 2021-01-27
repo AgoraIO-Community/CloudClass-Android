@@ -16,35 +16,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.agora.acadsoc_ui.dialog.NormalDialog;
-import io.agora.acadsoc_ui.dialog.TitleSingleBtnDialog;
-import io.agora.edu.classroom.widget.toast.ClassToastManager;
-import io.agora.edu.common.bean.ResponseBody;
 import io.agora.edu.launch.AgoraEduClassRoom;
-import io.agora.edu.launch.AgoraEduReplay;
-import io.agora.edu.launch.AgoraEduReplayConfig;
 import io.agora.edu.launch.AgoraEduRoleType;
 import io.agora.edu.launch.AgoraEduRoomType;
 import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.launch.AgoraEduSDKConfig;
-import io.agora.education.fetchtoken.FetchRtmTokenUtil;
-import io.agora.education.fetchtoken.RtmTokenRes;
 import io.agora.education.rtmtoken.RtmTokenBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static io.agora.edu.launch.AgoraEduSDK.REQUEST_CODE_RTC;
 import static io.agora.education.Constants.KEY_SP;
@@ -71,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        new TitleSingleBtnDialog(getString(R.string.dialog_class_end_title),
-                getString(R.string.dialog_class_is_end), getString(R.string.dialog_sure))
-                .show(getSupportFragmentManager(), null);
-//        new NormalDialog(getString(R.string.dialog_class_exit),
-//                getString(R.string.dialog_cancel), getString(R.string.dialog_sure), R.drawable.dialog_img_content)
-//                .show(getSupportFragmentManager(), null);
     }
 
     @Override

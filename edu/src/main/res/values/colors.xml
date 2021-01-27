@@ -63,9 +63,8 @@
     <color name="dialog_btn_cancel_bg">#A7A7A7</color>
 
     <!--  VideoWindow  -->
-    <color name="video_window_bg_stroke">#75C0FF</color>
-    <color name="video_window_bg_solid">#75C0FF</color>
-    <color name="video_window_texture_bg_solid">#FFFFFFFF</color>
+    <color name="video_window_unfold_layout_bg_stroke">#75C0FF</color>
+    <color name="video_window_unfold_layout_bg_solid">#FFFFFFFF</color>
     <color name="video_window_username_bg">#4E4E4E</color>
     <color name="video_window_username_text">#FEFEFE</color>
     <color name="video_window_trophy_bg">#4E4E4E</color>
@@ -75,6 +74,9 @@
     <color name="video_window_waitteacher_text">#002591</color>
     <color name="video_window_teacherleave_text">#002591</color>
     <color name="video_window_nocamera_text">#002591</color>
+    <color name="video_window_fold_layout_bg_stroke">#4992CF</color>
+    <color name="video_window_fold_layout_bg_solid">#75C0FF</color>
+    <color name="video_window_fold_username_text">#FEFEFE</color>
 
     <!-- Chat Window -->
     <color name="chat_window_bg">#9913196f</color>

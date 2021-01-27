@@ -1,4 +1,4 @@
-package io.agora.acadsoc_ui.dialog
+package io.agora.edu.classroom.widget.dialog
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import io.agora.edu.R
+import io.agora.edu.classroom.widget.dialog.DialogClickListener
 
 class NormalDialog : DialogFragment, View.OnClickListener {
     private lateinit var tv_dialog_cancel: AppCompatTextView
