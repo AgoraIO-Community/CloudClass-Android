@@ -3,10 +3,10 @@
     android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid
-        android:color="@color/dialog_btn_sure_bg"/>
-
     <corners
-        android:radius="@dimen/dp_30"/>
+        android:radius="@dimen/video_window_username_layout_bg_radius"/>
+
+    <solid
+        android:color="@color/video_window_username_bg"/>
 
 </shape>

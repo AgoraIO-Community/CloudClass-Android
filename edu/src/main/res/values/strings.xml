@@ -60,17 +60,22 @@
     <string name="covideo_reject_interactive">Teacher reject your interactive request!</string>
     <string name="covideo_abort_interactive">Teacher abort your interactive video!</string>
 
-
-
-
+    <!--  ClassToastManager  -->
     <string name="toast_classtime_until_class_end">%d minutes to the end of the classroom</string>
 
+    <!--  NormalDialog  TitleSingleDialog  -->
     <string name="dialog_class_end_title">Tips</string>
     <string name="dialog_class_is_end">Class is end!</string>
     <string name="dialog_sure">&#160;&#160;&#160;Sure&#160;&#160;&#160;</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">&#160;&#160;&#160;Cancel&#160;&#160;&#160;</string>
     <string name="dialog_class_exit">Are you sure you want to exit the classroom?</string>
     <string name="dialog_class_noend_exit">Class not end, are you sure you want to quit the classroom?</string>
     <string name="dialog_quit_class_sure">&#160;&#160;&#160;&#160;&#160;&#160;Quit&#160;&#160;&#160;&#160;&#160;&#160;</string>
     <string name="dialog_quit_class_cancel">Think again</string>
+
+    <!--  VideoWindow  -->
+    <string name="video_window_camera_off">Camera Off</string>
+    <string name="video_window_wait_teacher">Waiting foreign teacher...</string>
+    <string name="video_window_teacher_leave">Foreign teacher leave</string>
+    <string name="video_window_no_camera">No cameras detected</string>
 </resources>

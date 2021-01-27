@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="@color/dialog_button_cancel_bg"/>
+        android:color="@color/dialog_btn_cancel_bg"/>
 
     <corners
         android:radius="@dimen/dp_30"/>

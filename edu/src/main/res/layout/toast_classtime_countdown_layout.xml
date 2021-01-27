@@ -5,21 +5,38 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_76"
-        android:background="@drawable/toast_classtime_count_down_bg">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clock_Img"
+            android:layout_width="@dimen/toast_classtime_countdown_clock_w"
+            android:layout_height="@dimen/toast_classtime_countdown_clock_h"
+            android:src="@drawable/toast_ic_clock"/>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:layout_marginStart="@dimen/dp_80"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_32"
-            android:text="@string/toast_classtime_until_class_end"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"/>
+            android:layout_toEndOf="@id/clock_Img"
+            android:layout_marginStart="@dimen/toast_classtime_countdown_content_layout_margin_start"
+            android:layout_alignTop="@id/clock_Img"
+            android:layout_alignBottom="@id/clock_Img"
+            android:gravity="center_vertical"
+            android:alpha="0.8"
+            android:background="@drawable/toast_classtime_countdown_bg">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_marginStart="@dimen/toast_classtime_countdown_content_text_margin_start"
+                android:layout_marginEnd="@dimen/toast_classtime_countdown_content_text_margin_end"
+                android:text="@string/toast_classtime_until_class_end"
+                android:textColor="@color/white"
+                android:textSize="@dimen/toast_classtime_countdown_content_text"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

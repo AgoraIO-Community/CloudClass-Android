@@ -4,9 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="@color/dialog_btn_sure_bg"/>
+        android:color="@color/toast_normal_bg"/>
 
-    <corners
-        android:radius="@dimen/dp_30"/>
+    <corners android:radius="@dimen/toast_normal_bg_radius"/>
 
 </shape>

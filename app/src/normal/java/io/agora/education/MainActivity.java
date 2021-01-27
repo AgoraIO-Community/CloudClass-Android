@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import io.agora.acadsoc_ui.dialog.NormalDialog;
+import io.agora.acadsoc_ui.dialog.TitleSingleBtnDialog;
+import io.agora.edu.classroom.widget.toast.ClassToastManager;
 import io.agora.edu.common.bean.ResponseBody;
 import io.agora.edu.launch.AgoraEduClassRoom;
 import io.agora.edu.launch.AgoraEduReplay;
@@ -68,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        new TitleSingleBtnDialog(getString(R.string.dialog_class_end_title),
+                getString(R.string.dialog_class_is_end), getString(R.string.dialog_sure))
+                .show(getSupportFragmentManager(), null);
+//        new NormalDialog(getString(R.string.dialog_class_exit),
+//                getString(R.string.dialog_cancel), getString(R.string.dialog_sure), R.drawable.dialog_img_content)
+//                .show(getSupportFragmentManager(), null);
     }
 
     @Override

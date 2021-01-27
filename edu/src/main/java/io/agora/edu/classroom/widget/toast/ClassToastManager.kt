@@ -1,4 +1,4 @@
-package io.agora.edu.widget.toast
+package io.agora.edu.classroom.widget.toast
 
 import android.content.Context
 import android.os.Handler
@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import io.agora.edu.R
 
@@ -34,13 +35,15 @@ object ClassToastManager {
         val content = getContext().getString(R.string.toast_classtime_until_class_end, time)
         val spannableString = SpannableString(content)
         val start = content.indexOf(time.toString())
-        spannableString.setSpan(ForegroundColorSpan(getContext().resources.getColor(R.color.toast_classtime_count_down_time)),
-        start, start + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(ForegroundColorSpan(getContext().resources.getColor(R.color.toast_classtime_countdown_time)),
+        start, start + time.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         val view = LayoutInflater.from(getContext()).inflate(R.layout.toast_classtime_countdown_layout, null)
+        val clockImg = view.findViewById<AppCompatImageView>(R.id.clock_Img)
+        clockImg.z = 10f
         val textView = view.findViewById<AppCompatTextView>(R.id.content)
         textView.text = spannableString
         val toast = Toast(getContext())
-        toast.duration = Toast.LENGTH_SHORT
+        toast.duration = Toast.LENGTH_LONG
         toast.view = view
         toast.setGravity(Gravity.BOTTOM and Gravity.CENTER_HORIZONTAL, 0, 0)
         toast.show()

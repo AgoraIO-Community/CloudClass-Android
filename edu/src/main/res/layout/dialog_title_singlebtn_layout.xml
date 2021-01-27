@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/dp_224"
-        android:layout_height="@dimen/dp_156"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/dialog_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,14 +27,15 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/close"
-            android:layout_width="@dimen/dp_18"
-            android:layout_height="@dimen/dp_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/dp_4"
             app:layout_constraintTop_toTopOf="@id/title"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:src="@mipmap/dialog_ic_close_white"/>
 
         <View
             android:id="@+id/bg_View"
@@ -45,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/dialog_content_bg"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_6"
             android:layout_marginStart="@dimen/dp_6"
             android:layout_marginEnd="@dimen/dp_6"
             android:layout_marginBottom="@dimen/dp_6"/>
@@ -66,17 +67,22 @@
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="确定"
-            android:paddingStart="@dimen/dp_28"
-            android:paddingEnd="@dimen/dp_28"
+            android:text="确&#160;&#160;&#160;&#160;定"
+            android:textSize="@dimen/sp_12"
+            android:paddingStart="@dimen/dp_24"
+            android:paddingEnd="@dimen/dp_24"
             android:paddingTop="@dimen/dp_8"
-            android:paddingBottom="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_8"
             android:textColor="@color/dialog_btn_sure_text"
             android:background="@drawable/dialog_button_sure_bg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
             app:layout_constraintTop_toBottomOf="@id/content"
-            android:layout_marginTop="@dimen/dp_24"/>
+            app:layout_constraintBottom_toBottomOf="@id/bg_View"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_10"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
