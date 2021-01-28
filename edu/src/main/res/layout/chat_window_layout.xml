@@ -12,7 +12,6 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/chat_window_content_padding"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="@dimen/chat_window_content_margin"
             android:layout_above="@id/chat_window_input_layout"
             android:background="@drawable/chat_window_round_bg">
             <RelativeLayout
@@ -35,7 +34,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/chat_window_content_title_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/chat_window_title_layout_height"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_toEndOf="@+id/chat_window_content_title_icon"
@@ -46,10 +45,11 @@
                 </RelativeLayout>
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/chat_window_fold_btn"
-                    android:layout_width="@dimen/chat_window_icon_size_medium"
-                    android:layout_height="@dimen/chat_window_icon_size_medium"
+                    android:layout_width="@dimen/chat_window_title_layout_height"
+                    android:layout_height="@dimen/chat_window_title_layout_height"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/chat_window_content_padding"
                     android:scaleType="fitXY"
                     android:src="@drawable/chat_window_icon_fold" />
             </RelativeLayout>
@@ -69,14 +69,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/chat_window_content_margin"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/chat_window_content_padding"
+            android:padding="@dimen/chat_window_content_margin"
             android:background="@drawable/chat_window_round_bg">
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/chat_window_content_margin"
-                android:layout_marginBottom="@dimen/chat_window_content_margin">
+                android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/chat_window_input"
                     android:layout_width="match_parent"
@@ -86,6 +83,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/chat_window_input_hint"
                     android:textColorHint="@color/chat_window_input_hint_color"
+                    android:textSize="@dimen/chat_window_input_hint_text_size"
                     android:lines="1"
                     android:background="@drawable/chat_window_input_bg"/>
                 <androidx.appcompat.widget.AppCompatImageView
@@ -124,7 +122,7 @@
             android:textAlignment="gravity"
             android:gravity="center_vertical"
             android:background="@drawable/chat_window_new_message_round_bg"
-            android:text="2"
+            android:text="99+"
             android:textColor="@android:color/white"
             android:textSize="@dimen/chat_window_new_message_text_size"/>
     </RelativeLayout>
