@@ -1,5 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!--  NormalDialog  TitleSingleDialog  -->
+    <dimen name="dialog_title_singlebtn_title_margin_top">@dimen/dp_4</dimen>
+    <dimen name="dialog_title_singlebtn_title_text">@dimen/sp_14</dimen>
+    <dimen name="dialog_title_singlebtn_close_img_w">@dimen/dp_20</dimen>
+    <dimen name="dialog_title_singlebtn_close_img_h">@dimen/dp_20</dimen>
+    <dimen name="dialog_title_singlebtn_close_img_padding">@dimen/dp_4</dimen>
+    <dimen name="dialog_title_singlebtn_close_img_margin_top">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_close_img_margin_end">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_content_bg_margin_top">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_content_bg_margin_start">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_content_bg_margin_end">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_content_bg_margin_bottom">@dimen/dp_6</dimen>
+    <dimen name="dialog_title_singlebtn_content_text">@dimen/sp_14</dimen>
+    <dimen name="dialog_title_singlebtn_content_text_margin_top">@dimen/dp_24</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_margin_start">@dimen/dp_40</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_margin_top">@dimen/dp_16</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_margin_end">@dimen/dp_40</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_margin_bottom">@dimen/dp_10</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_padding_start">@dimen/dp_24</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_padding_top">@dimen/dp_8</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_padding_end">@dimen/dp_24</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_padding_bottom">@dimen/dp_8</dimen>
+    <dimen name="dialog_title_singlebtn_confirm_text">@dimen/sp_12</dimen>
+    <dimen name="dialog_normal_content_bg_margin_top">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_content_bg_margin_start">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_content_bg_margin_end">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_content_bg_margin_bottom">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_close_img_w">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_close_img_h">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_close_img_padding">@dimen/dp_4</dimen>
+    <dimen name="dialog_normal_close_img_margin_top">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_close_img_margin_end">@dimen/dp_6</dimen>
+    <dimen name="dialog_normal_content_img_w">@dimen/dp_45</dimen>
+    <dimen name="dialog_normal_content_img_h">@dimen/dp_45</dimen>
+    <dimen name="dialog_normal_content_img_margin_top">@dimen/dp_14</dimen>
+    <dimen name="dialog_normal_content_text_margin_top">@dimen/dp_10</dimen>
+    <dimen name="dialog_normal_content_text">@dimen/sp_14</dimen>
+    <dimen name="dialog_normal_cancel_margin_start">@dimen/dp_16</dimen>
+    <dimen name="dialog_normal_cancel_margin_top">@dimen/dp_12</dimen>
+    <dimen name="dialog_normal_cancel_margin_end">@dimen/dp_16</dimen>
+    <dimen name="dialog_normal_cancel_margin_bottom">@dimen/dp_12</dimen>
+    <dimen name="dialog_normal_cancel_padding_start">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_cancel_padding_top">@dimen/dp_10</dimen>
+    <dimen name="dialog_normal_cancel_padding_end">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_cancel_padding_bottom">@dimen/dp_10</dimen>
+    <dimen name="dialog_normal_cancel_text">@dimen/sp_12</dimen>
+    <dimen name="dialog_normal_confirm_margin_end">@dimen/dp_16</dimen>
+    <dimen name="dialog_normal_confirm_padding_start">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_confirm_padding_top">@dimen/dp_10</dimen>
+    <dimen name="dialog_normal_confirm_padding_end">@dimen/dp_20</dimen>
+    <dimen name="dialog_normal_confirm_padding_bottom">@dimen/dp_10</dimen>
+    <dimen name="dialog_normal_confirm_text">@dimen/sp_12</dimen>
+
+
+    <!--  ClassToastManager  -->
+    <dimen name="toast_classtime_countdown_bg_radius">@dimen/dp_57</dimen>
+    <dimen name="toast_classtime_countdown_clock_w">@dimen/dp_50</dimen>
+    <dimen name="toast_classtime_countdown_clock_h">@dimen/dp_50</dimen>
+    <dimen name="toast_classtime_countdown_content_layout_margin_start">@dimen/dp_m_12</dimen>
+    <dimen name="toast_classtime_countdown_content_text_margin_start">@dimen/dp_30</dimen>
+    <dimen name="toast_classtime_countdown_content_text_margin_end">@dimen/dp_20</dimen>
+    <dimen name="toast_classtime_countdown_content_text">@dimen/sp_14</dimen>
+    <dimen name="toast_normal_bg_radius">@dimen/dp_57</dimen>
+    <dimen name="toast_normal_content_margin_start">@dimen/dp_40</dimen>
+    <dimen name="toast_normal_content_margin_top">@dimen/dp_24</dimen>
+    <dimen name="toast_normal_content_margin_end">@dimen/dp_40</dimen>
+    <dimen name="toast_normal_content_margin_bottom">@dimen/dp_24</dimen>
+    <dimen name="toast_normal_content_text">@dimen/sp_14</dimen>
+
+    <!--  VideoWindow  -->
+    <dimen name="video_window_unfold_layout_bg_radius">@dimen/dp_12</dimen>
+    <dimen name="video_window_unfold_layout_stroke_width">@dimen/dp_6</dimen>
+    <dimen name="video_window_unfold_layout_padding">@dimen/dp_6</dimen>
+    <dimen name="video_window_texture_radius">@dimen/dp_8</dimen>
+    <dimen name="video_window_options_layout_margin">@dimen/dp_4</dimen>
+    <dimen name="video_window_username_layout_bg_radius">@dimen/dp_30</dimen>
+    <dimen name="video_window_username_layout_start_padding">@dimen/dp_6</dimen>
+    <dimen name="video_window_username_layout_top_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_username_layout_end_padding">@dimen/dp_0</dimen>
+    <dimen name="video_window_username_layout_bottom_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_username_start_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_username_text_size">@dimen/sp_8</dimen>
+    <dimen name="video_window_fold_img_w">@dimen/dp_20</dimen>
+    <dimen name="video_window_fold_img_h">@dimen/dp_20</dimen>
+    <dimen name="video_window_fold_img_padding">@dimen/dp_4</dimen>
+    <dimen name="video_window_video_img_w">@dimen/dp_20</dimen>
+    <dimen name="video_window_video_img_h">@dimen/dp_20</dimen>
+    <dimen name="video_window_video_img_end_margin">@dimen/dp_4</dimen>
+    <dimen name="video_window_audio_img_w">@dimen/dp_20</dimen>
+    <dimen name="video_window_audio_img_h">@dimen/dp_20</dimen>
+    <dimen name="video_window_audio_img_top_margin">@dimen/dp_2</dimen>
+    <dimen name="video_window_audio_volume_img_top_margin">@dimen/dp_2</dimen>
+    <dimen name="video_window_username_img_w">@dimen/dp_11</dimen>
+    <dimen name="video_window_username_img_h">@dimen/dp_11</dimen>
+    <dimen name="video_window_trophy_layout_bg_radius">@dimen/dp_30</dimen>
+    <dimen name="video_window_trophy_layout_start_padding">@dimen/dp_6</dimen>
+    <dimen name="video_window_trophy_layout_top_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_trophy_layout_end_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_trophy_layout_bottom_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_trophy_start_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_trophy_text_size">@dimen/sp_8</dimen>
+    <dimen name="video_window_videooff_img_w">@dimen/dp_45</dimen>
+    <dimen name="video_window_videooff_img_h">@dimen/dp_45</dimen>
+    <dimen name="video_window_videooff_text_margin_top">@dimen/dp_4</dimen>
+    <dimen name="video_window_videooff_text">@dimen/sp_8</dimen>
+    <dimen name="video_window_waitteacher_img_w">@dimen/dp_45</dimen>
+    <dimen name="video_window_waitteacher_img_h">@dimen/dp_45</dimen>
+    <dimen name="video_window_waitteacher_text_margin_top">@dimen/dp_4</dimen>
+    <dimen name="video_window_waitteacher_text">@dimen/sp_8</dimen>
+    <dimen name="video_window_teacherleave_img_w">@dimen/dp_45</dimen>
+    <dimen name="video_window_teacherleave_img_h">@dimen/dp_45</dimen>
+    <dimen name="video_window_teacherleave_text_margin_top">@dimen/dp_4</dimen>
+    <dimen name="video_window_teacherleave_text">@dimen/sp_8</dimen>
+    <dimen name="video_window_nocamera_img_w">@dimen/dp_45</dimen>
+    <dimen name="video_window_nocamera_img_h">@dimen/dp_45</dimen>
+    <dimen name="video_window_nocamera_text_margin_top">@dimen/dp_4</dimen>
+    <dimen name="video_window_nocamera_text">@dimen/sp_8</dimen>
+    <dimen name="video_window_fold_layout_bg_radius">@dimen/dp_10</dimen>
+    <dimen name="video_window_fold_layout_stroke_width">@dimen/dp_4</dimen>
+    <dimen name="video_window_fold_layout_padding">@dimen/dp_10</dimen>
+    <dimen name="video_window_fold_username_start_padding">@dimen/dp_2</dimen>
+    <dimen name="video_window_fold_username_text_size">@dimen/sp_10</dimen>
+
     <!-- Chat Window -->
     <dimen name="chat_window_content_margin">@dimen/dp_8</dimen>
     <dimen name="chat_window_content_padding">@dimen/dp_4</dimen>
@@ -27,7 +150,8 @@
     <dimen name="chat_window_new_message_text_size">@dimen/dp_9</dimen>
     <dimen name="chat_window_new_message_text_padding">@dimen/dp_m_10</dimen>
 
-    <dimen name="common_margin">@dimen/dp_15</dimen>`
+
+    <dimen name="common_margin">@dimen/dp_15</dimen>
     <dimen name="dp_m_60">-60.0000dp</dimen>
     <dimen name="dp_m_30">-30.0000dp</dimen>
     <dimen name="dp_m_20">-20.0000dp</dimen>

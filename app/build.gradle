@@ -68,6 +68,6 @@ dependencies {
 
     // RtmTokenBuilder need
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
 
 }

@@ -51,12 +51,30 @@
     <string name="onstage">正在台上</string>
     <string name="courseend">课程已经结束</string>
     <string name="noreplaydata">暂无回放数据</string>
+    <string name="parametererror">参数错误:%s</string>
 
     <string name="covideo_accept_interactive">老师接受了你的连麦申请！</string>
     <string name="covideo_reject_interactive">老师拒绝了你的连麦申请！</string>
     <string name="covideo_abort_interactive">老师终止了你的连麦！</string>
 
-    <string name="parametererrpr">参数错误:%s</string>
+    <!--  ClassToastManager  -->
+    <string name="toast_classtime_until_class_end">距离教室结束还有%d分钟</string>
+
+    <!--  NormalDialog  TitleSingleDialog  -->
+    <string name="dialog_class_end_title">提示信息</string>
+    <string name="dialog_class_is_end">课程已结束!</string>
+    <string name="dialog_sure">确&#160;&#160;&#160;&#160;定</string>
+    <string name="dialog_cancel">取&#160;&#160;&#160;&#160;消</string>
+    <string name="dialog_class_exit">是否确定退出教室？</string>
+    <string name="dialog_class_noend_exit">课程还未结束，是否确定退出教室？</string>
+    <string name="dialog_quit_class_sure">退出教室</string>
+    <string name="dialog_quit_class_cancel">再想一下</string>
+
+    <!--  VideoWindow  -->
+    <string name="video_window_camera_off">已关闭摄像头</string>
+    <string name="video_window_wait_teacher">等待外教进入教室…</string>
+    <string name="video_window_teacher_leave">外教已离开教室</string>
+    <string name="video_window_no_camera">没有检测到摄像头</string>
 
     <!-- Chat Window -->
     <string name="chat_window_title">聊天</string>

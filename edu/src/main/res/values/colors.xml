@@ -44,6 +44,40 @@
 
     <color name="C44A2FC">#44A2FC</color>
 
+
+    <!--  ClassToastManager  -->
+    <color name="toast_classtime_countdown_time">#FE313F</color>
+    <color name="toast_classtime_countdown_bg">#000000</color>
+    <color name="toast_normal_bg">#000000</color>
+    <color name="toast_normal_content_text">#FFFFFFFF</color>
+
+    <!--  NormalDialog  TitleSingleDialog  -->
+    <color name="dialog_bg_stroke">#75C0FF</color>
+    <color name="dialog_bg_solid">#75C0FF</color>
+    <color name="dialog_content_bg">#FFFFFFFF</color>
+    <color name="dialog_title_text">#FFFFFFFF</color>
+    <color name="dialog_content_text">#002591</color>
+    <color name="dialog_btn_sure_text">#FFFFFF</color>
+    <color name="dialog_btn_sure_bg">#DFB635</color>
+    <color name="dialog_btn_cancel_text">#FFFFFF</color>
+    <color name="dialog_btn_cancel_bg">#A7A7A7</color>
+
+    <!--  VideoWindow  -->
+    <color name="video_window_unfold_layout_bg_stroke">#75C0FF</color>
+    <color name="video_window_unfold_layout_bg_solid">#FFFFFFFF</color>
+    <color name="video_window_username_bg">#4E4E4E</color>
+    <color name="video_window_username_text">#FEFEFE</color>
+    <color name="video_window_trophy_bg">#4E4E4E</color>
+    <color name="video_window_trophy_text">#FFD919</color>
+    <color name="video_window_holdon_bg_solid">#DEF4FF</color>
+    <color name="video_window_videooff_text">#002591</color>
+    <color name="video_window_waitteacher_text">#002591</color>
+    <color name="video_window_teacherleave_text">#002591</color>
+    <color name="video_window_nocamera_text">#002591</color>
+    <color name="video_window_fold_layout_bg_stroke">#4992CF</color>
+    <color name="video_window_fold_layout_bg_solid">#75C0FF</color>
+    <color name="video_window_fold_username_text">#FEFEFE</color>
+
     <!-- Chat Window -->
     <color name="chat_window_bg">#9913196f</color>
     <color name="chat_window_item_bg">#13196F</color>

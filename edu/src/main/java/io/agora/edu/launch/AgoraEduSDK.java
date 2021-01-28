@@ -92,13 +92,13 @@ public class AgoraEduSDK {
         }
 
         if(agoraEduSDKConfig.getEyeCare() != 0 && agoraEduSDKConfig.getEyeCare() != 1) {
-            String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
+            String msg = String.format(context.getString(R.string.parametererror), "The value of " +
                     "AgoraEduSDKConfig.eyeCare is not expected, it must be 0 or 1!");
             errorTips(context, msg);
         }
 
         if(!AgoraEduRoleType.isValid(config.getRoleType())) {
-            String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
+            String msg = String.format(context.getString(R.string.parametererror), "The value of " +
                     "AgoraEduLaunchConfig.roleType is not expected, it must be 2!");
             errorTips(context, msg);
         }
@@ -110,7 +110,7 @@ public class AgoraEduSDK {
 //        }
 
         if(config.getRoomType() != AgoraEduRoomType.AgoraEduRoomType1V1.getValue()) {
-            String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
+            String msg = String.format(context.getString(R.string.parametererror), "The value of " +
                     "AgoraEduLaunchConfig.roomType is not expected, it must be 0 !");
             errorTips(context, msg);
         }

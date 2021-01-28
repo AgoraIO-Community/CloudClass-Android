@@ -13,35 +13,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.agora.edu.common.bean.ResponseBody;
+import io.agora.edu.classroom.widget.dialog.NormalDialog;
+import io.agora.edu.classroom.widget.dialog.TitleSingleBtnDialog;
 import io.agora.edu.launch.AgoraEduClassRoom;
-import io.agora.edu.launch.AgoraEduReplay;
-import io.agora.edu.launch.AgoraEduReplayConfig;
 import io.agora.edu.launch.AgoraEduRoleType;
 import io.agora.edu.launch.AgoraEduRoomType;
 import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.launch.AgoraEduSDKConfig;
-import io.agora.education.fetchtoken.FetchRtmTokenUtil;
-import io.agora.education.fetchtoken.RtmTokenRes;
 import io.agora.education.rtmtoken.RtmTokenBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static io.agora.edu.launch.AgoraEduSDK.REQUEST_CODE_RTC;
 import static io.agora.education.Constants.KEY_SP;
@@ -64,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String rtmToken;
 
     @Override
-    protected void onCreate(@androidx.annotation.Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

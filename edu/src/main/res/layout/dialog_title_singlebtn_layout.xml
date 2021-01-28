@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_title_singlebtn_title_margin_top"
+            android:text="Tips"
+            android:textColor="@color/dialog_title_text"
+            android:textSize="@dimen/dialog_title_singlebtn_title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/dialog_title_singlebtn_close_img_w"
+            android:layout_height="@dimen/dialog_title_singlebtn_close_img_h"
+            android:layout_marginTop="@dimen/dialog_title_singlebtn_close_img_margin_top"
+            android:layout_marginEnd="@dimen/dialog_title_singlebtn_close_img_margin_end"
+            android:padding="@dimen/dialog_title_singlebtn_close_img_padding"
+            android:src="@drawable/dialog_ic_close_white"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title" />
+
+        <View
+            android:id="@+id/bg_View"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dialog_title_singlebtn_content_bg_margin_start"
+            android:layout_marginTop="@dimen/dialog_title_singlebtn_content_bg_margin_top"
+            android:layout_marginEnd="@dimen/dialog_title_singlebtn_content_bg_margin_end"
+            android:layout_marginBottom="@dimen/dialog_title_singlebtn_content_bg_margin_bottom"
+            android:background="@drawable/dialog_content_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_title_singlebtn_content_text_margin_top"
+            android:text="课程已结束!"
+            android:textColor="@color/dialog_content_text"
+            android:textSize="@dimen/dialog_title_singlebtn_content_text"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintTop_toTopOf="@id/bg_View" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dialog_title_singlebtn_confirm_margin_start"
+            android:layout_marginTop="@dimen/dialog_title_singlebtn_confirm_margin_top"
+            android:layout_marginEnd="@dimen/dialog_title_singlebtn_confirm_margin_end"
+            android:layout_marginBottom="@dimen/dialog_title_singlebtn_confirm_margin_bottom"
+            android:background="@drawable/dialog_button_sure_bg"
+            android:paddingStart="@dimen/dialog_title_singlebtn_confirm_padding_start"
+            android:paddingTop="@dimen/dialog_title_singlebtn_confirm_padding_top"
+            android:paddingEnd="@dimen/dialog_title_singlebtn_confirm_padding_end"
+            android:paddingBottom="@dimen/dialog_title_singlebtn_confirm_padding_bottom"
+            android:text="确&#160;&#160;&#160;&#160;定"
+            android:textColor="@color/dialog_btn_sure_text"
+            android:textSize="@dimen/dialog_title_singlebtn_confirm_text"
+            app:layout_constraintBottom_toBottomOf="@id/bg_View"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintTop_toBottomOf="@id/content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

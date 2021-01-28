@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/bg_View"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dialog_normal_content_bg_margin_start"
+            android:layout_marginTop="@dimen/dialog_normal_content_bg_margin_top"
+            android:layout_marginEnd="@dimen/dialog_normal_content_bg_margin_end"
+            android:layout_marginBottom="@dimen/dialog_normal_content_bg_margin_bottom"
+            android:background="@drawable/dialog_content_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/dialog_normal_close_img_w"
+            android:layout_height="@dimen/dialog_normal_close_img_h"
+            android:layout_marginTop="@dimen/dialog_normal_close_img_margin_top"
+            android:layout_marginEnd="@dimen/dialog_normal_close_img_margin_end"
+            android:padding="@dimen/dialog_normal_close_img_padding"
+            android:src="@drawable/dialog_ic_close_gray"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintTop_toTopOf="@id/bg_View" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/contentImg"
+            android:layout_width="@dimen/dialog_normal_content_img_w"
+            android:layout_height="@dimen/dialog_normal_content_img_h"
+            android:layout_marginTop="@dimen/dialog_normal_content_img_margin_top"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintTop_toTopOf="@id/bg_View" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_normal_content_text_margin_top"
+            android:gravity="center"
+            android:maxWidth="@dimen/dp_160"
+            android:text="课程还未结束，是否确定退出教室？"
+            android:textColor="@color/dialog_content_text"
+            android:textSize="@dimen/dialog_normal_content_text"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintTop_toBottomOf="@id/contentImg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dialog_normal_cancel_margin_start"
+            android:layout_marginTop="@dimen/dialog_normal_cancel_margin_top"
+            android:layout_marginEnd="@dimen/dialog_normal_cancel_margin_end"
+            android:layout_marginBottom="@dimen/dialog_normal_cancel_margin_bottom"
+            android:background="@drawable/dialog_button_cancel_bg"
+            android:paddingStart="@dimen/dialog_normal_cancel_padding_start"
+            android:paddingTop="@dimen/dialog_normal_cancel_padding_top"
+            android:paddingEnd="@dimen/dialog_normal_cancel_padding_end"
+            android:paddingBottom="@dimen/dialog_normal_cancel_padding_bottom"
+            android:text="退出教室"
+            android:textColor="@color/dialog_btn_sure_text"
+            android:textSize="@dimen/dialog_normal_cancel_text"
+            app:layout_constraintBottom_toBottomOf="@id/bg_View"
+            app:layout_constraintEnd_toStartOf="@id/confirm"
+            app:layout_constraintStart_toStartOf="@id/bg_View"
+            app:layout_constraintTop_toBottomOf="@id/content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dialog_normal_confirm_margin_end"
+            android:background="@drawable/dialog_button_sure_bg"
+            android:paddingStart="@dimen/dialog_normal_confirm_padding_start"
+            android:paddingTop="@dimen/dialog_normal_confirm_padding_top"
+            android:paddingEnd="@dimen/dialog_normal_confirm_padding_end"
+            android:paddingBottom="@dimen/dialog_normal_confirm_padding_bottom"
+            android:text="再想一下"
+            android:textColor="@color/dialog_btn_sure_text"
+            android:textSize="@dimen/dialog_normal_confirm_text"
+            app:layout_constraintBottom_toBottomOf="@id/cancel"
+            app:layout_constraintEnd_toEndOf="@id/bg_View"
+            app:layout_constraintStart_toEndOf="@id/cancel"
+            app:layout_constraintTop_toTopOf="@id/cancel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
