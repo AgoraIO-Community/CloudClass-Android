@@ -54,16 +54,16 @@ class AudioView : LinearLayout {
         }
         for (i in 1..(4 - volumeLevel)) {
             val volumeIc = AppCompatImageView(context)
-            volumeIc.setImageResource(R.mipmap.video_window_ic_volume_off)
-            val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            volumeIc.setImageResource(R.drawable.video_window_ic_volume_off)
+            val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             layoutParams.topMargin = context.resources.getDimensionPixelSize(R.dimen.video_window_audio_volume_img_top_margin)
             volumeIc.layoutParams = layoutParams
             volumeLayout.addView(volumeIc)
         }
         for (i in 1..volumeLevel) {
             val volumeIc = AppCompatImageView(context)
-            volumeIc.setImageResource(R.mipmap.video_window_ic_volume_on)
-            val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+            volumeIc.setImageResource(R.drawable.video_window_ic_volume_on)
+            val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             layoutParams.topMargin = context.resources.getDimensionPixelSize(R.dimen.video_window_audio_volume_img_top_margin)
             volumeIc.layoutParams = layoutParams
             volumeLayout.addView(volumeIc)

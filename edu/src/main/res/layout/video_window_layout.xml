@@ -41,7 +41,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/video_window_ic_trophy"/>
+                        android:src="@drawable/video_window_ic_trophy"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/trophyNum_Text"
@@ -60,12 +60,12 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ic_fold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/video_window_fold_img_w"
+                    android:layout_height="@dimen/video_window_fold_img_h"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:padding="@dimen/video_window_fold_img_padding"
-                    android:src="@mipmap/video_window_ic_fold"/>
+                    android:background="@drawable/video_window_ic_fold"/>
 
                 <io.agora.edu.classroom.widget.video.AudioView
                     android:id="@+id/ic_audio"
@@ -76,8 +76,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ic_video"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/video_window_video_img_w"
+                    android:layout_height="@dimen/video_window_video_img_w"
                     app:layout_constraintEnd_toStartOf="@id/ic_audio"
                     android:layout_marginEnd="@dimen/video_window_video_img_end_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,9 +99,9 @@
                     android:paddingBottom="@dimen/video_window_username_layout_bottom_padding">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/video_window_ic_username"/>
+                        android:layout_width="@dimen/video_window_username_img_w"
+                        android:layout_height="@dimen/video_window_username_img_h"
+                        android:src="@drawable/video_window_ic_username"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/userName"
@@ -271,10 +271,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/userNameImg_Fold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/video_window_username_img_w"
+            android:layout_height="@dimen/video_window_username_img_h"
             android:layout_centerVertical="true"
-            android:src="@mipmap/video_window_ic_username"/>
+            android:src="@drawable/video_window_ic_username"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userNameText_Fold"
@@ -292,10 +292,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/unfold_Img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/video_window_fold_img_w"
+            android:layout_height="@dimen/video_window_fold_img_h"
             android:layout_centerVertical="true"
-            android:src="@mipmap/video_window_ic_unfold"
+            android:background="@drawable/video_window_ic_unfold"
             android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>

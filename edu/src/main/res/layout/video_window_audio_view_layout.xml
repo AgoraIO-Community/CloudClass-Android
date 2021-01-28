@@ -13,12 +13,17 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/video_window_ic_volume_on"/>
+
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_audio_Img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/video_window_audio_img_w"
+        android:layout_height="@dimen/video_window_audio_img_w"
         android:layout_marginTop="@dimen/video_window_audio_img_top_margin"
         android:src="@drawable/video_window_ic_audio"/>
 

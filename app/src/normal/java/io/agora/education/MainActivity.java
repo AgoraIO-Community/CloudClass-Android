@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -20,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import io.agora.edu.classroom.widget.dialog.NormalDialog;
+import io.agora.edu.classroom.widget.dialog.TitleSingleBtnDialog;
 import io.agora.edu.launch.AgoraEduClassRoom;
 import io.agora.edu.launch.AgoraEduRoleType;
 import io.agora.edu.launch.AgoraEduRoomType;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String rtmToken;
 
     @Override
-    protected void onCreate(@androidx.annotation.Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
