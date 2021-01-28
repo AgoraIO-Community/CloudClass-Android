@@ -84,4 +84,9 @@
     <color name="chat_window_text_white">#FEFEFE</color>
     <color name="chat_window_input_hint_color">#C2D5E5</color>
     <color name="chat_window_new_message_bg">#F04C36</color>
+
+    <!-- PageControlWindow -->
+    <color name="pagecontrol_window_bg_solid">#3B51BE</color>
+    <color name="pagecontrol_window_page_no_bg_solid">#707DBC</color>
+    <color name="pagecontrol_window_page_no_text">#FFFFFFFF</color>
 </resources>

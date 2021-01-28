@@ -1,52 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.cardview.widget.CardView">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:alpha="0.6"
+    android:background="@drawable/pagecontrol_window_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/pagecontrol_window_padding_start"
+    android:paddingTop="@dimen/pagecontrol_window_padding_top"
+    android:paddingEnd="@dimen/pagecontrol_window_padding_end"
+    android:paddingBottom="@dimen/pagecontrol_window_padding_bottom">
 
-    <LinearLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_previous"
+        android:layout_width="@dimen/pagecontrol_window_previous_ic_w"
+        android:layout_height="@dimen/pagecontrol_window_previous_ic_h"
+        android:layout_marginStart="@dimen/pagecontrol_window_previous_ic_margin_start"
+        android:src="@drawable/pagecontrol_window_ic_previous" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/pageNo_Edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/pagecontrol_window_pageno_edit_margin_start"
+        android:alpha="1"
+        android:background="@drawable/pagecontrol_window_page_no_bg"
+        android:cursorVisible="false"
+        android:paddingStart="@dimen/pagecontrol_window_pageno_edit_padding_start"
+        android:paddingTop="@dimen/pagecontrol_window_pageno_edit_padding_top"
+        android:paddingEnd="@dimen/pagecontrol_window_pageno_edit_padding_end"
+        android:paddingBottom="@dimen/pagecontrol_window_pageno_edit_padding_bottom"
+        android:text="10"
+        android:textColor="@color/pagecontrol_window_page_no_text"
+        android:textSize="@dimen/pagecontrol_window_pageno_edit_text" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_start"
-            android:layout_width="@dimen/dp_36"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginStart="@dimen/dp_4"
-            android:src="@drawable/ic_first" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp_14"
+        android:layout_marginStart="@dimen/dp_12"
+        android:background="@drawable/pagecontrol_window_ic_slash" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_previous"
-            android:layout_width="@dimen/dp_36"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginStart="@dimen/dp_4"
-            android:src="@drawable/ic_prev" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pageTotal_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pagecontrol_window_page_total_margin_start"
+        android:alpha="1"
+        android:text="20"
+        android:textColor="@color/pagecontrol_window_page_no_text"
+        android:textSize="@dimen/pagecontrol_window_page_total_text" />
 
-        <TextView
-            android:id="@+id/tv_page"
-            android:layout_width="@dimen/dp_64"
-            android:layout_height="@dimen/dp_32"
-            android:background="@drawable/btn_circle_f5f7f8"
-            android:gravity="center"
-            android:textColor="@color/gray_191919"
-            android:textSize="@dimen/sp_14" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_next"
+        android:layout_width="@dimen/pagecontrol_window_next_ic_w"
+        android:layout_height="@dimen/pagecontrol_window_next_ic_h"
+        android:layout_marginStart="@dimen/pagecontrol_window_next_ic_margin_start"
+        android:src="@drawable/pagecontrol_window_ic_next" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_next"
-            android:layout_width="@dimen/dp_36"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginStart="@dimen/dp_4"
-            android:src="@drawable/ic_next" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_enlarge"
+        android:layout_width="@dimen/pagecontrol_window_enlarge_ic_w"
+        android:layout_height="@dimen/pagecontrol_window_enlarge_ic_h"
+        android:layout_marginStart="@dimen/pagecontrol_window_enlarge_ic_margin_start"
+        android:src="@drawable/pagecontrol_window_ic_enlarge" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_end"
-            android:layout_width="@dimen/dp_36"
-            android:layout_height="@dimen/dp_36"
-            android:layout_marginStart="@dimen/dp_4"
-            android:src="@drawable/ic_end" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_narrow"
+        android:layout_width="@dimen/pagecontrol_window_narrow_ic_w"
+        android:layout_height="@dimen/pagecontrol_window_narrow_ic_h"
+        android:layout_marginStart="@dimen/pagecontrol_window_narrow_ic_margin_start"
+        android:src="@drawable/pagecontrol_window_ic_narrow" />
 
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_scale"
+        android:layout_width="@dimen/pagecontrol_window_scale_ic_w"
+        android:layout_height="@dimen/pagecontrol_window_scale_ic_h"
+        android:layout_marginStart="@dimen/pagecontrol_window_scale_ic_margin_start"
+        android:layout_marginEnd="@dimen/pagecontrol_window_scale_ic_margin_end"
+        android:src="@drawable/pagecontrol_window_ic_scale" />
 
-</merge>
+</LinearLayout>
