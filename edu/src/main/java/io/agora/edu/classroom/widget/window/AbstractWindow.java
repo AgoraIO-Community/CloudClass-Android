@@ -84,16 +84,60 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
                 .setDuration(ANIM_DURATION)
                 .xBy(getTranslateX(mMinimizeDirection))
                 .yBy(getTranslateY(mMinimizeDirection))
-                .scaleX(0).scaleY(0)
+                .scaleX(getScaleFactorX(mMinimizeDirection, false))
+                .scaleY(getScaleFactorY(mMinimizeDirection, false))
                 .setInterpolator(new AccelerateInterpolator())
                 .withEndAction(() -> {
-                    mOriginalView.setVisibility(GONE);
                     if (mMinimizedView != null) {
                         mMinimizedView.setVisibility(VISIBLE);
                     }
+
                     synchronized (this) {
                         mIsAnimating = false;
                         mIsMinimized = true;
+                        mRestoreAnimator = null;
+                    }
+                });
+    }
+
+    @Override
+    public void restoreMinimize() {
+        if (!ThreadUtil.isMainThread()) {
+            Log.w(mTag, "Minimization restore " +
+                    "canceled because not in UI thread");
+            return;
+        }
+
+        if (!mIsMinimized || mIsAnimating) {
+            Log.w(mTag, "Minimization restore canceled because " +
+                    "being animating or not minimized");
+            return;
+        }
+
+        synchronized (this) {
+            mIsAnimating = true;
+        }
+
+        startRestoreAnimate();
+    }
+
+    private void startRestoreAnimate() {
+        mRestoreAnimator = mOriginalView.animate()
+                .setDuration(ANIM_DURATION)
+                .xBy(getTranslateX(mRestoreDirection))
+                .yBy(getTranslateY(mRestoreDirection))
+                .scaleX(getScaleFactorX(mRestoreDirection, true))
+                .scaleY(getScaleFactorY(mRestoreDirection, true))
+                .setInterpolator(new DecelerateInterpolator())
+                .withStartAction(() -> {
+                    if (mMinimizedView != null) {
+                        mMinimizedView.setVisibility(GONE);
+                    }
+                })
+                .withEndAction(() -> {
+                    synchronized (this) {
+                        mIsAnimating = false;
+                        mIsMinimized = false;
                         mRestoreAnimator = null;
                     }
                 });
@@ -143,45 +187,24 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
         }
     }
 
-    @Override
-    public void restoreMinimize() {
-        if (!ThreadUtil.isMainThread()) {
-            Log.w(mTag, "Minimization restore " +
-                    "canceled because not in UI thread");
-            return;
+    private float getScaleFactorX(IMinimizable.Direction direction, boolean restore) {
+        switch (direction) {
+            case top:
+            case bottom:
+                return 1f;
+            default:
+                return restore ? 1f : 0f;
         }
-
-        if (!mIsMinimized || mIsAnimating) {
-            Log.w(mTag, "Minimization restore canceled because " +
-                    "being animating or not minimized");
-            return;
-        }
-
-        synchronized (this) {
-            mIsAnimating = true;
-        }
-
-        startRestoreAnimate();
     }
 
-    private void startRestoreAnimate() {
-        mRestoreAnimator = mOriginalView.animate()
-                .setDuration(ANIM_DURATION)
-                .xBy(getTranslateX(mRestoreDirection))
-                .yBy(getTranslateY(mRestoreDirection))
-                .scaleX(1f).scaleY(1f)
-                .setInterpolator(new DecelerateInterpolator())
-                .withEndAction(() -> {
-                    mOriginalView.setVisibility(VISIBLE);
-                    if (mMinimizedView != null) {
-                        mMinimizedView.setVisibility(GONE);
-                    }
-                    synchronized (this) {
-                        mIsAnimating = false;
-                        mIsMinimized = false;
-                        mRestoreAnimator = null;
-                    }
-                });
+    private float getScaleFactorY(IMinimizable.Direction direction, boolean restore) {
+        switch (direction) {
+            case left:
+            case right:
+                return 1f;
+            default:
+                return restore ? 1f : 0f;
+        }
     }
 
     @Override

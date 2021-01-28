@@ -67,6 +67,8 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
         mMessageList = new ArrayList<>();
         mAdapter = new ChatMessageAdapter();
         mMessageRecycler.setAdapter(mAdapter);
+
+        setMinimizeDirection(Direction.bottom);
     }
 
     @Override
