@@ -9,6 +9,7 @@ import com.herewhite.sdk.Room;
 import com.herewhite.sdk.RoomCallbacks;
 import com.herewhite.sdk.RoomParams;
 import com.herewhite.sdk.WhiteSdk;
+import com.herewhite.sdk.domain.CameraConfig;
 import com.herewhite.sdk.domain.GlobalState;
 import com.herewhite.sdk.domain.MemberState;
 import com.herewhite.sdk.domain.Promise;
@@ -25,6 +26,7 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
 
     private String appliance;
     private int[] strokeColor;
+    private double strokeWidth = -100f, textSize = -100f;
     private Boolean disableDeviceInputs;
     private Boolean disableCameraTransform;
     private Boolean writable;
@@ -76,6 +78,40 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
         return null;
     }
 
+    public void setStrokeWidth(double width) {
+        if (t != null) {
+            MemberState state = new MemberState();
+            state.setStrokeWidth(width);
+            t.setMemberState(state);
+        } else {
+            this.strokeWidth = width;
+        }
+    }
+
+    public double getStrokeWidth() {
+        if (t != null) {
+            return t.getMemberState().getStrokeWidth();
+        }
+        return strokeWidth;
+    }
+
+    public void setTextSize(double size) {
+        if (t != null) {
+            MemberState state = new MemberState();
+            state.setTextSize(size);
+            t.setMemberState(state);
+        } else {
+            this.textSize = size;
+        }
+    }
+
+    public double getTextSize() {
+        if (t != null) {
+            return t.getMemberState().getTextSize();
+        }
+        return textSize;
+    }
+
     public void setSceneIndex(int index) {
         if (t != null && !isDisableDeviceInputs()) {
             t.setSceneIndex(index, new Promise<Boolean>() {
@@ -102,6 +138,21 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
             return t.getScenes().length;
         }
         return 0;
+    }
+
+    public void zoom(double scale) {
+        if (t != null && !isDisableCameraTransform()) {
+            CameraConfig cameraConfig = new CameraConfig();
+            cameraConfig.setScale(scale);
+            t.moveCamera(cameraConfig);
+        }
+    }
+
+    public double getZoomScale() {
+        if (t != null) {
+            t.getZoomScale();
+        }
+        return 1.0;
     }
 
     public void pptPreviousStep() {
@@ -239,6 +290,12 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
         }
         if (strokeColor != null) {
             setStrokeColor(strokeColor);
+        }
+        if (strokeWidth != -100f) {
+            setStrokeWidth(strokeWidth);
+        }
+        if (textSize != -100f) {
+            setTextSize(textSize);
         }
         if (disableDeviceInputs != null) {
             disableDeviceInputs(disableDeviceInputs);

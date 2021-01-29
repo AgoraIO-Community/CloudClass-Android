@@ -2,7 +2,6 @@ package io.agora.edu.classroom.fragment;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -64,7 +63,7 @@ public class WhiteBoardFragment extends BaseFragment implements RadioGroup.OnChe
     private String curLocalUuid, curLocalToken, localUserUuid;
     private final double miniScale = 0.1d;
     private final double maxScale = 10d;
-    private GlobalStateChangeListener listener;
+    private GlobalStateChangeListener globalStateChangeListener;
     /*初始化时不进行相关提示*/
     private boolean inputTips = false;
     private boolean transform = false;
@@ -79,7 +78,7 @@ public class WhiteBoardFragment extends BaseFragment implements RadioGroup.OnChe
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof GlobalStateChangeListener) {
-            listener = (GlobalStateChangeListener) context;
+            globalStateChangeListener = (GlobalStateChangeListener) context;
         }
     }
 
@@ -237,8 +236,8 @@ public class WhiteBoardFragment extends BaseFragment implements RadioGroup.OnChe
     @Override
     public void onJoinSuccess(GlobalState state) {
         AgoraLog.e(TAG + ":onJoinSuccess->" + new Gson().toJson(state));
-        if (listener != null) {
-            listener.onGlobalStateChanged(state);
+        if (globalStateChangeListener != null) {
+            globalStateChangeListener.onGlobalStateChanged(state);
         }
     }
 
@@ -250,8 +249,8 @@ public class WhiteBoardFragment extends BaseFragment implements RadioGroup.OnChe
 
     @Override
     public void onGlobalStateChanged(GlobalState state) {
-        if (listener != null) {
-            listener.onGlobalStateChanged(state);
+        if (globalStateChangeListener != null) {
+            globalStateChangeListener.onGlobalStateChanged(state);
         }
     }
 

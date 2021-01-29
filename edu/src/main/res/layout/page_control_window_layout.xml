@@ -19,14 +19,13 @@
         android:layout_marginStart="@dimen/pagecontrol_window_previous_ic_margin_start"
         android:src="@drawable/pagecontrol_window_ic_previous" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/pageNo_Edit"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pageNo_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/pagecontrol_window_pageno_edit_margin_start"
         android:alpha="1"
         android:background="@drawable/pagecontrol_window_page_no_bg"
-        android:cursorVisible="false"
         android:paddingStart="@dimen/pagecontrol_window_pageno_edit_padding_start"
         android:paddingTop="@dimen/pagecontrol_window_pageno_edit_padding_top"
         android:paddingEnd="@dimen/pagecontrol_window_pageno_edit_padding_end"
@@ -73,7 +72,7 @@
         android:src="@drawable/pagecontrol_window_ic_narrow" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_scale"
+        android:id="@+id/iv_screen"
         android:layout_width="@dimen/pagecontrol_window_scale_ic_w"
         android:layout_height="@dimen/pagecontrol_window_scale_ic_h"
         android:layout_marginStart="@dimen/pagecontrol_window_scale_ic_margin_start"
