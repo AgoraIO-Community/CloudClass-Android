@@ -79,6 +79,18 @@
     <string name="video_window_teacher_leave">Foreign teacher leave</string>
     <string name="video_window_no_camera">No cameras detected</string>
 
+    <!-- Class Window -->
+    <string name="class_window_class_id_format">Class ID: %s</string>
+    <string name="class_window_class_not_start_hint">Class will begin after: </string>
+    <string name="class_window_class_begins">Class begins: </string>
+    <string name="class_window_leave_text">Leave</string>
+
+    <string-array name="class_window_network_states">
+        <item>Good</item>
+        <item>Medium</item>
+        <item>Bad</item>
+    </string-array>
+
     <!-- Chat Window -->
     <string name="chat_window_title">Chat</string>
     <string name="chat_window_input_hint">Input what you want to say</string>
