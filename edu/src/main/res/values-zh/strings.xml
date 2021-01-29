@@ -76,6 +76,18 @@
     <string name="video_window_teacher_leave">外教已离开教室</string>
     <string name="video_window_no_camera">没有检测到摄像头</string>
 
+    <!-- Class Window -->
+    <string name="class_window_class_id_format">课程ID: %s</string>
+    <string name="class_window_class_not_start_hint">距离上课还有: </string>
+    <string name="class_window_class_begins">已开始上课: </string>
+    <string name="class_window_leave_text">离开教室</string>
+
+    <string-array name="class_window_network_states">
+        <item>优</item>
+        <item>良</item>
+        <item>差</item>
+    </string-array>
+
     <!-- Chat Window -->
     <string name="chat_window_title">聊天</string>
     <string name="chat_window_input_hint">请输入你想说的话</string>

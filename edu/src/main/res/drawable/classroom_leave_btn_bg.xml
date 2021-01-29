@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/classroom_title_bar_btn_corner"/>
+    <solid android:color="@color/classroom_leave_btn_bg"/>
+    <stroke android:width="@dimen/classroom_title_bar_leave_btn_border_width"
+        android:color="@android:color/white"/>
+</shape>

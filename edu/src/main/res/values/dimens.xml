@@ -53,7 +53,6 @@
     <dimen name="dialog_normal_confirm_padding_bottom">@dimen/dp_10</dimen>
     <dimen name="dialog_normal_confirm_text">@dimen/sp_12</dimen>
 
-
     <!--  ClassToastManager  -->
     <dimen name="toast_classtime_countdown_bg_radius">@dimen/dp_57</dimen>
     <dimen name="toast_classtime_countdown_clock_w">@dimen/dp_50</dimen>
@@ -123,6 +122,19 @@
     <dimen name="video_window_fold_username_start_padding">@dimen/dp_2</dimen>
     <dimen name="video_window_fold_username_text_size">@dimen/sp_10</dimen>
 
+    <!-- Classroom Window -->
+    <dimen name="classroom_title_bar_height">@dimen/dp_48</dimen>
+    <dimen name="classroom_title_bar_btn_size">@dimen/dp_26</dimen>
+    <dimen name="classroom_title_bar_element_margin">@dimen/dp_12</dimen>
+    <dimen name="classroom_title_bar_element_margin_small">@dimen/dp_6</dimen>
+    <dimen name="classroom_title_bar_padding_border">@dimen/dp_26</dimen>
+    <dimen name="classroom_title_bar_btn_corner">@dimen/dp_14</dimen>
+    <dimen name="classroom_title_bar_leave_icon_size">@dimen/dp_14</dimen>
+    <dimen name="classroom_title_bar_leave_text_size">@dimen/dp_12</dimen>
+    <dimen name="classroom_title_bar_leave_btn_padding">@dimen/dp_10</dimen>
+    <dimen name="classroom_title_bar_leave_btn_border_width">@dimen/dp_2</dimen>
+    <dimen name="classroom_title_bar_text_size">@dimen/dp_12</dimen>
+
     <!-- Chat Window -->
     <dimen name="chat_window_content_margin">@dimen/dp_8</dimen>
     <dimen name="chat_window_content_padding">@dimen/dp_4</dimen>
@@ -150,7 +162,7 @@
     <dimen name="chat_window_new_message_text_size">@dimen/dp_9</dimen>
     <dimen name="chat_window_new_message_text_padding">@dimen/dp_m_10</dimen>
 
-    <!-- Chat Window -->
+    <!-- PageControlWindow -->
     <dimen name="pagecontrol_window_bg_corner">@dimen/dp_30</dimen>
     <dimen name="pagecontrol_window_padding_start">@dimen/dp_12</dimen>
     <dimen name="pagecontrol_window_padding_top">@dimen/dp_10</dimen>
@@ -184,7 +196,6 @@
 
 
 
-    <dimen name="common_margin">@dimen/dp_15</dimen>
     <dimen name="dp_m_60">-60.0000dp</dimen>
     <dimen name="dp_m_30">-30.0000dp</dimen>
     <dimen name="dp_m_20">-20.0000dp</dimen>
