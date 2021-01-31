@@ -95,4 +95,8 @@
     <color name="pagecontrol_window_bg_solid">#3B51BE</color>
     <color name="pagecontrol_window_page_no_bg_solid">#707DBC</color>
     <color name="pagecontrol_window_page_no_text">#FFFFFFFF</color>
+
+    <!-- WhiteBoardWindow -->
+    <color name="whiteboard_window_bg_stroke">#75C0FF</color>
+    <color name="whiteboard_window_bg_solid">#FFFFFF</color>
 </resources>

@@ -164,13 +164,16 @@
 
     <!-- PageControlWindow -->
     <dimen name="pagecontrol_window_bg_corner">@dimen/dp_30</dimen>
-    <dimen name="pagecontrol_window_padding_start">@dimen/dp_12</dimen>
-    <dimen name="pagecontrol_window_padding_top">@dimen/dp_10</dimen>
-    <dimen name="pagecontrol_window_padding_end">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_padding_bottom">@dimen/dp_10</dimen>
-    <dimen name="pagecontrol_window_previous_ic_w">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_previous_ic_h">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_previous_ic_margin_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_padding_bottom">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_previous_ic_w">@dimen/dp_40</dimen>
+    <dimen name="pagecontrol_window_previous_ic_h">@dimen/dp_24</dimen>
+    <dimen name="pagecontrol_window_previous_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_previous_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_previous_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_previous_padding_bottom">@dimen/dp_4</dimen>
     <dimen name="pagecontrol_window_pageno_edit_margin_start">@dimen/dp_12</dimen>
     <dimen name="pagecontrol_window_pageno_edit_padding_start">@dimen/dp_8</dimen>
     <dimen name="pagecontrol_window_pageno_edit_padding_top">@dimen/dp_2</dimen>
@@ -179,20 +182,37 @@
     <dimen name="pagecontrol_window_pageno_edit_text">@dimen/sp_12</dimen>
     <dimen name="pagecontrol_window_page_total_margin_start">@dimen/dp_16</dimen>
     <dimen name="pagecontrol_window_page_total_text">@dimen/sp_12</dimen>
-    <dimen name="pagecontrol_window_next_ic_w">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_next_ic_h">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_next_ic_margin_start">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_enlarge_ic_w">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_enlarge_ic_h">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_enlarge_ic_margin_start">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_narrow_ic_w">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_narrow_ic_h">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_narrow_ic_margin_start">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_scale_ic_w">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_scale_ic_h">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_scale_ic_margin_start">@dimen/dp_16</dimen>
-    <dimen name="pagecontrol_window_scale_ic_margin_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_next_ic_w">@dimen/dp_40</dimen>
+    <dimen name="pagecontrol_window_next_ic_h">@dimen/dp_24</dimen>
+    <dimen name="pagecontrol_window_next_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_next_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_next_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_next_padding_bottom">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_enlarge_ic_w">@dimen/dp_40</dimen>
+    <dimen name="pagecontrol_window_enlarge_ic_h">@dimen/dp_24</dimen>
+    <dimen name="pagecontrol_window_enlarge_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_enlarge_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_enlarge_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_enlarge_padding_bottom">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_narrow_ic_w">@dimen/dp_40</dimen>
+    <dimen name="pagecontrol_window_narrow_ic_h">@dimen/dp_24</dimen>
+    <dimen name="pagecontrol_window_narrow_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_narrow_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_narrow_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_narrow_padding_bottom">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_scale_ic_w">@dimen/dp_40</dimen>
+    <dimen name="pagecontrol_window_scale_ic_h">@dimen/dp_24</dimen>
+    <dimen name="pagecontrol_window_scale_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_scale_padding_top">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_scale_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_scale_padding_bottom">@dimen/dp_4</dimen>
+    <dimen name="pagecontrol_window_scale_ic_margin_end">@dimen/dp_4</dimen>
 
+    <!-- WhiteBoardWindow -->
+    <dimen name="whiteboard_window_bg_stroke">@dimen/dp_10</dimen>
+    <dimen name="whiteboard_window_bg_corner">@dimen/dp_15</dimen>
+    <dimen name="whiteboard_window_padding">@dimen/dp_10</dimen>
+    <dimen name="whiteboard_window_content_corner">@dimen/dp_8</dimen>
 
 
 

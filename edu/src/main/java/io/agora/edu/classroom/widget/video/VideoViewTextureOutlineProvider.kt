@@ -1,9 +1,11 @@
 package io.agora.edu.classroom.widget.video
 
+import android.content.Context
 import android.graphics.Outline
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewOutlineProvider
+import io.agora.edu.R
 
 class VideoViewTextureOutlineProvider(private val mRadius: Float) : ViewOutlineProvider() {
     override fun getOutline(view: View, outline: Outline) {

@@ -1,10 +1,12 @@
 package io.agora.edu.classroom.widget.whiteboard
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.TextureView
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ProgressBar
@@ -14,6 +16,7 @@ import com.herewhite.sdk.*
 import com.herewhite.sdk.domain.*
 import io.agora.base.ToastManager
 import io.agora.edu.R
+import io.agora.edu.classroom.widget.video.VideoViewTextureOutlineProvider
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.ellipseSizes
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.eraserSizes
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.penSizes
@@ -56,28 +59,28 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     private var originWh = arrayOf(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
     constructor(context: Context) : super(context) {
-        init()
+        initView()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init()
+        initView()
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
+        initView()
     }
 
-    private fun init() {
+    private fun initData() {
         WhiteDisplayerState.setCustomGlobalStateClass(BoardState::class.java)
         val configuration = WhiteSdkConfiguration(whiteBoardAppId, true)
         whiteSdk = WhiteSdk(whiteBoardView, context, configuration, this)
         boardManager.setListener(this)
-        initView()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         inflate(context, R.layout.white_board_window_layout, this)
+        (context as Activity).window.setBackgroundDrawableResource(android.R.color.transparent)
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -86,6 +89,8 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
             }
         })
         whiteBoardView = findViewById(R.id.white_board_view)
+        setWhiteBoardRound(whiteBoardView)
+        initData()
         loadingPb = findViewById(R.id.pb_loading)
         whiteBoardView.setOnTouchListener(this)
         whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
@@ -96,6 +101,13 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         whiteBoardEventListener?.let {
             it.onDisableDeviceInput(boardManager.isDisableDeviceInputs)
         }
+    }
+
+    private fun setWhiteBoardRound(whiteBoard: WhiteboardView) {
+        var radius: Float = context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_content_corner).toFloat()
+        val textureOutlineProvider = VideoViewTextureOutlineProvider(radius)
+        whiteBoard.outlineProvider = textureOutlineProvider
+        whiteBoard.clipToOutline = true
     }
 
     fun initBoardWithRoomToken(uuid: String?, boardToken: String?, localUserUuid: String?) {
@@ -151,6 +163,9 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
             } else {
                 boardManager.disableDeviceInputsTemporary(boardManager.isDisableDeviceInputs)
             }
+        }
+        whiteBoardEventListener?.let {
+            it.onDisableCameraTransform(disabled)
         }
         boardManager.disableCameraTransform(disabled)
     }
@@ -212,7 +227,6 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     /**CommonCallbacks*/
     override fun throwError(args: Any?) {
-        TODO("Not yet implemented")
     }
 
     override fun urlInterrupter(sourceUrl: String?): String? {
@@ -220,11 +234,9 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     }
 
     override fun onPPTMediaPlay() {
-        TODO("Not yet implemented")
     }
 
     override fun onPPTMediaPause() {
-        TODO("Not yet implemented")
     }
 
     override fun sdkSetupFail(error: SDKError?) {
