@@ -13,9 +13,13 @@
         android:padding="@dimen/video_window_unfold_layout_padding">
 
         <FrameLayout
-            android:id="@+id/textureContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/videoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/options_Layout"

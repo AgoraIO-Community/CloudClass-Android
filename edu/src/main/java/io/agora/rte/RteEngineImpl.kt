@@ -12,6 +12,8 @@ import io.agora.rtc.video.VideoEncoderConfiguration
 import io.agora.rte.data.RteAudioReverbPreset
 import io.agora.rte.data.RteAudioVoiceChanger
 import io.agora.rte.data.RteError.Companion.rtmError
+import io.agora.rte.data.RteLocalVideoError
+import io.agora.rte.data.RteLocalVideoState
 import io.agora.rte.listener.*
 import io.agora.rtm.*
 import io.agora.rtm.RtmStatusCode.LoginError.LOGIN_ERR_ALREADY_LOGIN
@@ -21,6 +23,7 @@ object RteEngineImpl : IRteEngine {
     internal lateinit var rtmClient: RtmClient
     internal lateinit var rtcEngine: RtcEngine
     private val channelMap = mutableMapOf<String, IRteChannel>()
+    private val rteChannelEventListenerMap = mutableMapOf<String, RteChannelEventListener>()
 
     var eventListener: RteEngineEventListener? = null
     var mediaDeviceListener: RteMediaDeviceListener? = null
@@ -117,9 +120,24 @@ object RteEngineImpl : IRteEngine {
                 /*本地用户独享的音量提示回调返回的 speakers 数组中： uid 为 0， volume 等于 totalVolume*/
                 if (speakers.size == 1 && speakers[0].uid == 0) {
                     speakerReportListener?.onAudioVolumeIndicationOfLocalSpeaker(speakers, totalVolume)
+                    rteChannelEventListenerMap.forEach {
+                        it.value.onAudioVolumeIndicationOfLocalSpeaker(speakers, totalVolume)
+                    }
                 } else {
                     speakerReportListener?.onAudioVolumeIndicationOfRemoteSpeaker(speakers, totalVolume)
+                    rteChannelEventListenerMap.forEach {
+                        it.value.onAudioVolumeIndicationOfRemoteSpeaker(speakers, totalVolume)
+                    }
                 }
+            }
+        }
+
+        override fun onLocalVideoStateChanged(localVideoState: Int, error: Int) {
+            super.onLocalVideoStateChanged(localVideoState, error)
+            rteChannelEventListenerMap.forEach {
+                val state = RteLocalVideoState.convert(localVideoState)
+                val err = RteLocalVideoError.convert(error)
+                it.value.onLocalVideoStateChanged(state, err)
             }
         }
     }
@@ -182,6 +200,7 @@ object RteEngineImpl : IRteEngine {
     override fun createChannel(channelId: String, eventListener: RteChannelEventListener): IRteChannel {
         val rteChannel = RteChannelImpl(channelId, eventListener)
         channelMap[channelId] = rteChannel
+        rteChannelEventListenerMap[channelId] = eventListener
         return rteChannel
     }
 

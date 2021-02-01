@@ -5,10 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.TextureView
-import android.view.View
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import com.google.gson.Gson
@@ -32,7 +29,7 @@ import io.agora.whiteboard.netless.listener.GlobalStateChangeListener
 import io.agora.whiteboard.netless.manager.BoardManager
 
 class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListener, CommonCallbacks,
-    WhiteBoardToolBarListener, PageControlWindow.PageControlListener{
+        WhiteBoardToolBarListener, PageControlWindow.PageControlListener {
     private val TAG = "WhiteBoardWindow"
     private lateinit var whiteBoardView: WhiteboardView
     private lateinit var loadingPb: ProgressBar
@@ -46,9 +43,11 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     private val miniScale = 0.1
     private val maxScale = 10.0
     private val scaleStepper = 0.5
+
     /*初始化时不进行相关提示*/
     private var inputTips = false
     private var transform = false
+
     /*是否允许在开启白板跟随的情况下，进行书写(仅仅书写，不包括移动缩放)*/
     var inputWhileFollow = false
 
@@ -56,7 +55,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     var globalStateChangeListener: GlobalStateChangeListener? = null
     var whiteBoardEventListener: WhiteBoardEventListener? = null
 
-    private var originWh = arrayOf(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+    private lateinit var originLayoutParams: LayoutParams
 
     constructor(context: Context) : super(context) {
         initView()
@@ -84,8 +83,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
-                originWh[0] = right - left
-                originWh[1] = bottom - top
+                originLayoutParams = this@WhiteBoardWindow.layoutParams as LayoutParams
             }
         })
         whiteBoardView = findViewById(R.id.white_board_view)
@@ -301,31 +299,26 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     override fun onEnlarge() {
         var curScale = boardManager.zoomScale
-        curScale+=scaleStepper
-        if(curScale in miniScale..maxScale) {
+        curScale += scaleStepper
+        if (curScale in miniScale..maxScale) {
             boardManager.zoom(curScale)
         }
     }
 
     override fun onNarrow() {
         var curScale = boardManager.zoomScale
-        curScale-=scaleStepper
-        if(curScale in miniScale..maxScale) {
+        curScale -= scaleStepper
+        if (curScale in miniScale..maxScale) {
             boardManager.zoom(curScale)
         }
     }
 
     override fun onFullScreen() {
-        val params = layoutParams
-        params.width = LayoutParams.MATCH_PARENT
-        params.height = LayoutParams.MATCH_PARENT
+        val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         layoutParams = params
     }
 
     override fun onFitScreen() {
-        val params = layoutParams
-        params.width = originWh[0]
-        params.height = originWh[1]
-        layoutParams = params
+        layoutParams = originLayoutParams
     }
 }

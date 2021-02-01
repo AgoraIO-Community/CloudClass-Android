@@ -48,6 +48,8 @@ import io.agora.education.impl.user.network.UserService
 import io.agora.education.impl.util.CommonUtil
 import io.agora.education.impl.util.Convert
 import io.agora.rtc.Constants.*
+import io.agora.rtc.IRtcEngineEventHandler
+import io.agora.rtc.RtcChannel
 import io.agora.rtc.models.ChannelMediaOptions
 import io.agora.rte.RteCallback
 import io.agora.rte.RteEngineImpl
@@ -188,14 +190,19 @@ internal class EduRoomImpl(
         val localUserInfo = EduLocalUserInfoImpl(options.userUuid, options.userName!!, options.roleType,
                 true, null, mutableListOf(), System.currentTimeMillis())
         /**此处需要把localUserInfo设置进localUser中*/
-        if (options.roleType == EduUserRole.STUDENT) {
-            syncSession.localUser = EduStudentImpl(localUserInfo)
-        } else if (options.roleType == EduUserRole.TEACHER) {
-            syncSession.localUser = EduTeacherImpl(localUserInfo)
-        } else if (options.roleType == EduUserRole.ASSISTANT) {
-            syncSession.localUser = EduAssistantImpl(localUserInfo)
-        } else {
-            callback.onFailure(parameterError("roleType"))
+        when (options.roleType) {
+            EduUserRole.STUDENT -> {
+                syncSession.localUser = EduStudentImpl(localUserInfo)
+            }
+            EduUserRole.TEACHER -> {
+                syncSession.localUser = EduTeacherImpl(localUserInfo)
+            }
+            EduUserRole.ASSISTANT -> {
+                syncSession.localUser = EduAssistantImpl(localUserInfo)
+            }
+            else -> {
+                callback.onFailure(parameterError("roleType"))
+            }
         }
         (syncSession.localUser as EduUserImpl).eduRoom = this
         /**大班课强制不自动发流*/
@@ -581,5 +588,21 @@ internal class EduRoomImpl(
         val value = max(txQuality, rxQuality)
         val quality: NetworkQuality = Convert.convertNetworkQuality(value)
         eventListener?.onNetworkQualityChanged(quality, getCurLocalUser().userInfo, this)
+    }
+
+    override fun onRemoteVideoStateChanged(rtcChannel: RtcChannel?, uid: Int, state: Int, reason: Int, elapsed: Int) {
+        getCurLocalUser().eventListener?.onRemoteVideoStateChanged(rtcChannel, uid, state, reason, elapsed)
+    }
+
+    override fun onLocalVideoStateChanged(localVideoState: Int, error: Int) {
+        getCurLocalUser().eventListener?.onLocalVideoStateChanged(localVideoState, error)
+    }
+
+    override fun onAudioVolumeIndicationOfLocalSpeaker(speakers: Array<out IRtcEngineEventHandler.AudioVolumeInfo>?, totalVolume: Int) {
+        getCurLocalUser().eventListener?.onAudioVolumeIndicationOfLocalSpeaker(speakers, totalVolume)
+    }
+
+    override fun onAudioVolumeIndicationOfRemoteSpeaker(speakers: Array<out IRtcEngineEventHandler.AudioVolumeInfo>?, totalVolume: Int) {
+        getCurLocalUser().eventListener?.onAudioVolumeIndicationOfRemoteSpeaker(speakers, totalVolume)
     }
 }

@@ -54,39 +54,36 @@ class PageControlWindow : AbstractWindow, View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.iv_previous -> {
-                pageControlListener?.let {
-                    it.onPrevious()
-                }
+                pageControlListener?.onPrevious()
             }
             R.id.iv_next -> {
-                pageControlListener?.let {
-                    it.onNext()
-                }
+                pageControlListener?.onNext()
             }
             R.id.iv_enlarge -> {
-                pageControlListener?.let {
-                    it.onEnlarge()
-                }
+                pageControlListener?.onEnlarge()
             }
             R.id.iv_narrow -> {
-                pageControlListener?.let {
-                    it.onNarrow()
-                }
+                pageControlListener?.onNarrow()
             }
             R.id.iv_screen -> {
                 pageControlListener?.let {
-                    if(isSelected) {
+                    if(screenIv.isSelected) {
                         it.onFitScreen()
                     } else {
                         it.onFullScreen()
                     }
                 }
-                isSelected = !isSelected
+                screenIv.isSelected = !screenIv.isSelected
             }
         }
     }
 
-
+    fun setPageIndex(index: Int, pages: Int) {
+        previousIv.isSelected = index != 1
+        nextIv.isSelected = index != pages
+        pageNoText.text = index.toString()
+        pageTotalText.text = pages.toString()
+    }
 
 
 

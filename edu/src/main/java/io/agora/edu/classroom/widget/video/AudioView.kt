@@ -15,22 +15,24 @@ class AudioView : LinearLayout {
     constructor(context: Context?) : super(context) {
         initView()
     }
+
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         initView()
     }
+
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
+            context,
+            attrs,
+            defStyleAttr
     ) {
         initView()
     }
 
     constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
+            context: Context?,
+            attrs: AttributeSet?,
+            defStyleAttr: Int,
+            defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
         initView()
     }
@@ -44,11 +46,11 @@ class AudioView : LinearLayout {
     fun updateVolume(volume: Int) {
         volumeLayout.removeAllViews()
         var volumeLevel = 0
-        if(volume != 0) {
+        if (volume != 0) {
             volumeLevel = volume / VOLUMEITEM
-            if(volumeLevel < 0) {
+            if (volumeLevel < 0) {
                 volumeLevel = 1
-            } else if(volumeLevel > 4) {
+            } else if (volumeLevel > 4) {
                 volumeLevel = 4
             }
         }
@@ -68,5 +70,15 @@ class AudioView : LinearLayout {
             volumeIc.layoutParams = layoutParams
             volumeLayout.addView(volumeIc)
         }
+    }
+
+    override fun setSelected(selected: Boolean) {
+        super.setSelected(selected)
+        volumeLayout.visibility = if (selected) VISIBLE else GONE
+    }
+
+    override fun setClickable(clickable: Boolean) {
+        super.setClickable(clickable)
+        audioImg.isClickable = clickable
     }
 }
