@@ -84,7 +84,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         })
         rootLayout = findViewById(R.id.root_Layout)
         whiteBoardView = findViewById(R.id.white_board_view)
-        setWhiteBoardCorner(true)
+//        setWhiteBoardCorner(true)
         loadingPb = findViewById(R.id.pb_loading)
         whiteBoardView.setOnTouchListener(this)
         whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,

@@ -262,9 +262,9 @@
             android:id="@+id/chat_Window"
             android:layout_width="@dimen/dp_137"
             android:layout_height="@dimen/dp_220"
+            android:layout_marginEnd="@dimen/dp_16"
             android:layout_alignBottom="@id/whiteBoard_Window"
             android:layout_marginBottom="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_16"
             android:layout_toStartOf="@id/video_Layout" />
 
     </RelativeLayout>
