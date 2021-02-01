@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/tool_window_popup_width"
+    android:layout_height="@dimen/tool_window_popup_height_eraser"
+    android:orientation="vertical"
+    android:background="@drawable/tool_window_popup_bg">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tool_window_popup_recycler_thickness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

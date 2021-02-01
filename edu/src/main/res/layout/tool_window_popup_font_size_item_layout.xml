@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/tool_window_popup_font_item_width"
+    android:layout_height="@dimen/tool_window_popup_font_item_height"
+    android:background="@drawable/tool_window_popup_font_item_bg">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tool_window_popup_recycler_font_size"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:textColor="@color/tool_window_popup_font_text_color"
+        android:textSize="@dimen/tool_window_popup_font_item_text_size"/>
+</RelativeLayout>

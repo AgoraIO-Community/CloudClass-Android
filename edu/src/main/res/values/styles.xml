@@ -13,4 +13,13 @@
     <style name="AppThemeFullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="tool_window_dialog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
