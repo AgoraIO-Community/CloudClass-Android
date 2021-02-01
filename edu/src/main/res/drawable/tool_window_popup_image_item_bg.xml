@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true" android:drawable="@drawable/tool_window_popup_image_item_bg_select"/>
+    <item android:drawable="@drawable/tool_window_popup_image_item_bg_unselect"/>
+</selector>

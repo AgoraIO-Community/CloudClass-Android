@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.agora.edu.classroom.widget.view.RectRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/tool_window_option_item_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/tool_window_option_item_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</io.agora.edu.classroom.widget.view.RectRelativeLayout>

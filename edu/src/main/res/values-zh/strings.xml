@@ -91,4 +91,7 @@
     <!-- Chat Window -->
     <string name="chat_window_title">聊天</string>
     <string name="chat_window_input_hint">请输入你想说的话</string>
+
+    <!-- Tool Window -->
+    <string name="tool_window_title">工具</string>
 </resources>
