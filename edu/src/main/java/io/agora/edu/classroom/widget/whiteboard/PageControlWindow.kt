@@ -79,9 +79,9 @@ class PageControlWindow : AbstractWindow, View.OnClickListener {
     }
 
     fun setPageIndex(index: Int, pages: Int) {
-        previousIv.isSelected = index != 1
+        previousIv.isSelected = index != 0
         nextIv.isSelected = index != pages
-        pageNoText.text = index.toString()
+        pageNoText.text = (index + 1).toString()
         pageTotalText.text = pages.toString()
     }
 

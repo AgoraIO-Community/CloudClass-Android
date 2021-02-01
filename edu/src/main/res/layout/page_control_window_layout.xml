@@ -33,7 +33,7 @@
         android:paddingTop="@dimen/pagecontrol_window_pageno_edit_padding_top"
         android:paddingEnd="@dimen/pagecontrol_window_pageno_edit_padding_end"
         android:paddingBottom="@dimen/pagecontrol_window_pageno_edit_padding_bottom"
-        android:text="10"
+        android:text=""
         android:textColor="@color/pagecontrol_window_page_no_text"
         android:textSize="@dimen/pagecontrol_window_pageno_edit_text" />
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/pagecontrol_window_page_total_margin_start"
         android:alpha="1"
-        android:text="20"
+        android:text=""
         android:textColor="@color/pagecontrol_window_page_no_text"
         android:textSize="@dimen/pagecontrol_window_page_total_text" />
 

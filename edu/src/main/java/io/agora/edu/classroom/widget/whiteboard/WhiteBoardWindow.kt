@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +37,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     private lateinit var whiteBoardView: WhiteboardView
     private lateinit var loadingPb: ProgressBar
 
-    var whiteBoardAppId: String? = null
+    private lateinit var whiteBoardAppId: String
     private var whiteSdk: WhiteSdk? = null
     private val boardManager = BoardManager()
     private var curLocalUuid: String? = null
@@ -44,7 +45,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     private var localUserUuid: String? = null
     private val miniScale = 0.1
     private val maxScale = 10.0
-    private val scaleStepper = 0.5
+    private val scaleStepper = 0.2
 
     /*初始化时不进行相关提示*/
     private var inputTips = false
@@ -60,19 +61,19 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     private lateinit var originLayoutParams: LayoutParams
 
     constructor(context: Context) : super(context) {
-        initView()
+        view()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        initView()
+        view()
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        initView()
+        view()
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun initView() {
+    private fun view() {
         inflate(context, R.layout.white_board_window_layout, this)
         (context as Activity).window.setBackgroundDrawableResource(android.R.color.transparent)
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -83,8 +84,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         })
         rootLayout = findViewById(R.id.root_Layout)
         whiteBoardView = findViewById(R.id.white_board_view)
-//        setWhiteBoardCorner(true)
-        initData()
+        setWhiteBoardCorner(true)
         loadingPb = findViewById(R.id.pb_loading)
         whiteBoardView.setOnTouchListener(this)
         whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
@@ -97,7 +97,8 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         }
     }
 
-    private fun initData() {
+    fun initWithAppId(whiteBoardAppId: String) {
+        this.whiteBoardAppId = whiteBoardAppId
         WhiteDisplayerState.setCustomGlobalStateClass(BoardState::class.java)
         val configuration = WhiteSdkConfiguration(whiteBoardAppId, true)
         whiteSdk = WhiteSdk(whiteBoardView, context, configuration, this)
@@ -105,10 +106,6 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     }
 
     private fun setWhiteBoardCorner(corner: Boolean) {
-        var radius0: Float = if (corner) context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_bg_corner).toFloat() else 0f
-        val outlineProvider0 = VideoViewTextureOutlineProvider(radius0)
-        rootLayout.outlineProvider = outlineProvider0
-        rootLayout.clipToOutline = corner
         var radius1: Float = if (corner) context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_content_corner).toFloat() else 0f
         val outlineProvider1 = VideoViewTextureOutlineProvider(radius1)
         whiteBoardView.outlineProvider = outlineProvider1
@@ -181,6 +178,8 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     fun releaseBoard() {
         boardManager.disconnect()
+        whiteBoardView.removeAllViews()
+        whiteBoardView.destroy()
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -232,6 +231,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     /**CommonCallbacks*/
     override fun throwError(args: Any?) {
+        Log.e(TAG, "error->${Gson().toJson(args)}")
     }
 
     override fun urlInterrupter(sourceUrl: String?): String? {
@@ -248,6 +248,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 //        initData()
 //        initBoardWithRoomToken(curLocalUuid, curLocalToken, localUserUuid)
         /**当回调这里的时候，需要重新初始化SDK(包括重新初始化 WhiteboardView)，然后再进行调用才可以*/
+        Log.e(TAG, "error->${error?.jsStack}")
     }
 
     /**WhiteBoardToolBarListener*/

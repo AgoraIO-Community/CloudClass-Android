@@ -20,11 +20,14 @@ import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
+import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
+import io.agora.education.api.room.EduRoom;
 import io.agora.education.api.stream.data.EduStreamEvent;
 import io.agora.education.api.stream.data.EduStreamInfo;
 import io.agora.education.api.user.EduStudent;
+import io.agora.education.api.user.data.EduUserEvent;
 import io.agora.education.api.user.data.EduUserInfo;
 import io.agora.education.api.user.data.EduUserRole;
 import io.agora.rtc.IRtcEngineEventHandler;
@@ -79,7 +82,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                         });
                         initTitleTimeState();
                         initParseBoardInfo(getMainEduRoom());
-                        renderTeacherStream();
+                        renderTeacherStream1();
                     }
 
                     @Override
@@ -93,14 +96,26 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     protected void initView() {
         super.initView();
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
+        whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
         whiteBoardWindow.setWhiteBoardEventListener(this);
-        whiteBoardWindow.setWhiteBoardAppId(agoraEduLaunchConfig.whiteBoardAppId);
         whiteBoardWindow.setInputWhileFollow(true);
+        whiteBoardWindow.setWritable(true);
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
         teacherVideo = findViewById(R.id.teacher_Window);
         teacherVideo.init(false);
+        teacherVideo.setIMinimizeListener(new IMinimizeListener() {
+            @Override
+            public void onMinimized() {
+                teacherVideo.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onRestoreMinimized() {
+                teacherVideo.setVisibility(View.VISIBLE);
+            }
+        });
         teacherFoldLayout = findViewById(R.id.teacherFold_Layout);
         teacherVideo.setMinimizedView(teacherFoldLayout);
         teacherNameText = findViewById(R.id.teacherName_Text);
@@ -108,6 +123,17 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         teacherUnfoldIMg.setOnClickListener(this);
         studentVideo = findViewById(R.id.student_Window);
         studentVideo.init(true);
+        studentVideo.setIMinimizeListener(new IMinimizeListener() {
+            @Override
+            public void onMinimized() {
+                studentVideo.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onRestoreMinimized() {
+                studentVideo.setVisibility(View.VISIBLE);
+            }
+        });
         studentVideo.setOnMediaControlListener(this);
         studentFoldLayout = findViewById(R.id.studentFold_Layout);
         studentVideo.setMinimizedView(studentFoldLayout);
@@ -117,7 +143,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         chatWindow = findViewById(R.id.chat_Window);
     }
 
-    private void renderTeacherStream() {
+    private void renderTeacherStream1() {
         getCurFullStream(new EduCallback<List<EduStreamInfo>>() {
             @Override
             public void onSuccess(@Nullable List<EduStreamInfo> streams) {
@@ -127,6 +153,31 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                             renderStream(getMainEduRoom(), streamInfo, teacherVideo.getVideoContainer());
                             teacherVideo.update(streamInfo.getPublisher().getUserName(),
                                     streamInfo.getHasAudio(), streamInfo.getHasVideo());
+                            teacherNameText.setText(streamInfo.getPublisher().getUserName());
+                            return;
+                        }
+                    }
+                    teacherVideo.updateState(VideoWindow.State.WaitTeacher);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+            }
+        });
+    }
+
+    private void renderTeacherStream2() {
+        getCurFullStream(new EduCallback<List<EduStreamInfo>>() {
+            @Override
+            public void onSuccess(@Nullable List<EduStreamInfo> streams) {
+                if (streams != null) {
+                    for (EduStreamInfo streamInfo : streams) {
+                        if (streamInfo.getPublisher().getRole().equals(EduUserRole.TEACHER)) {
+                            renderStream(getMainEduRoom(), streamInfo, teacherVideo.getVideoContainer());
+                            teacherVideo.update(streamInfo.getPublisher().getUserName(),
+                                    streamInfo.getHasAudio(), streamInfo.getHasVideo());
+                            teacherNameText.setText(streamInfo.getPublisher().getUserName());
                             break;
                         }
                     }
@@ -146,6 +197,25 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             teacherVideo.restoreMinimize();
         } else if (id == R.id.studentUnfold_Img) {
             studentVideo.restoreMinimize();
+        }
+    }
+
+    @Override
+    public void onRemoteUserLeft(@NotNull EduUserEvent userEvent, @NotNull EduRoom classRoom) {
+        super.onRemoteUserLeft(userEvent, classRoom);
+        EduUserInfo userInfo = userEvent.getModifiedUser();
+        if (userInfo.getRole().equals(EduUserRole.TEACHER)) {
+        }
+    }
+
+    @Override
+    public void onRemoteStreamsRemoved(@NotNull List<EduStreamEvent> streamEvents, @NotNull EduRoom classRoom) {
+        super.onRemoteStreamsRemoved(streamEvents, classRoom);
+        /**一对一场景下，远端流就是老师的Camera流*/
+        for (EduStreamEvent streamEvent : streamEvents) {
+            EduStreamInfo streamInfo = streamEvent.getModifiedStream();
+            renderStream(getMainEduRoom(), streamInfo, null);
+            teacherVideo.updateState(VideoWindow.State.TeacherLeave);
         }
     }
 
@@ -184,6 +254,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         super.onRemoteVideoStateChanged(rtcChannel, uid, state, reason, elapsed);
         if (state == RteRemoteVideoState.REMOTE_VIDEO_STATE_DECODING.getValue()) {
             teacherVideo.updateState(VideoWindow.State.Normal);
+            renderTeacherStream2();
         } else if (state == RteRemoteVideoState.REMOTE_VIDEO_STATE_FROZEN.getValue()) {
             teacherVideo.updateState(VideoWindow.State.NoCamera);
         }

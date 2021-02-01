@@ -1,5 +1,7 @@
 package io.agora.edu.classroom;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -42,6 +44,8 @@ import io.agora.edu.classroom.bean.channel.User;
 import io.agora.edu.classroom.bean.msg.ChannelMsg;
 import io.agora.edu.classroom.fragment.ChatRoomFragment;
 import io.agora.edu.classroom.fragment.WhiteBoardFragment;
+import io.agora.edu.classroom.widget.dialog.DialogClickListener;
+import io.agora.edu.classroom.widget.dialog.NormalDialog;
 import io.agora.edu.classroom.widget.title.TitleView;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardEventListener;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
@@ -556,9 +560,9 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
      * 尝试解析录制消息
      */
     protected void parseRecordMsg(Map<String, Object> roomProperties, Map<String, Object> cause) {
-        if(cause != null && !cause.isEmpty()) {
+        if (cause != null && !cause.isEmpty()) {
             int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
-            if(causeType == RECORDSTATECHANGED) {
+            if (causeType == RECORDSTATECHANGED) {
                 String recordJson = getProperty(roomProperties, RECORD);
                 if (!TextUtils.isEmpty(recordJson)) {
                     RecordBean tmp = RecordBean.fromJson(recordJson, RecordBean.class);
@@ -598,34 +602,55 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         }
     }
 
+    /**
+     * 手动点击返回或退出按钮触发
+     */
     public final void showLeaveDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager != null && !fragmentManager.isDestroyed()) {
-            ConfirmDialog.normal(getString(R.string.confirm_leave_room_content), confirm -> {
-                if (confirm) {
-                    /**退出白板*/
-                    whiteBoardWindow.releaseBoard();
-                    /**退出教室*/
-                    if (getMainEduRoom() != null) {
-                        getMainEduRoom().leave(new EduCallback<Unit>() {
-                            @Override
-                            public void onSuccess(@Nullable Unit res) {
-                                BaseClassActivity_acadsoc.super.finish();
-                            }
+            getMediaRoomStatus(new EduCallback<EduRoomStatus>() {
+                @Override
+                public void onSuccess(@Nullable EduRoomStatus roomStatus) {
+                    if (roomStatus != null) {
+                        boolean isEnd = roomStatus.getCourseState() == EduRoomState.END;
+                        String str = getString(isEnd ? R.string.dialog_class_exit : R.string.dialog_class_noend_exit);
+                        new NormalDialog(str, getString(R.string.dialog_cancel),
+                                getString(R.string.dialog_sure), R.drawable.dialog_img_content,
+                                confirm -> {
+                                    if (confirm) {
+                                        /**退出白板*/
+                                        whiteBoardWindow.releaseBoard();
+                                        /**退出教室*/
+                                        if (getMainEduRoom() != null) {
+                                            getMainEduRoom().leave(new EduCallback<Unit>() {
+                                                @Override
+                                                public void onSuccess(@Nullable Unit res) {
+                                                    BaseClassActivity_acadsoc.super.finish();
+                                                }
 
-                            @Override
-                            public void onFailure(@NotNull EduError error) {
-                                AgoraLog.e(TAG + ":leave EduRoom error->code:" + error.getType() + ",reason:" + error.getMsg());
-                                BaseClassActivity_acadsoc.super.finish();
-                            }
-                        });
+                                                @Override
+                                                public void onFailure(@NotNull EduError error) {
+                                                    AgoraLog.e(TAG + ":leave EduRoom error->code:"
+                                                            + error.getType() + ",reason:" + error.getMsg());
+                                                    BaseClassActivity_acadsoc.super.finish();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }).show(fragmentManager, null);
                     }
                 }
-            }).show(fragmentManager, null);
+
+                @Override
+                public void onFailure(@NotNull EduError error) {
+                }
+            });
         }
     }
 
-    /**课堂结束、被提出时调用*/
+    /**
+     * 课堂结束、被踢出时调用
+     */
     public final void showLeavedDialog(int strId) {
         runOnUiThread(() -> {
             /**退出白板*/
@@ -1119,9 +1144,9 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
                                 mainBoardBean.getInfo().getBoardToken(), userInfo.getUserUuid());
                     });
                 }
-                if(cause != null && !cause.isEmpty()) {
+                if (cause != null && !cause.isEmpty()) {
                     int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
-                    if(causeType == RECORDSTATECHANGED) {
+                    if (causeType == RECORDSTATECHANGED) {
                         String recordJson = getProperty(roomProperties, RECORD);
                         if (!TextUtils.isEmpty(recordJson)) {
                             RecordBean tmp = RecordBean.fromJson(recordJson, RecordBean.class);

@@ -150,7 +150,7 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
 
     public double getZoomScale() {
         if (t != null) {
-            t.getZoomScale();
+            return t.getZoomScale();
         }
         return 1.0;
     }
