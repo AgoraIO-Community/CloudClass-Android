@@ -123,7 +123,7 @@ object RteEngineImpl : IRteEngine {
                     rteChannelEventListenerMap.forEach {
                         it.value.onAudioVolumeIndicationOfLocalSpeaker(speakers, totalVolume)
                     }
-                } else {
+                } else if(speakers.size > 1) {
                     speakerReportListener?.onAudioVolumeIndicationOfRemoteSpeaker(speakers, totalVolume)
                     rteChannelEventListenerMap.forEach {
                         it.value.onAudioVolumeIndicationOfRemoteSpeaker(speakers, totalVolume)

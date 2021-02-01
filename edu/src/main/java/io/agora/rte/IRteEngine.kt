@@ -16,7 +16,7 @@ interface IRteEngine {
 
     fun logoutRtm()
 
-    /**作用于rtcChannel*/
+    /**作用于rteChannel*/
     fun createChannel(channelId: String, eventListener: io.agora.rte.listener.RteChannelEventListener): IRteChannel
 
     /**作用于全局*/

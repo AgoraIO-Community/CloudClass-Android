@@ -42,6 +42,8 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
     private var isLocal = true
     private var curState = State.Normal
 
+    var onMediaControlListener: OnMediaControlListener? = null
+
     constructor(context: Context) : super(context) {
         view()
     }
@@ -64,7 +66,7 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
         videoContainer.setOnHierarchyChangeListener(object : OnHierarchyChangeListener {
             override fun onChildViewAdded(parent: View?, child: View?) {
                 child?.let {
-                    if (child is TextureView) {
+                    if (child is TextureView || child is SurfaceView) {
                         setTextureViewRound(child)
                     }
                 }
@@ -76,7 +78,7 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
         videoImg = findViewById(R.id.ic_video)
         videoImg.setOnClickListener(this)
         audioView = findViewById(R.id.ic_audio)
-        audioView.setOnClickListener(this)
+        audioView.audioViewOnClickListener = this
         trophyLayout = findViewById(R.id.trophy_Layout)
         trophyNumText = findViewById(R.id.trophyNum_Text)
         userNameText = findViewById(R.id.userName)
@@ -138,6 +140,7 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
         setUserName(name)
         post {
             audioView.isSelected = hasAudio
+            videoImg.isSelected = hasVideo
         }
         updateState(if (hasVideo) State.Normal else State.VideoOff)
     }
@@ -197,8 +200,10 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
                 startMinimize()
             }
             R.id.ic_video -> {
+                onMediaControlListener?.onVideo(videoImg.isSelected)
             }
             R.id.ic_audio -> {
+                onMediaControlListener?.onAudio(audioView.isSelected)
             }
             R.id.unfold_Img -> {
                 Log.e(TAG, "膨胀")
@@ -217,5 +222,11 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
         TeacherLeave(2),
         VideoOff(3),
         NoCamera(4)
+    }
+
+    interface OnMediaControlListener {
+        fun onVideo(mute: Boolean)
+
+        fun onAudio(mute: Boolean)
     }
 }

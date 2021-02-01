@@ -1,6 +1,10 @@
 package io.agora.edu.classroom;
 
+import android.view.View;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.herewhite.sdk.domain.MemberState;
 import com.herewhite.sdk.domain.SceneState;
@@ -25,17 +29,21 @@ import io.agora.education.api.user.data.EduUserInfo;
 import io.agora.education.api.user.data.EduUserRole;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcChannel;
+import io.agora.rte.RteEngineImpl;
 import io.agora.rte.data.RteLocalVideoError;
 import io.agora.rte.data.RteLocalVideoState;
 import io.agora.rte.data.RteRemoteVideoState;
 
 import static io.agora.education.impl.Constants.AgoraLog;
 
-public class AcadsocActivity extends BaseClassActivity_acadsoc {
+public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
+        VideoWindow.OnMediaControlListener {
     private static final String TAG = "AscadsocActivity";
     private PageControlWindow pageControlWindow;
     private VideoWindow teacherVideo, studentVideo;
     private RelativeLayout teacherFoldLayout, studentFoldLayout;
+    private AppCompatTextView teacherNameText, studentNameText;
+    private AppCompatImageView teacherUnfoldIMg, studentUnfoldImg;
     private ChatWindow chatWindow;
 
     @Override
@@ -59,12 +67,14 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc {
                         getLocalUserInfo(new EduCallback<EduUserInfo>() {
                             @Override
                             public void onSuccess(@Nullable EduUserInfo userInfo) {
+                                /**设置RTE进行音量的回调*/
+                                RteEngineImpl.INSTANCE.enableAudioVolumeIndication(300, 3, false);
                                 studentVideo.setUserName(userInfo.getUserName());
+                                studentNameText.setText(userInfo.getUserName());
                             }
 
                             @Override
                             public void onFailure(@NotNull EduError error) {
-
                             }
                         });
                         initTitleTimeState();
@@ -93,10 +103,17 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc {
         teacherVideo.init(false);
         teacherFoldLayout = findViewById(R.id.teacherFold_Layout);
         teacherVideo.setMinimizedView(teacherFoldLayout);
+        teacherNameText = findViewById(R.id.teacherName_Text);
+        teacherUnfoldIMg = findViewById(R.id.teacherUnfold_Img);
+        teacherUnfoldIMg.setOnClickListener(this);
         studentVideo = findViewById(R.id.student_Window);
         studentVideo.init(true);
+        studentVideo.setOnMediaControlListener(this);
         studentFoldLayout = findViewById(R.id.studentFold_Layout);
         studentVideo.setMinimizedView(studentFoldLayout);
+        studentNameText = findViewById(R.id.studentName_Text);
+        studentUnfoldImg = findViewById(R.id.studentUnfold_Img);
+        studentUnfoldImg.setOnClickListener(this);
         chatWindow = findViewById(R.id.chat_Window);
     }
 
@@ -120,6 +137,16 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc {
             public void onFailure(@NotNull EduError error) {
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.teacherUnfold_Img) {
+            teacherVideo.restoreMinimize();
+        } else if (id == R.id.studentUnfold_Img) {
+            studentVideo.restoreMinimize();
+        }
     }
 
     @Override
@@ -207,5 +234,15 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc {
     @Override
     public void onMemberStateChanged(@Nullable MemberState state) {
         super.onMemberStateChanged(state);
+    }
+
+    @Override
+    public void onVideo(boolean mute) {
+        muteLocalVideo(mute);
+    }
+
+    @Override
+    public void onAudio(boolean mute) {
+        muteLocalAudio(mute);
     }
 }

@@ -13,117 +13,9 @@
         android:padding="@dimen/video_window_unfold_layout_padding">
 
         <FrameLayout
+            android:id="@+id/videoContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout
-                android:id="@+id/videoContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/options_Layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/video_window_options_layout_margin">
-
-                <LinearLayout
-                    android:id="@+id/trophy_Layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.5"
-                    android:background="@drawable/video_window_trophy_bg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/video_window_trophy_layout_start_padding"
-                    android:paddingTop="@dimen/video_window_trophy_layout_top_padding"
-                    android:paddingEnd="@dimen/video_window_trophy_layout_end_padding"
-                    android:paddingBottom="@dimen/video_window_trophy_layout_bottom_padding">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/video_window_ic_trophy"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/trophyNum_Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:maxEms="4"
-                        android:gravity="center_vertical"
-                        android:ellipsize="end"
-                        android:text="x99+"
-                        android:layout_marginStart="@dimen/video_window_trophy_start_padding"
-                        android:textSize="@dimen/video_window_trophy_text_size"
-                        android:textColor="@color/video_window_trophy_text"/>
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_fold"
-                    android:layout_width="@dimen/video_window_fold_img_w"
-                    android:layout_height="@dimen/video_window_fold_img_h"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="@dimen/video_window_fold_img_padding"
-                    android:background="@drawable/video_window_ic_fold"/>
-
-                <io.agora.edu.classroom.widget.video.AudioView
-                    android:id="@+id/ic_audio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_video"
-                    android:layout_width="@dimen/video_window_video_img_w"
-                    android:layout_height="@dimen/video_window_video_img_w"
-                    app:layout_constraintEnd_toStartOf="@id/ic_audio"
-                    android:layout_marginEnd="@dimen/video_window_video_img_end_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/video_window_ic_video" />
-
-                <LinearLayout
-                    android:id="@+id/username_Layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.5"
-                    android:background="@drawable/video_window_username_bg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/video_window_username_layout_start_padding"
-                    android:paddingTop="@dimen/video_window_username_layout_top_padding"
-                    android:paddingEnd="@dimen/video_window_username_layout_end_padding"
-                    android:paddingBottom="@dimen/video_window_username_layout_bottom_padding">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/video_window_username_img_w"
-                        android:layout_height="@dimen/video_window_username_img_h"
-                        android:src="@drawable/video_window_ic_username"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/userName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:maxEms="4"
-                        android:ellipsize="end"
-                        android:text="NancyNancyNancyNancy"
-                        android:layout_marginStart="@dimen/video_window_username_start_padding"
-                        android:textSize="@dimen/video_window_username_text_size"
-                        android:textColor="@color/video_window_username_text"/>
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </FrameLayout>
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:id="@+id/videoOff_Layout"
@@ -260,6 +152,108 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/options_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/video_window_options_layout_margin">
+
+            <LinearLayout
+                android:id="@+id/trophy_Layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@drawable/video_window_trophy_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/video_window_trophy_layout_start_padding"
+                android:paddingTop="@dimen/video_window_trophy_layout_top_padding"
+                android:paddingEnd="@dimen/video_window_trophy_layout_end_padding"
+                android:paddingBottom="@dimen/video_window_trophy_layout_bottom_padding">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/video_window_ic_trophy"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/trophyNum_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxEms="4"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:text="0"
+                    android:layout_marginStart="@dimen/video_window_trophy_start_padding"
+                    android:textSize="@dimen/video_window_trophy_text_size"
+                    android:textColor="@color/video_window_trophy_text"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ic_fold"
+                android:layout_width="@dimen/video_window_fold_img_w"
+                android:layout_height="@dimen/video_window_fold_img_h"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/video_window_fold_img_padding"
+                android:background="@drawable/video_window_ic_fold"/>
+
+            <io.agora.edu.classroom.widget.video.AudioView
+                android:id="@+id/ic_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ic_video"
+                android:layout_width="@dimen/video_window_video_img_w"
+                android:layout_height="@dimen/video_window_video_img_w"
+                app:layout_constraintEnd_toStartOf="@id/ic_audio"
+                android:layout_marginEnd="@dimen/video_window_video_img_end_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/video_window_ic_video" />
+
+            <LinearLayout
+                android:id="@+id/username_Layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@drawable/video_window_username_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/video_window_username_layout_start_padding"
+                android:paddingTop="@dimen/video_window_username_layout_top_padding"
+                android:paddingEnd="@dimen/video_window_username_layout_end_padding"
+                android:paddingBottom="@dimen/video_window_username_layout_bottom_padding">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/video_window_username_img_w"
+                    android:layout_height="@dimen/video_window_username_img_h"
+                    android:src="@drawable/video_window_ic_username"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxEms="4"
+                    android:ellipsize="end"
+                    android:text=""
+                    android:layout_marginStart="@dimen/video_window_username_start_padding"
+                    android:textSize="@dimen/video_window_username_text_size"
+                    android:textColor="@color/video_window_username_text"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 

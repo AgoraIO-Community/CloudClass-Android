@@ -75,9 +75,9 @@
     <dimen name="video_window_texture_radius">@dimen/dp_8</dimen>
     <dimen name="video_window_options_layout_margin">@dimen/dp_4</dimen>
     <dimen name="video_window_username_layout_bg_radius">@dimen/dp_30</dimen>
-    <dimen name="video_window_username_layout_start_padding">@dimen/dp_6</dimen>
+    <dimen name="video_window_username_layout_start_padding">@dimen/dp_4</dimen>
     <dimen name="video_window_username_layout_top_padding">@dimen/dp_2</dimen>
-    <dimen name="video_window_username_layout_end_padding">@dimen/dp_0</dimen>
+    <dimen name="video_window_username_layout_end_padding">@dimen/dp_2</dimen>
     <dimen name="video_window_username_layout_bottom_padding">@dimen/dp_2</dimen>
     <dimen name="video_window_username_start_padding">@dimen/dp_2</dimen>
     <dimen name="video_window_username_text_size">@dimen/sp_8</dimen>
