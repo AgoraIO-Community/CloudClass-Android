@@ -99,4 +99,12 @@
     <!-- WhiteBoardWindow -->
     <color name="whiteboard_window_bg_stroke">#75C0FF</color>
     <color name="whiteboard_window_bg_solid">#FFFFFF</color>
+
+    <!-- Tool Window -->
+    <color name="tool_window_bg">#B313196F</color>
+    <color name="tool_window_bg_border">#090E51</color>
+    <color name="tool_window_popup_image_item_bg">#80FFFFFF</color>
+    <color name="tool_window_popup_font_bg">#FFFFFF</color>
+    <color name="tool_window_popup_font_color">#002591</color>
+
 </resources>
