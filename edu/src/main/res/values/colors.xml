@@ -90,4 +90,11 @@
     <color name="chat_window_text_white">#FEFEFE</color>
     <color name="chat_window_input_hint_color">#C2D5E5</color>
     <color name="chat_window_new_message_bg">#F04C36</color>
+
+    <!-- Tool Window -->
+    <color name="tool_window_bg">#B313196F</color>
+    <color name="tool_window_bg_border">#090E51</color>
+    <color name="tool_window_popup_image_item_bg">#80FFFFFF</color>
+    <color name="tool_window_popup_font_bg">#FFFFFF</color>
+    <color name="tool_window_popup_font_color">#002591</color>
 </resources>

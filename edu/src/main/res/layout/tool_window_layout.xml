@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/tool_window_bg_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/tool_window_divider_padding"
+    android:background="@drawable/tool_window_bg">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_window_title_height"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:text="@string/tool_window_title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dp_12"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tool_window_option_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/tool_window_divider_padding"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_window_divider_width"
+        android:background="@color/tool_window_bg_border"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_window_fold_icon_layout_height">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/tool_window_icon_size"
+            android:layout_height="@dimen/tool_window_icon_size"
+            android:layout_centerInParent="true"
+            android:src="@drawable/tool_window_icon_fold"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/tool_window_icon_size"
+            android:layout_height="@dimen/tool_window_icon_size"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:src="@drawable/tool_window_icon_unfold"/>
+    </RelativeLayout>
+
+</LinearLayout>

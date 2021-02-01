@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/tool_window_bg"/>
+    <stroke android:color="@color/tool_window_bg_border"
+        android:width="@dimen/tool_window_border_width"/>
+    <corners android:radius="@dimen/tool_window_bg_corner"/>
+</shape>

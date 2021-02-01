@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent"/>
+    <corners android:radius="@dimen/tool_window_popup_font_item_corner"/>
+    <stroke android:width="@dimen/tool_window_popup_font_item_border"
+        android:color="@color/tool_window_popup_font_color"/>
+</shape>
