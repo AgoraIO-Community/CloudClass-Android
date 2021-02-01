@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/whiteboard_window_bg"
-    android:padding="@dimen/whiteboard_window_padding">
+    android:padding="@dimen/whiteboard_window_padding"
+    android:id="@+id/root_Layout">
 
     <com.herewhite.sdk.WhiteboardView
         android:id="@+id/white_board_view"

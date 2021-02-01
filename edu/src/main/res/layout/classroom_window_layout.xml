@@ -129,7 +129,7 @@
             android:layout_height="match_parent"
             android:layout_alignTop="@id/video_Layout"
             android:layout_alignBottom="@id/video_Layout"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_toStartOf="@id/video_Layout"
             android:layout_alignStart="@id/pageControl_Window"/>
 
@@ -274,6 +274,7 @@
             android:layout_width="@dimen/dp_137"
             android:layout_height="@dimen/dp_220"
             android:layout_toStartOf="@id/video_Layout"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_alignBottom="@id/pageControl_Window"/>
 
     </RelativeLayout>

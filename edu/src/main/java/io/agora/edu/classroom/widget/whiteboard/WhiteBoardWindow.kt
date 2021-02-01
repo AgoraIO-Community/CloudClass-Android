@@ -7,7 +7,8 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.herewhite.sdk.*
 import com.herewhite.sdk.domain.*
@@ -31,6 +32,7 @@ import io.agora.whiteboard.netless.manager.BoardManager
 class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListener, CommonCallbacks,
         WhiteBoardToolBarListener, PageControlWindow.PageControlListener {
     private val TAG = "WhiteBoardWindow"
+    private lateinit var rootLayout: ConstraintLayout
     private lateinit var whiteBoardView: WhiteboardView
     private lateinit var loadingPb: ProgressBar
 
@@ -69,13 +71,6 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         initView()
     }
 
-    private fun initData() {
-        WhiteDisplayerState.setCustomGlobalStateClass(BoardState::class.java)
-        val configuration = WhiteSdkConfiguration(whiteBoardAppId, true)
-        whiteSdk = WhiteSdk(whiteBoardView, context, configuration, this)
-        boardManager.setListener(this)
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         inflate(context, R.layout.white_board_window_layout, this)
@@ -86,8 +81,9 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
                 originLayoutParams = this@WhiteBoardWindow.layoutParams as LayoutParams
             }
         })
+        rootLayout = findViewById(R.id.root_Layout)
         whiteBoardView = findViewById(R.id.white_board_view)
-        setWhiteBoardRound(whiteBoardView)
+//        setWhiteBoardCorner(true)
         initData()
         loadingPb = findViewById(R.id.pb_loading)
         whiteBoardView.setOnTouchListener(this)
@@ -101,11 +97,22 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         }
     }
 
-    private fun setWhiteBoardRound(whiteBoard: WhiteboardView) {
-        var radius: Float = context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_content_corner).toFloat()
-        val textureOutlineProvider = VideoViewTextureOutlineProvider(radius)
-        whiteBoard.outlineProvider = textureOutlineProvider
-        whiteBoard.clipToOutline = true
+    private fun initData() {
+        WhiteDisplayerState.setCustomGlobalStateClass(BoardState::class.java)
+        val configuration = WhiteSdkConfiguration(whiteBoardAppId, true)
+        whiteSdk = WhiteSdk(whiteBoardView, context, configuration, this)
+        boardManager.setListener(this)
+    }
+
+    private fun setWhiteBoardCorner(corner: Boolean) {
+        var radius0: Float = if (corner) context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_bg_corner).toFloat() else 0f
+        val outlineProvider0 = VideoViewTextureOutlineProvider(radius0)
+        rootLayout.outlineProvider = outlineProvider0
+        rootLayout.clipToOutline = corner
+        var radius1: Float = if (corner) context.resources.getDimensionPixelSize(R.dimen.whiteboard_window_content_corner).toFloat() else 0f
+        val outlineProvider1 = VideoViewTextureOutlineProvider(radius1)
+        whiteBoardView.outlineProvider = outlineProvider1
+        whiteBoardView.clipToOutline = corner
     }
 
     fun initBoardWithRoomToken(uuid: String?, boardToken: String?, localUserUuid: String?) {
@@ -316,9 +323,13 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     override fun onFullScreen() {
         val params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         layoutParams = params
+        val drawable = ContextCompat.getDrawable(context, R.drawable.whiteboard_window_bg_no_corner)
+        rootLayout.background = drawable
     }
 
     override fun onFitScreen() {
         layoutParams = originLayoutParams
+        val drawable = ContextCompat.getDrawable(context, R.drawable.whiteboard_window_bg)
+        rootLayout.background = drawable
     }
 }
