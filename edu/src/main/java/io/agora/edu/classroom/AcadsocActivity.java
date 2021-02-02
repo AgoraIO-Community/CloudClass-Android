@@ -22,10 +22,13 @@ import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
+import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
 import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.room.EduRoom;
+import io.agora.education.api.statistics.ConnectionState;
+import io.agora.education.api.statistics.NetworkQuality;
 import io.agora.education.api.stream.data.EduStreamEvent;
 import io.agora.education.api.stream.data.EduStreamInfo;
 import io.agora.education.api.user.EduStudent;
@@ -44,6 +47,7 @@ import static io.agora.education.impl.Constants.AgoraLog;
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
         VideoWindow.OnMediaControlListener {
     private static final String TAG = "AscadsocActivity";
+    private ToolWindow toolWindow;
     private PageControlWindow pageControlWindow;
     private LinearLayout videoLayout;
     private VideoWindow teacherVideo, studentVideo;
@@ -104,6 +108,8 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         whiteBoardWindow.setWhiteBoardEventListener(this);
         whiteBoardWindow.setInputWhileFollow(true);
         whiteBoardWindow.setWritable(true);
+        toolWindow = findViewById(R.id.tool_Window);
+        toolWindow.setListener(whiteBoardWindow);
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
         videoLayout = findViewById(R.id.video_Layout);
@@ -233,6 +239,8 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         }
     }
 
+
+
     @Override
     public void onRemoteUserLeft(@NotNull EduUserEvent userEvent, @NotNull EduRoom classRoom) {
         super.onRemoteUserLeft(userEvent, classRoom);
@@ -250,6 +258,12 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             renderStream(getMainEduRoom(), streamInfo, null);
             teacherVideo.updateState(VideoWindow.State.TeacherLeave);
         }
+    }
+
+    @Override
+    public void onNetworkQualityChanged(@NotNull NetworkQuality quality, @NotNull EduUserInfo user,
+                                        @NotNull EduRoom classRoom) {
+        super.onNetworkQualityChanged(quality, user, classRoom);
     }
 
     @Override
