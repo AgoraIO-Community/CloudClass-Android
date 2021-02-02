@@ -128,8 +128,7 @@
             android:id="@+id/whiteBoard_Window"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:layout_toStartOf="@id/video_Layout" />
+            android:layout_margin="@dimen/dp_4" />
 
         <io.agora.edu.classroom.widget.whiteboard.PageControlWindow
             android:id="@+id/pageControl_Window"
@@ -141,40 +140,39 @@
 
         <LinearLayout
             android:id="@+id/video_Layout"
-            android:layout_width="@dimen/dp_192"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_4"
             android:orientation="vertical">
 
             <io.agora.edu.classroom.widget.video.VideoWindow
                 android:id="@+id/teacher_Window"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_144"
-                android:layout_weight="1"/>
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_8"/>
+                android:layout_height="@dimen/dp_4" />
 
             <io.agora.edu.classroom.widget.video.VideoWindow
                 android:id="@+id/student_Window"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_144"
-                android:layout_alignParentBottom="true"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_weight="1" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/fold_Layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/video_Layout"
-            android:layout_alignEnd="@id/video_Layout"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_4"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -260,12 +258,14 @@
 
         <io.agora.edu.classroom.widget.chat.ChatWindow
             android:id="@+id/chat_Window"
-            android:layout_width="@dimen/dp_137"
-            android:layout_height="@dimen/dp_220"
-            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/whiteBoard_Window"
             android:layout_alignBottom="@id/whiteBoard_Window"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_8"
-            android:layout_toStartOf="@id/video_Layout" />
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

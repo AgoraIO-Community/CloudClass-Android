@@ -1,6 +1,9 @@
 package io.agora.edu.classroom;
 
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -19,7 +22,6 @@ import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
 import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
@@ -43,6 +45,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         VideoWindow.OnMediaControlListener {
     private static final String TAG = "AscadsocActivity";
     private PageControlWindow pageControlWindow;
+    private LinearLayout videoLayout;
     private VideoWindow teacherVideo, studentVideo;
     private RelativeLayout teacherFoldLayout, studentFoldLayout;
     private AppCompatTextView teacherNameText, studentNameText;
@@ -103,6 +106,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         whiteBoardWindow.setWritable(true);
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
+        videoLayout = findViewById(R.id.video_Layout);
         teacherVideo = findViewById(R.id.teacher_Window);
         teacherVideo.init(false);
         teacherVideo.setIMinimizeListener(new IMinimizeListener() {
@@ -141,6 +145,35 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         studentUnfoldImg = findViewById(R.id.studentUnfold_Img);
         studentUnfoldImg.setOnClickListener(this);
         chatWindow = findViewById(R.id.chat_Window);
+        /**各window适配屏幕*/
+        View layout = findViewById(Window.ID_ANDROID_CONTENT);
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int screenW = layout.getRight() - layout.getLeft();
+                int screenH = layout.getBottom() - layout.getTop();
+                /**适配VideoWindow*/
+                teacherVideo.resize(screenW);
+                studentVideo.resize(screenW);
+                /**适配视频折叠布局*/
+                teacherFoldLayout.getLayoutParams().width = teacherVideo.getLayoutParams().width;
+                studentFoldLayout.getLayoutParams().width = studentVideo.getLayoutParams().width;
+                /**适配WhiteBoardWindow*/
+                RelativeLayout.LayoutParams videoLayoutParams = (RelativeLayout.LayoutParams) videoLayout.getLayoutParams();
+                LinearLayout.LayoutParams teacherParams = (LinearLayout.LayoutParams) teacherVideo.getLayoutParams();
+                RelativeLayout.LayoutParams whiteBoardParams = (RelativeLayout.LayoutParams) whiteBoardWindow.getLayoutParams();
+                whiteBoardParams.setMarginEnd(whiteBoardParams.getMarginEnd() + teacherParams.width + videoLayoutParams.getMarginEnd());
+                whiteBoardParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.dp_4));
+                /**适配ChatWindow*/
+                chatWindow.resize(screenW);
+                RelativeLayout.LayoutParams chatParams = (RelativeLayout.LayoutParams) chatWindow.getLayoutParams();
+                chatParams.setMarginEnd(chatParams.getMarginEnd() + whiteBoardParams.getMarginEnd());
+                /**适配PageControlWindow*/
+                int surPlus = screenW - chatParams.width - chatParams.getMarginEnd();
+                pageControlWindow.resize(surPlus);
+            }
+        });
     }
 
     private void renderTeacherStream1() {
