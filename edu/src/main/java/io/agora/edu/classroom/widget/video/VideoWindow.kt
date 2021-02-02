@@ -91,11 +91,11 @@ class VideoWindow : AbstractWindow {
         /**设置动画方向*/
         setMinimizeDirection(IMinimizable.Direction.bottom)
         foldImg.setOnClickListener {
-            startMinimize()
+            startMinimize(null)
         }
         unfoldImg.setOnClickListener {
             Log.e(TAG, "膨胀")
-            restoreMinimize()
+            restoreMinimize(null)
         }
     }
 
