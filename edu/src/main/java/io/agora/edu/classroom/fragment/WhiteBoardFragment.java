@@ -25,6 +25,8 @@ import com.herewhite.sdk.domain.SDKError;
 import com.herewhite.sdk.domain.SceneState;
 import com.herewhite.sdk.domain.WhiteDisplayerState;
 
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.OnTouch;
 import io.agora.base.ToastManager;
@@ -287,6 +289,11 @@ public class WhiteBoardFragment extends BaseFragment implements RadioGroup.OnChe
 
     @Override
     public void onPPTMediaPause() {
+
+    }
+
+    @Override
+    public void onMessage(JSONObject object) {
 
     }
 

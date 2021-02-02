@@ -119,6 +119,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/container_Layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/classroom_title_bar_layout"

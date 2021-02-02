@@ -27,7 +27,6 @@ import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.room.EduRoom;
-import io.agora.education.api.statistics.ConnectionState;
 import io.agora.education.api.statistics.NetworkQuality;
 import io.agora.education.api.stream.data.EduStreamEvent;
 import io.agora.education.api.stream.data.EduStreamInfo;
@@ -47,6 +46,7 @@ import static io.agora.education.impl.Constants.AgoraLog;
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
         VideoWindow.OnMediaControlListener {
     private static final String TAG = "AscadsocActivity";
+    private RelativeLayout containerLayout;
     private ToolWindow toolWindow;
     private PageControlWindow pageControlWindow;
     private LinearLayout videoLayout;
@@ -69,6 +69,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initData() {
         super.initData();
+        /**进入教室*/
         joinRoomAsStudent(getMainEduRoom(), agoraEduLaunchConfig.getUserName(), agoraEduLaunchConfig.getUserUuid(), true, true, true,
                 new EduCallback<EduStudent>() {
                     @Override
@@ -102,6 +103,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initView() {
         super.initView();
+        containerLayout = findViewById(R.id.container_Layout);
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
         whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
@@ -157,8 +159,8 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             @Override
             public void onGlobalLayout() {
                 layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int screenW = layout.getRight() - layout.getLeft();
-                int screenH = layout.getBottom() - layout.getTop();
+                int screenW = containerLayout.getRight() - containerLayout.getLeft();
+                int screenH = containerLayout.getBottom() - containerLayout.getTop();
                 /**适配VideoWindow*/
                 teacherVideo.resize(screenW);
                 studentVideo.resize(screenW);
@@ -238,8 +240,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             studentVideo.restoreMinimize();
         }
     }
-
-
 
     @Override
     public void onRemoteUserLeft(@NotNull EduUserEvent userEvent, @NotNull EduRoom classRoom) {

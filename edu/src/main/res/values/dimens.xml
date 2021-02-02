@@ -175,9 +175,9 @@
     <dimen name="pagecontrol_window_previous_padding_end">@dimen/dp_8</dimen>
     <dimen name="pagecontrol_window_previous_padding_bottom">@dimen/dp_4</dimen>
     <dimen name="pagecontrol_window_pageno_edit_margin_start">@dimen/dp_12</dimen>
-    <dimen name="pagecontrol_window_pageno_edit_padding_start">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_pageno_edit_padding_start">@dimen/dp_4</dimen>
     <dimen name="pagecontrol_window_pageno_edit_padding_top">@dimen/dp_2</dimen>
-    <dimen name="pagecontrol_window_pageno_edit_padding_end">@dimen/dp_8</dimen>
+    <dimen name="pagecontrol_window_pageno_edit_padding_end">@dimen/dp_4</dimen>
     <dimen name="pagecontrol_window_pageno_edit_padding_bottom">@dimen/dp_2</dimen>
     <dimen name="pagecontrol_window_pageno_edit_text">@dimen/sp_12</dimen>
     <dimen name="pagecontrol_window_page_total_margin_start">@dimen/dp_12</dimen>
