@@ -13,29 +13,29 @@
         android:text="@string/tool_window_title"
         android:textColor="@android:color/white"
         android:textSize="@dimen/dp_12"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tool_window_option_recycler"
+    <FrameLayout
+        android:id="@+id/tool_window_option_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/tool_window_divider_padding"/>
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tool_window_option_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/tool_window_divider_padding"/>
+    </FrameLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/tool_window_divider_width"
         android:background="@color/tool_window_bg_border"/>
     <RelativeLayout
+        android:id="@+id/tool_window_fold_icon_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tool_window_fold_icon_layout_height">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/tool_window_divider_padding">
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tool_window_fold_icon"
             android:layout_width="@dimen/tool_window_icon_size"
             android:layout_height="@dimen/tool_window_icon_size"
-            android:layout_centerInParent="true"
-            android:src="@drawable/tool_window_icon_fold"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/tool_window_icon_size"
-            android:layout_height="@dimen/tool_window_icon_size"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:src="@drawable/tool_window_icon_unfold"/>
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
-
 </LinearLayout>
