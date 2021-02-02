@@ -1,10 +1,14 @@
 package io.agora.edu.classroom.widget.whiteboard;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +20,9 @@ import io.agora.edu.R;
 import io.agora.edu.classroom.widget.window.AbstractWindow;
 
 public class ToolWindow extends AbstractWindow {
+    private static final String TAG = ToolWindow.class.getSimpleName();
+    private static final int FOLD_DURATION = 500;
+
     public interface ToolWindowListener {
         void onModeChanged(int mode);
 
@@ -46,7 +53,13 @@ public class ToolWindow extends AbstractWindow {
     };
 
     private int mSelectedOption = -1;
+    private boolean mFold;
+    private int mToolRecyclerHeight;
+
     private ToolWindowListener mListener;
+    private AppCompatImageView mFoldIcon;
+    private FrameLayout mIconRecyclerLayout;
+    private RecyclerView mIconRecycler;
 
     public ToolWindow(Context context) {
         super(context);
@@ -66,10 +79,101 @@ public class ToolWindow extends AbstractWindow {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.tool_window_layout, this);
 
-        RecyclerView optionRecycler = findViewById(R.id.tool_window_option_recycler);
-        optionRecycler.setLayoutManager(new LinearLayoutManager(
+        mIconRecyclerLayout = findViewById(R.id.tool_window_option_layout);
+        mIconRecycler = findViewById(R.id.tool_window_option_recycler);
+        mIconRecycler.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false));
-        optionRecycler.setAdapter(new ToolWindowOptionAdapter());
+        mIconRecycler.setAdapter(new ToolWindowOptionAdapter());
+
+        mFoldIcon = findViewById(R.id.tool_window_fold_icon);
+        if (mFold) {
+            mFoldIcon.setImageResource(R.drawable.tool_window_icon_unfold);
+        } else {
+            mFoldIcon.setImageResource(R.drawable.tool_window_icon_fold);
+        }
+
+        findViewById(R.id.tool_window_fold_icon_layout).setOnClickListener(view -> {
+           if (mFold) unfold(); else fold();
+        });
+    }
+
+    private void fold() {
+        mToolRecyclerHeight = mIconRecyclerLayout.getHeight();
+        ViewPropertyAnimator animator = mIconRecycler.animate();
+        animator.setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                mFoldIcon.setEnabled(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                mFoldIcon.setEnabled(true);
+                mFold = !mFold;
+                mFoldIcon.setImageResource(R.drawable.tool_window_icon_unfold);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                mFoldIcon.setEnabled(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        animator.setUpdateListener(valueAnimator -> {
+            float fraction = valueAnimator.getAnimatedFraction();
+            int curHeight = (int) (mToolRecyclerHeight * (1 - fraction));
+            LinearLayout.LayoutParams params =
+                    (LinearLayout.LayoutParams) mIconRecyclerLayout.getLayoutParams();
+            params.height = curHeight;
+            mIconRecyclerLayout.setLayoutParams(params);
+        });
+
+        animator.setDuration(FOLD_DURATION);
+        animator.yBy(-mIconRecycler.getHeight());
+    }
+
+    private void unfold() {
+        ViewPropertyAnimator animator = mIconRecycler.animate();
+        animator.setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                mFoldIcon.setEnabled(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                mFoldIcon.setEnabled(true);
+                mFold = !mFold;
+                mFoldIcon.setImageResource(R.drawable.tool_window_icon_fold);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                mFoldIcon.setEnabled(true);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
+        animator.setUpdateListener(valueAnimator -> {
+            float fraction = valueAnimator.getAnimatedFraction();
+            int curHeight = (int) (mToolRecyclerHeight * fraction);
+            LinearLayout.LayoutParams params =
+                    (LinearLayout.LayoutParams) mIconRecyclerLayout.getLayoutParams();
+            params.height = curHeight;
+            mIconRecyclerLayout.setLayoutParams(params);
+        });
+
+        animator.setDuration(FOLD_DURATION);
+        animator.yBy(mToolRecyclerHeight);
     }
 
     private class ToolWindowOptionAdapter extends RecyclerView.Adapter<ToolWindowOptionViewHolder> {
