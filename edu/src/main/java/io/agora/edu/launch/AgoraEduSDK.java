@@ -217,13 +217,23 @@ public class AgoraEduSDK {
     }
 
     private static void callbackError(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
         Log.e(TAG, msg);
         agoraEduLaunchCallback.onCallback(AgoraEduEvent.AgoraEduEventDestroyed);
     }
 
     private static void errorTips(Context context, String msg) throws Exception {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
         Log.e(TAG, msg);
         throw new Exception(msg);
     }

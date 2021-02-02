@@ -16,18 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.agora.edu.common.bean.ResponseBody;
 import io.agora.edu.launch.AgoraEduClassRoom;
 import io.agora.edu.launch.AgoraEduReplay;
 import io.agora.edu.launch.AgoraEduReplayConfig;
@@ -36,12 +28,7 @@ import io.agora.edu.launch.AgoraEduRoomType;
 import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.launch.AgoraEduSDKConfig;
-import io.agora.education.fetchtoken.FetchRtmTokenUtil;
-import io.agora.education.fetchtoken.RtmTokenRes;
 import io.agora.education.rtmtoken.RtmTokenBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static io.agora.edu.launch.AgoraEduSDK.REQUEST_CODE_RTC;
 import static io.agora.education.Constants.KEY_SP;
@@ -107,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //                        "scenario/recording/f488493d1886435f963dfb3d95984fd4/5ff99f6612c83b045ed90495/6b6c425515445a49a26e29aa7a828f33_1235542.m3u8",
 //                        "", "", "",
 //                        "");
-//                AgoraEduReplay replay = AgoraEduSDK.replay(getApplicationContext(), config, state -> {
+//                AgoraEduReplay replay = AgoraEduSDK.replay(this, config, state -> {
 //                    Log.e(TAG, ":replay-课堂状态:" + state.name());
 //                });
 //                new Thread(() -> {
@@ -207,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
             AgoraEduLaunchConfig agoraEduLaunchConfig = new AgoraEduLaunchConfig(userName, userUuid,
                     roomName, roomUuid, roleType, roomType, rtmToken);
-            AgoraEduClassRoom classRoom = AgoraEduSDK.launch(getApplicationContext(), agoraEduLaunchConfig,
+            AgoraEduClassRoom classRoom = AgoraEduSDK.launch(this, agoraEduLaunchConfig,
                     (state) -> {
                         Log.e(TAG, ":launch-课堂状态:" + state.name());
                         notifyBtnJoinEnable(true);
