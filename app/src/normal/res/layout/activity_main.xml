@@ -229,14 +229,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <io.agora.edu.classroom.widget.video.VideoWindow
-            android:id="@+id/videoWindow"
-            android:layout_width="480px"
-            android:layout_height="480px"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

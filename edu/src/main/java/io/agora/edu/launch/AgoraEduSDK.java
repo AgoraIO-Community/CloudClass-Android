@@ -18,6 +18,7 @@ import io.agora.base.PreferenceManager;
 import io.agora.base.ToastManager;
 import io.agora.base.network.RetrofitManager;
 import io.agora.edu.R;
+import io.agora.edu.classroom.AcadsocActivity;
 import io.agora.edu.classroom.ReplayActivity;
 import io.agora.edu.common.api.RoomPre;
 import io.agora.edu.common.bean.request.RoomPreCheckReq;
@@ -31,9 +32,8 @@ import io.agora.education.api.manager.EduManagerOptions;
 import io.agora.education.api.room.data.EduRoomState;
 import io.agora.education.api.room.data.RoomType;
 import io.agora.edu.classroom.BaseClassActivity;
-import io.agora.edu.classroom.OneToOneClassActivity;
 
-import static io.agora.edu.classroom.BaseClassActivity.setEduManager;
+import static io.agora.edu.classroom.BaseClassActivity_acadsoc.setEduManager;
 
 public class AgoraEduSDK {
     private static final String TAG = "EduLaunch";
@@ -204,7 +204,8 @@ public class AgoraEduSDK {
         Intent intent = new Intent();
         int roomType = config.getRoomType();
         if (roomType == RoomType.ONE_ON_ONE.getValue()) {
-            intent.setClass(context, OneToOneClassActivity.class);
+//            intent.setClass(context, OneToOneClassActivity.class);
+            intent.setClass(context, AcadsocActivity.class);
         }
 //        else if (roomType == RoomType.SMALL_CLASS.getValue()) {
 //            intent.setClass(context, SmallClassActivity.class);

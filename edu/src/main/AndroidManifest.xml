@@ -24,6 +24,12 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
+            android:name=".classroom.AcadsocActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity
             android:name=".classroom.OneToOneClassActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
