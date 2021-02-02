@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/classroom_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -18,18 +19,10 @@
             android:layout_centerVertical="true"
             android:src="@drawable/classroom_icon_customer_service"/>
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/classroom_refresh_btn"
-            android:layout_width="@dimen/classroom_title_bar_btn_size"
-            android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_toStartOf="@id/classroom_customer_service_btn"
-            android:layout_marginEnd="@dimen/classroom_title_bar_element_margin"
-            android:layout_centerVertical="true"
-            android:src="@drawable/classroom_icon_refresh"/>
-        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/classroom_switch_camera_btn"
             android:layout_width="@dimen/classroom_title_bar_btn_size"
             android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_toStartOf="@id/classroom_refresh_btn"
+            android:layout_toStartOf="@id/classroom_customer_service_btn"
             android:layout_marginEnd="@dimen/classroom_title_bar_element_margin"
             android:layout_centerVertical="true"
             android:src="@drawable/classroom_icon_switch_camera"/>
@@ -71,33 +64,46 @@
         <RelativeLayout
             android:id="@+id/classroom_class_time_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_toEndOf="@id/classroom_room_id_text">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/classroom_class_time_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/classroom_class_state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/classroom_class_time_icon"
+                android:textSize="@dimen/classroom_title_bar_text_size"
+                android:textColor="@android:color/white"/>
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/classroom_class_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/classroom_class_time_icon"/>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/classroom_class_state_text"
+                android:textSize="@dimen/classroom_title_bar_text_size"/>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/classroom_network_state_layout"
-            android:layout_width="@dimen/classroom_title_bar_btn_size"
-            android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/classroom_class_time_layout">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_class_time_layout"
+            android:layout_marginStart="@dimen/classroom_title_bar_element_margin">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/classroom_network_state_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/classroom_title_bar_btn_size"
+                android:layout_height="@dimen/classroom_title_bar_btn_size"
+                android:layout_centerVertical="true"
                 android:src="@drawable/classroom_icon_network_state_good"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/classroom_network_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/classroom_title_bar_element_margin_small"
                 android:layout_toEndOf="@id/classroom_network_state_icon"
                 android:textSize="@dimen/classroom_title_bar_text_size"/>
         </RelativeLayout>

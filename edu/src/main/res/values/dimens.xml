@@ -133,7 +133,7 @@
     <dimen name="classroom_title_bar_leave_text_size">@dimen/dp_12</dimen>
     <dimen name="classroom_title_bar_leave_btn_padding">@dimen/dp_10</dimen>
     <dimen name="classroom_title_bar_leave_btn_border_width">@dimen/dp_2</dimen>
-    <dimen name="classroom_title_bar_text_size">@dimen/dp_12</dimen>
+    <dimen name="classroom_title_bar_text_size">@dimen/dp_13</dimen>
 
     <!-- Chat Window -->
     <dimen name="chat_window_content_margin">@dimen/dp_8</dimen>

@@ -47,9 +47,6 @@
     <!-- Classroom Window -->
     <color name="classroom_title_bar_bg">#1D35AD</color>
     <color name="classroom_leave_btn_bg">#D9B74F</color>
-    <color name="classroom_network_state_color_good">#D4EF76</color>
-    <color name="classroom_network_state_color_medium">#E7A953</color>
-    <color name="classroom_network_state_color_bad">#DF5841</color>
 
     <!--  ClassToastManager  -->
     <color name="toast_classtime_countdown_time">#FE313F</color>
