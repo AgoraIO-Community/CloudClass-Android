@@ -11,6 +11,8 @@ import io.agora.rtc.models.ChannelMediaOptions
 import io.agora.rte.RteEngineImpl.OK
 import io.agora.rte.data.RteError.Companion.rtcError
 import io.agora.rte.data.RteError.Companion.rtmError
+import io.agora.rte.data.RteRemoteVideoState
+import io.agora.rte.data.RteRemoteVideoStateChangeReason
 import io.agora.rte.listener.RteChannelEventListener
 import io.agora.rte.listener.RteStatisticsReportListener
 import io.agora.rtm.*
@@ -87,6 +89,9 @@ internal class RteChannelImpl(
         override fun onRemoteVideoStateChanged(rtcChannel: RtcChannel?, uid: Int, state: Int, reason: Int, elapsed: Int) {
             super.onRemoteVideoStateChanged(rtcChannel, uid, state, reason, elapsed)
             Log.e(TAG, "onRemoteVideoStateChanged->$uid, state->$state, reason->$reason")
+            val videoState = RteRemoteVideoState.convert(state)
+            val changeReason = RteRemoteVideoStateChangeReason.convert(state)
+            eventListener?.onRemoteVideoStateChanged(rtcChannel, uid, videoState, changeReason, elapsed)
         }
 
         override fun onRemoteVideoStats(rtcChannel: RtcChannel?, stats: IRtcEngineEventHandler.RemoteVideoStats?) {

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string name="agora_app_id" translatable="false">47b7535dcb9a4bb4aa592115266eae98</string>
-<!--        <string name="agora_app_id" translatable="false">Your AppId</string>-->
+        <string name="agora_app_id" translatable="false">Your AppId</string>
 </resources>

@@ -1,5 +1,7 @@
 package io.agora.edu.classroom;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,6 +15,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.herewhite.sdk.domain.GlobalState;
+import com.herewhite.sdk.domain.MemberState;
+import com.herewhite.sdk.domain.SceneState;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,9 +35,31 @@ import io.agora.agoraactionprocess.AgoraActionProcessManager;
 import io.agora.base.ToastManager;
 import io.agora.base.callback.ThrowableCallback;
 import io.agora.base.network.RetrofitManager;
+import io.agora.covideo.AgoraCoVideoAction;
 import io.agora.edu.R;
+import io.agora.edu.R2;
+import io.agora.edu.base.BaseActivity;
+import io.agora.edu.classroom.bean.channel.Room;
+import io.agora.edu.classroom.bean.channel.User;
+import io.agora.edu.classroom.bean.msg.ChannelMsg;
+import io.agora.edu.classroom.fragment.ChatRoomFragment;
+import io.agora.edu.classroom.fragment.WhiteBoardFragment;
+import io.agora.edu.classroom.widget.dialog.DialogClickListener;
+import io.agora.edu.classroom.widget.dialog.NormalDialog;
+import io.agora.edu.classroom.widget.title.TitleView;
+import io.agora.edu.classroom.widget.whiteboard.WhiteBoardEventListener;
+import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
 import io.agora.edu.common.api.Chat;
+import io.agora.edu.common.bean.ResponseBody;
+import io.agora.edu.common.bean.board.BoardBean;
+import io.agora.edu.common.bean.board.BoardFollowMode;
+import io.agora.edu.common.bean.board.BoardInfo;
+import io.agora.edu.common.bean.board.BoardState;
 import io.agora.edu.common.impl.ChatImpl;
+import io.agora.edu.common.service.BoardService;
+import io.agora.edu.launch.AgoraEduLaunchConfig;
+import io.agora.edu.util.AppUtil;
+import io.agora.edu.widget.ConfirmDialog;
 import io.agora.edu.widget.EyeProtection;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
@@ -66,32 +92,14 @@ import io.agora.education.api.user.EduStudent;
 import io.agora.education.api.user.EduTeacher;
 import io.agora.education.api.user.EduUser;
 import io.agora.education.api.user.data.EduLocalUserInfo;
-import io.agora.edu.R2;
 import io.agora.education.api.user.data.EduUserEvent;
 import io.agora.education.api.user.data.EduUserInfo;
 import io.agora.education.api.user.data.EduUserLeftType;
 import io.agora.education.api.user.data.EduUserRole;
 import io.agora.education.api.user.data.EduUserStateChangeType;
 import io.agora.education.api.user.listener.EduUserEventListener;
-import io.agora.edu.base.BaseActivity;
-import io.agora.edu.common.bean.board.BoardBean;
-import io.agora.edu.common.bean.board.BoardFollowMode;
-import io.agora.edu.common.bean.board.BoardInfo;
-import io.agora.edu.common.bean.board.BoardState;
-import io.agora.edu.classroom.bean.channel.Room;
-import io.agora.edu.classroom.bean.channel.User;
-import io.agora.edu.classroom.bean.msg.ChannelMsg;
 import io.agora.record.bean.RecordBean;
 import io.agora.record.bean.RecordMsg;
-import io.agora.edu.classroom.fragment.ChatRoomFragment;
-import io.agora.edu.classroom.fragment.WhiteBoardFragment;
-import io.agora.edu.classroom.widget.title.TitleView;
-import io.agora.edu.launch.AgoraEduLaunchConfig;
-import io.agora.edu.common.service.BoardService;
-import io.agora.edu.common.bean.ResponseBody;
-import io.agora.edu.util.AppUtil;
-import io.agora.edu.widget.ConfirmDialog;
-import io.agora.covideo.AgoraCoVideoAction;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcChannel;
 import io.agora.whiteboard.netless.listener.GlobalStateChangeListener;
@@ -101,32 +109,24 @@ import static io.agora.edu.BuildConfig.API_BASE_URL;
 import static io.agora.edu.classroom.bean.PropertyCauseType.CMD;
 import static io.agora.edu.classroom.bean.PropertyCauseType.RECORDSTATECHANGED;
 import static io.agora.edu.common.bean.board.BoardBean.BOARD;
+import static io.agora.edu.launch.AgoraEduEvent.AgoraEduEventDestroyed;
+import static io.agora.edu.launch.AgoraEduEvent.AgoraEduEventReady;
 import static io.agora.edu.launch.AgoraEduSDK.CODE;
 import static io.agora.edu.launch.AgoraEduSDK.REASON;
 import static io.agora.edu.launch.AgoraEduSDK.agoraEduLaunchCallback;
-import static io.agora.edu.launch.AgoraEduEvent.AgoraEduEventReady;
-import static io.agora.edu.launch.AgoraEduEvent.AgoraEduEventDestroyed;
 import static io.agora.education.impl.Constants.AgoraLog;
-import static io.agora.record.bean.RecordBean.RECORD;
 import static io.agora.record.bean.RecordAction.END;
+import static io.agora.record.bean.RecordBean.RECORD;
 
-public abstract class BaseClassActivity extends BaseActivity implements EduRoomEventListener, EduUserEventListener,
-        EduManagerEventListener, GlobalStateChangeListener, AgoraActionListener {
-    private static final String TAG = BaseClassActivity.class.getSimpleName();
+public abstract class BaseClassActivity_acadsoc extends BaseActivity implements EduRoomEventListener, EduUserEventListener,
+        EduManagerEventListener, GlobalStateChangeListener, WhiteBoardEventListener, AgoraActionListener {
+    private static final String TAG = BaseClassActivity_acadsoc.class.getSimpleName();
 
     public static final String LAUNCHCONFIG = "LAUNCHCONFIG";
     public static final String EDUMANAGER = "eduManager";
     public static final int RESULT_CODE = 808;
 
-    @BindView(R2.id.title_view)
-    protected TitleView title_view;
-    @BindView(R2.id.layout_whiteboard)
-    protected FrameLayout layout_whiteboard;
-    @BindView(R2.id.layout_share_video)
-    protected FrameLayout layout_share_video;
-
-    protected WhiteBoardFragment whiteboardFragment = new WhiteBoardFragment();
-    protected ChatRoomFragment chatRoomFragment = new ChatRoomFragment();
+    protected WhiteBoardWindow whiteBoardWindow;
 
     private static EduManager eduManager;
     protected AgoraEduLaunchConfig agoraEduLaunchConfig;
@@ -154,8 +154,8 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
             eduManager.setEduManagerEventListener(this);
         }
         agoraEduLaunchConfig = getIntent().getParcelableExtra(LAUNCHCONFIG);
-        whiteboardFragment.setWhiteBoardAppId(agoraEduLaunchConfig.whiteBoardAppId);
-        chatRoomFragment.setAppId(agoraEduLaunchConfig.appId, agoraEduLaunchConfig.whiteBoardAppId);
+//        whiteboardFragment.setWhiteBoardAppId(agoraEduLaunchConfig.whiteBoardAppId);
+//        chatRoomFragment.setAppId(agoraEduLaunchConfig.appId, agoraEduLaunchConfig.whiteBoardAppId);
         RoomCreateOptions createOptions = new RoomCreateOptions(agoraEduLaunchConfig.getRoomUuid(),
                 agoraEduLaunchConfig.getRoomName(), agoraEduLaunchConfig.getRoomType());
         try {
@@ -169,9 +169,6 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
 
     @Override
     protected void initView() {
-        if (getClassType() == RoomType.ONE_ON_ONE.getValue()) {
-            whiteboardFragment.setInputWhileFollow(true);
-        }
     }
 
     @Override
@@ -183,7 +180,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
     @Override
     protected void onDestroy() {
         /**尝试主动释放TimeView中的handle*/
-        title_view.setTimeState(false, 0);
+//        title_view.setTimeState(false, 0);
         /**退出activity之前释放eduRoom资源*/
         mainEduRoom = null;
         if (eduManager != null) {
@@ -204,21 +201,21 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
     protected abstract int getClassType();
 
     public static void setEduManager(EduManager eduManager) {
-        BaseClassActivity.eduManager = eduManager;
+        BaseClassActivity_acadsoc.eduManager = eduManager;
     }
 
     protected void showFragmentWithJoinSuccess() {
-        title_view.setTitle(agoraEduLaunchConfig.getRoomName());
-        getSupportFragmentManager().beginTransaction()
-                .remove(whiteboardFragment)
-                .remove(chatRoomFragment)
-                .commitNowAllowingStateLoss();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.layout_whiteboard, whiteboardFragment)
-                .add(R.id.layout_chat_room, chatRoomFragment)
-                .show(whiteboardFragment)
-                .show(chatRoomFragment)
-                .commitNowAllowingStateLoss();
+//        title_view.setTitle(agoraEduLaunchConfig.getRoomName());
+//        getSupportFragmentManager().beginTransaction()
+//                .remove(whiteboardFragment)
+//                .remove(chatRoomFragment)
+//                .commitNowAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.layout_whiteboard, whiteboardFragment)
+//                .add(R.id.layout_chat_room, chatRoomFragment)
+//                .show(whiteboardFragment)
+//                .show(chatRoomFragment)
+//                .commitNowAllowingStateLoss();
     }
 
     /**
@@ -236,7 +233,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         EduRoom room = null;
         if (eduManager != null) {
             room = eduManager.createClassroom(options);
-            room.setEventListener(BaseClassActivity.this);
+            room.setEventListener(BaseClassActivity_acadsoc.this);
         } else {
             throw new NullPointerException("eduManager is null");
         }
@@ -260,7 +257,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     joinSuccess = true;
                     isJoining = false;
                     if (needUserListener) {
-                        user.setEventListener(BaseClassActivity.this);
+                        user.setEventListener(BaseClassActivity_acadsoc.this);
                     }
                     EduStudent student = (EduStudent) user;
                     callback.onSuccess(student);
@@ -297,7 +294,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     joinSuccess = true;
                     isJoining = false;
                     if (needUserListener) {
-                        user.setEventListener(BaseClassActivity.this);
+                        user.setEventListener(BaseClassActivity_acadsoc.this);
                     }
                     EduTeacher teacher = (EduTeacher) user;
                     callback.onSuccess(teacher);
@@ -331,7 +328,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     joinSuccess = true;
                     isJoining = false;
                     if (needUserListener) {
-                        user.setEventListener(BaseClassActivity.this);
+                        user.setEventListener(BaseClassActivity_acadsoc.this);
                     }
                     EduAssistant assistant = (EduAssistant) user;
                     callback.onSuccess(assistant);
@@ -563,9 +560,9 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
      * 尝试解析录制消息
      */
     protected void parseRecordMsg(Map<String, Object> roomProperties, Map<String, Object> cause) {
-        if(cause != null && !cause.isEmpty()) {
+        if (cause != null && !cause.isEmpty()) {
             int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
-            if(causeType == RECORDSTATECHANGED) {
+            if (causeType == RECORDSTATECHANGED) {
                 String recordJson = getProperty(roomProperties, RECORD);
                 if (!TextUtils.isEmpty(recordJson)) {
                     RecordBean tmp = RecordBean.fromJson(recordJson, RecordBean.class);
@@ -584,7 +581,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                                                     getString(R.string.replay_link), System.currentTimeMillis(),
                                                     EduChatMsgType.Text.getValue());
                                             recordMsg.isMe = true;
-                                            chatRoomFragment.addMessage(recordMsg);
+//                                            chatRoomFragment.addMessage(recordMsg);
                                         }
 
                                         @Override
@@ -605,38 +602,59 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         }
     }
 
+    /**
+     * 手动点击返回或退出按钮触发
+     */
     public final void showLeaveDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager != null && !fragmentManager.isDestroyed()) {
-            ConfirmDialog.normal(getString(R.string.confirm_leave_room_content), confirm -> {
-                if (confirm) {
-                    /**退出白板*/
-                    whiteboardFragment.releaseBoard();
-                    /**退出教室*/
-                    if (getMainEduRoom() != null) {
-                        getMainEduRoom().leave(new EduCallback<Unit>() {
-                            @Override
-                            public void onSuccess(@Nullable Unit res) {
-                                BaseClassActivity.super.finish();
-                            }
+            getMediaRoomStatus(new EduCallback<EduRoomStatus>() {
+                @Override
+                public void onSuccess(@Nullable EduRoomStatus roomStatus) {
+                    if (roomStatus != null) {
+                        boolean isEnd = roomStatus.getCourseState() == EduRoomState.END;
+                        String str = getString(isEnd ? R.string.dialog_class_exit : R.string.dialog_class_noend_exit);
+                        new NormalDialog(str, getString(R.string.dialog_cancel),
+                                getString(R.string.dialog_sure), R.drawable.dialog_img_content,
+                                confirm -> {
+                                    if (confirm) {
+                                        /**退出白板*/
+                                        whiteBoardWindow.releaseBoard();
+                                        /**退出教室*/
+                                        if (getMainEduRoom() != null) {
+                                            getMainEduRoom().leave(new EduCallback<Unit>() {
+                                                @Override
+                                                public void onSuccess(@Nullable Unit res) {
+                                                    BaseClassActivity_acadsoc.super.finish();
+                                                }
 
-                            @Override
-                            public void onFailure(@NotNull EduError error) {
-                                AgoraLog.e(TAG + ":leave EduRoom error->code:" + error.getType() + ",reason:" + error.getMsg());
-                                BaseClassActivity.super.finish();
-                            }
-                        });
+                                                @Override
+                                                public void onFailure(@NotNull EduError error) {
+                                                    AgoraLog.e(TAG + ":leave EduRoom error->code:"
+                                                            + error.getType() + ",reason:" + error.getMsg());
+                                                    BaseClassActivity_acadsoc.super.finish();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }).show(fragmentManager, null);
                     }
                 }
-            }).show(fragmentManager, null);
+
+                @Override
+                public void onFailure(@NotNull EduError error) {
+                }
+            });
         }
     }
 
-    /**课堂结束、被提出时调用*/
+    /**
+     * 课堂结束、被踢出时调用
+     */
     public final void showLeavedDialog(int strId) {
         runOnUiThread(() -> {
             /**退出白板*/
-            whiteboardFragment.releaseBoard();
+            whiteBoardWindow.releaseBoard();
             /**退出教室*/
             if (getMainEduRoom() != null) {
                 getMainEduRoom().leave(new EduCallback<Unit>() {
@@ -655,7 +673,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         if (fragmentManager != null && !fragmentManager.isDestroyed()) {
             ConfirmDialog.single(getString(strId), confirm -> {
                 if (confirm) {
-                    BaseClassActivity.super.finish();
+                    BaseClassActivity_acadsoc.super.finish();
                 }
             }).setCancel(false).show(fragmentManager, null);
         }
@@ -766,7 +784,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
             ConfirmDialog.singleWithButton(getString(R.string.uploadlog_success).concat(logId),
                     getString(R.string.copy1), confirm -> {
                         if (confirm) {
-                            AppUtil.copyToClipboard(BaseClassActivity.this, logId);
+                            AppUtil.copyToClipboard(BaseClassActivity_acadsoc.this, logId);
                         }
                     }).show(fragmentManager, null);
         }
@@ -940,9 +958,9 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         getMediaRoomStatus(new EduCallback<EduRoomStatus>() {
             @Override
             public void onSuccess(@Nullable EduRoomStatus status) {
-                title_view.setTimeState(status.getCourseState() == EduRoomState.START,
-                        System.currentTimeMillis() - status.getStartTime());
-                chatRoomFragment.setMuteAll(!status.isStudentChatAllowed());
+//                title_view.setTimeState(status.getCourseState() == EduRoomState.START,
+//                        System.currentTimeMillis() - status.getStartTime());
+//                chatRoomFragment.setMuteAll(!status.isStudentChatAllowed());
             }
 
             @Override
@@ -967,7 +985,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     mainBoardBean = new Gson().fromJson(boardJson, BoardBean.class);
                     BoardInfo info = mainBoardBean.getInfo();
                     AgoraLog.e(TAG + ":白板信息已存在->" + boardJson);
-                    runOnUiThread(() -> whiteboardFragment.initBoardWithRoomToken(info.getBoardId(),
+                    runOnUiThread(() -> whiteBoardWindow.initBoardWithRoomToken(info.getBoardId(),
                             info.getBoardToken(), userInfo.getUserUuid()));
                 }
             }
@@ -990,7 +1008,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     EduLocalUserInfo localUserInfo = localUser.getUserInfo();
                     AgoraActionProcessConfig config = new AgoraActionProcessConfig(agoraEduLaunchConfig.appId,
                             agoraEduLaunchConfig.getRoomUuid(), localUserInfo.getUserToken(), API_BASE_URL);
-                    actionProcessManager = new AgoraActionProcessManager(config, BaseClassActivity.this);
+                    actionProcessManager = new AgoraActionProcessManager(config, BaseClassActivity_acadsoc.this);
                 }
             }
 
@@ -1048,7 +1066,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
             @Override
             public void onSuccess(@Nullable EduUser user) {
                 chatMsg.isMe = chatMsg.getFromUser().equals(user.getUserInfo());
-                chatRoomFragment.addMessage(chatMsg);
+//                chatRoomFragment.addMessage(chatMsg);
                 AgoraLog.e(TAG + ":成功添加一条聊天消息");
             }
 
@@ -1067,66 +1085,17 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
     @Override
     public void onRemoteStreamsAdded(@NotNull List<EduStreamEvent> streamEvents, @NotNull EduRoom classRoom) {
         AgoraLog.e(TAG + ":收到添加远端流的回调");
-        Iterator<EduStreamEvent> iterator = streamEvents.iterator();
-        while (iterator.hasNext()) {
-            EduStreamEvent streamEvent = iterator.next();
-            EduStreamInfo streamInfo = streamEvent.getModifiedStream();
-            if (streamInfo.getPublisher().getRole() == EduUserRole.TEACHER
-                    && streamInfo.getVideoSourceType().equals(VideoSourceType.SCREEN)) {
-                /**老师打开了屏幕分享，此时把这个流渲染出来*/
-                runOnUiThread(() -> {
-                    layout_whiteboard.setVisibility(View.GONE);
-                    layout_share_video.setVisibility(View.VISIBLE);
-                    layout_share_video.removeAllViews();
-                    renderStream(getMainEduRoom(), streamInfo, layout_share_video);
-                });
-                /**屏幕分享流已处理，移出集合*/
-                iterator.remove();
-                break;
-            }
-        }
     }
 
     @Override
     public void onRemoteStreamUpdated(@NotNull List<EduStreamEvent> streamEvents,
                                       @NotNull EduRoom classRoom) {
         AgoraLog.e(TAG + ":收到修改远端流的回调");
-        Iterator<EduStreamEvent> iterator = streamEvents.iterator();
-        while (iterator.hasNext()) {
-            EduStreamEvent streamEvent = iterator.next();
-            EduStreamInfo streamInfo = streamEvent.getModifiedStream();
-            if (streamInfo.getPublisher().getRole() == EduUserRole.TEACHER
-                    && streamInfo.getVideoSourceType().equals(VideoSourceType.SCREEN)) {
-                runOnUiThread(() -> {
-                    layout_whiteboard.setVisibility(View.GONE);
-                    layout_share_video.setVisibility(View.VISIBLE);
-                    layout_share_video.removeAllViews();
-                    renderStream(getMainEduRoom(), streamInfo, layout_share_video);
-                });
-                /**屏幕分享流已处理，移出集合*/
-                iterator.remove();
-                break;
-            }
-        }
     }
 
     @Override
     public void onRemoteStreamsRemoved(@NotNull List<EduStreamEvent> streamEvents, @NotNull EduRoom classRoom) {
         AgoraLog.e(TAG + ":收到移除远端流的回调");
-        for (EduStreamEvent streamEvent : streamEvents) {
-            EduStreamInfo streamInfo = streamEvent.getModifiedStream();
-            if (streamInfo.getPublisher().getRole() == EduUserRole.TEACHER
-                    && streamInfo.getVideoSourceType().equals(VideoSourceType.SCREEN)) {
-                /**老师关闭了屏幕分享，移除屏幕分享的布局*/
-                runOnUiThread(() -> {
-                    layout_whiteboard.setVisibility(View.VISIBLE);
-                    layout_share_video.setVisibility(View.GONE);
-                    layout_share_video.removeAllViews();
-                    renderStream(getMainEduRoom(), streamInfo, null);
-                });
-                break;
-            }
-        }
     }
 
     @Override
@@ -1136,15 +1105,15 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
             public void onSuccess(@Nullable EduRoomStatus roomStatus) {
                 switch (event) {
                     case CourseState:
-                        title_view.setTimeState(roomStatus.getCourseState() == EduRoomState.START,
-                                System.currentTimeMillis() - roomStatus.getStartTime());
+//                        title_view.setTimeState(roomStatus.getCourseState() == EduRoomState.START,
+//                                System.currentTimeMillis() - roomStatus.getStartTime());
                         if (roomStatus.getCourseState().equals(EduRoomState.END)) {
                             /*课堂结束，强制退出*/
                             showLeavedDialog(R.string.courseend);
                         }
                         break;
                     case AllStudentsChat:
-                        chatRoomFragment.setMuteAll(!roomStatus.isStudentChatAllowed());
+//                        chatRoomFragment.setMuteAll(!roomStatus.isStudentChatAllowed());
                         break;
                     default:
                         break;
@@ -1171,13 +1140,13 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                     /**首次获取到白板信息*/
                     mainBoardBean = new Gson().fromJson(boardJson, BoardBean.class);
                     runOnUiThread(() -> {
-                        whiteboardFragment.initBoardWithRoomToken(mainBoardBean.getInfo().getBoardId(),
+                        whiteBoardWindow.initBoardWithRoomToken(mainBoardBean.getInfo().getBoardId(),
                                 mainBoardBean.getInfo().getBoardToken(), userInfo.getUserUuid());
                     });
                 }
-                if(cause != null && !cause.isEmpty()) {
+                if (cause != null && !cause.isEmpty()) {
                     int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
-                    if(causeType == RECORDSTATECHANGED) {
+                    if (causeType == RECORDSTATECHANGED) {
                         String recordJson = getProperty(roomProperties, RECORD);
                         if (!TextUtils.isEmpty(recordJson)) {
                             RecordBean tmp = RecordBean.fromJson(recordJson, RecordBean.class);
@@ -1194,7 +1163,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
                                                     getString(R.string.replay_link), System.currentTimeMillis(),
                                                     EduChatMsgType.Text.getValue());
                                             recordMsg.isMe = true;
-                                            chatRoomFragment.addMessage(recordMsg);
+//                                            chatRoomFragment.addMessage(recordMsg);
                                         }
 
                                         @Override
@@ -1219,7 +1188,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
     @Override
     public void onNetworkQualityChanged(@NotNull NetworkQuality quality, @NotNull EduUserInfo user, @NotNull EduRoom classRoom) {
 //        AgoraLog.e(TAG + ":onNetworkQualityChanged->" + quality.getValue());
-        title_view.setNetworkQuality(quality);
+//        title_view.setNetworkQuality(quality);
     }
 
     @Override
@@ -1242,7 +1211,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
     public void onLocalUserUpdated(@NotNull EduUserEvent userEvent, @NotNull EduUserStateChangeType type) {
         /**更新用户信息*/
         EduUserInfo userInfo = userEvent.getModifiedUser();
-        chatRoomFragment.setMuteLocal(!userInfo.isChatAllowed());
+//        chatRoomFragment.setMuteLocal(!userInfo.isChatAllowed());
     }
 
     @Override
@@ -1353,16 +1322,16 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
             followTips = true;
             curFollowState = follow;
         }
-        whiteboardFragment.disableCameraTransform(follow);
+        whiteBoardWindow.disableCameraTransform(follow);
         if (getClassType() == RoomType.ONE_ON_ONE.getValue()) {
             /**一对一，学生始终有输入权限*/
-            whiteboardFragment.disableDeviceInputs(false);
+            whiteBoardWindow.disableDeviceInputs(false);
             return;
         }
         whiteBoardIsGranted(boardState, new EduCallback<Boolean>() {
             @Override
             public void onSuccess(@Nullable Boolean granted) {
-                whiteboardFragment.disableDeviceInputs(!granted);
+                whiteBoardWindow.disableDeviceInputs(!granted);
             }
 
             @Override
@@ -1372,6 +1341,25 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         });
     }
 
+    @Override
+    public void onDisableDeviceInput(boolean disable) {
+
+    }
+
+    @Override
+    public void onDisableCameraTransform(boolean disable) {
+
+    }
+
+    @Override
+    public void onSceneStateChanged(@Nullable SceneState state) {
+
+    }
+
+    @Override
+    public void onMemberStateChanged(@Nullable MemberState state) {
+
+    }
 
     @Override
     public void onApply(@NotNull AgoraActionMsgRes actionMsgRes) {

@@ -11,7 +11,9 @@ import java.lang.annotation.RetentionPolicy;
         com.herewhite.sdk.domain.Appliance.RECTANGLE,
         com.herewhite.sdk.domain.Appliance.ELLIPSE,
         com.herewhite.sdk.domain.Appliance.ERASER,
-        com.herewhite.sdk.domain.Appliance.TEXT
+        com.herewhite.sdk.domain.Appliance.TEXT,
+        com.herewhite.sdk.domain.Appliance.ARROW,
+        com.herewhite.sdk.domain.Appliance.STRAIGHT
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface Appliance {
