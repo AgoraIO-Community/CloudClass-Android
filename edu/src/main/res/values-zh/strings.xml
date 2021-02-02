@@ -57,4 +57,5 @@
     <string name="covideo_abort_interactive">老师终止了你的连麦！</string>
 
     <string name="parametererrpr">参数错误:%s</string>
+    <string name="remoteloginerror">账号在远端设备登录, 您已离开教室</string>
 </resources>

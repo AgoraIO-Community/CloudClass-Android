@@ -60,4 +60,5 @@
     <string name="covideo_abort_interactive">Teacher abort your interactive video!</string>
 
     <string name="parametererrpr">parameter error:%s</string>
+    <string name="remoteloginerror">Account was logged in from remote device, you have left the classroom</string>
 </resources>

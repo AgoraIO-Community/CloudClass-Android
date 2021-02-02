@@ -331,6 +331,7 @@ public class SmallClassActivity extends BaseClassActivity implements TabLayout.O
     @Override
     public void onConnectionStateChanged(@NotNull ConnectionState state, @NotNull EduRoom classRoom) {
         super.onConnectionStateChanged(state, classRoom);
+        showLeavedDialog(R.string.remoteloginerror);
     }
 
     @Override
