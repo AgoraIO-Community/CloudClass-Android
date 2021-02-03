@@ -6,6 +6,10 @@ data class ChatTranslateReq(val content: String) {
     var from: String = AUTO
     var to: String = AUTO
 
+    constructor(content: String, to: String) : this(content) {
+        this.to = to
+    }
+
     constructor(content: String, from: String, to: String) : this(content) {
         this.from = from
         this.to = to
