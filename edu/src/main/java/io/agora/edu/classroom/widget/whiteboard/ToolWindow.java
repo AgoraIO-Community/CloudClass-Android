@@ -35,6 +35,51 @@ public class ToolWindow extends AbstractWindow {
         void onFontSizeSelected(int fontIndex);
     }
 
+    public static class ToolConfig {
+        public int modeIndex;
+        public int colorIndex;
+        public int thicknessIndex;
+        public int pencilStyleIndex;
+        public int fontSizeIndex;
+
+        public ToolConfig(int modeIndex, int color, int thicknessIndex,
+                          int pencilIndex, int fontSizeIndex) {
+            this.modeIndex = modeIndex;
+            this.colorIndex = ToolPopupDialog.colorToIndex(color);
+            this.thicknessIndex = thicknessIndex;
+            this.pencilStyleIndex = pencilIndex;
+            this.fontSizeIndex = fontSizeIndex;
+        }
+
+        public ToolConfig() {
+
+        }
+
+        public void setConfig(ToolConfig config) {
+            this.modeIndex = config.modeIndex;
+            this.colorIndex = config.colorIndex;
+            this.thicknessIndex = config.thicknessIndex;
+            this.pencilStyleIndex = config.pencilStyleIndex;
+            this.fontSizeIndex = config.fontSizeIndex;
+        }
+
+        public void setColorIndex(int colorIndex) {
+            this.colorIndex = colorIndex;
+        }
+
+        public void setThicknessIndex(int thicknessIndex) {
+            this.thicknessIndex = thicknessIndex;
+        }
+
+        public void setPencilIndex(int pencilIndex) {
+            this.pencilStyleIndex = pencilIndex;
+        }
+
+        public void seFontSizeIndex(int fontSizeIndex) {
+            this.fontSizeIndex = fontSizeIndex;
+        }
+    }
+
     private final int[] mOptionIconRes = {
             R.drawable.tool_window_icon_arrow,
             R.drawable.tool_window_icon_pencil,
@@ -52,7 +97,7 @@ public class ToolWindow extends AbstractWindow {
             ToolPopupDialog.PopupType.eraser,
     };
 
-    private int mSelectedOption = -1;
+    private int mSelectedMode = -1;
     private boolean mFold;
     private int mToolRecyclerHeight;
 
@@ -60,6 +105,10 @@ public class ToolWindow extends AbstractWindow {
     private AppCompatImageView mFoldIcon;
     private FrameLayout mIconRecyclerLayout;
     private RecyclerView mIconRecycler;
+    private ToolWindowOptionAdapter mAdapter;
+
+    private ToolPopupDialog mPopup;
+    private ToolConfig mConfig = new ToolConfig();
 
     public ToolWindow(Context context) {
         super(context);
@@ -83,7 +132,8 @@ public class ToolWindow extends AbstractWindow {
         mIconRecycler = findViewById(R.id.tool_window_option_recycler);
         mIconRecycler.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false));
-        mIconRecycler.setAdapter(new ToolWindowOptionAdapter());
+        mAdapter = new ToolWindowOptionAdapter();
+        mIconRecycler.setAdapter(mAdapter);
 
         mFoldIcon = findViewById(R.id.tool_window_fold_icon);
         if (mFold) {
@@ -176,6 +226,11 @@ public class ToolWindow extends AbstractWindow {
         animator.yBy(mToolRecyclerHeight);
     }
 
+    public void setConfig(ToolConfig config) {
+        mConfig.setConfig(config);
+        if (mAdapter != null) mAdapter.notifyDataSetChanged();
+    }
+
     private class ToolWindowOptionAdapter extends RecyclerView.Adapter<ToolWindowOptionViewHolder> {
         @NonNull
         @Override
@@ -189,15 +244,16 @@ public class ToolWindow extends AbstractWindow {
             final int pos = holder.getAdapterPosition();
             holder.icon.setImageResource(mOptionIconRes[pos]);
             holder.position = pos;
-            holder.itemView.setActivated(mSelectedOption == pos);
+            holder.itemView.setActivated(mSelectedMode == pos);
             holder.itemView.setOnClickListener(view -> {
-                if (mSelectedOption == holder.position) {
-                    if (holder.position != 0 && mListener != null) {
-                        popupWindowIfNeeded(mSelectedOption, holder.itemView, mListener);
-                    }
-                } else {
-                    mSelectedOption = holder.position;
+                if (mSelectedMode != holder.position) {
+                    dismissPopWindow();
+                    mSelectedMode = holder.position;
                     if (mListener != null) mListener.onModeChanged(holder.position);
+                }
+
+                if (holder.position != 0 && !popWindowShowing()) {
+                    popupWindowIfNeeded(mSelectedMode, holder.itemView, mListener);
                 }
 
                 notifyDataSetChanged();
@@ -225,7 +281,19 @@ public class ToolWindow extends AbstractWindow {
                 default: type = ToolPopupDialog.PopupType.pencil; break;
             }
 
-            new ToolPopupDialog(getContext(), view, type, listener).show();
+            mPopup = new ToolPopupDialog(getContext(), view, type, listener, mConfig);
+            mPopup.setOnDismissListener(dialogInterface -> mPopup = null);
+            mPopup.show();
+        }
+    }
+
+    private boolean popWindowShowing() {
+        return mPopup != null && mPopup.isShowing();
+    }
+
+    private void dismissPopWindow() {
+        if (popWindowShowing()) {
+            mPopup.dismiss();
         }
     }
 

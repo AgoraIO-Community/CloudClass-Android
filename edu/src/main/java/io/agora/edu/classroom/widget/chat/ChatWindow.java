@@ -64,9 +64,9 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
 
         setLayouts(mUnfoldLayout, mFoldLayout);
 
-        findViewById(R.id.chat_window_fold_btn).setOnClickListener(view -> startMinimize());
+        findViewById(R.id.chat_window_fold_btn).setOnClickListener(view -> startMinimize(null));
 
-        findViewById(R.id.chat_window_min).setOnClickListener(view -> restoreMinimize());
+        findViewById(R.id.chat_window_min).setOnClickListener(view -> restoreMinimize(null));
 
         findViewById(R.id.chat_window_input_send_btn).setOnClickListener(view -> {
 

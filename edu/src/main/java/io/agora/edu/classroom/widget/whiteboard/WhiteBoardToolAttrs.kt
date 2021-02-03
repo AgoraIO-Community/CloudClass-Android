@@ -30,9 +30,9 @@ object WhiteBoardToolAttrs {
 
 class ToolModeAttr {
     var modeIndex: Int = 0
-    var rgb: Int = 0
-    var thicknessIndex: Int = 3
-    var pencilStyleIndex: Int = 0
+    var rgb: Int = -1163718
+    var thicknessIndex: Int = 0
+    var pencilStyleIndex: Int = 3
     var fontSizeIndex: Int = 0
 
     constructor()

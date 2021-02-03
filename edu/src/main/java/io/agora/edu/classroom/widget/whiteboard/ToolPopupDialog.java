@@ -51,14 +51,39 @@ public class ToolPopupDialog extends Dialog {
             R.drawable.tool_window_pencil_type_brush ,
     };
 
+    // -11024391
+    private static final int BLUE = Color.rgb(87, 199, 249);
+
+    // -13055
+    private static final int YELLOW = Color.rgb(255, 205, 1);
+
+    // -1163718
+    private static final int RED = Color.rgb(238, 62, 58);
+
+    // -16595162
+    private static final int GREEN = Color.rgb(2, 199, 38);
+
+    // -15066598
+    private static final int BLACK = Color.rgb(26, 26, 26);
+
+    // -855310
+    private static final int WHITE = Color.rgb(242, 242, 242);
+
     private final int[] mColors = {
-            Color.rgb(87, 199, 249),
-            Color.rgb(255, 205, 1),
-            Color.rgb(238, 62, 58),
-            Color.rgb(2, 199, 38),
-            Color.rgb(26, 26, 26),
-            Color.rgb(242, 242, 242),
+            BLUE, YELLOW, RED, GREEN, BLACK, WHITE
     };
+
+    public static int colorToIndex(int color) {
+        switch (color) {
+            case -11024391: return 0;
+            case -13055: return 1;
+            case -1163718: return 2;
+            case -16595162: return 3;
+            case -15066598: return 4;
+            case -855310: return 5;
+            default: return -1;
+        }
+    }
 
     private int mDialogPadding;
 
@@ -78,13 +103,16 @@ public class ToolPopupDialog extends Dialog {
     private FontSizeAdapter mFontAdapter;
 
     private final ToolWindow.ToolWindowListener mListener;
+    private ToolWindow.ToolConfig mConfig;
 
     public ToolPopupDialog(@NonNull Context context, View anchor, PopupType type,
-                           @Nullable ToolWindow.ToolWindowListener listener) {
+                           @Nullable ToolWindow.ToolWindowListener listener,
+                           @NonNull ToolWindow.ToolConfig config) {
         super(context, R.style.tool_window_dialog);
         setContentView(getLayoutByType(type));
         init(anchor, type);
         mListener = listener;
+        setConfig(config);
     }
 
     private int getLayoutByType(PopupType type) {
@@ -203,6 +231,14 @@ public class ToolPopupDialog extends Dialog {
         }
     }
 
+    private void setConfig(ToolWindow.ToolConfig config) {
+        mConfig = config;
+        mColorSelectIndex = config.colorIndex;
+        mThicknessSelectIndex = config.thicknessIndex;
+        mPencilStyleIndex = config.pencilStyleIndex;
+        mFontSizeSelectIndex = config.fontSizeIndex;
+    }
+
     private class ColorAdapter extends RecyclerView.Adapter<ColorViewHolder> {
         @NonNull
         @Override
@@ -219,6 +255,7 @@ public class ToolPopupDialog extends Dialog {
             holder.itemView.setActivated(pos == mColorSelectIndex);
             holder.itemView.setOnClickListener(view -> {
                 mColorSelectIndex = holder.position;
+                mConfig.setColorIndex(mColorSelectIndex);
                 if (mColorAdapter != null) mColorAdapter.notifyDataSetChanged();
                 if (mListener != null) mListener.onColorSelected(mColors[holder.position]);
             });
@@ -256,6 +293,7 @@ public class ToolPopupDialog extends Dialog {
             holder.itemView.setActivated(holder.position == mThicknessSelectIndex);
             holder.itemView.setOnClickListener(view -> {
                 mThicknessSelectIndex = holder.position;
+                mConfig.setThicknessIndex(mThicknessSelectIndex);
                 if (mThicknessAdapter != null) mThicknessAdapter.notifyDataSetChanged();
                 if (mListener != null) mListener.onThicknessSelected(holder.position);
             });
@@ -311,6 +349,7 @@ public class ToolPopupDialog extends Dialog {
             holder.itemView.setActivated(mPencilStyleIndex == pos);
             holder.itemView.setOnClickListener(view -> {
                 mPencilStyleIndex = holder.position;
+                mConfig.setPencilIndex(mPencilStyleIndex);
                 if (mPencilAdapter != null) mPencilAdapter.notifyDataSetChanged();
                 if (mListener != null) mListener.onPencilStyleSelected(holder.position);
             });
@@ -348,6 +387,7 @@ public class ToolPopupDialog extends Dialog {
             holder.itemView.setActivated(mFontSizeSelectIndex == pos);
             holder.itemView.setOnClickListener(view -> {
                 mFontSizeSelectIndex = holder.position;
+                mConfig.seFontSizeIndex(mFontSizeSelectIndex);
                 if (mFontAdapter != null) mFontAdapter.notifyDataSetChanged();
                 if (mListener != null) mListener.onFontSizeSelected(holder.position);
             });

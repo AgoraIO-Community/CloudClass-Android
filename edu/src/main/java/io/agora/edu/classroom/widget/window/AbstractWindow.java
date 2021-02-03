@@ -10,6 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import io.agora.edu.util.ThreadUtil;
 
@@ -33,12 +34,6 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
     private ViewPropertyAnimator mMinimizeAnimator;
     private ViewPropertyAnimator mRestoreAnimator;
 
-    private IMinimizeListener iMinimizeListener;
-
-    public void setIMinimizeListener(IMinimizeListener iMinimizeListener) {
-        this.iMinimizeListener = iMinimizeListener;
-    }
-
     public AbstractWindow(Context context) {
         super(context);
         init();
@@ -59,20 +54,23 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
     }
 
     @Override
-    public void startMinimize() {
+    public void startMinimize(@Nullable IWindowAnimateListener listener) {
         if (!ThreadUtil.isMainThread()) {
             Log.w(mTag, "Minimization canceled because not in UI thread");
+            if (listener != null) listener.onAnimateCancel();
             return;
         }
 
         if (mIsMinimized || mIsAnimating) {
             Log.w(mTag, "Minimization canceled because " +
                     "being animating or already minimized");
+            if (listener != null) listener.onAnimateCancel();
             return;
         }
 
         if (mOriginalView == null) {
             Log.w(mTag, "Minimization canceled because original view is null");
+            if (listener != null) listener.onAnimateCancel();
             return;
         }
 
@@ -80,12 +78,13 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
             mIsAnimating = true;
         }
 
-        startMinimizationAnimate();
+        startMinimizationAnimate(listener);
     }
 
-    private void startMinimizationAnimate() {
+    private void startMinimizationAnimate(@Nullable IWindowAnimateListener listener) {
         mRestoreWidth = mOriginalView.getWidth();
         mRestoreHeight = mOriginalView.getHeight();
+        if (listener != null) listener.onAnimateStart();
         mMinimizeAnimator = mOriginalView.animate()
                 .setDuration(ANIM_DURATION)
                 .xBy(getTranslateX(mMinimizeDirection))
@@ -104,23 +103,29 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
                         mRestoreAnimator = null;
                     }
 
-                    if(iMinimizeListener != null) {
-                        iMinimizeListener.onMinimized();
-                    }
+                    if (listener != null) listener.onAnimateEnd();
                 });
     }
 
     @Override
-    public void restoreMinimize() {
+    public void restoreMinimize(@Nullable IWindowAnimateListener listener) {
         if (!ThreadUtil.isMainThread()) {
             Log.w(mTag, "Minimization restore " +
                     "canceled because not in UI thread");
+            if (listener != null) listener.onAnimateCancel();
             return;
         }
 
         if (!mIsMinimized || mIsAnimating) {
             Log.w(mTag, "Minimization restore canceled because " +
                     "being animating or not minimized");
+            if (listener != null) listener.onAnimateCancel();
+            return;
+        }
+
+        if (mOriginalView == null) {
+            Log.w(mTag, "Minimization canceled because original view is null");
+            if (listener != null) listener.onAnimateCancel();
             return;
         }
 
@@ -128,10 +133,11 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
             mIsAnimating = true;
         }
 
-        startRestoreAnimate();
+        startRestoreAnimate(listener);
     }
 
-    private void startRestoreAnimate() {
+    private void startRestoreAnimate(@Nullable IWindowAnimateListener listener) {
+        if (listener != null) listener.onAnimateStart();
         mRestoreAnimator = mOriginalView.animate()
                 .setDuration(ANIM_DURATION)
                 .xBy(getTranslateX(mRestoreDirection))
@@ -151,9 +157,7 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
                         mRestoreAnimator = null;
                     }
 
-                    if(iMinimizeListener != null) {
-                        iMinimizeListener.onRestoreMinimized();
-                    }
+                    if (listener != null) listener.onAnimateEnd();
                 });
     }
 

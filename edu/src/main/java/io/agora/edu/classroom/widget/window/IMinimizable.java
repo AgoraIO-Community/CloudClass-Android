@@ -11,9 +11,9 @@ public interface IMinimizable {
         topLeft, topRight, bottomLeft, bottomRight
     }
 
-    void startMinimize();
+    void startMinimize(IWindowAnimateListener listener);
 
-    void restoreMinimize();
+    void restoreMinimize(IWindowAnimateListener listener);
 
     void cancelAnimate();
 
