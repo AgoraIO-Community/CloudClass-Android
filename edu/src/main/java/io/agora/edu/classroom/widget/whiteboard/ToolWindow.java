@@ -246,16 +246,14 @@ public class ToolWindow extends AbstractWindow {
             holder.position = pos;
             holder.itemView.setActivated(mSelectedMode == pos);
             holder.itemView.setOnClickListener(view -> {
-                if (mSelectedMode == holder.position) {
-                    if (holder.position != 0 && !popWindowShowing()) {
-                        popupWindowIfNeeded(mSelectedMode, holder.itemView, mListener);
-                    }
-                } else {
+                if (mSelectedMode != holder.position) {
                     dismissPopWindow();
+                    mSelectedMode = holder.position;
                     if (mListener != null) mListener.onModeChanged(holder.position);
-                    if (holder.position != 0 && !popWindowShowing()) {
-                        popupWindowIfNeeded(mSelectedMode, holder.itemView, mListener);
-                    }
+                }
+
+                if (holder.position != 0 && !popWindowShowing()) {
+                    popupWindowIfNeeded(mSelectedMode, holder.itemView, mListener);
                 }
 
                 notifyDataSetChanged();
