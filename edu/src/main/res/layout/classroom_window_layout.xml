@@ -1,123 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/classroom_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:id="@+id/classroom_title_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/classroom_title_bar_height"
         android:layout_alignParentTop="true"
-        android:background="@color/classroom_title_bar_bg"
         android:paddingStart="@dimen/classroom_title_bar_padding_border"
-        android:paddingEnd="@dimen/classroom_title_bar_padding_border">
-
+        android:paddingEnd="@dimen/classroom_title_bar_padding_border"
+        android:background="@color/classroom_title_bar_bg">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/classroom_customer_service_btn"
             android:layout_width="@dimen/classroom_title_bar_btn_size"
             android:layout_height="@dimen/classroom_title_bar_btn_size"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/classroom_icon_customer_service" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/classroom_refresh_btn"
-            android:layout_width="@dimen/classroom_title_bar_btn_size"
-            android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/classroom_title_bar_element_margin"
-            android:layout_toStartOf="@id/classroom_customer_service_btn"
-            android:src="@drawable/classroom_icon_refresh" />
-
+            android:src="@drawable/classroom_icon_customer_service"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/classroom_switch_camera_btn"
             android:layout_width="@dimen/classroom_title_bar_btn_size"
             android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/classroom_customer_service_btn"
             android:layout_marginEnd="@dimen/classroom_title_bar_element_margin"
-            android:layout_toStartOf="@id/classroom_refresh_btn"
-            android:src="@drawable/classroom_icon_switch_camera" />
-
+            android:layout_centerVertical="true"
+            android:src="@drawable/classroom_icon_switch_camera"/>
         <RelativeLayout
             android:id="@+id/classroom_leave_btn_layout"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/classroom_leave_btn_bg"
+            android:layout_alignParentStart="true"
             android:paddingStart="@dimen/classroom_title_bar_leave_btn_padding"
-            android:paddingEnd="@dimen/classroom_title_bar_leave_btn_padding">
-
+            android:paddingEnd="@dimen/classroom_title_bar_leave_btn_padding"
+            android:background="@drawable/classroom_leave_btn_bg">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/classroom_leave_btn_icon"
                 android:layout_width="@dimen/classroom_title_bar_leave_icon_size"
                 android:layout_height="@dimen/classroom_title_bar_leave_icon_size"
                 android:layout_centerVertical="true"
-                android:src="@drawable/classroom_icon_leave_room" />
-
+                android:src="@drawable/classroom_icon_leave_room"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/classroom_leave_btn_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/classroom_leave_btn_icon"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/classroom_title_bar_element_margin_small"
-                android:layout_toEndOf="@id/classroom_leave_btn_icon"
-                android:text="@string/class_window_leave_text"
+                android:textSize="@dimen/classroom_title_bar_leave_text_size"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/classroom_title_bar_leave_text_size" />
+                android:text="@string/class_window_leave_text"/>
         </RelativeLayout>
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/classroom_room_id_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/classroom_title_bar_padding_border"
             android:layout_toEndOf="@id/classroom_leave_btn_layout"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/classroom_title_bar_text_size" />
-
+            android:layout_marginStart="@dimen/classroom_title_bar_padding_border"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/classroom_title_bar_text_size"
+            android:textColor="@android:color/white"/>
         <RelativeLayout
             android:id="@+id/classroom_class_time_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/classroom_room_id_text">
-
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_room_id_text"
+            android:layout_marginStart="@dimen/classroom_title_bar_element_margin">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/classroom_class_time_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/classroom_class_state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/classroom_class_time_icon"
+                android:textSize="@dimen/classroom_title_bar_text_size"
+                android:textColor="@android:color/white"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/classroom_class_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/classroom_class_time_icon" />
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/classroom_class_state_text"
+                android:textSize="@dimen/classroom_title_bar_text_size"/>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/classroom_network_state_layout"
-            android:layout_width="@dimen/classroom_title_bar_btn_size"
-            android:layout_height="@dimen/classroom_title_bar_btn_size"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/classroom_class_time_layout">
-
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/classroom_class_time_layout"
+            android:layout_marginStart="@dimen/classroom_title_bar_element_margin">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/classroom_network_state_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/classroom_icon_network_state_good" />
-
+                android:layout_width="@dimen/classroom_title_bar_btn_size"
+                android:layout_height="@dimen/classroom_title_bar_btn_size"
+                android:layout_centerVertical="true"
+                android:src="@drawable/classroom_icon_network_state_good"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/classroom_network_state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/classroom_title_bar_element_margin_small"
                 android:layout_toEndOf="@id/classroom_network_state_icon"
-                android:textSize="@dimen/classroom_title_bar_text_size" />
+                android:textSize="@dimen/classroom_title_bar_text_size"/>
         </RelativeLayout>
-
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/container_Layout"
         android:layout_width="match_parent"
@@ -276,5 +267,4 @@
             android:layout_marginTop="@dimen/dp_8"/>
 
     </RelativeLayout>
-
 </RelativeLayout>

@@ -37,16 +37,12 @@ import io.agora.base.callback.ThrowableCallback;
 import io.agora.base.network.RetrofitManager;
 import io.agora.covideo.AgoraCoVideoAction;
 import io.agora.edu.R;
-import io.agora.edu.R2;
 import io.agora.edu.base.BaseActivity;
 import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.bean.channel.User;
 import io.agora.edu.classroom.bean.msg.ChannelMsg;
-import io.agora.edu.classroom.fragment.ChatRoomFragment;
-import io.agora.edu.classroom.fragment.WhiteBoardFragment;
-import io.agora.edu.classroom.widget.dialog.DialogClickListener;
 import io.agora.edu.classroom.widget.dialog.NormalDialog;
-import io.agora.edu.classroom.widget.title.TitleView;
+import io.agora.edu.classroom.widget.room.ClassTitleBar;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardEventListener;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
 import io.agora.edu.common.api.Chat;
@@ -125,6 +121,8 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
     public static final String LAUNCHCONFIG = "LAUNCHCONFIG";
     public static final String EDUMANAGER = "eduManager";
     public static final int RESULT_CODE = 808;
+
+    protected ClassTitleBar classTitleBar;
 
     protected WhiteBoardWindow whiteBoardWindow;
 
@@ -958,9 +956,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         getMediaRoomStatus(new EduCallback<EduRoomStatus>() {
             @Override
             public void onSuccess(@Nullable EduRoomStatus status) {
-//                title_view.setTimeState(status.getCourseState() == EduRoomState.START,
-//                        System.currentTimeMillis() - status.getStartTime());
-//                chatRoomFragment.setMuteAll(!status.isStudentChatAllowed());
+                classTitleBar.setClassId(agoraEduLaunchConfig.getRoomUuid());
             }
 
             @Override

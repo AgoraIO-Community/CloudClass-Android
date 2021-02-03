@@ -20,6 +20,7 @@ import java.util.List;
 import io.agora.edu.R;
 import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
+import io.agora.edu.classroom.widget.room.ClassTitleBar;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
 import io.agora.edu.classroom.widget.whiteboard.ToolModeAttr;
@@ -45,7 +46,7 @@ import io.agora.rte.data.RteRemoteVideoState;
 import static io.agora.education.impl.Constants.AgoraLog;
 
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
-        VideoWindow.OnMediaControlListener {
+        VideoWindow.OnMediaControlListener, ClassTitleBar.ClassTitleBarListener {
     private static final String TAG = "AscadsocActivity";
     private RelativeLayout containerLayout;
     private ToolWindow toolWindow;
@@ -88,6 +89,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                             public void onFailure(@NotNull EduError error) {
                             }
                         });
+
                         initTitleTimeState();
                         initParseBoardInfo(getMainEduRoom());
                         renderTeacherStream1();
@@ -104,6 +106,10 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     protected void initView() {
         super.initView();
         containerLayout = findViewById(R.id.container_Layout);
+
+        classTitleBar = new ClassTitleBar(findViewById(R.id.classroom_title_bar_layout));
+        classTitleBar.setClassTitleBarListener(this);
+
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
         whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
@@ -379,5 +385,20 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     public void onAudio(boolean mute) {
         muteLocalAudio(mute);
+    }
+
+    @Override
+    public void onLeaveRoom() {
+        showLeaveDialog();
+    }
+
+    @Override
+    public void onSwitchCamera() {
+
+    }
+
+    @Override
+    public void onCustomerService() {
+
     }
 }

@@ -35,6 +35,7 @@ public class ClassTitleBar {
     };
 
     private final AppCompatTextView mRoomIdTextView;
+    private final String mRoomIdHintFormat;
     private final AppCompatImageView mTimeIcon;
     private final AppCompatTextView mClassStateText;
     private final AppCompatTextView mTimeText;
@@ -73,6 +74,14 @@ public class ClassTitleBar {
 
         setNetworkState(NetworkState.medium);
         setClassStarted(true);
+
+        mRoomIdHintFormat = layout.getContext().getResources()
+                .getString(R.string.class_window_class_id_format);
+    }
+
+    public void setClassId(String id) {
+        String idText = String.format(mRoomIdHintFormat, id);
+        mRoomIdTextView.setText(idText);
     }
 
     public void setNetworkState(NetworkState state) {
