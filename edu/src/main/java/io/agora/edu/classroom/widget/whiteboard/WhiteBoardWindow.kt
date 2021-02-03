@@ -60,7 +60,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     private lateinit var originLayoutParams: LayoutParams
 
-    private val toolModeAttr: ToolModeAttr = ToolModeAttr()
+    val curToolModeAttr: ToolModeAttr = ToolModeAttr()
 
     constructor(context: Context) : super(context) {
         view()
@@ -259,22 +259,22 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     /**WhiteBoardToolBarListener*/
     override fun onModeChanged(modeIndex: Int) {
-        toolModeAttr.modeIndex = modeIndex
+        curToolModeAttr.modeIndex = modeIndex
         boardManager.appliance = modes[modeIndex]
     }
 
     override fun onColorSelected(rgb: Int) {
-        toolModeAttr.rgb = rgb
+        curToolModeAttr.rgb = rgb
         boardManager.strokeColor = ColorUtil.colorToArray(rgb)
     }
 
     override fun onThicknessSelected(thicknessIndex: Int) {
-        toolModeAttr.thicknessIndex = thicknessIndex
+        curToolModeAttr.thicknessIndex = thicknessIndex
         boardManager.strokeWidth = penSizes[thicknessIndex]
     }
 
     override fun onPencilStyleSelected(styleIndex: Int) {
-        toolModeAttr.pencilStyleIndex = styleIndex
+        curToolModeAttr.pencilStyleIndex = styleIndex
         when (penStyles[styleIndex]) {
             PenTheme.Arrow -> {
                 boardManager.appliance = Appliance.ARROW
@@ -292,7 +292,7 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     }
 
     override fun onFontSizeSelected(fontIndex: Int) {
-        toolModeAttr.fontSizeIndex = fontIndex
+        curToolModeAttr.fontSizeIndex = fontIndex
         boardManager.textSize = textSizes[fontIndex]
     }
 
