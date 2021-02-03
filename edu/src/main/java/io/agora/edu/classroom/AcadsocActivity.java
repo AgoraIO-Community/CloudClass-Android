@@ -22,8 +22,9 @@ import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
+import io.agora.edu.classroom.widget.whiteboard.ToolModeAttr;
 import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
-import io.agora.edu.classroom.widget.window.IMinimizeListener;
+import io.agora.edu.classroom.widget.window.IWindowAnimateListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.room.EduRoom;
@@ -69,7 +70,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initData() {
         super.initData();
-        /**进入教室*/
         joinRoomAsStudent(getMainEduRoom(), agoraEduLaunchConfig.getUserName(), agoraEduLaunchConfig.getUserUuid(), true, true, true,
                 new EduCallback<EduStudent>() {
                     @Override
@@ -110,24 +110,21 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         whiteBoardWindow.setWhiteBoardEventListener(this);
         whiteBoardWindow.setInputWhileFollow(true);
         whiteBoardWindow.setWritable(true);
+
         toolWindow = findViewById(R.id.tool_Window);
         toolWindow.setListener(whiteBoardWindow);
+        ToolModeAttr attr = whiteBoardWindow.getCurToolModeAttr();
+        toolWindow.setConfig(new ToolWindow.ToolConfig(
+                attr.getModeIndex(), attr.getRgb(), attr.getThicknessIndex(),
+                attr.getPencilStyleIndex(), attr.getFontSizeIndex()
+        ));
+
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
         videoLayout = findViewById(R.id.video_Layout);
         teacherVideo = findViewById(R.id.teacher_Window);
         teacherVideo.init(false);
-        teacherVideo.setIMinimizeListener(new IMinimizeListener() {
-            @Override
-            public void onMinimized() {
-                teacherVideo.setVisibility(View.GONE);
-            }
 
-            @Override
-            public void onRestoreMinimized() {
-                teacherVideo.setVisibility(View.VISIBLE);
-            }
-        });
         teacherFoldLayout = findViewById(R.id.teacherFold_Layout);
         teacherVideo.setMinimizedView(teacherFoldLayout);
         teacherNameText = findViewById(R.id.teacherName_Text);
@@ -135,17 +132,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         teacherUnfoldIMg.setOnClickListener(this);
         studentVideo = findViewById(R.id.student_Window);
         studentVideo.init(true);
-        studentVideo.setIMinimizeListener(new IMinimizeListener() {
-            @Override
-            public void onMinimized() {
-                studentVideo.setVisibility(View.GONE);
-            }
 
-            @Override
-            public void onRestoreMinimized() {
-                studentVideo.setVisibility(View.VISIBLE);
-            }
-        });
         studentVideo.setOnMediaControlListener(this);
         studentFoldLayout = findViewById(R.id.studentFold_Layout);
         studentVideo.setMinimizedView(studentFoldLayout);
@@ -235,9 +222,39 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.teacherUnfold_Img) {
-            teacherVideo.restoreMinimize();
+            teacherVideo.restoreMinimize(new IWindowAnimateListener() {
+                @Override
+                public void onAnimateStart() {
+
+                }
+
+                @Override
+                public void onAnimateEnd() {
+                    teacherVideo.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimateCancel() {
+
+                }
+            });
         } else if (id == R.id.studentUnfold_Img) {
-            studentVideo.restoreMinimize();
+            studentVideo.restoreMinimize(new IWindowAnimateListener() {
+                @Override
+                public void onAnimateStart() {
+
+                }
+
+                @Override
+                public void onAnimateEnd() {
+                    studentVideo.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimateCancel() {
+
+                }
+            });
         }
     }
 

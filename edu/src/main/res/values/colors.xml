@@ -82,14 +82,14 @@
     <color name="video_window_fold_username_text">#FEFEFE</color>
 
     <!-- Chat Window -->
-    <color name="chat_window_bg">#9913196F</color>
+    <color name="chat_window_bg">#B313196F</color>
     <color name="chat_window_item_bg">#13196F</color>
     <color name="chat_window_text_white">#FEFEFE</color>
     <color name="chat_window_input_hint_color">#C2D5E5</color>
     <color name="chat_window_new_message_bg">#F04C36</color>
 
     <!-- PageControlWindow -->
-    <color name="pagecontrol_window_bg_solid">#3B51BE</color>
+    <color name="pagecontrol_window_bg_solid">#808F9AD0</color>
     <color name="pagecontrol_window_page_no_bg_solid">#707DBC</color>
     <color name="pagecontrol_window_page_no_text">#FFFFFFFF</color>
 
@@ -99,7 +99,7 @@
 
     <!-- Tool Window -->
     <color name="tool_window_bg">#B313196F</color>
-    <color name="tool_window_bg_border">#090E51</color>
+    <color name="tool_window_bg_border">#B3090E51</color>
     <color name="tool_window_popup_image_item_bg">#80FFFFFF</color>
     <color name="tool_window_popup_font_bg">#FFFFFF</color>
     <color name="tool_window_popup_font_color">#002591</color>
