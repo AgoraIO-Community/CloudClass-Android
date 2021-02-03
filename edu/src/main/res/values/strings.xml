@@ -16,7 +16,7 @@
     <string name="color_picker">Color Picker</string>
     <string name="there_is_no_teacher_disable_whiteboard">There is no teacher in this classroom, cannot use the whiteboard.</string>
     <string name="get_channel_attr_failed">Get channel attributes failed，Please try again later!</string>
-    <string name="the_room_is_full">Room is full, please change another room!</string>
+    <string name="the_room_is_full">The classroom is full</string>
     <string name="chat_muting">Prohibited post!</string>
     <string name="time_default" translatable="false">00:00:00</string>
     <string name="time_separator" translatable="false">&#160;/&#160;</string>
@@ -47,6 +47,7 @@
     <string name="teacherinviteaudio">teacher applied to turn on your microphone!</string>
     <string name="teacherinvitevideo">teacher applied to turn on your camera!</string>
     <string name="copy1">Copy</string>
+    <string name="sendhanduptoteacher">HandsUp request has been sent to teacher</string>
     <string name="handsupsuccess">hands up success</string>
     <string name="handsupfailed">hands up failed</string>
     <string name="cancelhandsupsuccess">cancel hands up success</string>

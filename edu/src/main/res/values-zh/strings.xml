@@ -16,7 +16,7 @@
     <string name="color_picker">颜色选择器</string>
     <string name="there_is_no_teacher_disable_whiteboard">老师不在线，无法使用白板</string>
     <string name="get_channel_attr_failed">获取房间信息失败，请稍后重试！</string>
-    <string name="the_room_is_full">此房间人数已达上限！</string>
+    <string name="the_room_is_full">加入教室失败，教室人数已满</string>
     <string name="chat_muting">禁言中！</string>
     <string name="rtm_not_login">RTM未登录，请稍后重试</string>
     <string name="configuration_load_failed">配置加载失败，请稍后重试</string>
@@ -44,6 +44,7 @@
     <string name="teacherinviteaudio">老师申请打开麦克风!</string>
     <string name="teacherinvitevideo">老师申请打开摄像头!</string>
     <string name="copy1">复制</string>
+    <string name="sendhanduptoteacher">已发送举手请求给老师</string>
     <string name="handsupsuccess">举手成功</string>
     <string name="handsupfailed">举手失败</string>
     <string name="cancelhandsupsuccess">取消举手成功</string>

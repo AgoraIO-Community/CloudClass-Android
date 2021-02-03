@@ -242,6 +242,7 @@ public class LargeClassActivity extends BaseClassActivity implements TabLayout.O
                 @Override
                 public void onSuccess(@Nullable Boolean res) {
                     AgoraLog.e(TAG + ":举手成功");
+                    ToastManager.showShort(R.string.sendhanduptoteacher);
                 }
 
                 @Override

@@ -95,19 +95,19 @@ public class AgoraEduSDK {
             errorTips(context, msg);
         }
 
-        if(agoraEduSDKConfig.getEyeCare() != 0 && agoraEduSDKConfig.getEyeCare() != 1) {
+        if (agoraEduSDKConfig.getEyeCare() != 0 && agoraEduSDKConfig.getEyeCare() != 1) {
             String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
                     "AgoraEduSDKConfig.eyeCare is not expected, it must be 0 or 1!");
             errorTips(context, msg);
         }
 
-        if(!AgoraEduRoleType.isValid(config.getRoleType())) {
+        if (!AgoraEduRoleType.isValid(config.getRoleType())) {
             String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
                     "AgoraEduLaunchConfig.roleType is not expected, it must be 2!");
             errorTips(context, msg);
         }
 
-        if(!AgoraEduRoomType.isValid(config.getRoomType())) {
+        if (!AgoraEduRoomType.isValid(config.getRoomType())) {
             String msg = String.format(context.getString(R.string.parametererrpr), "The value of " +
                     "AgoraEduLaunchConfig.roomType is not expected, it must be 0 or 1 or 2!");
             errorTips(context, msg);
@@ -149,8 +149,9 @@ public class AgoraEduSDK {
 
             @Override
             public void onFailure(@NotNull EduError error) {
-                String msg = "pullRemoteConfig failed->code:" + error.getType() + ",msg:" + error.getMsg();
-                callbackError(context, msg);
+                StringBuilder toastMsg = new StringBuilder("pullRemoteConfig failed");
+                StringBuilder logMsg = toastMsg.append("->code:" + error.getType() + ",msg:" + error.getMsg());
+                callbackError(context, toastMsg.toString(), logMsg.toString());
             }
         });
 
@@ -158,7 +159,8 @@ public class AgoraEduSDK {
     }
 
     private static void checkAndInit(@NotNull Context context, @NotNull AgoraEduLaunchConfig config) {
-        RoomPreCheckReq req = new RoomPreCheckReq(config.getRoomName(), config.getRoomType());
+        RoomPreCheckReq req = new RoomPreCheckReq(config.getRoomName(), config.getRoomType(),
+                String.valueOf(config.getRoleType()));
         roomPre.preCheckClassRoom(config.getUserUuid(), req, new EduCallback<RoomPreCheckRes>() {
             @Override
             public void onSuccess(@Nullable RoomPreCheckRes res) {
@@ -170,7 +172,7 @@ public class AgoraEduSDK {
                         @Override
                         public void onSuccess(@Nullable EduManager res) {
                             if (res != null) {
-                                Log.e(TAG, ":初始化EduManager成功");
+                                Log.e(TAG, ":init EduManager success");
                                 setEduManager(res);
                                 Intent intent = createIntent(context, config);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -180,20 +182,26 @@ public class AgoraEduSDK {
 
                         @Override
                         public void onFailure(@NotNull EduError error) {
-                            String msg = "初始化EduManager失败->code:" + error.getType() + ",reason:" + error.getMsg();
-                            callbackError(context, msg);
+                            StringBuilder toastMsg = new StringBuilder("init EduManager failed");
+                            StringBuilder logMsg = toastMsg.append("->code:" + error.getType() + ",reason:" + error.getMsg());
+                            callbackError(context, toastMsg.toString(), logMsg.toString());
                         }
                     });
                 } else {
                     String msg = "Room is End!";
-                    callbackError(context, msg);
+                    callbackError(context, msg, msg);
                 }
             }
 
             @Override
             public void onFailure(@NotNull EduError error) {
-                String msg = "preCheckClassRoom failed->code:" + error.getType() + ",msg:" + error.getMsg();
-                callbackError(context, msg);
+                StringBuilder logMsg = new StringBuilder("preCheckClassRoom failed->code:" +
+                        error.getType() + ",msg:" + error.getMsg());
+                StringBuilder toastMsg = new StringBuilder();
+                if (error.getType() == 20403001) {
+                    toastMsg.append(context.getString(R.string.the_room_is_full));
+                }
+                callbackError(context, toastMsg.toString(), logMsg.toString());
             }
         });
     }
@@ -216,14 +224,16 @@ public class AgoraEduSDK {
         return intent;
     }
 
-    private static void callbackError(Context context, String msg) {
-        ((Activity) context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-        Log.e(TAG, msg);
+    private static void callbackError(Context context, String toastMsg, String logMsg) {
+        if (!TextUtils.isEmpty(toastMsg)) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        Log.e(TAG, logMsg);
         agoraEduLaunchCallback.onCallback(AgoraEduEvent.AgoraEduEventDestroyed);
     }
 

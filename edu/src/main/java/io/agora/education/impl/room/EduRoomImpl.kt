@@ -22,6 +22,8 @@ import io.agora.education.api.room.EduRoom
 import io.agora.education.api.room.data.*
 import io.agora.education.api.statistics.NetworkQuality
 import io.agora.education.api.stream.data.*
+import io.agora.education.api.stream.data.VideoDimensions.VideoDimensions_320X240
+import io.agora.education.api.stream.data.VideoDimensions.VideoDimensions_640X480
 import io.agora.education.api.user.EduUser
 import io.agora.education.api.user.data.EduChatState
 import io.agora.education.api.user.data.EduUserInfo
@@ -196,6 +198,24 @@ internal class EduRoomImpl(
             syncSession.localUser = EduAssistantImpl(localUserInfo)
         } else {
             callback.onFailure(parameterError("roleType"))
+        }
+        /**根据classType设置视频分辨率*/
+        when (getCurRoomType()) {
+            RoomType.ONE_ON_ONE -> {
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_640X480[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_640X480[1]
+            }
+            RoomType.SMALL_CLASS -> {
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+            }
+            RoomType.LARGE_CLASS -> {
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+            }
+            else -> {
+                /**默认360 * 360*/
+            }
         }
         (syncSession.localUser as EduUserImpl).eduRoom = this
         /**大班课强制不自动发流*/

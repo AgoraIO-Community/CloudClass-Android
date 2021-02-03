@@ -14,6 +14,11 @@ enum class DegradationPreference {
     MAINTAIN_BALANCED
 }
 
+object VideoDimensions {
+    val VideoDimensions_640X480 = arrayOf(640, 480)
+    val VideoDimensions_320X240 = arrayOf(320, 240)
+}
+
 data class VideoEncoderConfig(
         var videoDimensionWidth: Int = 360,
         var videoDimensionHeight: Int = 360,
