@@ -22,13 +22,16 @@ import java.util.List;
 import io.agora.edu.R;
 import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
+import io.agora.edu.classroom.widget.room.ClassTitleBar;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
+import io.agora.edu.classroom.widget.whiteboard.ToolModeAttr;
 import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
 import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.edu.common.bean.request.ChatTranslateReq;
 import io.agora.edu.common.bean.response.ChatRecordItem;
 import io.agora.edu.common.bean.response.ChatTranslateRes;
+import io.agora.edu.classroom.widget.window.IWindowAnimateListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.message.EduChatMsg;
@@ -50,7 +53,7 @@ import io.agora.rte.data.RteRemoteVideoState;
 import static io.agora.education.impl.Constants.AgoraLog;
 
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
-        VideoWindow.OnMediaControlListener {
+        VideoWindow.OnMediaControlListener, ClassTitleBar.ClassTitleBarListener {
     private static final String TAG = "AscadsocActivity";
     private RelativeLayout containerLayout;
     private ToolWindow toolWindow;
@@ -74,7 +77,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initData() {
         super.initData();
-        /**进入教室*/
         joinRoomAsStudent(getMainEduRoom(), agoraEduLaunchConfig.getUserName(), agoraEduLaunchConfig.getUserUuid(), true, true, true,
                 new EduCallback<EduStudent>() {
                     @Override
@@ -93,6 +95,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                             public void onFailure(@NotNull EduError error) {
                             }
                         });
+
                         initTitleTimeState();
                         initParseBoardInfo(getMainEduRoom());
                         renderTeacherStream1();
@@ -121,6 +124,9 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             }
         });
         containerLayout = findViewById(R.id.container_Layout);
+
+        classTitleBar = new ClassTitleBar(findViewById(R.id.classroom_title_bar_layout));
+        classTitleBar.setClassTitleBarListener(this);
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
         whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
@@ -129,6 +135,11 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         whiteBoardWindow.setWritable(true);
         toolWindow = findViewById(R.id.tool_Window);
         toolWindow.setListener(whiteBoardWindow);
+        ToolModeAttr attr = whiteBoardWindow.getCurToolModeAttr();
+        toolWindow.setConfig(new ToolWindow.ToolConfig(
+                attr.getModeIndex(), attr.getRgb(), attr.getThicknessIndex(),
+                attr.getPencilStyleIndex(), attr.getFontSizeIndex()
+        ));
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
         videoLayout = findViewById(R.id.video_Layout);
@@ -315,9 +326,9 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.teacherUnfold_Img) {
-            teacherVideo.restoreMinimize();
+            teacherVideo.restoreMinimize(null);
         } else if (id == R.id.studentUnfold_Img) {
-            studentVideo.restoreMinimize();
+            studentVideo.restoreMinimize(null);
         }
     }
 
@@ -447,5 +458,20 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     public void onAudio(boolean mute) {
         muteLocalAudio(mute);
+    }
+
+    @Override
+    public void onLeaveRoom() {
+        showLeaveDialog();
+    }
+
+    @Override
+    public void onSwitchCamera() {
+        switchCamera();
+    }
+
+    @Override
+    public void onCustomerService() {
+
     }
 }

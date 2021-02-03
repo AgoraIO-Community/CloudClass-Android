@@ -13,11 +13,11 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.constraintlayout.utils.widget.MockView
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.agora.edu.R
 import io.agora.edu.classroom.widget.window.AbstractWindow
 import io.agora.edu.classroom.widget.window.IMinimizable
+import io.agora.edu.classroom.widget.window.IWindowAnimateListener
 
 class VideoWindow : AbstractWindow, View.OnClickListener {
     private val TAG = "VideoView"
@@ -212,7 +212,7 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
         when (v?.id) {
             R.id.ic_fold -> {
                 Log.e(TAG, "最小化")
-                startMinimize()
+                startMinimize(null)
             }
             R.id.ic_video -> {
                 onMediaControlListener?.onVideo(videoImg.isSelected)
@@ -222,7 +222,7 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
             }
             R.id.unfold_Img -> {
                 Log.e(TAG, "膨胀")
-                restoreMinimize()
+                restoreMinimize(null)
             }
         }
     }
