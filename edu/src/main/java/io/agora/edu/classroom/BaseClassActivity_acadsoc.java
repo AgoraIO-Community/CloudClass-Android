@@ -365,6 +365,21 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         }
     }
 
+    public final void switchCamera() {
+        getLocalUser(new EduCallback<EduUser>() {
+            @Override
+            public void onSuccess(@Nullable EduUser user) {
+                if(user != null) {
+                    user.switchCamera();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+            }
+        });
+    }
+
     /**
      * 禁止本地音频
      */
@@ -429,7 +444,21 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
 
     public void getLocalUser(EduCallback<EduUser> callback) {
         if (getMainEduRoom() != null) {
-            getMainEduRoom().getLocalUser(callback);
+            getMainEduRoom().getLocalUser(new EduCallback<EduUser>() {
+                @Override
+                public void onSuccess(@Nullable EduUser user) {
+                    if(user == null) {
+                        callback.onFailure(EduError.Companion.internalError("current eduRoom`s localUsr is null"));
+                    } else {
+                        callback.onSuccess(user);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull EduError error) {
+                    callback.onFailure(error);
+                }
+            });
         }
         callback.onFailure(EduError.Companion.internalError("current eduRoom is null"));
     }
@@ -438,11 +467,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         getLocalUser(new EduCallback<EduUser>() {
             @Override
             public void onSuccess(@Nullable EduUser res) {
-                if (res != null) {
-                    callback.onSuccess(res.getUserInfo());
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("current eduUser is null"));
-                }
+                callback.onSuccess(res.getUserInfo());
             }
 
             @Override
@@ -465,11 +490,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         getLocalUser(new EduCallback<EduUser>() {
             @Override
             public void onSuccess(@Nullable EduUser res) {
-                if (res != null) {
-                    res.sendRoomChatMessage(msg, callback);
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("current eduUser is null"));
-                }
+                res.sendRoomChatMessage(msg, callback);
             }
 
             @Override
