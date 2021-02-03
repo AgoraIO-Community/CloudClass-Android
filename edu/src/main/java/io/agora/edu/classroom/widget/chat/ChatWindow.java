@@ -21,6 +21,12 @@ import io.agora.edu.R;
 import io.agora.edu.classroom.widget.window.AbstractWindow;
 
 public class ChatWindow extends AbstractWindow implements TextWatcher {
+
+    /**
+     * 宽占Window.ID_ANDROID_CONTENT宽的比例
+     */
+    public static final float widthOfContent = 0.25f;
+
     private AppCompatTextView mFoldMsgCount;
     private RelativeLayout mUnfoldLayout;
     private RelativeLayout mFoldLayout;
@@ -28,6 +34,11 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
     private List<ChatItem> mMessageList;
 
     private boolean mFold;
+
+    public void resize(int screenWidth) {
+        float width = ((float) screenWidth) * widthOfContent;
+        getLayoutParams().width = ((int) width);
+    }
 
     public ChatWindow(Context context) {
         super(context);

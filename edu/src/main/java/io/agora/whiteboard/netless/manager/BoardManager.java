@@ -241,11 +241,6 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
     }
 
     @Override
-    public void onBeingAbleToCommitChange(boolean isAbleToCommit) {
-
-    }
-
-    @Override
     public void onDisconnectWithError(Exception e) {
         Log.e(TAG, "onDisconnectWithError->" + e.getMessage());
         if (listener != null) {
@@ -275,6 +270,16 @@ public class BoardManager extends NetlessManager<Room> implements RoomCallbacks 
                 handler.post(() -> listener.onSceneStateChanged(sceneState));
             }
         }
+    }
+
+    @Override
+    public void onCanUndoStepsUpdate(long canUndoSteps) {
+
+    }
+
+    @Override
+    public void onCanRedoStepsUpdate(long canRedoSteps) {
+
     }
 
     @Override

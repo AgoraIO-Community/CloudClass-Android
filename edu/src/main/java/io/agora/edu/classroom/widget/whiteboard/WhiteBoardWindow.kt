@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.*
+import android.webkit.WebView
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -16,11 +17,9 @@ import com.herewhite.sdk.domain.*
 import io.agora.base.ToastManager
 import io.agora.edu.R
 import io.agora.edu.classroom.widget.video.VideoViewTextureOutlineProvider
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.ellipseSizes
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.eraserSizes
+import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.modes
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.penSizes
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.penThemes
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.rectangleSizes
+import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.penStyles
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardToolAttrs.textSizes
 import io.agora.edu.classroom.widget.window.AbstractWindow
 import io.agora.edu.common.bean.board.BoardState
@@ -29,9 +28,10 @@ import io.agora.education.impl.Constants
 import io.agora.whiteboard.netless.listener.BoardEventListener
 import io.agora.whiteboard.netless.listener.GlobalStateChangeListener
 import io.agora.whiteboard.netless.manager.BoardManager
+import org.json.JSONObject
 
 class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListener, CommonCallbacks,
-        WhiteBoardToolBarListener, PageControlWindow.PageControlListener {
+        ToolWindow.ToolWindowListener, PageControlWindow.PageControlListener {
     private val TAG = "WhiteBoardWindow"
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var whiteBoardView: WhiteboardView
@@ -60,6 +60,8 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
 
     private lateinit var originLayoutParams: LayoutParams
 
+    private val toolModeAttr: ToolModeAttr = ToolModeAttr()
+
     constructor(context: Context) : super(context) {
         view()
     }
@@ -83,9 +85,9 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
             }
         })
         rootLayout = findViewById(R.id.root_Layout)
-        whiteBoardView = findViewById(R.id.white_board_view)
-//        setWhiteBoardCorner(true)
         loadingPb = findViewById(R.id.pb_loading)
+        whiteBoardView = findViewById(R.id.white_board_view)
+        WebView.setWebContentsDebuggingEnabled(true)
         whiteBoardView.setOnTouchListener(this)
         whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
                                                    bottom: Int, oldLeft: Int, oldTop: Int,
@@ -244,6 +246,10 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     override fun onPPTMediaPause() {
     }
 
+    override fun onMessage(`object`: JSONObject?) {
+
+    }
+
     override fun sdkSetupFail(error: SDKError?) {
 //        initData()
 //        initBoardWithRoomToken(curLocalUuid, curLocalToken, localUserUuid)
@@ -252,14 +258,24 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
     }
 
     /**WhiteBoardToolBarListener*/
-    override fun onSelector() {
-        boardManager.appliance = Appliance.SELECTOR
+    override fun onModeChanged(modeIndex: Int) {
+        toolModeAttr.modeIndex = modeIndex
+        boardManager.appliance = modes[modeIndex]
     }
 
-    override fun onPencil(color: Int, widthIndex: Int, themeIndex: Int) {
-        boardManager.strokeColor = ColorUtil.colorToArray(color)
-        boardManager.strokeWidth = penSizes[widthIndex]
-        when (penThemes[themeIndex]) {
+    override fun onColorSelected(rgb: Int) {
+        toolModeAttr.rgb = rgb
+        boardManager.strokeColor = ColorUtil.colorToArray(rgb)
+    }
+
+    override fun onThicknessSelected(thicknessIndex: Int) {
+        toolModeAttr.thicknessIndex = thicknessIndex
+        boardManager.strokeWidth = penSizes[thicknessIndex]
+    }
+
+    override fun onPencilStyleSelected(styleIndex: Int) {
+        toolModeAttr.pencilStyleIndex = styleIndex
+        when (penStyles[styleIndex]) {
             PenTheme.Arrow -> {
                 boardManager.appliance = Appliance.ARROW
             }
@@ -275,25 +291,9 @@ class WhiteBoardWindow : AbstractWindow, View.OnTouchListener, BoardEventListene
         }
     }
 
-    override fun onText(color: Int, sizeIndex: Int) {
-        boardManager.appliance = Appliance.TEXT
-        boardManager.strokeColor = ColorUtil.colorToArray(color)
-        boardManager.textSize = textSizes[sizeIndex]
-    }
-
-    override fun onRectangle(color: Int, widthIndex: Int) {
-        boardManager.appliance = Appliance.RECTANGLE
-        boardManager.strokeWidth = rectangleSizes[widthIndex]
-    }
-
-    override fun onEllipse(color: Int, widthIndex: Int) {
-        boardManager.appliance = Appliance.ELLIPSE
-        boardManager.strokeWidth = ellipseSizes[widthIndex]
-    }
-
-    override fun onEraser(widthIndex: Int) {
-        boardManager.appliance = Appliance.ERASER
-        boardManager.strokeWidth = eraserSizes[widthIndex]
+    override fun onFontSizeSelected(fontIndex: Int) {
+        toolModeAttr.fontSizeIndex = fontIndex
+        boardManager.textSize = textSizes[fontIndex]
     }
 
     /**PageControlListener*/

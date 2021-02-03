@@ -119,7 +119,7 @@ dependencies {
     implementation "io.agora.rtc:full-sdk:${safeExtGet('dependencies', 'io.agora.rtc:full-sdk', '2.9.0.106')}"
     implementation "io.agora.rtm:rtm-sdk:${safeExtGet('dependencies', 'io.agora.rtm:rtm-sdk', '1.4.1')}"
     implementation "androidx.annotation:annotation:${safeExtGet('dependencies', 'androidx.annotation:annotation', '1.1.0')}"
-    implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', '2.9.14')}"
+    implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', '2.11.13')}"
 
 
 //    //------打包aar配置开始-------
