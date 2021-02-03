@@ -26,18 +26,21 @@
         android:id="@+id/pageNo_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/pagecontrol_window_pageno_edit_margin_start"
         android:alpha="1"
+        android:layout_marginStart="@dimen/pagecontrol_window_pageno_edit_margin_start"
         android:background="@drawable/pagecontrol_window_page_no_bg"
         android:paddingStart="@dimen/pagecontrol_window_pageno_edit_padding_start"
         android:paddingTop="@dimen/pagecontrol_window_pageno_edit_padding_top"
         android:paddingEnd="@dimen/pagecontrol_window_pageno_edit_padding_end"
         android:paddingBottom="@dimen/pagecontrol_window_pageno_edit_padding_bottom"
-        android:text=""
+        android:text="999"
+        android:singleLine="true"
+        android:maxEms="3"
         android:textColor="@color/pagecontrol_window_page_no_text"
         android:textSize="@dimen/pagecontrol_window_pageno_edit_text" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/slash_Img"
         android:layout_width="@dimen/dp_10"
         android:layout_height="@dimen/dp_14"
         android:layout_marginStart="@dimen/dp_12"
@@ -49,7 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/pagecontrol_window_page_total_margin_start"
         android:alpha="1"
-        android:text=""
+        android:text="999"
+        android:singleLine="true"
+        android:maxEms="3"
         android:textColor="@color/pagecontrol_window_page_no_text"
         android:textSize="@dimen/pagecontrol_window_page_total_text" />
 

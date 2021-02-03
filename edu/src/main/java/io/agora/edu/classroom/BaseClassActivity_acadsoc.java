@@ -359,7 +359,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         finish();
     }
 
-    protected void recoveryFragmentWithConfigChanged() {
+    protected void recoveryFragmentWithConfigChanged() throws Exception {
         if (joinSuccess) {
             showFragmentWithJoinSuccess();
         }

@@ -1,6 +1,9 @@
 package io.agora.edu.classroom;
 
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -19,11 +22,12 @@ import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
-import io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow;
+import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
 import io.agora.edu.classroom.widget.window.IMinimizeListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.room.EduRoom;
+import io.agora.education.api.statistics.NetworkQuality;
 import io.agora.education.api.stream.data.EduStreamEvent;
 import io.agora.education.api.stream.data.EduStreamInfo;
 import io.agora.education.api.user.EduStudent;
@@ -42,7 +46,10 @@ import static io.agora.education.impl.Constants.AgoraLog;
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
         VideoWindow.OnMediaControlListener {
     private static final String TAG = "AscadsocActivity";
+    private RelativeLayout containerLayout;
+    private ToolWindow toolWindow;
     private PageControlWindow pageControlWindow;
+    private LinearLayout videoLayout;
     private VideoWindow teacherVideo, studentVideo;
     private RelativeLayout teacherFoldLayout, studentFoldLayout;
     private AppCompatTextView teacherNameText, studentNameText;
@@ -62,6 +69,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initData() {
         super.initData();
+        /**进入教室*/
         joinRoomAsStudent(getMainEduRoom(), agoraEduLaunchConfig.getUserName(), agoraEduLaunchConfig.getUserUuid(), true, true, true,
                 new EduCallback<EduStudent>() {
                     @Override
@@ -95,14 +103,18 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initView() {
         super.initView();
+        containerLayout = findViewById(R.id.container_Layout);
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
         whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
         whiteBoardWindow.setWhiteBoardEventListener(this);
         whiteBoardWindow.setInputWhileFollow(true);
         whiteBoardWindow.setWritable(true);
+        toolWindow = findViewById(R.id.tool_Window);
+        toolWindow.setListener(whiteBoardWindow);
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
+        videoLayout = findViewById(R.id.video_Layout);
         teacherVideo = findViewById(R.id.teacher_Window);
         teacherVideo.init(false);
         teacherVideo.setIMinimizeListener(new IMinimizeListener() {
@@ -141,6 +153,35 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         studentUnfoldImg = findViewById(R.id.studentUnfold_Img);
         studentUnfoldImg.setOnClickListener(this);
         chatWindow = findViewById(R.id.chat_Window);
+        /**各window适配屏幕*/
+        View layout = findViewById(Window.ID_ANDROID_CONTENT);
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int screenW = containerLayout.getRight() - containerLayout.getLeft();
+                int screenH = containerLayout.getBottom() - containerLayout.getTop();
+                /**适配VideoWindow*/
+                teacherVideo.resize(screenW);
+                studentVideo.resize(screenW);
+                /**适配视频折叠布局*/
+                teacherFoldLayout.getLayoutParams().width = teacherVideo.getLayoutParams().width;
+                studentFoldLayout.getLayoutParams().width = studentVideo.getLayoutParams().width;
+                /**适配WhiteBoardWindow*/
+                RelativeLayout.LayoutParams videoLayoutParams = (RelativeLayout.LayoutParams) videoLayout.getLayoutParams();
+                LinearLayout.LayoutParams teacherParams = (LinearLayout.LayoutParams) teacherVideo.getLayoutParams();
+                RelativeLayout.LayoutParams whiteBoardParams = (RelativeLayout.LayoutParams) whiteBoardWindow.getLayoutParams();
+                whiteBoardParams.setMarginEnd(whiteBoardParams.getMarginEnd() + teacherParams.width + videoLayoutParams.getMarginEnd());
+                whiteBoardParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.dp_4));
+                /**适配ChatWindow*/
+                chatWindow.resize(screenW);
+                RelativeLayout.LayoutParams chatParams = (RelativeLayout.LayoutParams) chatWindow.getLayoutParams();
+                chatParams.setMarginEnd(chatParams.getMarginEnd() + whiteBoardParams.getMarginEnd());
+                /**适配PageControlWindow*/
+                int surPlus = screenW - chatParams.width - chatParams.getMarginEnd();
+                pageControlWindow.resize(surPlus);
+            }
+        });
     }
 
     private void renderTeacherStream1() {
@@ -217,6 +258,12 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             renderStream(getMainEduRoom(), streamInfo, null);
             teacherVideo.updateState(VideoWindow.State.TeacherLeave);
         }
+    }
+
+    @Override
+    public void onNetworkQualityChanged(@NotNull NetworkQuality quality, @NotNull EduUserInfo user,
+                                        @NotNull EduRoom classRoom) {
+        super.onNetworkQualityChanged(quality, user, classRoom);
     }
 
     @Override

@@ -21,6 +21,14 @@ import io.agora.edu.classroom.widget.window.IMinimizable
 
 class VideoWindow : AbstractWindow, View.OnClickListener {
     private val TAG = "VideoView"
+
+    companion object {
+        /**宽占Window.ID_ANDROID_CONTENT宽的比例*/
+        const val widthOfContent: Float = 0.29f
+        /**固定的宽高比*/
+        const val aspectRatio: Float = 1.46f
+    }
+
     lateinit var videoContainer: FrameLayout
     lateinit var optionsLayout: ConstraintLayout
     private lateinit var videoImg: AppCompatImageView
@@ -43,6 +51,13 @@ class VideoWindow : AbstractWindow, View.OnClickListener {
     private var curState = State.Normal
 
     var onMediaControlListener: OnMediaControlListener? = null
+
+    fun resize(screenWidth: Int) {
+        val width = screenWidth.toFloat() * widthOfContent
+        val height = width / aspectRatio
+        layoutParams.width = width.toInt()
+        layoutParams.height = height.toInt()
+    }
 
     constructor(context: Context) : super(context) {
         view()
