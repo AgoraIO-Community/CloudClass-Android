@@ -81,12 +81,12 @@ public class ToolWindow extends AbstractWindow {
     }
 
     private final int[] mOptionIconRes = {
-            R.drawable.tool_window_icon_arrow,
-            R.drawable.tool_window_icon_pencil,
-            R.drawable.tool_window_icon_text,
-            R.drawable.tool_window_icon_rect,
-            R.drawable.tool_window_icon_circle,
-            R.drawable.tool_window_icon_eraser,
+            R.drawable.tool_window_option_icon_arrow_unselect,
+            R.drawable.tool_window_option_icon_pencil_unselect,
+            R.drawable.tool_window_option_icon_text_unselect,
+            R.drawable.tool_window_option_icon_rect_unselect,
+            R.drawable.tool_window_option_icon_circle_unselect,
+            R.drawable.tool_window_option_icon_eraser_unselect,
     };
 
     private final ToolPopupDialog.PopupType[] mPopupTypes = {
@@ -145,6 +145,8 @@ public class ToolWindow extends AbstractWindow {
         findViewById(R.id.tool_window_fold_icon_layout).setOnClickListener(view -> {
            if (mFold) unfold(); else fold();
         });
+
+        setWindowAlpha();
     }
 
     private void fold() {
@@ -244,6 +246,7 @@ public class ToolWindow extends AbstractWindow {
             final int pos = holder.getAdapterPosition();
             holder.icon.setImageResource(mOptionIconRes[pos]);
             holder.position = pos;
+            if (holder.position == 0) holder.more.setVisibility(View.GONE);
             holder.itemView.setActivated(mSelectedMode == pos);
             holder.itemView.setOnClickListener(view -> {
                 if (mSelectedMode != holder.position) {
@@ -299,13 +302,13 @@ public class ToolWindow extends AbstractWindow {
 
     private static class ToolWindowOptionViewHolder extends RecyclerView.ViewHolder {
         AppCompatImageView icon;
-        AppCompatImageView arrow;
+        AppCompatImageView more;
         int position;
 
         public ToolWindowOptionViewHolder(@NonNull View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.tool_window_option_item_icon);
-            arrow = itemView.findViewById(R.id.tool_window_option_item_arrow);
+            more = itemView.findViewById(R.id.tool_window_option_item_more);
         }
     }
 

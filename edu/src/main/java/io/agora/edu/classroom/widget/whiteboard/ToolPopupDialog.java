@@ -93,7 +93,7 @@ public class ToolPopupDialog extends Dialog {
     private int mFontSizeSelectIndex;
 
     private int mImageSpacing;
-    private int mFontLinePadding;
+    private int mFontItemPadding;
 
     private String[] mFontSizes;
 
@@ -161,7 +161,7 @@ public class ToolPopupDialog extends Dialog {
         mFontSizes = getContext().getResources().getStringArray(R.array.tool_window_popup_font_size);
         mImageSpacing = getContext().getResources()
                 .getDimensionPixelSize(R.dimen.tool_window_popup_image_item_spacing);
-        mFontLinePadding = getContext().getResources()
+        mFontItemPadding = getContext().getResources()
                 .getDimensionPixelSize(R.dimen.tool_window_popup_font_line_padding);
         initRecycler(type);
     }
@@ -419,8 +419,12 @@ public class ToolPopupDialog extends Dialog {
             int size = mFontSizes.length;
 
             if (FONT_GRID_SPAN <= position && (size - position + 1) > FONT_GRID_SPAN) {
-                outRect.top = mFontLinePadding;
-                outRect.bottom = mFontLinePadding;
+                outRect.top = mFontItemPadding;
+                outRect.bottom = mFontItemPadding;
+            }
+
+            if ((position + 1) % FONT_GRID_SPAN != 0) {
+                outRect.right = mFontItemPadding;
             }
         }
     }

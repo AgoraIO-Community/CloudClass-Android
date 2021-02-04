@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import io.agora.edu.util.ThreadUtil;
 
 public class AbstractWindow extends RelativeLayout implements IMinimizable {
+    protected static final float WINDOW_ALPHA = 0.7f;
+
     private static final int ANIM_DURATION = 300;
 
     private String mTag;
@@ -259,5 +261,9 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
     public void cancelAnimate() {
         if (mRestoreAnimator != null) mRestoreAnimator.cancel();
         if (mMinimizeAnimator != null) mMinimizeAnimator.cancel();
+    }
+
+    protected void setWindowAlpha() {
+        setAlpha(WINDOW_ALPHA);
     }
 }

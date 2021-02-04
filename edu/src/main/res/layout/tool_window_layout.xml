@@ -21,7 +21,7 @@
             android:id="@+id/tool_window_option_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/tool_window_divider_padding"/>
+            android:overScrollMode="never"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"

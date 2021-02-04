@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/tool_window_popup_width"
     android:layout_height="@dimen/tool_window_popup_height_shape"
-    android:orientation="vertical"
-    android:background="@drawable/tool_window_popup_bg">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tool_window_popup_recycler_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tool_window_popup_recycler_thickness"
+    android:background="@drawable/tool_window_dialog_188x92_bg">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/tool_window_popup_line_padding"/>
-</LinearLayout>
+        android:layout_marginStart="@dimen/tool_window_popup_content_left_margin"
+        android:layout_centerVertical="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tool_window_popup_recycler_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tool_window_popup_recycler_thickness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tool_window_popup_line_padding"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tool_window_popup_recycler_color"/>
+    </RelativeLayout>
+</RelativeLayout>

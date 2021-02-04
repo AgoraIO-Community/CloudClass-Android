@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/tool_window_popup_width"
     android:layout_height="@dimen/tool_window_popup_height_font"
-    android:orientation="vertical"
-    android:background="@drawable/tool_window_popup_bg">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tool_window_popup_recycler_color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tool_window_popup_recycler_font_size"
+    android:background="@drawable/tool_window_dialog_188x132_bg">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/tool_window_popup_line_padding"
-        android:padding="@dimen/tool_window_popup_font_padding"
-        android:background="@drawable/tool_window_popup_font_bg"/>
-</LinearLayout>
+        android:layout_marginStart="@dimen/tool_window_popup_content_left_margin"
+        android:layout_centerVertical="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tool_window_popup_recycler_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/tool_window_popup_line_padding"
+            android:layout_below="@id/tool_window_popup_recycler_color"
+            android:background="@drawable/tool_window_popup_font_bg"
+            android:padding="@dimen/tool_window_popup_font_padding"
+            android:layout_centerHorizontal="true">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tool_window_popup_recycler_font_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

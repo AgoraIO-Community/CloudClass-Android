@@ -84,6 +84,8 @@ public class ChatWindow extends AbstractWindow implements TextWatcher, View.OnCl
         mMessageRecycler.setAdapter(mAdapter);
 
         setMinimizeDirection(Direction.bottom);
+
+        setWindowAlpha();
     }
 
     @Override
