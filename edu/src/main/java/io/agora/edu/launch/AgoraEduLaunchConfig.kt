@@ -9,15 +9,15 @@ import android.os.Parcelable
 class AgoraEduLaunchConfig(val userName: String, val userUuid: String, val roomName: String,
                            val roomUuid: String,
                            val roleType: Int = AgoraEduRoleType.AgoraEduRoleTypeStudent.value,
-                           val roomType: Int, val rtmToken: String, val translateTo: String) : Parcelable {
+                           val roomType: Int, val rtmToken: String, val translateLanguage: String) : Parcelable {
     lateinit var appId: String
     var eyeCare = 0
     lateinit var whiteBoardAppId: String
 
     private constructor(userName: String, userUuid: String, roomName: String, roomUuid: String,
-                        roleType: Int, roomType: Int, rtmToken: String, translateTo: String,
+                        roleType: Int, roomType: Int, rtmToken: String, translateLanguage: String,
                         appId: String, eyeCare: Int, whiteBoardAppId: String)
-            : this(userName, userUuid, roomName, roomUuid, roleType, roomType, rtmToken, translateTo) {
+            : this(userName, userUuid, roomName, roomUuid, roleType, roomType, rtmToken, translateLanguage) {
         this.appId = appId
         this.eyeCare = eyeCare
         this.whiteBoardAppId = whiteBoardAppId
@@ -46,7 +46,7 @@ class AgoraEduLaunchConfig(val userName: String, val userUuid: String, val roomN
         parcel.writeInt(roleType)
         parcel.writeInt(roomType)
         parcel.writeString(rtmToken)
-        parcel.writeString(translateTo)
+        parcel.writeString(translateLanguage)
         parcel.writeString(appId)
         parcel.writeInt(eyeCare)
         parcel.writeString(whiteBoardAppId)

@@ -1,6 +1,5 @@
 package io.agora.edu.classroom;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -10,7 +9,6 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.google.gson.Gson;
 import com.herewhite.sdk.domain.MemberState;
 import com.herewhite.sdk.domain.SceneState;
 
@@ -18,20 +16,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 import io.agora.edu.R;
 import io.agora.edu.classroom.bean.channel.Room;
-import io.agora.edu.classroom.widget.chat.ChatWindow;
+import io.agora.edu.classroom.widget.reward.RewardWindow;
 import io.agora.edu.classroom.widget.room.ClassTitleBar;
 import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
 import io.agora.edu.classroom.widget.whiteboard.ToolModeAttr;
 import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
 import io.agora.edu.classroom.widget.window.IMinimizeListener;
-import io.agora.edu.common.bean.request.ChatTranslateReq;
-import io.agora.edu.common.bean.response.ChatRecordItem;
-import io.agora.edu.common.bean.response.ChatTranslateRes;
-import io.agora.edu.classroom.widget.window.IWindowAnimateListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
 import io.agora.education.api.message.EduChatMsg;
@@ -50,11 +45,15 @@ import io.agora.rte.data.RteLocalVideoError;
 import io.agora.rte.data.RteLocalVideoState;
 import io.agora.rte.data.RteRemoteVideoState;
 
+import static io.agora.edu.classroom.bean.PropertyCauseType.CMD;
+import static io.agora.edu.classroom.bean.PropertyCauseType.DATA;
+import static io.agora.edu.classroom.bean.PropertyCauseType.REWARDCHANGED;
 import static io.agora.education.impl.Constants.AgoraLog;
 
 public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.OnClickListener,
         VideoWindow.OnMediaControlListener, ClassTitleBar.ClassTitleBarListener {
     private static final String TAG = "AscadsocActivity";
+    private RelativeLayout classroomContainer;
     private RelativeLayout containerLayout;
     private ToolWindow toolWindow;
     private PageControlWindow pageControlWindow;
@@ -63,6 +62,8 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     private RelativeLayout teacherFoldLayout, studentFoldLayout;
     private AppCompatTextView teacherNameText, studentNameText;
     private AppCompatImageView teacherUnfoldIMg, studentUnfoldImg;
+
+    private static final String[] REWARDKEYS = new String[]{"students", "reward"};
 
     @Override
     protected int getLayoutResId() {
@@ -89,13 +90,13 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                                 RteEngineImpl.INSTANCE.enableAudioVolumeIndication(300, 3, false);
                                 studentVideo.setUserName(userInfo.getUserName());
                                 studentNameText.setText(userInfo.getUserName());
+                                updateStudentTrophy(getMainEduRoom());
                             }
 
                             @Override
                             public void onFailure(@NotNull EduError error) {
                             }
                         });
-
                         initTitleTimeState();
                         initParseBoardInfo(getMainEduRoom());
                         renderTeacherStream1();
@@ -111,6 +112,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initView() {
         super.initView();
+        classroomContainer = findViewById(R.id.classroom_container);
         containerLayout = findViewById(R.id.container_Layout);
 
         classTitleBar = new ClassTitleBar(findViewById(R.id.classroom_title_bar_layout));
@@ -247,6 +249,18 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         });
     }
 
+    private void updateStudentTrophy(EduRoom classRoom) {
+        try {
+            Object object = classRoom.getRoomProperties().get(REWARDKEYS[0]);
+            object = ((Map) object).get(agoraEduLaunchConfig.getUserUuid());
+            object = ((Map) object).get(REWARDKEYS[1]);
+            studentVideo.updateTrophy(((int) ((double) object)));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -278,6 +292,22 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
             EduStreamInfo streamInfo = streamEvent.getModifiedStream();
             renderStream(getMainEduRoom(), streamInfo, null);
             teacherVideo.updateState(VideoWindow.State.TeacherLeave);
+        }
+    }
+
+    @Override
+    public void onRoomPropertiesChanged(@NotNull EduRoom classRoom, @Nullable Map<String, Object> cause) {
+        super.onRoomPropertiesChanged(classRoom, cause);
+        if (cause != null && !cause.isEmpty()) {
+            int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
+            if (causeType == REWARDCHANGED) {
+                Object object = cause.get(DATA);
+                if (object instanceof Map && ((Map) object).containsKey(agoraEduLaunchConfig.getUserUuid())) {
+                    /**奖励包含本地用户*/
+                    runOnUiThread(() -> classroomContainer.addView(new RewardWindow(this)));
+                    updateStudentTrophy(classRoom);
+                }
+            }
         }
     }
 

@@ -187,15 +187,15 @@ public class MainActivity extends AppCompatActivity {
             /**声网 APP Id(声网控制台获取)*/
             String appId = getAppId();
             /**声网 APP Certificate(声网控制台获取)*/
-            String appCertificate = "";
+            String appCertificate = "1560d3b87dd040b1bfe9cb506cbeeaed";
             rtmToken = new RtmTokenBuilder().buildToken(appId, appCertificate, userUuid,
                     RtmTokenBuilder.Role.Rtm_User, 0);
 
             /**聊天内容翻译的目标语言,参考:{@link io.agora.edu.common.bean.request.ChatTranslationLan}*/
-            String translateTo = ChatTranslationLan.INSTANCE.getCN();
+            String translateLanguage = ChatTranslationLan.INSTANCE.getCN();
 
             AgoraEduLaunchConfig agoraEduLaunchConfig = new AgoraEduLaunchConfig(userName, userUuid,
-                    roomName, roomUuid, roleType, roomType, rtmToken, translateTo);
+                    roomName, roomUuid, roleType, roomType, rtmToken, translateLanguage);
             AgoraEduClassRoom classRoom = AgoraEduSDK.launch(this, agoraEduLaunchConfig,
                     (state) -> {
                         Log.e(TAG, ":launch-课堂状态:" + state.name());
