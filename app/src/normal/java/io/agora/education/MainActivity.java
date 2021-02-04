@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
-import io.agora.edu.classroom.widget.dialog.NormalDialog;
 import io.agora.edu.common.bean.request.ChatTranslationLan;
 import io.agora.edu.launch.AgoraEduClassRoom;
 import io.agora.edu.launch.AgoraEduRoleType;
@@ -30,7 +29,6 @@ import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.launch.AgoraEduSDKConfig;
 import io.agora.education.rtmtoken.RtmTokenBuilder;
-import kotlin.Unit;
 
 import static io.agora.edu.launch.AgoraEduSDK.REQUEST_CODE_RTC;
 import static io.agora.education.Constants.KEY_SP;
@@ -57,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        new NormalDialog(getString(R.string.dialog_class_noend_exit), getString(io.agora.edu.R.string.dialog_cancel),
-//                getString(io.agora.edu.R.string.dialog_sure), io.agora.edu.R.drawable.dialog_img_content,
-//                null).show(getSupportFragmentManager(), null);
     }
 
     @Override
