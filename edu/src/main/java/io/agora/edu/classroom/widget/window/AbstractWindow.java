@@ -34,6 +34,12 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
     private ViewPropertyAnimator mMinimizeAnimator;
     private ViewPropertyAnimator mRestoreAnimator;
 
+    private IMinimizeListener iMinimizeListener;
+
+    public void setIMinimizeListener(IMinimizeListener iMinimizeListener) {
+        this.iMinimizeListener = iMinimizeListener;
+    }
+
     public AbstractWindow(Context context) {
         super(context);
         init();
@@ -104,6 +110,10 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
                     }
 
                     if (listener != null) listener.onAnimateEnd();
+
+                    if(iMinimizeListener != null) {
+                        iMinimizeListener.onMinimized();
+                    }
                 });
     }
 
@@ -158,6 +168,10 @@ public class AbstractWindow extends RelativeLayout implements IMinimizable {
                     }
 
                     if (listener != null) listener.onAnimateEnd();
+
+                    if(iMinimizeListener != null) {
+                        iMinimizeListener.onRestoreMinimized();
+                    }
                 });
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +22,7 @@ import java.util.List;
 import io.agora.edu.R;
 import io.agora.edu.classroom.widget.window.AbstractWindow;
 
-public class ChatWindow extends AbstractWindow implements TextWatcher {
+public class ChatWindow extends AbstractWindow implements TextWatcher, View.OnClickListener {
 
     /**
      * 宽占Window.ID_ANDROID_CONTENT宽的比例
@@ -32,6 +34,7 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
     private RelativeLayout mFoldLayout;
     private ChatMessageAdapter mAdapter;
     private List<ChatItem> mMessageList;
+    private AppCompatImageView sendBtn;
 
     private boolean mFold;
 
@@ -61,6 +64,7 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
         mFoldLayout = findViewById(R.id.chat_window_fold_layout);
         mFoldLayout.setVisibility(View.GONE);
         mUnfoldLayout = findViewById(R.id.chat_window_unfold_content);
+        sendBtn = findViewById(R.id.chat_window_input_send_btn);
 
         setLayouts(mUnfoldLayout, mFoldLayout);
 
@@ -95,6 +99,10 @@ public class ChatWindow extends AbstractWindow implements TextWatcher {
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
     }
 
     private class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHolder> {

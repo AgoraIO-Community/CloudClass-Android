@@ -1,5 +1,6 @@
 package io.agora.edu.classroom;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.gson.Gson;
 import com.herewhite.sdk.domain.MemberState;
 import com.herewhite.sdk.domain.SceneState;
 
@@ -25,9 +27,14 @@ import io.agora.edu.classroom.widget.video.VideoWindow;
 import io.agora.edu.classroom.widget.whiteboard.PageControlWindow;
 import io.agora.edu.classroom.widget.whiteboard.ToolModeAttr;
 import io.agora.edu.classroom.widget.whiteboard.ToolWindow;
+import io.agora.edu.classroom.widget.window.IMinimizeListener;
+import io.agora.edu.common.bean.request.ChatTranslateReq;
+import io.agora.edu.common.bean.response.ChatRecordItem;
+import io.agora.edu.common.bean.response.ChatTranslateRes;
 import io.agora.edu.classroom.widget.window.IWindowAnimateListener;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
+import io.agora.education.api.message.EduChatMsg;
 import io.agora.education.api.room.EduRoom;
 import io.agora.education.api.statistics.NetworkQuality;
 import io.agora.education.api.stream.data.EduStreamEvent;
@@ -56,7 +63,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     private RelativeLayout teacherFoldLayout, studentFoldLayout;
     private AppCompatTextView teacherNameText, studentNameText;
     private AppCompatImageView teacherUnfoldIMg, studentUnfoldImg;
-    private ChatWindow chatWindow;
 
     @Override
     protected int getLayoutResId() {
@@ -105,18 +111,28 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initView() {
         super.initView();
+        findViewById(R.id.sendChat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendChat("聊天-" + System.currentTimeMillis());
+            }
+        });
+        findViewById(R.id.pullRecord).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pullChatRecords(null, true);
+            }
+        });
         containerLayout = findViewById(R.id.container_Layout);
 
         classTitleBar = new ClassTitleBar(findViewById(R.id.classroom_title_bar_layout));
         classTitleBar.setClassTitleBarListener(this);
-
         whiteBoardWindow = findViewById(R.id.whiteBoard_Window);
         whiteBoardWindow.initWithAppId(agoraEduLaunchConfig.getWhiteBoardAppId());
         whiteBoardWindow.setGlobalStateChangeListener(this);
         whiteBoardWindow.setWhiteBoardEventListener(this);
         whiteBoardWindow.setInputWhileFollow(true);
         whiteBoardWindow.setWritable(true);
-
         toolWindow = findViewById(R.id.tool_Window);
         toolWindow.setListener(whiteBoardWindow);
         ToolModeAttr attr = whiteBoardWindow.getCurToolModeAttr();
@@ -124,13 +140,22 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
                 attr.getModeIndex(), attr.getRgb(), attr.getThicknessIndex(),
                 attr.getPencilStyleIndex(), attr.getFontSizeIndex()
         ));
-
         pageControlWindow = findViewById(R.id.pageControl_Window);
         pageControlWindow.setPageControlListener(whiteBoardWindow);
         videoLayout = findViewById(R.id.video_Layout);
         teacherVideo = findViewById(R.id.teacher_Window);
         teacherVideo.init(false);
+        teacherVideo.setIMinimizeListener(new IMinimizeListener() {
+            @Override
+            public void onMinimized() {
+                teacherVideo.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onRestoreMinimized() {
+                teacherVideo.setVisibility(View.VISIBLE);
+            }
+        });
         teacherFoldLayout = findViewById(R.id.teacherFold_Layout);
         teacherVideo.setMinimizedView(teacherFoldLayout);
         teacherNameText = findViewById(R.id.teacherName_Text);
@@ -138,7 +163,17 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         teacherUnfoldIMg.setOnClickListener(this);
         studentVideo = findViewById(R.id.student_Window);
         studentVideo.init(true);
+        studentVideo.setIMinimizeListener(new IMinimizeListener() {
+            @Override
+            public void onMinimized() {
+                studentVideo.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onRestoreMinimized() {
+                studentVideo.setVisibility(View.VISIBLE);
+            }
+        });
         studentVideo.setOnMediaControlListener(this);
         studentFoldLayout = findViewById(R.id.studentFold_Layout);
         studentVideo.setMinimizedView(studentFoldLayout);
@@ -224,44 +259,82 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         });
     }
 
+    private void sendChat(String msg) {
+        chat.roomChat(agoraEduLaunchConfig.getUserUuid(), msg, new EduCallback<EduChatMsg>() {
+            @Override
+            public void onSuccess(@Nullable EduChatMsg res) {
+                if (res != null) {
+                    Log.e(TAG, "sendChat result->" + res);
+
+                } else {
+                    Log.e(TAG, "sendChat failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
+            }
+        });
+    }
+
+    /**
+     * @param reverse 正向查询，逆向查询
+     */
+    private void pullChatRecords(String nextId, boolean reverse) {
+        chat.pullRecords(nextId, reverse, new EduCallback<List<ChatRecordItem>>() {
+            @Override
+            public void onSuccess(@Nullable List<ChatRecordItem> res) {
+                if (res != null) {
+                    Log.e(TAG, "pullChatRecords result->" + new Gson().toJson(res));
+
+                } else {
+                    Log.e(TAG, "pullChatRecords failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
+            }
+        });
+    }
+
+    /**
+     * @param to 目标语言
+     */
+    private void translate(String msg, String to) {
+        ChatTranslateReq req = new ChatTranslateReq(msg, to);
+        chat.translate(req, new EduCallback<ChatTranslateRes>() {
+            @Override
+            public void onSuccess(@Nullable ChatTranslateRes res) {
+                if (res != null) {
+                    Log.e(TAG, "translate result->" + res.getTranslation());
+                } else {
+                    Log.e(TAG, "translate failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "translate failed->" + new Gson().toJson(error));
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.teacherUnfold_Img) {
-            teacherVideo.restoreMinimize(new IWindowAnimateListener() {
-                @Override
-                public void onAnimateStart() {
-
-                }
-
-                @Override
-                public void onAnimateEnd() {
-                    teacherVideo.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAnimateCancel() {
-
-                }
-            });
+            teacherVideo.restoreMinimize(null);
         } else if (id == R.id.studentUnfold_Img) {
-            studentVideo.restoreMinimize(new IWindowAnimateListener() {
-                @Override
-                public void onAnimateStart() {
-
-                }
-
-                @Override
-                public void onAnimateEnd() {
-                    studentVideo.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAnimateCancel() {
-
-                }
-            });
+            studentVideo.restoreMinimize(null);
         }
+    }
+
+    @Override
+    public void onRoomChatMessageReceived(@NotNull EduChatMsg eduChatMsg, @NotNull EduRoom classRoom) {
+        super.onRoomChatMessageReceived(eduChatMsg, classRoom);
     }
 
     @Override
@@ -394,7 +467,7 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
 
     @Override
     public void onSwitchCamera() {
-
+        switchCamera();
     }
 
     @Override

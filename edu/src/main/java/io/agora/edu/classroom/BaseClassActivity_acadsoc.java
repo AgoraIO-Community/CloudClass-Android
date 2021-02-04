@@ -30,17 +30,16 @@ import butterknife.BindView;
 import io.agora.agoraactionprocess.AgoraActionConfigInfo;
 import io.agora.agoraactionprocess.AgoraActionListener;
 import io.agora.agoraactionprocess.AgoraActionMsgRes;
-import io.agora.agoraactionprocess.AgoraActionProcessConfig;
 import io.agora.agoraactionprocess.AgoraActionProcessManager;
 import io.agora.base.ToastManager;
 import io.agora.base.callback.ThrowableCallback;
 import io.agora.base.network.RetrofitManager;
-import io.agora.covideo.AgoraCoVideoAction;
 import io.agora.edu.R;
 import io.agora.edu.base.BaseActivity;
 import io.agora.edu.classroom.bean.channel.Room;
 import io.agora.edu.classroom.bean.channel.User;
 import io.agora.edu.classroom.bean.msg.ChannelMsg;
+import io.agora.edu.classroom.widget.chat.ChatWindow;
 import io.agora.edu.classroom.widget.dialog.NormalDialog;
 import io.agora.edu.classroom.widget.room.ClassTitleBar;
 import io.agora.edu.classroom.widget.whiteboard.WhiteBoardEventListener;
@@ -125,6 +124,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
     protected ClassTitleBar classTitleBar;
 
     protected WhiteBoardWindow whiteBoardWindow;
+    protected ChatWindow chatWindow;
 
     private static EduManager eduManager;
     protected AgoraEduLaunchConfig agoraEduLaunchConfig;
@@ -137,7 +137,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
     protected AgoraActionProcessManager actionProcessManager;
     protected List<AgoraActionConfigInfo> actionConfigs = new ArrayList<>();
     private ConfirmDialog audioInviteDialog, videoInviteDialog;
-    private Chat chat;
+    protected Chat chat;
 
 
     @Override
@@ -275,74 +275,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         });
     }
 
-    protected void joinRoomAsTeacher(EduRoom eduRoom, String yourNameStr, String yourUuid, boolean autoSubscribe,
-                                     boolean autoPublish, boolean needUserListener, EduCallback<EduTeacher> callback) {
-        if (isJoining) {
-            return;
-        }
-        isJoining = true;
-        RoomJoinOptions options = new RoomJoinOptions(yourUuid, yourNameStr, EduUserRole.TEACHER,
-                new RoomMediaOptions(autoSubscribe, autoPublish), agoraEduLaunchConfig.getRoomType());
-        eduRoom.joinClassroom(options, new EduCallback<EduUser>() {
-            @Override
-            public void onSuccess(@Nullable EduUser user) {
-                if (user != null) {
-//                    /**设置全局的userToken(注意同一个user在不同的room内，token不一样)*/
-//                    RetrofitManager.instance().addHeader("token", user.getUserInfo().getUserToken());
-                    joinSuccess = true;
-                    isJoining = false;
-                    if (needUserListener) {
-                        user.setEventListener(BaseClassActivity_acadsoc.this);
-                    }
-                    EduTeacher teacher = (EduTeacher) user;
-                    callback.onSuccess(teacher);
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("join failed: localUser is null"));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                isJoining = false;
-                callback.onFailure(error);
-            }
-        });
-    }
-
-    protected void joinRoomAsAssistant(EduRoom eduRoom, String yourNameStr, String yourUuid, boolean autoSubscribe,
-                                       boolean autoPublish, boolean needUserListener, EduCallback<EduAssistant> callback) {
-        if (isJoining) {
-            return;
-        }
-        isJoining = true;
-        RoomJoinOptions options = new RoomJoinOptions(yourUuid, yourNameStr, EduUserRole.ASSISTANT,
-                new RoomMediaOptions(autoSubscribe, autoPublish), agoraEduLaunchConfig.getRoomType());
-        eduRoom.joinClassroom(options, new EduCallback<EduUser>() {
-            @Override
-            public void onSuccess(@Nullable EduUser user) {
-                if (user != null) {
-//                    /**设置全局的userToken(注意同一个user在不同的room内，token不一样)*/
-//                    RetrofitManager.instance().addHeader("token", user.getUserInfo().getUserToken());
-                    joinSuccess = true;
-                    isJoining = false;
-                    if (needUserListener) {
-                        user.setEventListener(BaseClassActivity_acadsoc.this);
-                    }
-                    EduAssistant assistant = (EduAssistant) user;
-                    callback.onSuccess(assistant);
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("join failed: localUser is null"));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                isJoining = false;
-                callback.onFailure(error);
-            }
-        });
-    }
-
     /**
      * 加入失败，回传数据并结束当前页面
      */
@@ -357,10 +289,19 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         finish();
     }
 
-    protected void recoveryFragmentWithConfigChanged() throws Exception {
-        if (joinSuccess) {
-            showFragmentWithJoinSuccess();
-        }
+    public final void switchCamera() {
+        getLocalUser(new EduCallback<EduUser>() {
+            @Override
+            public void onSuccess(@Nullable EduUser user) {
+                if (user != null) {
+                    user.switchCamera();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+            }
+        });
     }
 
     /**
@@ -427,7 +368,21 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
 
     public void getLocalUser(EduCallback<EduUser> callback) {
         if (getMainEduRoom() != null) {
-            getMainEduRoom().getLocalUser(callback);
+            getMainEduRoom().getLocalUser(new EduCallback<EduUser>() {
+                @Override
+                public void onSuccess(@Nullable EduUser user) {
+                    if (user == null) {
+                        callback.onFailure(EduError.Companion.internalError("current eduRoom`s localUsr is null"));
+                    } else {
+                        callback.onSuccess(user);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull EduError error) {
+                    callback.onFailure(error);
+                }
+            });
         }
         callback.onFailure(EduError.Companion.internalError("current eduRoom is null"));
     }
@@ -436,11 +391,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         getLocalUser(new EduCallback<EduUser>() {
             @Override
             public void onSuccess(@Nullable EduUser res) {
-                if (res != null) {
-                    callback.onSuccess(res.getUserInfo());
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("current eduUser is null"));
-                }
+                callback.onSuccess(res.getUserInfo());
             }
 
             @Override
@@ -457,28 +408,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
 
     protected void setLocalCameraStream(EduStreamInfo streamInfo) {
         this.localCameraStream = streamInfo;
-    }
-
-    protected void sendRoomChatMsg(String msg, EduCallback<EduChatMsg> callback) {
-        getLocalUser(new EduCallback<EduUser>() {
-            @Override
-            public void onSuccess(@Nullable EduUser res) {
-                if (res != null) {
-                    res.sendRoomChatMessage(msg, callback);
-                } else {
-                    callback.onFailure(EduError.Companion.internalError("current eduUser is null"));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                callback.onFailure(error);
-            }
-        });
-    }
-
-    public void sendRoomChatMsg(String fromUuid, String msg, EduCallback<EduChatMsg> callback) {
-        chat.roomChat(fromUuid, msg, callback);
     }
 
     protected void getCurFullStream(EduCallback<List<EduStreamInfo>> callback) {
@@ -532,72 +461,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
                 break;
         }
         return getString(resId);
-    }
-
-    protected void getScreenShareStream(EduCallback<EduStreamInfo> callback) {
-        getCurFullStream(new EduCallback<List<EduStreamInfo>>() {
-            @Override
-            public void onSuccess(@Nullable List<EduStreamInfo> res) {
-                for (EduStreamInfo stream : res) {
-                    if (stream.getVideoSourceType().equals(VideoSourceType.SCREEN)) {
-                        callback.onSuccess(stream);
-                        return;
-                    }
-                }
-                callback.onFailure(EduError.Companion.internalError("there is no screenShare"));
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                callback.onFailure(error);
-            }
-        });
-    }
-
-    /**
-     * 尝试解析录制消息
-     */
-    protected void parseRecordMsg(Map<String, Object> roomProperties, Map<String, Object> cause) {
-        if (cause != null && !cause.isEmpty()) {
-            int causeType = (int) Float.parseFloat(cause.get(CMD).toString());
-            if (causeType == RECORDSTATECHANGED) {
-                String recordJson = getProperty(roomProperties, RECORD);
-                if (!TextUtils.isEmpty(recordJson)) {
-                    RecordBean tmp = RecordBean.fromJson(recordJson, RecordBean.class);
-                    if (mainRecordBean == null || tmp.getState() != mainRecordBean.getState()) {
-                        mainRecordBean = tmp;
-                        if (mainRecordBean.getState() == END) {
-                            getLocalUserInfo(new EduCallback<EduUserInfo>() {
-                                @Override
-                                public void onSuccess(@Nullable EduUserInfo userInfo) {
-                                    getMediaRoomUuid(new EduCallback<String>() {
-                                        @Override
-                                        public void onSuccess(@Nullable String uuid) {
-                                            EduFromUserInfo fromUser = new EduFromUserInfo(userInfo.getUserUuid(),
-                                                    userInfo.getUserName(), userInfo.getRole());
-                                            RecordMsg recordMsg = new RecordMsg(uuid, fromUser,
-                                                    getString(R.string.replay_link), System.currentTimeMillis(),
-                                                    EduChatMsgType.Text.getValue());
-                                            recordMsg.isMe = true;
-//                                            chatRoomFragment.addMessage(recordMsg);
-                                        }
-
-                                        @Override
-                                        public void onFailure(@NotNull EduError error) {
-
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFailure(@NotNull EduError error) {
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -677,146 +540,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         }
     }
 
-    /**
-     * 显示允许远端打开本地音视频的确认框
-     */
-    public final void confirmInvite(AgoraCoVideoAction action) {
-        ConfirmDialog dialog = null;
-        String content = "";
-        LocalStreamInitOptions options = new LocalStreamInitOptions("", false, false);
-        /**此处对本地流的操作是追加而不是覆盖，所以尝试获取本地流并同步音视频流状态*/
-        if (localCameraStream != null) {
-            options.setEnableMicrophone(localCameraStream.getHasAudio());
-            options.setEnableCamera(localCameraStream.getHasVideo());
-        }
-        switch (action.getAction()) {
-            case 0:
-                if (audioInviteDialog != null && audioInviteDialog.isVisible()) {
-                    return;
-                }
-                content = getString(R.string.teacherinviteaudio);
-                options.setEnableMicrophone(true);
-                dialog = audioInviteDialog = ConfirmDialog.normal(content, confirm -> {
-                    if (confirm) {
-                        upsertLocalStream(options);
-                    }
-                });
-                break;
-            case 1:
-                if (videoInviteDialog != null && videoInviteDialog.isVisible()) {
-                    return;
-                }
-                content = getString(R.string.teacherinvitevideo);
-                options.setEnableCamera(true);
-                dialog = videoInviteDialog = ConfirmDialog.normal(content, confirm -> {
-                    if (confirm) {
-                        upsertLocalStream(options);
-                    }
-                });
-                break;
-        }
-        final ConfirmDialog finalDialog = dialog;
-        runOnUiThread(() -> {
-            CountDownTimer countDownTimer = new CountDownTimer(10500, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    finalDialog.setConfirmText(getString(R.string.confirm)
-                            .concat(String.format("(%d)", millisUntilFinished / 1000 + 1)));
-                }
-
-                @Override
-                public void onFinish() {
-                    finalDialog.dismiss();
-                }
-            };
-            countDownTimer.start();
-            finalDialog.setConfirmText(getString(R.string.confirm).concat("(10)"));
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            if (fragmentManager != null && !fragmentManager.isDestroyed()) {
-                finalDialog.show(getSupportFragmentManager(), null);
-            }
-        });
-    }
-
-    /**
-     * 新建/更新本地流
-     */
-    private final void upsertLocalStream(LocalStreamInitOptions options) {
-        getLocalUser(new EduCallback<EduUser>() {
-            @Override
-            public void onSuccess(@Nullable EduUser localUser) {
-                if (localUser != null) {
-                    options.setStreamUuid(localUser.getUserInfo().getStreamUuid());
-                    localUser.initOrUpdateLocalStream(options, new EduCallback<EduStreamInfo>() {
-                        @Override
-                        public void onSuccess(@Nullable EduStreamInfo stream) {
-                            if (stream != null) {
-                                localUser.publishStream(stream, new EduCallback<Boolean>() {
-                                    @Override
-                                    public void onSuccess(@Nullable Boolean res) {
-                                    }
-
-                                    @Override
-                                    public void onFailure(@NotNull EduError error) {
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(@NotNull EduError error) {
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-            }
-        });
-    }
-
-    private final void showLogId(String logId) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager != null && !fragmentManager.isDestroyed()) {
-            ConfirmDialog.singleWithButton(getString(R.string.uploadlog_success).concat(logId),
-                    getString(R.string.copy1), confirm -> {
-                        if (confirm) {
-                            AppUtil.copyToClipboard(BaseClassActivity_acadsoc.this, logId);
-                        }
-                    }).show(fragmentManager, null);
-        }
-    }
-
-    public final void uploadLog(EduCallback callback) {
-        if (eduManager != null) {
-            eduManager.uploadDebugItem(DebugItem.LOG, new EduCallback<String>() {
-                @Override
-                public void onSuccess(@Nullable String res) {
-                    callback.onSuccess(res);
-                    if (res != null) {
-                        showLogId(res);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull EduError error) {
-                    callback.onSuccess(error);
-                    ToastManager.showShort(String.format(getString(R.string.function_error),
-                            error.getType(), error.getMsg()));
-                }
-            });
-        }
-    }
-
-    protected void getMediaRoomInfo(EduCallback<EduRoomInfo> callback) {
-        if (getMyMediaRoom() == null) {
-            callback.onFailure(EduError.Companion.internalError("current eduRoom is null"));
-        } else {
-            getMyMediaRoom().getRoomInfo(callback);
-        }
-    }
-
     protected void getMediaRoomStatus(EduCallback<EduRoomStatus> callback) {
         if (getMyMediaRoom() == null) {
             callback.onFailure(EduError.Companion.internalError("current eduRoom is null"));
@@ -833,24 +556,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
                 @Override
                 public void onSuccess(@Nullable EduRoomInfo res) {
                     callback.onSuccess(res.getRoomUuid());
-                }
-
-                @Override
-                public void onFailure(@NotNull EduError error) {
-                    callback.onFailure(error);
-                }
-            });
-        }
-    }
-
-    protected final void getMediaRoomName(EduCallback<String> callback) {
-        if (getMyMediaRoom() == null) {
-            callback.onFailure(EduError.Companion.internalError("current eduRoom is null"));
-        } else {
-            getMyMediaRoom().getRoomInfo(new EduCallback<EduRoomInfo>() {
-                @Override
-                public void onSuccess(@Nullable EduRoomInfo res) {
-                    callback.onSuccess(res.getRoomName());
                 }
 
                 @Override
@@ -993,39 +698,6 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
         });
     }
 
-    /**
-     * 务必在joinSuccess成功后调用
-     */
-    protected void buildActionProcessManager() {
-        getLocalUser(new EduCallback<EduUser>() {
-            @Override
-            public void onSuccess(@Nullable EduUser localUser) {
-                if (localUser != null) {
-                    EduLocalUserInfo localUserInfo = localUser.getUserInfo();
-                    AgoraActionProcessConfig config = new AgoraActionProcessConfig(agoraEduLaunchConfig.appId,
-                            agoraEduLaunchConfig.getRoomUuid(), localUserInfo.getUserToken(), API_BASE_URL);
-                    actionProcessManager = new AgoraActionProcessManager(config, BaseClassActivity_acadsoc.this);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-
-            }
-        });
-    }
-
-    /**
-     * 务必在buildActionProcessManager之后调用
-     */
-    protected void parseAgoraActionConfig(EduRoom room) {
-        if (actionProcessManager != null) {
-            actionConfigs = actionProcessManager.parseConfigInfo(room.getRoomProperties());
-        } else {
-            AgoraLog.e(TAG + ":actionProcessManager is null!");
-        }
-    }
-
     @Override
     public void onRemoteUsersInitialized(@NotNull List<? extends EduUserInfo> users, @NotNull EduRoom classRoom) {
         initTitleTimeState();
@@ -1063,7 +735,7 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
             public void onSuccess(@Nullable EduUser user) {
                 chatMsg.isMe = chatMsg.getFromUser().equals(user.getUserInfo());
 //                chatRoomFragment.addMessage(chatMsg);
-                AgoraLog.e(TAG + ":成功添加一条聊天消息");
+                AgoraLog.e(TAG + ":成功添加一条聊天消息->" + new Gson().toJson(eduChatMsg));
             }
 
             @Override
