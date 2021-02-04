@@ -81,20 +81,26 @@ public class ClassTitleBar {
 
     public void setClassId(String id) {
         String idText = String.format(mRoomIdHintFormat, id);
-        mRoomIdTextView.setText(idText);
+        mRoomIdTextView.post(() -> mRoomIdTextView.setText(idText));
     }
 
     public void setNetworkState(NetworkState state) {
         int index = state.ordinal();
-        mNetworkStateIcon.setImageResource(mNetworkStateIconRes[index]);
-        mNetworkStateText.setText(mNetworkStateStrings[index]);
-        mNetworkStateText.setTextColor(mNetworkStateTextColor[index]);
+        mNetworkStateIcon.post(() -> {
+            mNetworkStateIcon.setImageResource(mNetworkStateIconRes[index]);
+        });
+        mNetworkStateText.post(() -> {
+            mNetworkStateText.setText(mNetworkStateStrings[index]);
+            mNetworkStateText.setTextColor(mNetworkStateTextColor[index]);
+        });
     }
 
     public void setClassStarted(boolean started) {
         int resource = started ? R.string.class_window_class_begins
                 : R.string.class_window_class_not_start_hint;
-        mClassStateText.setText(resource);
+        mClassStateText.post(() -> {
+            mClassStateText.setText(resource);
+        });
     }
 
     public void setClassTitleBarListener(@NonNull ClassTitleBarListener listener) {

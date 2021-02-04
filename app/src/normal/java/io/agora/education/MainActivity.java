@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 import io.agora.edu.classroom.widget.dialog.NormalDialog;
-import io.agora.edu.classroom.widget.dialog.TitleSingleBtnDialog;
+import io.agora.edu.common.bean.request.ChatTranslationLan;
 import io.agora.edu.launch.AgoraEduClassRoom;
 import io.agora.edu.launch.AgoraEduRoleType;
 import io.agora.edu.launch.AgoraEduRoomType;
@@ -30,6 +30,7 @@ import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
 import io.agora.edu.launch.AgoraEduSDKConfig;
 import io.agora.education.rtmtoken.RtmTokenBuilder;
+import kotlin.Unit;
 
 import static io.agora.edu.launch.AgoraEduSDK.REQUEST_CODE_RTC;
 import static io.agora.education.Constants.KEY_SP;
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        new NormalDialog(getString(R.string.dialog_class_noend_exit), getString(io.agora.edu.R.string.dialog_cancel),
+//                getString(io.agora.edu.R.string.dialog_sure), io.agora.edu.R.drawable.dialog_img_content,
+//                null).show(getSupportFragmentManager(), null);
     }
 
     @Override
@@ -183,12 +187,15 @@ public class MainActivity extends AppCompatActivity {
             /**声网 APP Id(声网控制台获取)*/
             String appId = getAppId();
             /**声网 APP Certificate(声网控制台获取)*/
-            String appCertificate = "";
+            String appCertificate = "1560d3b87dd040b1bfe9cb506cbeeaed";
             rtmToken = new RtmTokenBuilder().buildToken(appId, appCertificate, userUuid,
                     RtmTokenBuilder.Role.Rtm_User, 0);
 
+            /**聊天内容翻译的目标语言,参考:{@link io.agora.edu.common.bean.request.ChatTranslationLan}*/
+            String translateTo = ChatTranslationLan.INSTANCE.getCN();
+
             AgoraEduLaunchConfig agoraEduLaunchConfig = new AgoraEduLaunchConfig(userName, userUuid,
-                    roomName, roomUuid, roleType, roomType, rtmToken);
+                    roomName, roomUuid, roleType, roomType, rtmToken, translateTo);
             AgoraEduClassRoom classRoom = AgoraEduSDK.launch(this, agoraEduLaunchConfig,
                     (state) -> {
                         Log.e(TAG, ":launch-课堂状态:" + state.name());

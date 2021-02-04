@@ -22,7 +22,7 @@ object ChatTranslationLan {
     val CN = "zh-CHS"
     val EN = "en"
     val JA = "ja"
-    val KO = "KO"
+    val KO = "ko"
     val FR = "fr"
     val ES = "es"
     val PT = "pt"

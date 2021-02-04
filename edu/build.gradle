@@ -42,8 +42,8 @@ android {
         //--------api-buildconfig---------------
         buildConfigField 'String', 'SDK_VERSION', '"1.0.0"'
 //        buildConfigField 'String', 'API_BASE_URL', '"http://api-test.agora.io"'
-//        buildConfigField 'String', 'API_BASE_URL', '"http://api-solutions-dev.bj2.agoralab.co"'
-        buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io"'
+        buildConfigField 'String', 'API_BASE_URL', '"http://api-solutions-dev.bj2.agoralab.co"'
+//        buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io"'
         buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"https://api-solutions.agoralab.co"'
         //--------api-buildconfig---------------
     }
@@ -68,16 +68,6 @@ android {
         targetCompatibility = 1.8
     }
     kotlinOptions { jvmTarget = 1.8 }
-//    fataar {
-//        /**
-//         * If transitive is true, local jar module and remote library's dependencies will be embed.
-//         * If transitive is false, just embed first level dependency
-//         * Local aar project does not support transitive, always embed first level
-//         * Default value is false
-//         * @since 1.3.0
-//         */
-//        transitive = true
-//    }
 }
 
 dependencies {
@@ -120,64 +110,4 @@ dependencies {
     implementation "io.agora.rtm:rtm-sdk:${safeExtGet('dependencies', 'io.agora.rtm:rtm-sdk', '1.4.1')}"
     implementation "androidx.annotation:annotation:${safeExtGet('dependencies', 'androidx.annotation:annotation', '1.1.0')}"
     implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', '2.11.13')}"
-
-
-//    //------打包aar配置开始-------
-//    embed project(':AgoraActionProcess')
-//    embed project(':base')
-//    embed project(':covideo')
-//    embed project(':edusdk-api')
-//    embed project(':edusdk-impl')
-//    embed project(':log')
-//    embed project(':rte')
-//    embed project(':timeline')
-//    embed project(':whiteboard')
-//
-//    embed ("androidx.constraintlayout:constraintlayout:${safeExtGet('dependencies', 'androidx.constraintlayout:constraintlayout', '2.0.4')}") {
-//        // exclude any group or module
-//        exclude(group: 'androidx.core', module: 'core')
-//        // exclude all dependencies
-//        transitive = false
-//    }
-//    embed ("androidx.constraintlayout:constraintlayout-solver:${safeExtGet('dependencies', 'androidx.constraintlayout:constraintlayout-solver', '2.0.4')}")
-//    //------打包aar配置结束-------
-
-//    //--------maven打包aar开始----------------
-//    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-//    api 'androidx.core:core-ktx:1.3.2'
-//
-//    api "androidx.preference:preference:${safeExtGet('dependencies', 'androidx.preference:preference', '1.1.1')}"
-//
-//    api "com.google.code.gson:gson:${safeExtGet('dependencies', 'com.google.code.gson:gson', '2.8.6')}"
-//    api "com.squareup.retrofit2:retrofit:${safeExtGet('dependencies', 'com.squareup.retrofit2:retrofit', '2.9.0')}"
-//    api "com.squareup.okhttp3:logging-interceptor:${safeExtGet('dependencies', 'com.squareup.okhttp3:logging-interceptor', '4.7.2')}"
-//    api "com.squareup.retrofit2:converter-gson:${safeExtGet('dependencies', 'com.squareup.retrofit2:converter-gson', '2.9.0')}"
-//
-//    api "androidx.constraintlayout:constraintlayout:${safeExtGet('dependencies', 'androidx.constraintlayout:constraintlayout', '2.0.4')}"
-//
-//    api "com.elvishew:xlog:${safeExtGet('dependencies', 'com.elvishew:xlog', '1.6.1')}"
-//    api "com.aliyun.dpa:oss-android-sdk:${safeExtGet('dependencies', 'com.aliyun.dpa:oss-android-sdk', '2.9.4')}"
-//
-//    api "io.agora.rtc:full-sdk:${safeExtGet('dependencies', 'io.agora.rtc:full-sdk', '2.9.0.106')}"
-//    api "io.agora.rtm:rtm-sdk:${safeExtGet('dependencies', 'io.agora.rtm:rtm-sdk', '1.4.1')}"
-//
-//    api "androidx.annotation:annotation:${safeExtGet('dependencies', 'androidx.annotation:annotation', '1.1.0')}"
-//
-//    api "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', '2.9.14')}"
-//    //--------maven打包aar结束----------------
 }
-
-//apply plugin: 'maven'
-//uploadArchives {
-//    repositories.mavenDeployer {
-//        // 本地存放目录(自行选择)，可放在gradle.properties文件中引用
-//        def mavenDirPath = file('/Users/cjw/Desktop/EduSdkTest-maven')
-//        // 必须双引号，单引号不会转义$
-//        repository(url: "file://${mavenDirPath.absolutePath}")
-//        pom.project {
-//            groupId "io.agora.edu" // 可以随意取，一般取包名
-//            artifactId "edusdk" // 可以随意取，一般取库的名字
-//            version "1.0.0" // 版本号
-//        }
-//    }
-//}

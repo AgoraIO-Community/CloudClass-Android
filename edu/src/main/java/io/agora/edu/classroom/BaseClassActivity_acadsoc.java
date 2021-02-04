@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -50,6 +51,9 @@ import io.agora.edu.common.bean.board.BoardBean;
 import io.agora.edu.common.bean.board.BoardFollowMode;
 import io.agora.edu.common.bean.board.BoardInfo;
 import io.agora.edu.common.bean.board.BoardState;
+import io.agora.edu.common.bean.request.ChatTranslateReq;
+import io.agora.edu.common.bean.response.ChatRecordItem;
+import io.agora.edu.common.bean.response.ChatTranslateRes;
 import io.agora.edu.common.impl.ChatImpl;
 import io.agora.edu.common.service.BoardService;
 import io.agora.edu.launch.AgoraEduLaunchConfig;
@@ -589,6 +593,69 @@ public abstract class BaseClassActivity_acadsoc extends BaseActivity implements 
             public void onFailure(@NotNull EduError error) {
             }
         }));
+    }
+
+    protected void sendChat(String msg) {
+        chat.roomChat(agoraEduLaunchConfig.getUserUuid(), msg, new EduCallback<Boolean>() {
+            @Override
+            public void onSuccess(@Nullable Boolean res) {
+                if (res != null) {
+                    Log.e(TAG, "sendChat result->" + res);
+
+                } else {
+                    Log.e(TAG, "sendChat failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
+            }
+        });
+    }
+
+    /**
+     * @param reverse 正向查询，逆向查询
+     */
+    protected void pullChatRecords(String nextId, boolean reverse) {
+        chat.pullRecords(nextId, reverse, new EduCallback<List<ChatRecordItem>>() {
+            @Override
+            public void onSuccess(@Nullable List<ChatRecordItem> res) {
+                if (res != null) {
+                    Log.e(TAG, "pullChatRecords result->" + new Gson().toJson(res));
+
+                } else {
+                    Log.e(TAG, "pullChatRecords failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
+            }
+        });
+    }
+
+    /**
+     * @param to 目标语言
+     */
+    protected void translate(String msg, String to) {
+        ChatTranslateReq req = new ChatTranslateReq(msg, to);
+        chat.translate(req, new EduCallback<ChatTranslateRes>() {
+            @Override
+            public void onSuccess(@Nullable ChatTranslateRes res) {
+                if (res != null) {
+                    Log.e(TAG, "translate result->" + res.getTranslation());
+                } else {
+                    Log.e(TAG, "translate failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull EduError error) {
+                Log.e(TAG, "translate failed->" + new Gson().toJson(error));
+            }
+        });
     }
 
     protected String getProperty(Map<String, Object> properties, String key) {

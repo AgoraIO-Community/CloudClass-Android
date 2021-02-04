@@ -34,11 +34,11 @@ public class ChatImpl extends Base implements Chat {
     }
 
     @Override
-    public void roomChat(@NotNull String fromUuid, @NotNull String message, EduCallback<EduChatMsg> callback) {
+    public void roomChat(@NotNull String fromUuid, @NotNull String message, EduCallback<Boolean> callback) {
         EduRoomChatMsgReq req = new EduRoomChatMsgReq(message, EduChatMsgType.Text.getValue());
         RetrofitManager.instance().getService(API_BASE_URL, ChatService.class)
                 .roomChat(appId, roomUuid, fromUuid, req)
-                .enqueue(new RetrofitManager.Callback(0, new ThrowableCallback<ResponseBody<EduChatMsg>>() {
+                .enqueue(new RetrofitManager.Callback(0, new ThrowableCallback<io.agora.base.network.ResponseBody<Boolean>>() {
                     @Override
                     public void onFailure(@Nullable Throwable throwable) {
                         if(throwable instanceof BusinessException) {
@@ -50,9 +50,9 @@ public class ChatImpl extends Base implements Chat {
                     }
 
                     @Override
-                    public void onSuccess(@Nullable ResponseBody<EduChatMsg> res) {
-                        if(res != null && res.data != null) {
-                            callback.onSuccess(res.data);
+                    public void onSuccess(@Nullable io.agora.base.network.ResponseBody<Boolean> res) {
+                        if(res != null) {
+                            callback.onSuccess(res.code == 0);
                         } else {
                             callback.onFailure(EduError.Companion.customMsgError("response is null"));
                         }

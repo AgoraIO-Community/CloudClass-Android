@@ -482,7 +482,7 @@ public abstract class BaseClassActivity extends BaseActivity implements EduRoomE
         });
     }
 
-    public void sendRoomChatMsg(String fromUuid, String msg, EduCallback<EduChatMsg> callback) {
+    public void sendRoomChatMsg(String fromUuid, String msg, EduCallback<Boolean> callback) {
         chat.roomChat(fromUuid, msg, callback);
     }
 

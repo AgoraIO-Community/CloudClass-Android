@@ -116,21 +116,6 @@
         android:layout_below="@id/classroom_title_bar_layout"
         android:background="@drawable/classroom_bg">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sendChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发送"
-            android:layout_centerHorizontal="true"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/pullRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="拉取"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/sendChat"/>
-
         <io.agora.edu.classroom.widget.whiteboard.WhiteBoardWindow
             android:id="@+id/whiteBoard_Window"
             android:layout_width="match_parent"

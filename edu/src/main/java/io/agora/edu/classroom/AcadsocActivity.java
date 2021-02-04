@@ -111,18 +111,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     @Override
     protected void initView() {
         super.initView();
-        findViewById(R.id.sendChat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendChat("聊天-" + System.currentTimeMillis());
-            }
-        });
-        findViewById(R.id.pullRecord).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pullChatRecords(null, true);
-            }
-        });
         containerLayout = findViewById(R.id.container_Layout);
 
         classTitleBar = new ClassTitleBar(findViewById(R.id.classroom_title_bar_layout));
@@ -259,69 +247,6 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
         });
     }
 
-    private void sendChat(String msg) {
-        chat.roomChat(agoraEduLaunchConfig.getUserUuid(), msg, new EduCallback<EduChatMsg>() {
-            @Override
-            public void onSuccess(@Nullable EduChatMsg res) {
-                if (res != null) {
-                    Log.e(TAG, "sendChat result->" + res);
-
-                } else {
-                    Log.e(TAG, "sendChat failed!");
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
-            }
-        });
-    }
-
-    /**
-     * @param reverse 正向查询，逆向查询
-     */
-    private void pullChatRecords(String nextId, boolean reverse) {
-        chat.pullRecords(nextId, reverse, new EduCallback<List<ChatRecordItem>>() {
-            @Override
-            public void onSuccess(@Nullable List<ChatRecordItem> res) {
-                if (res != null) {
-                    Log.e(TAG, "pullChatRecords result->" + new Gson().toJson(res));
-
-                } else {
-                    Log.e(TAG, "pullChatRecords failed!");
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                Log.e(TAG, "pullChatRecords failed->" + new Gson().toJson(error));
-            }
-        });
-    }
-
-    /**
-     * @param to 目标语言
-     */
-    private void translate(String msg, String to) {
-        ChatTranslateReq req = new ChatTranslateReq(msg, to);
-        chat.translate(req, new EduCallback<ChatTranslateRes>() {
-            @Override
-            public void onSuccess(@Nullable ChatTranslateRes res) {
-                if (res != null) {
-                    Log.e(TAG, "translate result->" + res.getTranslation());
-                } else {
-                    Log.e(TAG, "translate failed!");
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull EduError error) {
-                Log.e(TAG, "translate failed->" + new Gson().toJson(error));
-            }
-        });
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -360,6 +285,19 @@ public class AcadsocActivity extends BaseClassActivity_acadsoc implements View.O
     public void onNetworkQualityChanged(@NotNull NetworkQuality quality, @NotNull EduUserInfo user,
                                         @NotNull EduRoom classRoom) {
         super.onNetworkQualityChanged(quality, user, classRoom);
+        ClassTitleBar.NetworkState state = ClassTitleBar.NetworkState.good;
+        switch (quality) {
+            case GOOD:
+                state = ClassTitleBar.NetworkState.good;
+                break;
+            case POOR:
+                state = ClassTitleBar.NetworkState.medium;
+                break;
+            case BAD:
+                state = ClassTitleBar.NetworkState.bad;
+                break;
+        }
+        classTitleBar.setNetworkState(state);
     }
 
     @Override

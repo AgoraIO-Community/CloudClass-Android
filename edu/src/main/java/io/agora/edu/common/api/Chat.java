@@ -12,7 +12,7 @@ import io.agora.education.api.EduCallback;
 import io.agora.education.api.message.EduChatMsg;
 
 public interface Chat {
-    void roomChat(@NotNull String fromUuid, @NotNull String message, EduCallback<EduChatMsg> callback);
+    void roomChat(@NotNull String fromUuid, @NotNull String message, EduCallback<Boolean> callback);
 
     void translate(@NotNull ChatTranslateReq req, EduCallback<ChatTranslateRes> callback);
 
