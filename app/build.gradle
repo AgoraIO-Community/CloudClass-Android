@@ -71,7 +71,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation project(path: ':extapp')
     annotationProcessor "com.jakewharton:butterknife-compiler:${safeExtGet('dependencies', 'com.jakewharton:butterknife-compiler', '10.2.1')}"
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
