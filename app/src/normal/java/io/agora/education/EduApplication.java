@@ -2,16 +2,10 @@ package io.agora.education;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 import io.agora.edu.launch.AgoraEduSDK;
-import io.agora.extension.AgoraExtAppConfiguration;
-import io.agora.extension.impl.CountDownExtApp;
 
 //import com.tencent.bugly.crashreport.CrashReport;
 
