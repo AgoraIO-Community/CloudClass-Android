@@ -1,0 +1,36 @@
+ext {
+    android = [
+            'compileSdkVersion': 29,
+            'buildToolsVersion': "29.0.3",
+            'minSdkVersion'    : 21,
+            'targetSdkVersion' : 29,
+            'rtcSDKVersion'    : "2.9.107.144",
+            'rtmSDKVersion'    : "1.4.1",
+            'boardSDKVersion'  : "2.12.25",
+    ]
+    dependencies = [
+            'junit:junit'                                     : '4.12',
+            'androidx.test.ext:junit'                         : '1.1.1',
+            'androidx.test.espresso:espresso-core'            : '3.2.0',
+            'androidx.constraintlayout:constraintlayout'      : '2.0.4',
+            'com.google.android.material:material'            : '1.2.1',
+            'com.google.android.exoplayer:exoplayer'          : '2.8.1',
+            'com.github.CymChad:BaseRecyclerViewAdapterHelper': '3.0.0-beta11',
+            'com.jakewharton:butterknife'                     : '10.2.1',
+            'com.jakewharton:butterknife-compiler'            : '10.2.1',
+
+            'androidx.annotation:annotation'                  : '1.1.0',
+            'androidx.preference:preference'                  : '1.1.1',
+            'com.google.code.gson:gson'                       : '2.8.6',
+            'com.squareup.retrofit2:retrofit'                 : '2.9.0',
+            'com.squareup.retrofit2:converter-gson'           : '2.9.0',
+            'com.squareup.okhttp3:logging-interceptor'        : '4.7.2',
+            'com.elvishew:xlog'                               : '1.6.1',
+            'com.aliyun.dpa:oss-android-sdk'                  : '2.9.4',
+            'com.github.agorabuilder:agora-special-full'      : android.rtcSDKVersion,
+            'io.agora.rtm:rtm-sdk'                            : android.rtmSDKVersion,
+            'com.github.duty-os:white-sdk-android'            : android.boardSDKVersion,
+            'com.github.bumptech.glide:glide'                 : '4.11.0',
+            'com.github.bumptech.glide:compiler'              : '4.11.0',
+    ]
+}

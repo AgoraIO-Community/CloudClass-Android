@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/agora_userlist_dialog_width"
+    android:layout_height="@dimen/agora_userlist_dialog_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_small"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/agora_userlist_bg"
+        android:elevation="@dimen/agora_userlist_dialog_elevation"
+        android:layout_margin="@dimen/agora_userlist_dialog_elevation"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_userlist_row_height"
+            android:background="@drawable/agora_userlist_top_bg"
+            android:paddingStart="@dimen/padding_medium">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/theme_text_color_black"
+                android:text="@string/agora_userlist_dialog_title"/>
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_small"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/agora_userlist_close"/>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/theme_divider_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_userlist_row_height"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/padding_large">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_teacher_name"/>
+
+            <TextView
+                android:id="@+id/tv_teacher_name"
+                android:layout_width="0dp"
+                android:background="@null"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:textSize="@dimen/text_size_small"
+                android:singleLine="true"
+                android:textColor="@color/theme_text_color_black"
+                android:paddingStart="@dimen/padding_small"
+                android:layout_height="wrap_content"
+                tools:text="Laaaaaaaa"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_thinner"
+            android:background="@color/theme_divider_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_userlist_row_height"
+            android:gravity="center_vertical"
+            android:background="@color/theme_gray_lighter">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.6"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:gravity="center"
+                android:text="@string/agora_userlist_table_title_student_name"/>
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text_color_gray"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_table_title_get_on_off"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_table_title_access"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_table_title_camera"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_table_title_mic"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/theme_text_color_gray"
+                android:textSize="@dimen/text_size_smaller"
+                android:text="@string/agora_userlist_table_title_reward"/>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_thinner"
+            android:background="@color/theme_divider_color"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/padding_small"
+            android:scrollbarStyle="insideInset"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/agora_userlist_dialog_list_item"/>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
