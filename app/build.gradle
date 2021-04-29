@@ -12,13 +12,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion safeExtGet('android', 'compileSdkVersion', '29')
+    compileSdkVersion safeExtGet('android', 'compileSdkVersion', 29)
     buildToolsVersion safeExtGet('android', 'buildToolsVersion', '29.0.3')
 
     defaultConfig {
         applicationId "io.agora.education"
-        minSdkVersion safeExtGet('android', 'minSdkVersion', '21')
-        targetSdkVersion safeExtGet('android', 'targetSdkVersion', '29')
+        minSdkVersion safeExtGet('android', 'minSdkVersion', 21)
+        targetSdkVersion safeExtGet('android', 'targetSdkVersion', 29)
         versionCode 10
         versionName "6.2.0"
 
