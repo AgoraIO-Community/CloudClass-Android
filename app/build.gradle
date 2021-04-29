@@ -113,6 +113,12 @@ dependencies {
         implementation project(path: ':agoraui')
     } else {
         logger.warn('dependAAR is false')
-        implementation project(path: ':edu')
+//        implementation project(path: ':edu')
+        implementation project(path: ':agoraui')
+        implementation ('com.github.AgoraIO-Community:CloudClass-Android:v1.1.0.2') {
+            exclude group: 'com.github.AgoraIO-Community', module: 'agoraui'
+            exclude group: 'com.github.AgoraIO-Community', module: 'educontext'
+            exclude group: 'com.github.AgoraIO-Community', module: 'extapp'
+        }
     }
 }
