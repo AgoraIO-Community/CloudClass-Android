@@ -1,0 +1,8 @@
+include ':widget'
+include ':extapp'
+include ':educontext'
+include ':agoraui'
+include ':edu'
+include ':app'
+include ':hyphenate'
+rootProject.name = 'CloudClass-Android'

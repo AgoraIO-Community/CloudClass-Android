@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/agoraui_loading_dialog_bg"
+        android:elevation="4dp"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/loading_Img"
+            android:layout_width="@dimen/loading_img_width"
+            android:layout_height="@dimen/loading_img_height"
+            android:layout_marginTop="@dimen/loading_img_padding_top"
+            android:layout_marginLeft="@dimen/loading_img_padding_left"
+            android:layout_marginRight="@dimen/loading_img_padding_right"
+            android:layout_marginBottom="@dimen/loading_img_padding_right"
+            android:layout_centerInParent="true"
+            android:src="@drawable/agora_board_loading_img"
+            />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/loading_img_padding_top"
+            android:gravity="center"
+            android:layout_below="@+id/loading_Img"
+            android:text="@string/agora_board_reconnect" />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

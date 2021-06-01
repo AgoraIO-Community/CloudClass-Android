@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid
+        android:color="@color/theme_text_color_black"/>
+
+    <corners android:radius="@dimen/agora_toast_bg_corner"/>
+
+</shape>

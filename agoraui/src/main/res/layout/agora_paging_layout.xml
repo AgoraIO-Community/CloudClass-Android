@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/agora_paging_control_height">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_paging_full_screen_btn"
+            android:layout_width="@dimen/agora_paging_control_icon_size"
+            android:layout_height="@dimen/agora_paging_control_icon_size"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/padding_large"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:src="@drawable/agora_paging_icon_full_screen"
+            android:scaleType="fitXY"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_paging_zoom_out_btn"
+            android:layout_width="@dimen/agora_paging_control_icon_size"
+            android:layout_height="@dimen/agora_paging_control_icon_size"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/agora_paging_full_screen_btn"
+            android:layout_toRightOf="@id/agora_paging_full_screen_btn"
+            android:src="@drawable/agora_paging_icon_zoom_out"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_paging_zoom_in_btn"
+            android:layout_width="@dimen/agora_paging_control_icon_size"
+            android:layout_height="@dimen/agora_paging_control_icon_size"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/agora_paging_zoom_out_btn"
+            android:layout_toRightOf="@id/agora_paging_zoom_out_btn"
+            android:src="@drawable/agora_paging_icon_zoom_in"/>
+
+        <View
+            android:id="@+id/agora_paging_divider"
+            android:layout_width="@dimen/divider_thin"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/agora_paging_zoom_in_btn"
+            android:layout_alignBottom="@id/agora_paging_zoom_in_btn"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/padding_small"
+            android:layout_marginLeft="@dimen/padding_small"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:layout_toEndOf="@id/agora_paging_zoom_in_btn"
+            android:layout_toRightOf="@id/agora_paging_zoom_in_btn"
+            android:background="@color/theme_divider_color_dark" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_paging_previous_btn"
+            android:layout_width="@dimen/agora_paging_control_icon_size"
+            android:layout_height="@dimen/agora_paging_control_icon_size"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/agora_paging_divider"
+            android:layout_toRightOf="@id/agora_paging_divider"
+            android:src="@drawable/agora_paging_icon_prev"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_paging_pageNo_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/agora_paging_previous_btn"
+            android:layout_toRightOf="@id/agora_paging_previous_btn"
+            android:background="@drawable/agora_paging_pageno_bg"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingLeft="@dimen/padding_medium"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_small"
+            android:text="11/12"
+            android:textColor="@color/theme_text_color_dark_gray"
+            android:textSize="@dimen/number_medium" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_paging_next_btn"
+            android:layout_width="@dimen/agora_paging_control_icon_size"
+            android:layout_height="@dimen/agora_paging_control_icon_size"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/agora_paging_pageNo_tv"
+            android:layout_toRightOf="@id/agora_paging_pageNo_tv"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large"
+            android:src="@drawable/agora_paging_icon_next"/>
+
+        <View
+            android:id="@+id/cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/agora_paging_full_screen_btn"
+            android:layout_alignLeft="@id/agora_paging_full_screen_btn"
+            android:layout_alignTop="@id/agora_paging_full_screen_btn"
+            android:layout_alignEnd="@id/agora_paging_next_btn"
+            android:layout_alignRight="@id/agora_paging_next_btn"
+            android:layout_alignBottom="@id/agora_paging_full_screen_btn"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

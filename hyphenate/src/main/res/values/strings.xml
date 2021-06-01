@@ -1,0 +1,14 @@
+<resources>
+    <string name="send">发送</string>
+    <string name="send_danmaku">发个弹幕吧</string>
+    <string name="get_scope">获取学分</string>
+    <string name="remain">剩余：</string>
+    <string name="give">赠送</string>
+    <string name="total_silence">全员禁言</string>
+    <string name="you_have_been_silenced">你已被禁言</string>
+    <string name="message_incloud_illegal_content">发送失败，消息包含非法字符</string>
+    <string name="login_failed">登录失败</string>
+    <string name="join_failed">加入失败</string>
+    <string name="in_the_login">正在登录...</string>
+    <string name="in_the_join">正在加入...</string>
+</resources>

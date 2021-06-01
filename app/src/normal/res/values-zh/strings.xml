@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="your_name_should_not_be_empty">用户名不能为空</string>
+    <string name="your_uuid_should_not_be_empty">用户Id不能为空</string>
+    <string name="room_uuid_should_not_be_empty">房间名不能为空</string>
+    <string name="room_name_should_not_be_empty">房间Id不能为空</string>
+    <string name="room_type_should_not_be_empty">房间类型不能为空</string>
+    <string name="one2one_class">一对一</string>
+    <string name="small_class">互动小班课</string>
+    <string name="large_class">大班课</string>
+    <string name="breakout">超级小班课</string>
+    <string name="intermediate">中班课</string>
+    <string name="eye_care_mode">护眼模式</string>
+    <string name="join">加入教室</string>
+    <string name="setting">设置</string>
+    <string name="no_enough_permissions">没有足够的权限</string>
+
+    <string name="join_forbidden_title">禁入通知</string>
+    <string name="join_forbidden_message">你已被禁止进入这个教室</string>
+    <string name="join_forbidden_button_confirm">确定</string>
+</resources>
