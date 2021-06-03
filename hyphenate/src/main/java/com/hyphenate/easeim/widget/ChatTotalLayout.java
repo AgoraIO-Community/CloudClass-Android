@@ -116,7 +116,6 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
 
     private void init() {
         initView();
-        initDanmaku();
         initHandler(context);
     }
 
@@ -132,6 +131,12 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
         initData();
         gift = findViewById(R.id.gift);
         initListener();
+        mContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                initDanmaku();
+            }
+        });
     }
 
     private void initData(){
@@ -175,8 +180,11 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
         mManager = DanmakuManager.getInstance();
         mManager.init(context, mContainer); // 必须首先调用init方法
 
+        ScreenUtil.setScreenWidth(mContainer.getWidth());
         DanmakuManager.Config config = mManager.getConfig(); // 弹幕相关设置
-        config.setLineHeight(ScreenUtil.autoSize(60)); // 设置行高
+        config.setLineHeight(ScreenUtil.dip2px(context, 30)); // 设置行高
+        config.setMarginTop(ScreenUtil.dip2px(context, 5));// 设置间距
+        config.setMaxScrollLine(mContainer.getHeight()/(config.getLineHeight()+config.getMarginTop()));
 
         mDanmakuCreator = new DanmakuCreator();
     }

@@ -169,14 +169,12 @@ public class DanmakuManager {
             EMLog.e(TAG, "send: screen is full, too many danmaku [" + danmaku + "]");
             return TOO_MANY_DANMAKU;
         }
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
-        if (params == null) {
-            params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            marginParams = new ViewGroup.MarginLayoutParams(params);
-        }
-        marginParams.setMargins(0, marginTop + ScreenUtil.autoSize(10), 0, 0);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getConfig().lineHeight);
+        ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(params);
+
+        marginParams.setMargins(0, marginTop, 0, 0);
         view.setLayoutParams(marginParams);
+        view.getContent().setTextSize(getConfig().textSize);
         view.show(mDanmakuContainer.get(), getDisplayDuration(danmaku));
         addViewToList(view);
         return RESULT_OK;
@@ -248,6 +246,16 @@ public class DanmakuManager {
          */
         private int maxScrollLine = 0;
 
+        /**
+         * 弹幕间距，px
+         */
+        private int marginTop = 0;
+
+        /**
+         * 弹幕文字大小，sp
+         */
+        private int textSize = 16;
+
         public int getLineHeight() {
             return lineHeight;
         }
@@ -295,6 +303,22 @@ public class DanmakuManager {
 
         public void setMaxScrollLine(int maxScrollLine) {
             this.maxScrollLine = maxScrollLine;
+        }
+
+        public void setMarginTop(int marginTop) {
+            this.marginTop = marginTop;
+        }
+
+        public int getMarginTop() {
+            return marginTop;
+        }
+
+        public int getTextSize() {
+            return textSize;
+        }
+
+        public void setTextSize(int textSize) {
+            this.textSize = textSize;
         }
     }
 

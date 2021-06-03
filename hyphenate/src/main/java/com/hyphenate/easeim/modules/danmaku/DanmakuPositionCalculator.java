@@ -27,7 +27,7 @@ class DanmakuPositionCalculator {
     }
 
     private int getLineHeightWithPadding() {
-        return (int) (1.35f * (mDanmakuManager.getConfig().getLineHeight() + ScreenUtil.autoSize(5)));
+        return mDanmakuManager.getConfig().getLineHeight() + mDanmakuManager.getConfig().getMarginTop();
     }
 
     int getMarginTop(DanmakuView view) {
