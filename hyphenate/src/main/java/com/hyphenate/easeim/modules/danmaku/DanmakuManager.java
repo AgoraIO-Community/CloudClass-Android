@@ -6,18 +6,14 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.interfaces.Pool;
 import com.hyphenate.easeim.utils.RandomUtil;
 import com.hyphenate.easeim.utils.ScreenUtil;
-import com.hyphenate.util.EMLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -136,11 +132,9 @@ public class DanmakuManager {
 
         DanmakuView view = mDanmakuViewPool.get();
         if (view == null) {
-            EMLog.e(TAG, "show: Too many danmaku, discard");
             return RESULT_FULL_POOL;
         }
         if (mDanmakuContainer == null || mDanmakuContainer.get() == null) {
-            EMLog.e(TAG, "show: Root view is null.");
             return RESULT_NULL_ROOT_VIEW;
         }
         view.setMessage(danmaku.message);
@@ -166,7 +160,6 @@ public class DanmakuManager {
 
         if (marginTop == -1) {
             // 屏幕放不下了
-            EMLog.e(TAG, "send: screen is full, too many danmaku [" + danmaku + "]");
             return TOO_MANY_DANMAKU;
         }
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getConfig().lineHeight);
@@ -204,15 +197,15 @@ public class DanmakuManager {
     public DanmakuView getDanmakuView(String msgId) {
         mDanmakuViewPool.removeView(msgId);
         for (DanmakuView view : viewList
-             ) {
-            if(view.getMessage().equals(msgId))
+        ) {
+            if (view.getMessage().equals(msgId))
                 return view;
         }
         return null;
     }
 
-    private void addViewToList(DanmakuView view){
-        if(viewList.size() > max){
+    private void addViewToList(DanmakuView view) {
+        if (viewList.size() > max) {
             viewList.remove(0);
         }
         viewList.add(view);
@@ -269,7 +262,7 @@ public class DanmakuManager {
         }
 
         public int getDurationScroll() {
-            return RandomUtil.nextInt(5, 10)*1000;
+            return RandomUtil.nextInt(5, 10) * 1000;
         }
 
         public int getDurationTop() {
