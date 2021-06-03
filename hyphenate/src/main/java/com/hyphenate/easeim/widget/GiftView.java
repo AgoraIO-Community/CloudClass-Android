@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.adapter.GiftGridAdapter;
@@ -25,7 +27,7 @@ import java.util.List;
 public class GiftView extends LinearLayout implements GiftItemListener, View.OnClickListener {
 
     private ImageView closeView;
-    private GridView gridView;
+    private RecyclerView gridView;
     private TextView scopeView;
     private ImageView doubtView;
     private RelativeLayout promptRoot;
@@ -56,15 +58,16 @@ public class GiftView extends LinearLayout implements GiftItemListener, View.OnC
         String scope = String.format("%s学分", totalScore);
         scopeView.setText(scope);
         giftList = gifts;
-        GiftGridAdapter gridAdapter = new GiftGridAdapter(context, 1, giftList);
+        GiftGridAdapter gridAdapter = new GiftGridAdapter(giftList, context);
+        gridView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         gridView.setAdapter(gridAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                gridAdapter.setSeclection(i);
-                gridAdapter.notifyDataSetChanged();
-            }
-        });
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                gridAdapter.setSeclection(i);
+//                gridAdapter.notifyDataSetChanged();
+//            }
+//        });
 
         gridAdapter.setGiftViewListener(this);
         closeView.setOnClickListener(this);

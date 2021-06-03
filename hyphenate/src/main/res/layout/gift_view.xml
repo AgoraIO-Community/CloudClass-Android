@@ -68,15 +68,13 @@
         android:layout_below="@+id/gift_title"
         android:background="@color/view_line" />
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gift_grid"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/divider"
         android:layout_margin="20dp"
-        android:columnWidth="80dp"
-        android:drawSelectorOnTop="false"
-        android:numColumns="auto_fit"
+        android:overScrollMode="never"
         android:scrollbars="none" />
 
     <RelativeLayout
