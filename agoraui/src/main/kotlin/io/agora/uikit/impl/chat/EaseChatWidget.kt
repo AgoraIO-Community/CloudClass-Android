@@ -251,6 +251,7 @@ class EaseChatWidget : AgoraAbsWidget() {
                 val info = EMUserInfo()
                 info.nickName = nickName
                 info.avatarUrl = avatarUrl
+                info.ext = DemoConstant.ROLE_STUDENT.toString()
                 EaseIM.getInstance().updateOwnInfo(info)
                 joinChatRoom()
             }
