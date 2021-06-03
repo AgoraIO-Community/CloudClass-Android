@@ -11,4 +11,9 @@
     <string name="join_failed">加入失败</string>
     <string name="in_the_login">正在登录...</string>
     <string name="in_the_join">正在加入...</string>
+    <string name="get_scope_way">获取学分的方式有：</string>
+    <string name="watch_live">观看直播课</string>
+    <string name="watch_live_replay">观看课程回放</string>
+    <string name="complete_online_test">完成在线测</string>
+    <string name="specific_details">具体细则请访问 "学习中心 > 个人中心"</string>
 </resources>

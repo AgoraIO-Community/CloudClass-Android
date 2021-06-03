@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,7 +26,9 @@ public class GiftView extends LinearLayout implements GiftItemListener, View.OnC
 
     private ImageView closeView;
     private GridView gridView;
-    private TextView scopeVeiw;
+    private TextView scopeView;
+    private ImageView doubtView;
+    private RelativeLayout promptRoot;
     private Context context;
     private GiftViewListener giftViewListener;
     private List<Gift> giftList = new ArrayList<>();
@@ -44,14 +47,16 @@ public class GiftView extends LinearLayout implements GiftItemListener, View.OnC
         LayoutInflater.from(context).inflate(R.layout.gift_view, this);
     }
 
-    public void init(List<Gift> gifts, String totalScore){
+    public void init(List<Gift> gifts, String totalScore) {
         closeView = findViewById(R.id.close_gift);
         gridView = findViewById(R.id.gift_grid);
-        scopeVeiw = findViewById(R.id.scope);
+        scopeView = findViewById(R.id.scope);
+        doubtView = findViewById(R.id.iv_doubt);
+        promptRoot = findViewById(R.id.prompt_root);
         String scope = String.format("%s学分", totalScore);
-        scopeVeiw.setText(scope);
+        scopeView.setText(scope);
         giftList = gifts;
-        GiftGridAdapter gridAdapter = new GiftGridAdapter(context, 1,giftList);
+        GiftGridAdapter gridAdapter = new GiftGridAdapter(context, 1, giftList);
         gridView.setAdapter(gridAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,6 +68,8 @@ public class GiftView extends LinearLayout implements GiftItemListener, View.OnC
 
         gridAdapter.setGiftViewListener(this);
         closeView.setOnClickListener(this);
+        doubtView.setOnClickListener(this);
+        promptRoot.setOnClickListener(this);
     }
 
     @Override
@@ -70,15 +77,24 @@ public class GiftView extends LinearLayout implements GiftItemListener, View.OnC
         giftViewListener.onGiftSend(gift);
     }
 
-    public void setGiftViewListener(GiftViewListener giftViewListener){
+    public void setGiftViewListener(GiftViewListener giftViewListener) {
         this.giftViewListener = giftViewListener;
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if(id == R.id.close_gift){
+        if (id == R.id.close_gift) {
+            promptRoot.setVisibility(GONE);
             giftViewListener.onCloseGiftView();
+        } else if (id == R.id.iv_doubt) {
+            if (promptRoot.getVisibility() == VISIBLE) {
+                promptRoot.setVisibility(GONE);
+            } else {
+                promptRoot.setVisibility(VISIBLE);
+            }
+        } else if (id == R.id.prompt_root) {
+            promptRoot.setVisibility(GONE);
         }
     }
 }
