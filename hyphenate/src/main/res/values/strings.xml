@@ -4,7 +4,7 @@
     <string name="get_scope">获取学分</string>
     <string name="remain">剩余：</string>
     <string name="give">赠送</string>
-    <string name="total_silence">全员禁言</string>
+    <string name="total_silence">全员禁言中</string>
     <string name="you_have_been_silenced">你已被禁言</string>
     <string name="message_incloud_illegal_content">发送失败，消息包含非法字符</string>
     <string name="login_failed">登录失败</string>
@@ -16,4 +16,5 @@
     <string name="watch_live_replay">观看课程回放</string>
     <string name="complete_online_test">完成在线测</string>
     <string name="specific_details">具体细则请访问 "学习中心 > 个人中心"</string>
+    <string name="register_failed">注册失败</string>
 </resources>

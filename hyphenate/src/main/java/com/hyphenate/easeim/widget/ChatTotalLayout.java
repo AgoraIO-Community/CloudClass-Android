@@ -383,6 +383,7 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
         mDanmakuSend.setEnabled(false);
         gift.setEnabled(false);
         hideInputMenu();
+        hideGiftView();
     }
 
     /**
