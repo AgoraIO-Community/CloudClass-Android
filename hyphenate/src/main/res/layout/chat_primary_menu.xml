@@ -33,7 +33,6 @@
                 android:background="@drawable/ease_send_message_et_bg"
                 android:focusableInTouchMode="true"
                 android:imeOptions="actionSend"
-                android:maxLines="4"
                 android:minHeight="32dp"
                 android:paddingLeft="10dp"
                 android:paddingTop="3dp"

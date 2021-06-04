@@ -182,8 +182,8 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
 
         ScreenUtil.setScreenWidth(mContainer.getWidth());
         DanmakuManager.Config config = mManager.getConfig(); // 弹幕相关设置
-        config.setLineHeight(ScreenUtil.dip2px(context, 30)); // 设置行高
-        config.setMarginTop(ScreenUtil.dip2px(context, 5));// 设置间距
+        config.setLineHeight(ScreenUtil.dip2px(30)); // 设置行高
+        config.setMarginTop(ScreenUtil.dip2px(5));// 设置间距
         config.setMaxScrollLine(mContainer.getHeight()/(config.getLineHeight()+config.getMarginTop()));
 
         mDanmakuCreator = new DanmakuCreator();

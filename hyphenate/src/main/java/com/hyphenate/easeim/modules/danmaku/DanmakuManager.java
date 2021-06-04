@@ -2,6 +2,8 @@ package com.hyphenate.easeim.modules.danmaku;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -162,12 +164,22 @@ public class DanmakuManager {
             // 屏幕放不下了
             return TOO_MANY_DANMAKU;
         }
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getConfig().lineHeight);
+        view.getContent().setTextSize(getConfig().textSize);
+
+        Rect rect = new Rect();
+        Paint paint = view.getContent().getPaint();
+        paint.getTextBounds(danmaku.text, 0, danmaku.text.length(), rect);
+        int viewWidth = rect.width()+ScreenUtil.dip2px(34)+rect.height()*2;
+        if(viewWidth < ScreenUtil.getScreenWidth()){
+            viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
+        }
+
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(viewWidth, getConfig().lineHeight);
         ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(params);
 
         marginParams.setMargins(0, marginTop, 0, 0);
         view.setLayoutParams(marginParams);
-        view.getContent().setTextSize(getConfig().textSize);
+
         view.show(mDanmakuContainer.get(), getDisplayDuration(danmaku));
         addViewToList(view);
         return RESULT_OK;
