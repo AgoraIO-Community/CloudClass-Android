@@ -1,0 +1,104 @@
+def safeExtGet(prop, key, fallback) {
+    if (rootProject.ext.has(prop)) {
+        def map = rootProject.ext.get(prop)
+        if (map.containsKey(key)) {
+            return map.get(key)
+        }
+    }
+    return fallback
+}
+
+plugins {
+    id 'com.android.library'
+    id 'com.jakewharton.butterknife'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'com.github.dcendents.android-maven'
+}
+
+android {
+    compileSdkVersion safeExtGet('android', 'compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('android', 'buildToolsVersion', '29.0.3')
+
+    defaultConfig {
+        minSdkVersion safeExtGet('android', 'minSdkVersion', 19)
+        targetSdkVersion safeExtGet('android', 'targetSdkVersion', 29)
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField 'String', 'APAAS_VERSION', '"1.1.2"'
+        buildConfigField 'String', 'POLICY_URL', '"https://www.agora.io/privacy-policy/"'
+        buildConfigField 'String', 'REPLAY_BASE_URL', '"https://agora-adc-artifacts.oss-accelerate.aliyuncs.com/"'
+
+        //--------whiteboard-buildconfig-----------
+        buildConfigField 'String', 'NETLESS_RESOURCE_CDN_HOST', '"convertcdn.netless.link/"'
+        buildConfigField 'String', 'NETLESS_API_BASE_URL', '"https://cloudcapiv4.herewhite.com/"'
+        //--------whiteboard-buildconfig-----------
+
+        //--------api-buildconfig---------------
+        buildConfigField 'String', 'SDK_VERSION', '"1.0.0"'
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io/"'
+        buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"https://api-solutions.agoralab.co/"'
+        //--------api-buildconfig---------------
+
+        //--------report-buildconfig---------------
+        buildConfigField 'String', 'REPORT_BASE_URL', '"https://api.agora.io/"'
+        buildConfigField 'String', 'REPORT_BASE_URL_V2', '"https://test-rest-argus.bj2.agoralab.co"'
+        //--------report-buildconfig---------------
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+//            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions { jvmTarget = 1.8 }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    api project(path: ':agoraui')
+
+    implementation "com.google.android.material:material:${safeExtGet('dependencies', 'com.google.android.material:material', '1.2.1')}"
+    implementation "com.google.android.exoplayer:exoplayer:${safeExtGet('dependencies', 'com.google.android.exoplayer:exoplayer', '2.8.1')}"
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${safeExtGet('dependencies', 'com.github.CymChad:BaseRecyclerViewAdapterHelper', '3.0.0-beta11')}"
+
+    implementation "com.jakewharton:butterknife:${safeExtGet('dependencies', 'com.jakewharton:butterknife', '10.2.1')}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${safeExtGet('dependencies', 'com.jakewharton:butterknife-compiler', '10.2.1')}"
+
+    implementation "com.github.bumptech.glide:glide:${safeExtGet('dependencies', 'com.github.bumptech.glide:glide', '4.11.0')}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${safeExtGet('dependencies', 'com.github.bumptech.glide:compiler', '4.11.0')}"
+
+    //-----------base-------------
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api 'androidx.core:core-ktx:1.3.2'
+    api "androidx.preference:preference:${safeExtGet('dependencies', 'androidx.preference:preference', '1.1.1')}"
+    api "com.google.code.gson:gson:${safeExtGet('dependencies', 'com.google.code.gson:gson', '2.8.6')}"
+    api "com.squareup.retrofit2:retrofit:${safeExtGet('dependencies', 'com.squareup.retrofit2:retrofit', '2.9.0')}"
+    api "com.squareup.okhttp3:logging-interceptor:${safeExtGet('dependencies', 'com.squareup.okhttp3:logging-interceptor', '4.7.2')}"
+    api "com.squareup.retrofit2:converter-gson:${safeExtGet('dependencies', 'com.squareup.retrofit2:converter-gson', '2.9.0')}"
+    api "androidx.constraintlayout:constraintlayout:${safeExtGet('dependencies', 'androidx.constraintlayout:constraintlayout', '2.0.4')}"
+    //-----------base-------------
+
+    testImplementation "junit:junit:${safeExtGet('dependencies', 'junit:junit', '4.12')}"
+
+    implementation "com.google.protobuf:protobuf-java:${safeExtGet('dependencies', 'com.google.protobuf:protobuf-java', '3.17.0')}"
+    implementation "com.elvishew:xlog:${safeExtGet('dependencies', 'com.elvishew:xlog', '1.6.1')}"
+    implementation "com.aliyun.dpa:oss-android-sdk:${safeExtGet('dependencies', 'com.aliyun.dpa:oss-android-sdk', '2.9.4')}"
+    implementation "com.github.agorabuilder:agora-special-full:${safeExtGet('dependencies', 'com.github.agorabuilder:agora-special-full', rootProject.ext.android.rtcSDKVersion)}"
+    implementation "io.agora.rtm:rtm-sdk:${safeExtGet('dependencies', 'io.agora.rtm:rtm-sdk', rootProject.ext.android.rtmSDKVersion)}"
+    implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', rootProject.ext.android.boardSDKVersion)}"
+}

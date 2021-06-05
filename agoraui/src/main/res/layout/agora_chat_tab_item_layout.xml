@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_chat_tab_item_layout"
+    android:layout_width="@dimen/agora_message_tab_min_width"
+    android:layout_height="match_parent"
+    android:background="@drawable/agora_chat_tab_background">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_chat_tab_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/agora_chat_tab_item_text_color"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_chat_tab_item_dot"
+        android:layout_width="@dimen/agora_message_tab_dot_size"
+        android:layout_height="@dimen/agora_message_tab_dot_size"
+        android:layout_above="@id/agora_chat_tab_item_text"
+        android:layout_toEndOf="@id/agora_chat_tab_item_text"
+        android:layout_toRightOf="@id/agora_chat_tab_item_text"
+        android:src="@drawable/agora_chat_new_message_dot"
+        android:scaleType="fitXY"/>
+</RelativeLayout>

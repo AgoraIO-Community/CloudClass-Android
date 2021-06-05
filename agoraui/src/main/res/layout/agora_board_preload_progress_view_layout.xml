@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/agora_board_progress_view_corner_radius"
+        app:cardElevation="@dimen/agora_board_progress_view_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progress_Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/agora_board_progress_view_bg"
+            android:paddingStart="@dimen/agora_board_progress_view_padding_start"
+            android:paddingLeft="@dimen/agora_board_progress_view_padding_start"
+            android:paddingTop="@dimen/agora_board_progress_view_padding_top"
+            android:paddingEnd="@dimen/agora_board_progress_view_padding_end"
+            android:paddingRight="@dimen/agora_board_progress_view_padding_end"
+            android:paddingBottom="@dimen/agora_board_progress_view_padding_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/agora_board_preload_progress_view_content"
+                android:textColor="@color/theme_text_color_black"
+                android:textSize="@dimen/agora_board_progress_view_content_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/progress_Text"
+                android:layout_width="@dimen/agora_board_progress_view_progress_text_w"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/agora_board_progress_view_progress_text_margin_top"
+                android:gravity="center"
+                android:text="99%"
+                android:textColor="@color/theme_blue_light"
+                android:textSize="@dimen/agora_board_progress_view_progress_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/download_Progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="@dimen/agora_board_progress_view_progressbar_w"
+                android:layout_height="@dimen/agora_board_progress_view_progressbar_h"
+                android:layout_marginEnd="@dimen/agora_board_progress_view_progressbar_margin_end"
+                android:max="10"
+                android:min="0"
+                android:progress="10"
+                android:progressDrawable="@drawable/agora_board_progress_view_progressbar_bg"
+                android:secondaryProgress="10"
+                app:layout_constraintBottom_toBottomOf="@id/progress_Text"
+                app:layout_constraintEnd_toStartOf="@id/progress_Text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/progress_Text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/danma_root_layout"
+    android:padding="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/danma_content"
+        android:layout_alignBottom="@+id/danma_content"
+        android:layout_marginEnd="10dp"
+        />
+
+    <TextView
+        android:id="@+id/danma_content"
+        android:layout_toRightOf="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        />
+
+    <ImageView
+        android:id="@+id/danma_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/danma_content"
+        android:layout_marginLeft="10dp"
+        android:padding="2dp"
+        android:layout_alignTop="@+id/danma_content"
+        android:layout_alignBottom="@+id/danma_content"
+        />
+
+</RelativeLayout>
