@@ -84,7 +84,7 @@ public class DanmakuCreator {
     private String randomColor() {
         int i = RandomUtil.nextInt(10);
         if (i <= 5) {
-            return "#FFFFFFFF";
+            return "#FF000000";
         } else if (i == 6) {
             return "#FF0000FF";
         } else if (i == 7) {

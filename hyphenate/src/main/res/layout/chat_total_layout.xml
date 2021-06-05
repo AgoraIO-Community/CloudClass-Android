@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:id="@+id/danmaku_bottom"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
@@ -24,8 +24,9 @@
 
             <TextView
                 android:id="@+id/etSend"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="32dp"
+                android:layout_weight="1"
                 android:layout_margin="8dp"
                 android:background="@drawable/main_et_send_danmaku_bg"
                 android:gravity="center_vertical"

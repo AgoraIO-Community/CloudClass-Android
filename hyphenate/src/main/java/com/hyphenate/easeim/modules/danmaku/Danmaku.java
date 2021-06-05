@@ -1,8 +1,5 @@
 package com.hyphenate.easeim.modules.danmaku;
 
-
-import com.hyphenate.chat.EMMessage;
-
 public class Danmaku {
     public static final String COLOR_GRAY = "#c0c0c0";
     public static final String COLOR_WHITE = "#ffffffff";

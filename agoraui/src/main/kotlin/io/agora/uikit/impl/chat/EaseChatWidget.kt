@@ -35,6 +35,8 @@ class EaseChatWidget : AgoraAbsWidget() {
 
     private var loginLimit = 0
     private var joinLimit = 0
+    private var isAllMute = false
+    private var isSingleMute = false
 
     private var messageListener: EMMessageListener? = null
     private var chatRoomChangeListener: EMChatRoomChangeListener? = null
@@ -42,15 +44,44 @@ class EaseChatWidget : AgoraAbsWidget() {
 
     private val isAllMemberMuted: Unit
         get() {
-            EMClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(
-                    mChatRoomId, object : EMValueCallBack<EMChatRoom> {
-                override fun onSuccess(value: EMChatRoom) {
-                    if (value.isAllMemberMuted) {
-                        totalLayout!!.sendHandleEnable(mContext!!.resources
-                                .getString(R.string.total_silence), false)
+            EMClient.getInstance().chatroomManager().asyncFetchChatRoomAnnouncement(
+                    mChatRoomId, object : EMValueCallBack<String> {
+                override fun onSuccess(value: String) {
+                    if (value.isEmpty()) {
+                        totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
                     } else {
-                        totalLayout!!.sendHandleEnable(mContext!!.resources
-                                .getString(R.string.send_danmaku), true)
+                        when (value.substring(0, 1)) {
+                            "0" -> {
+                                isAllMute = false
+                                totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
+                            }
+                            "1" -> {
+                                isAllMute = true
+                                totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.total_silence), false)
+                            }
+                            else -> EMLog.e(TAG, "fetch_announcement:$value")
+                        }
+                    }
+                    checkSingleMute
+                }
+
+                override fun onError(error: Int, errorMsg: String) {
+
+                }
+            })
+        }
+
+    private val checkSingleMute: Unit
+        get() {
+            EMClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
+                    mChatRoomId, object : EMValueCallBack<Boolean> {
+                override fun onSuccess(value: Boolean) {
+                    EMLog.e(TAG, "checkIfInChatRoomWhiteList:$value")
+                    isSingleMute = value
+                    if (value) {
+                        if (!isAllMute) {
+                            totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.you_have_been_silenced), false)
+                        }
                     }
                 }
 
@@ -74,6 +105,8 @@ class EaseChatWidget : AgoraAbsWidget() {
     private fun joinEaseIM() {
         loginLimit = 0
         joinLimit = 0
+        isAllMute = false
+        isSingleMute = false
 
         // userName = localUserInfo.userUuid
         userName = getEduContext()?.userContext()?.localUserInfo()?.userUuid ?: ""
@@ -90,13 +123,14 @@ class EaseChatWidget : AgoraAbsWidget() {
             it.setRoomUuid(roomUuid)
         }
 
-        EaseIM.getInstance().init(mContext, appKey)
-        initEaseListener()
-        if (userName.isNotEmpty() && userUuid.isNotEmpty()) {
-            // userUuid is pwd
-            loginIM(userName, userUuid)
-        } else {
-            EMLog.e(TAG, "User name/uuid is null or empty, ease im login fail")
+        if(EaseIM.getInstance().init(mContext, appKey)){
+            initEaseListener()
+            if (userName.isNotEmpty() && userUuid.isNotEmpty()) {
+                // userUuid is pwd
+                loginIM(userName, userUuid)
+            } else {
+                EMLog.e(TAG, "User name/uuid is null or empty, ease im login fail")
+            }
         }
     }
 
@@ -194,33 +228,37 @@ class EaseChatWidget : AgoraAbsWidget() {
             }
 
             override fun onMuteListAdded(chatRoomId: String, mutes: List<String>, expireTime: Long) {
-                for (member in mutes) {
-                    totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.you_have_been_silenced), false)
-                }
+
             }
 
             override fun onMuteListRemoved(chatRoomId: String, mutes: List<String>) {
-                for (member in mutes) {
-                    totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
-                }
+
             }
 
             override fun onWhiteListAdded(chatRoomId: String, whitelist: List<String>) {
-
+                for (member in whitelist) {
+                    EMLog.e(TAG, "onWhiteListAdded:$member")
+                    if (member == EMClient.getInstance().currentUser) {
+                        isSingleMute = true
+                        if (!isAllMute)
+                            totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.you_have_been_silenced), false)
+                    }
+                }
             }
 
             override fun onWhiteListRemoved(chatRoomId: String, whitelist: List<String>) {
-
+                for (member in whitelist) {
+                    EMLog.e(TAG, "onWhiteListRemoved:$member")
+                    if (member == EMClient.getInstance().currentUser) {
+                        isSingleMute = false
+                        if (!isAllMute)
+                            totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
+                    }
+                }
             }
 
             override fun onAllMemberMuteStateChanged(roomId: String, isMuted: Boolean) {
-                if (mChatRoomId == roomId) {
-                    if (isMuted) {
-                        totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.total_silence), false)
-                    } else {
-                        totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
-                    }
-                }
+
             }
 
             override fun onAdminAdded(chatRoomId: String, admin: String) {
@@ -236,7 +274,20 @@ class EaseChatWidget : AgoraAbsWidget() {
             }
 
             override fun onAnnouncementChanged(chatRoomId: String, announcement: String) {
-
+                EMLog.e(TAG, "announcement_change:$announcement")
+                if (mChatRoomId == chatRoomId) {
+                    when(announcement.substring(0, 1)){
+                        "0" -> {
+                            isAllMute = false
+                            if (isSingleMute) totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.you_have_been_silenced), true)
+                            else totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
+                        }
+                        "1" -> {
+                            isAllMute = true
+                            totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.total_silence), false)
+                        }
+                    }
+                }
             }
         }
 
@@ -251,14 +302,15 @@ class EaseChatWidget : AgoraAbsWidget() {
                 val info = EMUserInfo()
                 info.nickName = nickName
                 info.avatarUrl = avatarUrl
+                info.ext = DemoConstant.ROLE_STUDENT.toString()
                 EaseIM.getInstance().updateOwnInfo(info)
                 joinChatRoom()
             }
 
             override fun onError(code: Int, error: String) {
-                EMLog.e("Login:", "$code:$error")
+                EMLog.e(TAG, "login failed:$code:$error")
                 if (loginLimit == 2) {
-                    totalLayout!!.sendHandleToast(mContext!!.resources.getString(R.string.login_failed))
+                    totalLayout!!.sendHandleToast(mContext!!.resources.getString(R.string.login_failed) + ":$error")
                     totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.login_failed), false)
                     return
                 }
@@ -285,9 +337,9 @@ class EaseChatWidget : AgoraAbsWidget() {
             }
 
             override fun onError(error: Int, errorMsg: String) {
-                EMLog.e("Login:", "join  $error:$errorMsg")
+                EMLog.e(TAG, "join failed: $error:$errorMsg")
                 if (joinLimit == 2) {
-                    totalLayout!!.sendHandleToast(mContext!!.resources.getString(R.string.join_failed))
+                    totalLayout!!.sendHandleToast(mContext!!.resources.getString(R.string.join_failed) + ":$errorMsg")
                     totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.join_failed), false)
                     return
                 }
@@ -303,6 +355,9 @@ class EaseChatWidget : AgoraAbsWidget() {
                 loginIM(userName, pwd)
             } catch (e: HyphenateException) {
                 e.printStackTrace()
+                EMLog.e(TAG, "create failed:" + e.errorCode + ":" + e.description)
+                totalLayout!!.sendHandleToast(mContext!!.resources.getString(R.string.register_failed).toString() + ":" + e.description)
+                totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.register_failed), false)
             }
         }.start()
     }
@@ -314,6 +369,7 @@ class EaseChatWidget : AgoraAbsWidget() {
     override fun release() {
         totalLayout?.cancelHandler()
         cancelEaseListener()
+        EMClient.getInstance().chatroomManager().leaveChatRoom(mChatRoomId)
         logoutIM()
     }
 
