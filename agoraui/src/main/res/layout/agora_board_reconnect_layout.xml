@@ -37,7 +37,7 @@
                 android:id="@+id/loading_Img"
                 android:layout_width="@dimen/agora_board_loading_img_w"
                 android:layout_height="@dimen/agora_board_loading_img_h"
-                android:src="@drawable/agora_board_loading_img"
+                android:src="@drawable/agora_ui_loading_img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -24,6 +24,8 @@ interface IAgoraUIContainer {
     fun willLaunchExtApp(appIdentifier:String):Int
 
     fun showTips(msg: String)
+
+    fun release()
 }
 
 object AgoraUIContainer {
@@ -42,6 +44,9 @@ object AgoraUIContainer {
             }
             AgoraContainerType.LargeClass -> {
                 AgoraUILargeClassContainer(eduContext, config)
+            }
+            AgoraContainerType.Debug -> {
+                AgoraDebugContainer(eduContext, config)
             }
         }
 

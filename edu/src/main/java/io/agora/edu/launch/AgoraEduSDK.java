@@ -388,7 +388,7 @@ public class AgoraEduSDK {
     private static void callbackError(Context context, AgoraEduEvent event, String msg) {
         Log.e(TAG, msg);
         agoraEduLaunchCallback.onCallback(event);
-        if (context instanceof Activity) {
+        if (context instanceof Activity && event != AgoraEduEvent.AgoraEduEventForbidden) {
             ((Activity) context).runOnUiThread(() -> Toast.makeText(context, msg, Toast.LENGTH_SHORT).show());
         }
         Log.e(TAG, msg);

@@ -1,9 +1,6 @@
 package io.agora.uikit.educontext.handlers
 
-import io.agora.educontext.EduContextClassState
-import io.agora.educontext.EduContextConnectionState
-import io.agora.educontext.EduContextError
-import io.agora.educontext.EduContextNetworkState
+import io.agora.educontext.*
 import io.agora.educontext.eventHandler.IRoomHandler
 
 open class RoomHandler : IRoomHandler {
@@ -41,5 +38,14 @@ open class RoomHandler : IRoomHandler {
 
     override fun onClassroomJoined() {
 
+    }
+
+    override fun onFlexRoomPropsInitialized(properties: MutableMap<String, Any>) {
+    }
+
+    override fun onFlexRoomPropsChanged(changedProperties: MutableMap<String, Any>,
+                                        properties: MutableMap<String, Any>,
+                                        cause: MutableMap<String, Any>?,
+                                        operator: EduContextUserInfo?) {
     }
 }

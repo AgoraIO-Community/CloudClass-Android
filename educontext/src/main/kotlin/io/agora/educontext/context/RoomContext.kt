@@ -11,7 +11,7 @@ abstract class RoomContext : AbsHandlerPool<IRoomHandler>() {
 
     abstract fun uploadLog()
 
-//    abstract fun upsertRoomProperties(properties: MutableMap<String, String>, cause: MutableMap<String, String>?)
-//
-//    abstract fun removeRoomProperties(keys: MutableList<String>, cause: MutableMap<String, String>?)
+    abstract fun updateFlexRoomProps(properties: MutableMap<String, String>, cause: MutableMap<String, String>?)
+
+    abstract fun joinClassRoom()
 }

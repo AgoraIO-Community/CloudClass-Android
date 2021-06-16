@@ -8,6 +8,7 @@ import io.agora.base.network.RetrofitManager
 import io.agora.edu.classroom.bean.PropertyData
 import io.agora.edu.common.bean.ResponseBody
 import io.agora.edu.launch.AgoraEduSDK
+import io.agora.edu.util.TimeUtil
 import io.agora.extension.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,8 +26,8 @@ abstract class AgoraExtAppManager(
 
     private val extAppEngine = AgoraExtAppEngine(context, container, this)
 
-    fun launchExtApp(identifier: String) : Int {
-        return extAppEngine.launchExtApp(identifier)
+    fun launchExtApp(identifier: String, currentTime: Long) : Int {
+        return extAppEngine.launchExtApp(identifier,false,currentTime)
     }
 
     fun getRegisteredApps() : List<AgoraExtAppInfo> {
@@ -47,8 +48,9 @@ abstract class AgoraExtAppManager(
                 run {
                     Log.d(tag, "ext app initialize id $s, ${any.toString()}")
                     val state = (roomProperties?.get(keyAppCommon) as Map<String, Any>)?.get(s)
+                    val currentTime = TimeUtil.currentTimeMillis()
                     updateExtAppProperties(s, any as? MutableMap<String, Any?>,
-                            null, state as? MutableMap<String, Any?>)
+                            null, state as? MutableMap<String, Any?>,currentTime)
                 }
             }
 
@@ -72,7 +74,7 @@ abstract class AgoraExtAppManager(
                 // of an extension app (denoted by extAppId)
                 val extAppId = data["extAppUuid"] as? String
                 val extAppCause = data["extAppCause"] as? MutableMap<String, Any?>
-
+                val currentTime = TimeUtil.currentTimeMillis()
                 // One property change event contains only the change info of one
                 // single extension app, we must find the common info and properties
                 // of this extension app and callback to it
@@ -85,7 +87,7 @@ abstract class AgoraExtAppManager(
                         "$extAppProperties, state map: $stateMap")
 
                 extAppId?.let { id ->
-                    updateExtAppProperties(id, extAppProperties, extAppCause, stateMap)
+                    updateExtAppProperties(id, extAppProperties, extAppCause, stateMap,currentTime)
                 }
             }
         }
@@ -94,8 +96,8 @@ abstract class AgoraExtAppManager(
     private fun updateExtAppProperties(appIdentifier: String,
                                        properties: MutableMap<String, Any?>?,
                                        cause: MutableMap<String, Any?>?,
-                                       state: MutableMap<String, Any?>?) {
-        extAppEngine.onExtAppPropertyUpdated(appIdentifier, properties, cause, state)
+                                       state: MutableMap<String, Any?>?, currentTime: Long) {
+        extAppEngine.onExtAppPropertyUpdated(appIdentifier, properties, cause, state, currentTime)
     }
 
     @UiThread

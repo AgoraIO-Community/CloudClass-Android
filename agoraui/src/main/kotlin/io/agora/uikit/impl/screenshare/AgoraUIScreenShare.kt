@@ -8,7 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
-import io.agora.educontext.AgoraScreenShareState
+import io.agora.educontext.EduContextScreenShareState
 import io.agora.educontext.EduContextPool
 import io.agora.uikit.R
 import io.agora.uikit.educontext.handlers.ScreenShareHandler
@@ -30,7 +30,7 @@ class AgoraUIScreenShare(
     private val screenShareContainer: FrameLayout = contentView.findViewById(R.id.screen_share_container_layout)
 
     private val screenShareHandler = object : ScreenShareHandler() {
-        override fun onScreenShareStateUpdated(state: AgoraScreenShareState, streamUuid: String) {
+        override fun onScreenShareStateUpdated(state: EduContextScreenShareState, streamUuid: String) {
             updateScreenShareState(state, streamUuid)
         }
 
@@ -58,9 +58,9 @@ class AgoraUIScreenShare(
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    fun updateScreenShareState(state: AgoraScreenShareState, streamUuid: String) {
+    fun updateScreenShareState(state: EduContextScreenShareState, streamUuid: String) {
         contentView.post {
-            val sharing = state == AgoraScreenShareState.Start
+            val sharing = state == EduContextScreenShareState.Start
             contentView.visibility = if (sharing) VISIBLE else GONE
             eduContext?.screenShareContext()?.setScreenShareState(state)
 

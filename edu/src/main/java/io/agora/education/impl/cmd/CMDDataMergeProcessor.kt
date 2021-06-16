@@ -138,7 +138,7 @@ internal class CMDDataMergeProcessor : CMDProcessor() {
                         var map: MutableMap<String, Any> = curUserProperties
                         val notExistsKeys = mutableListOf<String>()
                         while (iterable.hasNext()) {
-                            val elementKey = iterable.next()
+                            var elementKey = iterable.next()
                             val data = map[elementKey]
                             // Upsert/delete existing attributes
                             if (data != null && data is MutableMap<*, *>) {
@@ -159,6 +159,10 @@ internal class CMDDataMergeProcessor : CMDProcessor() {
                                 }
                             } else if (data == null) {
                                 notExistsKeys.add(elementKey)
+                                while (iterable.hasNext()) {
+                                    elementKey = iterable.next()
+                                    notExistsKeys.add(elementKey)
+                                }
                             }
                         }
                         // Newly added attributes
@@ -367,7 +371,7 @@ internal class CMDDataMergeProcessor : CMDProcessor() {
                 var map: MutableMap<String, Any> = roomProperties
                 val notExistsKeys = mutableListOf<String>()
                 while (iterable.hasNext()) {
-                    val elementKey = iterable.next()
+                    var elementKey = iterable.next()
                     val data = map[elementKey]
                     if (data != null && data is MutableMap<*, *>) {
                         if (!iterable.hasNext()) {
@@ -387,6 +391,10 @@ internal class CMDDataMergeProcessor : CMDProcessor() {
                         }
                     } else if (data == null) {
                         notExistsKeys.add(elementKey)
+                        while (iterable.hasNext()) {
+                            elementKey = iterable.next()
+                            notExistsKeys.add(elementKey)
+                        }
                     }
                 }
                 if (notExistsKeys.isNotEmpty()) {

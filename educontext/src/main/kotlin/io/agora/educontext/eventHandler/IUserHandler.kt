@@ -19,4 +19,11 @@ interface IUserHandler {
     fun onUserTip(tip: String)
 
     fun onRoster(context: Context, anchor: View, type: Int?)
+
+    /** @param  operator this is null when server update props */
+    fun onFlexUserPropsChanged(changedProperties: MutableMap<String, Any>,
+                               properties: MutableMap<String, Any>,
+                               cause: MutableMap<String, Any>?,
+                               fromUser: EduContextUserDetailInfo,
+                               operator: EduContextUserInfo?)
 }

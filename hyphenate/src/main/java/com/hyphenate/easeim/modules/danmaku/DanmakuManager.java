@@ -2,22 +2,20 @@ package com.hyphenate.easeim.modules.danmaku;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.interfaces.Pool;
 import com.hyphenate.easeim.utils.RandomUtil;
 import com.hyphenate.easeim.utils.ScreenUtil;
-import com.hyphenate.util.EMLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -136,11 +134,9 @@ public class DanmakuManager {
 
         DanmakuView view = mDanmakuViewPool.get();
         if (view == null) {
-            EMLog.e(TAG, "show: Too many danmaku, discard");
             return RESULT_FULL_POOL;
         }
         if (mDanmakuContainer == null || mDanmakuContainer.get() == null) {
-            EMLog.e(TAG, "show: Root view is null.");
             return RESULT_NULL_ROOT_VIEW;
         }
         view.setMessage(danmaku.message);
@@ -166,17 +162,24 @@ public class DanmakuManager {
 
         if (marginTop == -1) {
             // 屏幕放不下了
-            EMLog.e(TAG, "send: screen is full, too many danmaku [" + danmaku + "]");
             return TOO_MANY_DANMAKU;
         }
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
-        if (params == null) {
-            params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            marginParams = new ViewGroup.MarginLayoutParams(params);
+        view.getContent().setTextSize(getConfig().textSize);
+
+        Rect rect = new Rect();
+        Paint paint = view.getContent().getPaint();
+        paint.getTextBounds(danmaku.text, 0, danmaku.text.length(), rect);
+        int viewWidth = rect.width()+ScreenUtil.dip2px(34)+rect.height()*2;
+        if(viewWidth < ScreenUtil.getScreenWidth()){
+            viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
         }
-        marginParams.setMargins(0, marginTop + ScreenUtil.autoSize(10), 0, 0);
+
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(viewWidth, getConfig().lineHeight);
+        ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(params);
+
+        marginParams.setMargins(0, marginTop, 0, 0);
         view.setLayoutParams(marginParams);
+
         view.show(mDanmakuContainer.get(), getDisplayDuration(danmaku));
         addViewToList(view);
         return RESULT_OK;
@@ -206,15 +209,15 @@ public class DanmakuManager {
     public DanmakuView getDanmakuView(String msgId) {
         mDanmakuViewPool.removeView(msgId);
         for (DanmakuView view : viewList
-             ) {
-            if(view.getMessage().equals(msgId))
+        ) {
+            if (view.getMessage().equals(msgId))
                 return view;
         }
         return null;
     }
 
-    private void addViewToList(DanmakuView view){
-        if(viewList.size() > max){
+    private void addViewToList(DanmakuView view) {
+        if (viewList.size() > max) {
             viewList.remove(0);
         }
         viewList.add(view);
@@ -248,6 +251,16 @@ public class DanmakuManager {
          */
         private int maxScrollLine = 0;
 
+        /**
+         * 弹幕间距，px
+         */
+        private int marginTop = 0;
+
+        /**
+         * 弹幕文字大小，sp
+         */
+        private int textSize = 16;
+
         public int getLineHeight() {
             return lineHeight;
         }
@@ -261,7 +274,7 @@ public class DanmakuManager {
         }
 
         public int getDurationScroll() {
-            return RandomUtil.nextInt(5, 10)*1000;
+            return RandomUtil.nextInt(5, 10) * 1000;
         }
 
         public int getDurationTop() {
@@ -295,6 +308,22 @@ public class DanmakuManager {
 
         public void setMaxScrollLine(int maxScrollLine) {
             this.maxScrollLine = maxScrollLine;
+        }
+
+        public void setMarginTop(int marginTop) {
+            this.marginTop = marginTop;
+        }
+
+        public int getMarginTop() {
+            return marginTop;
+        }
+
+        public int getTextSize() {
+            return textSize;
+        }
+
+        public void setTextSize(int textSize) {
+            this.textSize = textSize;
         }
     }
 

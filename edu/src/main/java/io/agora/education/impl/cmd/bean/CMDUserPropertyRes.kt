@@ -7,6 +7,6 @@ class CMDUserPropertyRes(
         action: Int,
         changeProperties: MutableMap<String, Any>,
         cause: MutableMap<String, Any>?,
-        operator: EduBaseUserInfo?
+        operator: OperatorUserInfo?
 ) : CMDRoomPropertyRes(action, changeProperties, cause, operator) {
 }

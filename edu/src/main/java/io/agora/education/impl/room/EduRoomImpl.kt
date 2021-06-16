@@ -217,16 +217,16 @@ internal class EduRoomImpl(
         /**Set the video resolution according to the classType*/
         when (getCurRoomType()) {
             RoomType.ONE_ON_ONE -> {
-                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             RoomType.SMALL_CLASS -> {
-                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             RoomType.LARGE_CLASS -> {
-                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             else -> {
                 /**default is 360 * 360*/

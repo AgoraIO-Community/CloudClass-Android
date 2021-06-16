@@ -19,6 +19,7 @@ import io.agora.edu.launch.AgoraEduLaunchConfig
 import io.agora.edu.launch.AgoraEduRoleType
 import io.agora.edu.launch.AgoraEduSDK
 import io.agora.edu.util.AppUtil.getNavigationBarHeight
+import io.agora.edu.util.TimeUtil
 import io.agora.edu.widget.EyeProtection
 import io.agora.education.api.EduCallback
 import io.agora.education.api.base.EduError
@@ -35,9 +36,7 @@ import io.agora.education.api.room.data.*
 import io.agora.education.api.room.listener.EduRoomEventListener
 import io.agora.education.api.statistics.ConnectionState
 import io.agora.education.api.statistics.NetworkQuality
-import io.agora.education.api.stream.data.EduStreamEvent
-import io.agora.education.api.stream.data.EduStreamInfo
-import io.agora.education.api.stream.data.VideoSourceType
+import io.agora.education.api.stream.data.*
 import io.agora.education.api.user.EduStudent
 import io.agora.education.api.user.EduUser
 import io.agora.education.api.user.data.*
@@ -82,7 +81,7 @@ abstract class BaseClassActivity : BaseActivity(),
     protected var contentLayout: RelativeLayout? = null
 
     protected var container: IAgoraUIContainer? = null
-    protected var roomStatusManager: RoomStatusManager? = null
+    protected var roomStateManager: RoomStateManager? = null
     protected var deviceManager: DeviceManager? = null
     protected var chatManager: ChatManager? = null
     protected var easeImManager: IMManager? = null
@@ -95,6 +94,7 @@ abstract class BaseClassActivity : BaseActivity(),
     protected var extAppManager: AgoraExtAppManager? = null
     protected var whiteBoardManager: WhiteBoardManager? = null
     protected var whiteBoardContainer: ViewGroup? = null
+    protected var flexPropsManager: FlexPropsManager? = null
 
     protected data class JoinRoomConfiguration(
             val autoPublish: Boolean = false,
@@ -104,7 +104,7 @@ abstract class BaseClassActivity : BaseActivity(),
     private var joinConfig = JoinRoomConfiguration()
 
     @Volatile
-    private var rtmReconnecting = false
+    private var rtmConnectionState = ConnectionState.DISCONNECTED.value
 
     @Volatile
     var isJoining = false
@@ -116,6 +116,7 @@ abstract class BaseClassActivity : BaseActivity(),
     // both room and white board join successfully
     private var roomJoinSuccess = false
     private var whiteboardJoinSuccess = false
+    private var joinWhiteBoardCalled = false;
 
     @Synchronized
     protected fun processJoinSuccess(): Boolean {
@@ -161,6 +162,12 @@ abstract class BaseClassActivity : BaseActivity(),
 
         override fun onMediaMsgUpdate(msg: String) {
             container?.showTips(msg)
+        }
+    }
+
+    private val flexManagerEventListener = object : FlexManagerEventListener {
+        override fun onGranted(userId: String): Boolean {
+            return whiteBoardManager?.isGranted(userId) ?: false
         }
     }
 
@@ -257,7 +264,7 @@ abstract class BaseClassActivity : BaseActivity(),
                 override fun onSuccess(res: String?) {
                     AgoraLog.d(tag, "log updated ->$res");
                     if (res != null) {
-                        roomStatusManager?.setUploadedLogMsg(res)
+                        roomStateManager?.setUploadedLogMsg(res)
                     }
                 }
 
@@ -266,6 +273,167 @@ abstract class BaseClassActivity : BaseActivity(),
                 }
 
             })
+        }
+
+        override fun updateFlexRoomProps(properties: MutableMap<String, String>, cause: MutableMap<String, String>?) {
+            roomStateManager?.updateFlexProps(properties, cause)
+        }
+
+        override fun joinClassRoom() {
+            joinRoomAsStudent(
+                    launchConfig?.userName,
+                    launchConfig?.userUuid,
+                    joinConfig.autoSubscribe,
+                    joinConfig.autoPublish,
+                    joinConfig.needUserListener,
+                    object : EduCallback<EduStudent?> {
+                        override fun onSuccess(res: EduStudent?) {
+                            res?.let { student ->
+                                setRoomJoinSuccess()
+                                checkProcessSuccess()
+                                preCheckData?.let { preCheck -> initEduCapabilityManagers(launchConfig!!, preCheck) }
+                                onRoomJoined(true, student)
+                            }
+                        }
+
+                        override fun onFailure(error: EduError) {
+                            joinFailed(error.type, error.msg)
+                            onRoomJoined(false, null, error)
+                        }
+                    })
+        }
+    }
+
+    private val mediaContext = object : MediaContext() {
+        override fun openCamera() {
+            val videoTrack = eduManager?.getEduMediaControl()?.createCameraVideoTrack()
+            val a = videoTrack?.start()
+            Log.i(tag, "openCamera->$a")
+        }
+
+        override fun closeCamera() {
+            val videoTrack = eduManager?.getEduMediaControl()?.createCameraVideoTrack()
+            val a = videoTrack?.stop()
+            Log.i(tag, "closeCamera->$a")
+        }
+
+        override fun startPreview(container: ViewGroup) {
+            val videoTrack = eduManager?.getEduMediaControl()?.createCameraVideoTrack()
+            val b = videoTrack?.setRenderConfig(EduRenderConfig(EduRenderMode.FIT))
+            Log.i(tag, "setRenderConfig-fit->$b")
+            val config = EduVideoEncoderConfig()
+            config.videoDimensionWidth = VideoDimensions.VideoDimensions_320X240[0]
+            config.videoDimensionHeight = VideoDimensions.VideoDimensions_320X240[1]
+            config.orientationMode = OrientationMode.FIXED_LANDSCAPE
+            val c = videoTrack?.setVideoEncoderConfig(config)
+            Log.i(tag, "setVideoEncoderConfig->$c")
+            val a = videoTrack?.setView(container)
+            Log.i(tag, "startPreview->$a")
+        }
+
+        override fun stopPreview() {
+            val videoTrack = eduManager?.getEduMediaControl()?.createCameraVideoTrack()
+            val a = videoTrack?.setView(null)
+            Log.i(tag, "stopPreview->$a")
+        }
+
+        override fun openMicrophone() {
+            val audioTrack = eduManager?.getEduMediaControl()?.createMicrophoneTrack()
+            val a = audioTrack?.start()
+            Log.i(tag, "openMicrophone->$a")
+        }
+
+        override fun closeMicrophone() {
+            val audioTrack = eduManager?.getEduMediaControl()?.createMicrophoneTrack()
+            val a = audioTrack?.stop()
+            Log.i(tag, "closeMicrophone->$a")
+        }
+
+        override fun publishStream(type: EduContextMediaStreamType) {
+            val hasVideo = type != EduContextMediaStreamType.Audio
+            val hasAudio = type != EduContextMediaStreamType.Video
+            getLocalUser(object : EduCallback<EduUser?> {
+                override fun onSuccess(localUser: EduUser?) {
+                    localUser?.let {
+                        getCurFullStream(object : EduCallback<MutableList<EduStreamInfo>> {
+                            override fun onSuccess(res: MutableList<EduStreamInfo>?) {
+                                var stream = res?.find { it.publisher.userUuid == localUser.userInfo.userUuid }
+                                if (stream == null) {
+                                    stream = EduStreamInfo(localUser.userInfo.streamUuid, null,
+                                            VideoSourceType.CAMERA, hasVideo, hasAudio, localUser.userInfo)
+                                } else {
+                                    if (type == EduContextMediaStreamType.Video) {
+                                        stream.hasVideo = true
+                                    }
+                                    if (type == EduContextMediaStreamType.Audio) {
+                                        stream.hasAudio = true
+                                    }
+                                    if (type == EduContextMediaStreamType.All) {
+                                        stream.hasVideo = hasVideo
+                                        stream.hasAudio = hasAudio
+                                    }
+                                }
+                                localUser.publishStream(stream, object : EduCallback<Boolean> {
+                                    override fun onSuccess(res: Boolean?) {
+                                    }
+
+                                    override fun onFailure(error: EduError) {
+                                    }
+                                })
+                            }
+
+                            override fun onFailure(error: EduError) {
+                            }
+                        })
+                    }
+                }
+
+                override fun onFailure(error: EduError) {
+                }
+            })
+        }
+
+        override fun unPublishStream(type: EduContextMediaStreamType) {
+            getLocalUser(object : EduCallback<EduUser?> {
+                override fun onSuccess(localUser: EduUser?) {
+                    localUser?.let {
+                        getCurFullStream(object : EduCallback<MutableList<EduStreamInfo>> {
+                            override fun onSuccess(res: MutableList<EduStreamInfo>?) {
+                                var stream = res?.find { it.publisher.userUuid == localUser.userInfo.userUuid }
+                                stream?.let {
+                                    if (type == EduContextMediaStreamType.Video) {
+                                        it.hasVideo = false
+                                    }
+                                    if (type == EduContextMediaStreamType.Audio) {
+                                        it.hasAudio = false
+                                    }
+                                    if (type == EduContextMediaStreamType.All) {
+                                        it.hasVideo = false
+                                        it.hasAudio = false
+                                    }
+                                    localUser.unPublishStream(it, object : EduCallback<Boolean> {
+                                        override fun onSuccess(res: Boolean?) {
+                                        }
+
+                                        override fun onFailure(error: EduError) {
+                                        }
+                                    })
+                                }
+
+                            }
+
+                            override fun onFailure(error: EduError) {
+                            }
+                        })
+                    }
+                }
+
+                override fun onFailure(error: EduError) {
+                }
+            })
+        }
+
+        override fun renderRemoteView(container: ViewGroup?, streamUuid: String) {
         }
     }
 
@@ -292,7 +460,7 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     private val screenShareContext = object : ScreenShareContext() {
-        override fun setScreenShareState(state: AgoraScreenShareState) {
+        override fun setScreenShareState(state: EduContextScreenShareState) {
             screenShareManager?.setScreenShareState(state)
         }
 
@@ -302,21 +470,21 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     private val userContext = object : UserContext() {
-//        override fun startPreview(container: ViewGroup) {
-//            userListManager?.startPreview(container)
-//        }
-//
-//        override fun stopPreview() {
-//            userListManager?.stopPreview()
-//        }
-//
-//        override fun publishLocalStream(hasAudio: Boolean, hasVideo: Boolean) {
-//            userListManager?.publishLocalStream(hasAudio, hasVideo)
-//        }
-//
-//        override fun unPublishLocalStream(hasAudio: Boolean, hasVideo: Boolean) {
-//            userListManager?.unPublishLocalStream(hasAudio, hasVideo)
-//        }
+        override fun startPreview(container: ViewGroup) {
+            userListManager?.startPreview(container)
+        }
+
+        override fun stopPreview(container: ViewGroup) {
+            userListManager?.stopPreview(container)
+        }
+
+        override fun publish(container: ViewGroup, hasAudio: Boolean, hasVideo: Boolean) {
+            userListManager?.publishLocalStream(container, hasAudio, hasVideo)
+        }
+
+        override fun unPublish() {
+
+        }
 
         override fun localUserInfo(): EduContextUserInfo {
             var uid = ""
@@ -328,7 +496,7 @@ abstract class BaseClassActivity : BaseActivity(),
                     res?.let {
                         uid = it.userInfo.userUuid
                         name = it.userInfo.userName
-                        properties = userListManager?.getAgoraCustomProps(uid)
+                        properties = userListManager?.getUserFlexProps(uid)
                     }
                 }
 
@@ -353,6 +521,11 @@ abstract class BaseClassActivity : BaseActivity(),
 
         override fun renderVideo(container: ViewGroup?, streamUuid: String) {
             userListManager?.renderContainer(container, streamUuid)
+        }
+
+        override fun updateFlexUserProps(userUuid: String, properties: MutableMap<String, String>,
+                                         cause: MutableMap<String, String>?) {
+            userListManager?.updateFlexProps(userUuid, properties, cause)
         }
     }
 
@@ -471,7 +644,7 @@ abstract class BaseClassActivity : BaseActivity(),
                     launchConfig!!.userUuid,
                     launchConfig!!.userName,
                     EduContextUserRole.Student,
-                    privateChatManager?.getAgoraCustomProps(launchConfig!!.userUuid))
+                    privateChatManager?.getUserFlexProps(launchConfig!!.userUuid))
         }
 
         override fun startPrivateChat(peerId: String,
@@ -486,7 +659,7 @@ abstract class BaseClassActivity : BaseActivity(),
                                                 user.userUuid,
                                                 user.userName,
                                                 toEduContextUserInfo(user.role),
-                                                privateChatManager?.getAgoraCustomProps(user.userUuid))
+                                                privateChatManager?.getUserFlexProps(user.userUuid))
                                         callback?.onSuccess(
                                                 EduContextPrivateChatInfo(
                                                         getLocalUserInfo(),
@@ -523,23 +696,12 @@ abstract class BaseClassActivity : BaseActivity(),
 
     private val extAppContext = object : ExtAppContext {
         override fun launchExtApp(appIdentifier: String): Int {
-            return extAppManager?.launchExtApp(appIdentifier)
+            return extAppManager?.launchExtApp(appIdentifier,TimeUtil.currentTimeMillis())
                     ?: AgoraExtAppErrorCode.ExtAppEngineError
         }
 
         override fun getRegisteredExtApps(): List<AgoraExtAppInfo> {
             return extAppManager?.getRegisteredApps() ?: mutableListOf()
-        }
-    }
-
-    private val widgetContext = object : WidgetContext {
-        override fun getWidgetProperties(type: WidgetType): Map<String, Any>? {
-            return when (type) {
-                WidgetType.IM -> {
-                    easeImManager?.parseEaseIMProperties(
-                            eduRoom?.roomProperties?.get(IMManager.propertiesKey) as? Map<String, Any>)
-                }
-            }
         }
     }
 
@@ -556,7 +718,11 @@ abstract class BaseClassActivity : BaseActivity(),
             return roomContext
         }
 
-        override fun deviceContext(): DeviceContext {
+        override fun mediaContext(): MediaContext? {
+            return mediaContext
+        }
+
+        override fun deviceContext(): DeviceContext? {
             return deviceContext
         }
 
@@ -589,7 +755,18 @@ abstract class BaseClassActivity : BaseActivity(),
         }
     }
 
-    private fun initAndJoinRoom() {
+    private val widgetContext = object : WidgetContext {
+        override fun getWidgetProperties(type: WidgetType): Map<String, Any>? {
+            return when (type) {
+                WidgetType.IM -> {
+                    easeImManager?.parseEaseIMProperties(
+                            eduRoom?.roomProperties?.get(IMManager.propertiesKey) as? Map<String, Any>)
+                }
+            }
+        }
+    }
+
+    private fun initData() {
         eduManager?.eduManagerEventListener = this
         launchConfig = intent.getParcelableExtra(Data.launchConfig)
         preCheckData = intent.getParcelableExtra(Data.precheckData)
@@ -614,43 +791,29 @@ abstract class BaseClassActivity : BaseActivity(),
             eduRoom?.eventListener = this
 
             joinConfig = onRoomJoinConfig()
-            joinRoomAsStudent(
-                    config.userName,
-                    config.userUuid,
-                    joinConfig.autoSubscribe,
-                    joinConfig.autoPublish,
-                    joinConfig.needUserListener,
-                    object : EduCallback<EduStudent?> {
-                        override fun onSuccess(res: EduStudent?) {
-                            res?.let { student ->
-                                setRoomJoinSuccess()
-                                checkProcessSuccess()
-                                preCheckData?.let { preCheck -> initEduCapabilityManagers(config, preCheck) }
-                                onRoomJoined(true, student)
-
-                                eduContext.roomContext()?.getHandlers()?.forEach { h ->
-                                    h.onClassroomJoined()
-                                }
-                            }
-                        }
-
-                        override fun onFailure(error: EduError) {
-                            joinFailed(error.type, error.msg)
-                            onRoomJoined(false, null, error)
-                        }
-                    })
         }
     }
 
     protected abstract fun onRoomJoinConfig(): JoinRoomConfiguration
 
-    protected abstract fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError? = null)
+    protected open fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError? = null) {
+        if (success) {
+            eduContext.roomContext()?.getHandlers()?.forEach {
+                it.onClassroomJoined()
+            }
+        }
+    }
 
     private fun joinRoomAsStudent(name: String?, uuid: String?,
                                   autoSubscribe: Boolean,
                                   autoPublish: Boolean,
                                   needUserListener: Boolean,
                                   callback: EduCallback<EduStudent?>) {
+        if (!isJoining && joinSuccess) {
+            Log.e(tag, "already join success, do not repeat join")
+            return
+        }
+
         if (isJoining) {
             Log.e(tag, "join fail because you are joining the classroom")
             return
@@ -679,6 +842,10 @@ abstract class BaseClassActivity : BaseActivity(),
 
                     joinSuccess = true
                     isJoining = false
+
+                    // report rtcAppScenario
+                    eduManager?.reportAppScenario(launchConfig!!.roomType, BuildConfig.SERVICE_APAAS,
+                            BuildConfig.APAAS_VERSION)
 
                     if (needUserListener) {
                         res.eventListener = this@BaseClassActivity
@@ -721,11 +888,11 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     private fun initEduCapabilityManagers(config: AgoraEduLaunchConfig, preCheckData: RoomPreCheckRes) {
-        whiteBoardManager!!.initBoardWithRoomToken(preCheckData.board.boardId,
+        whiteBoardManager?.initBoardWithRoomToken(preCheckData.board.boardId,
                 preCheckData.board.boardToken, config.userUuid)
 
-        RoomStatusManager(this, eduContext.roomContext(), config, preCheckData, eduRoom).let { manager ->
-            roomStatusManager = manager
+        RoomStateManager(this, eduContext.roomContext(), config, preCheckData, eduRoom).let { manager ->
+            roomStateManager = manager
             manager.setClassName(config.roomName)
             manager.initClassState()
         }
@@ -733,8 +900,6 @@ abstract class BaseClassActivity : BaseActivity(),
         contentLayout?.let { layout ->
             initExtAppManager(layout, config)
         }
-
-        easeImManager = IMManager()
 
         getLocalUser(object : EduCallback<EduUser?> {
             override fun onSuccess(res: EduUser?) {
@@ -812,6 +977,13 @@ abstract class BaseClassActivity : BaseActivity(),
                         manager.initLocalDeviceState(deviceManager!!.getDeviceConfig())
                         manager.notifyUserList()
                     }
+
+                    FlexPropsManager(this@BaseClassActivity, eduContext, config, eduRoom,
+                            localUser).let {
+                        it.eventListener = flexManagerEventListener
+                        flexPropsManager = it
+                        flexPropsManager?.initRoomFlexProps()
+                    }
                 }
             }
 
@@ -857,7 +1029,7 @@ abstract class BaseClassActivity : BaseActivity(),
         val view = onContentViewLayout()
         view.fitsSystemWindows = true
         setContentView(view)
-        initAndJoinRoom()
+        initData()
     }
 
     protected abstract fun onContentViewLayout(): RelativeLayout
@@ -870,7 +1042,7 @@ abstract class BaseClassActivity : BaseActivity(),
     override fun onDestroy() {
         super.onDestroy()
         privateChatManager?.dispose()
-        roomStatusManager?.dispose()
+        roomStateManager?.dispose()
         extAppManager?.dispose()
         eduRoom = null
         getEduManager()?.let {
@@ -954,6 +1126,7 @@ abstract class BaseClassActivity : BaseActivity(),
                 override fun onSuccess(res: Unit?) {
                     if (finish) {
                         extAppManager?.dispose()
+                        container?.release()
                         finish()
                     }
 
@@ -1086,15 +1259,18 @@ abstract class BaseClassActivity : BaseActivity(),
         chatManager?.notifyMuteChatStatus(type)
     }
 
-    override fun onRoomPropertiesChanged(classRoom: EduRoom, cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
+    override fun onRoomPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                         classRoom: EduRoom, cause: MutableMap<String, Any>?,
+                                         operator: EduBaseUserInfo?) {
         AgoraLog.e("$tag:Received callback of roomProperty change")
         extAppManager?.handleRoomPropertiesChange(classRoom.roomProperties, cause)
         screenShareManager?.checkAndNotifyScreenShareByProperty(cause)
+        flexPropsManager?.notifyRoomFlexProps(changedProperties, cause, operator)
     }
 
     override fun onNetworkQualityChanged(quality: NetworkQuality, user: EduBaseUserInfo, classRoom: EduRoom) {
         if (user.userUuid == launchConfig?.userUuid) {
-            roomStatusManager?.updateNetworkState(quality)
+            roomStateManager?.updateNetworkState(quality)
         }
     }
 
@@ -1102,27 +1278,25 @@ abstract class BaseClassActivity : BaseActivity(),
         AgoraLog.e("$tag:onConnectionStateChanged-> " +
                 "${s.name}, room: ${launchConfig?.roomUuid}")
         val state = EduContextConnectionState.convert(s.value)
-        roomStatusManager?.updateConnectionState(state)
+        roomStateManager?.updateConnectionState(state)
         // when reconnected, need sync deviceConfig to remote.
-        if (roomStatusManager?.isReconnected(state) == true) {
+        if (roomStateManager?.isReconnected(state) == true) {
             deviceManager?.syncDeviceConfig()
         }
 
         if (state == EduContextConnectionState.Aborted) {
-            rtmReconnecting = false
+            rtmConnectionState = s.value
             forceLeave(true)
             return
         }
 
         if (state == EduContextConnectionState.Connected) {
-            if (rtmReconnecting) {
+            if (rtmConnectionState == EduContextConnectionState.Reconnecting.value) {
                 ReporterV2.getReporterV2(launchConfig!!.vendorId)
                         .reportAPpaSUserReconnect(0, System.currentTimeMillis())
-                rtmReconnecting = false
             }
-        } else {
-            rtmReconnecting = state == EduContextConnectionState.Reconnecting
         }
+        rtmConnectionState = s.value
     }
 
     override fun onRemoteVideoStateChanged(rtcChannel: RtcChannel?, uid: Int, state: Int, reason: Int, elapsed: Int) {
@@ -1230,13 +1404,16 @@ abstract class BaseClassActivity : BaseActivity(),
 
     }
 
-    override fun onRemoteUserPropertiesChanged(classRoom: EduRoom, userInfo: EduUserInfo,
-                                               cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-
+    override fun onRemoteUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                               classRoom: EduRoom, userInfo: EduUserInfo,
+                                               cause: MutableMap<String, Any>?,
+                                               operator: EduBaseUserInfo?) {
+        flexPropsManager?.notifyUserFlexProps(userInfo, changedProperties, cause, operator)
     }
 
-    override fun onLocalUserPropertiesChanged(userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+    override fun onLocalUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                              userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
                                               operator: EduBaseUserInfo?) {
-
+        flexPropsManager?.notifyUserFlexProps(userInfo, changedProperties, cause, operator)
     }
 }

@@ -19,7 +19,6 @@ import io.agora.education.impl.user.data.EduUserInfoImpl
 import io.agora.education.impl.room.EduRoomImpl
 import io.agora.education.impl.user.data.EduLocalUserInfoImpl
 import io.agora.education.impl.user.data.request.RoleMuteConfig
-import io.agora.educontext.EduContextConnectionState
 import io.agora.rtc.Constants.*
 import io.agora.rtc.video.VideoEncoderConfiguration
 import io.agora.rtm.RtmStatusCode.ConnectionState.CONNECTION_STATE_DISCONNECTED
@@ -29,14 +28,14 @@ import io.agora.rtm.RtmStatusCode.ConnectionState.CONNECTION_STATE_RECONNECTING
 import io.agora.rtm.RtmStatusCode.ConnectionState.CONNECTION_STATE_ABORTED
 
 internal object Convert {
-    fun convertVideoEncoderConfig(videoEncoderConfig: VideoEncoderConfig): VideoEncoderConfiguration {
+    fun convertVideoEncoderConfig(eduVideoEncoderConfig: EduVideoEncoderConfig): VideoEncoderConfiguration {
         var videoDimensions = VideoEncoderConfiguration.VideoDimensions(
-                videoEncoderConfig.videoDimensionWidth,
-                videoEncoderConfig.videoDimensionHeight)
+                eduVideoEncoderConfig.videoDimensionWidth,
+                eduVideoEncoderConfig.videoDimensionHeight)
         var videoEncoderConfiguration = VideoEncoderConfiguration()
         videoEncoderConfiguration.dimensions = videoDimensions
-        videoEncoderConfiguration.frameRate = videoEncoderConfig.frameRate
-        when (videoEncoderConfig.orientationMode) {
+        videoEncoderConfiguration.frameRate = eduVideoEncoderConfig.frameRate
+        when (eduVideoEncoderConfig.orientationMode) {
             OrientationMode.ADAPTIVE -> {
                 videoEncoderConfiguration.orientationMode = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
             }
@@ -47,7 +46,7 @@ internal object Convert {
                 videoEncoderConfiguration.orientationMode = VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT
             }
         }
-        when (videoEncoderConfig.degradationPreference) {
+        when (eduVideoEncoderConfig.degradationPreference) {
             DegradationPreference.MAINTAIN_QUALITY -> {
                 videoEncoderConfiguration.degradationPrefer = VideoEncoderConfiguration.DEGRADATION_PREFERENCE.MAINTAIN_QUALITY
             }

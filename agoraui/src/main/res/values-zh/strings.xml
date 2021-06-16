@@ -44,6 +44,7 @@
     <string name="agora_message_input_hint">请输入消息</string>
     <string name="agora_message_student_chat_mute_tips">已开启学生禁言</string>
     <string name="agora_message_student_chat_mute_hint">禁言中</string>
+    <string name="agora_message_item_role_assistant">助教</string>
 
     <string name="agora_message_chat_student_ban_local">你被%s禁言了</string>
     <string name="agora_message_chat_student_ban_remote">%s被%s禁言了</string>

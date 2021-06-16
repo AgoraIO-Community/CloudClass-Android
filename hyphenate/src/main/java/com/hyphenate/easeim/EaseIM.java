@@ -44,7 +44,7 @@ public class EaseIM {
         }
 
         EMOptions options = initChatOptions();
-        if (appKey != null) {
+        if (appKey != null && !appKey.isEmpty()) {
             options.setAppKey(appKey);
         }
 

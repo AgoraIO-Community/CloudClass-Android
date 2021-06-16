@@ -18,7 +18,7 @@
             android:layout_margin="@dimen/margin_smaller" />
     </RelativeLayout>
 
-    <io.agora.uikit.impl.whiteboard.AgoraUIBoardLoadingView
+    <io.agora.uikit.impl.loading.AgoraUILoadingView
         android:id="@+id/whiteboard_loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

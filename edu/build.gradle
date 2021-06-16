@@ -29,24 +29,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
+        buildConfigField 'Integer', 'SERVICE_APAAS', '0'
         buildConfigField 'String', 'APAAS_VERSION', '"1.1.2"'
         buildConfigField 'String', 'POLICY_URL', '"https://www.agora.io/privacy-policy/"'
         buildConfigField 'String', 'REPLAY_BASE_URL', '"https://agora-adc-artifacts.oss-accelerate.aliyuncs.com/"'
 
         //--------whiteboard-buildconfig-----------
-        buildConfigField 'String', 'NETLESS_RESOURCE_CDN_HOST', '"convertcdn.netless.link/"'
+        buildConfigField 'String', 'NETLESS_RESOURCE_CDN_HOST', '"convertcdn.netless.link"'
         buildConfigField 'String', 'NETLESS_API_BASE_URL', '"https://cloudcapiv4.herewhite.com/"'
         //--------whiteboard-buildconfig-----------
 
         //--------api-buildconfig---------------
         buildConfigField 'String', 'SDK_VERSION', '"1.0.0"'
         buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io/"'
-        buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"https://api-solutions.agoralab.co/"'
+        buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"http://api.agora.io/"'
         //--------api-buildconfig---------------
 
         //--------report-buildconfig---------------
         buildConfigField 'String', 'REPORT_BASE_URL', '"https://api.agora.io/"'
-        buildConfigField 'String', 'REPORT_BASE_URL_V2', '"https://test-rest-argus.bj2.agoralab.co"'
+        buildConfigField 'String', 'REPORT_BASE_URL_V2', '"https://rest-argus-ad.agoralab.co"'
         //--------report-buildconfig---------------
     }
 

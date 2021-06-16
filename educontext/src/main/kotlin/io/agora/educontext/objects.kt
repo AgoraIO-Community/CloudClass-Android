@@ -5,6 +5,7 @@ import android.graphics.Color
 data class EduContextChatItem(
         var name: String = "",
         var uid: String = "",
+        var role: Int = EduContextUserRole.Student.value,
         var message: String = "",
         var messageId: String = "",
         var type: EduContextChatItemType = EduContextChatItemType.Text,
@@ -198,7 +199,7 @@ enum class EduContextVideoMode(val value: Int) {
 }
 
 data class WhiteboardDrawingConfig(
-        var activeAppliance: WhiteboardApplianceType = WhiteboardApplianceType.Select,
+        var activeAppliance: WhiteboardApplianceType = WhiteboardApplianceType.Clicker,
         var color: Int = Color.WHITE,
         var fontSize: Int = 22,
         var thick: Int = 4) {
@@ -223,7 +224,7 @@ data class EduContextPrivateChatInfo(
         val fromUser: EduContextUserInfo,
         val toUser: EduContextUserInfo)
 
-enum class AgoraScreenShareState(val value: Int) {
+enum class EduContextScreenShareState(val value: Int) {
     Start(0),
     Pause(1),
     Stop(2)
@@ -236,7 +237,7 @@ data class EduContextRoomInfo(
 )
 
 enum class EduContextRoomType(val value: Int) {
-    OneToONe(0),
+    OneToOne(0),
     LargeClass(2),
     SmallClass(4);
 
@@ -245,7 +246,7 @@ enum class EduContextRoomType(val value: Int) {
             return when (value) {
                 LargeClass.value -> LargeClass
                 SmallClass.value -> SmallClass
-                else -> OneToONe
+                else -> OneToOne
             }
         }
     }
@@ -281,6 +282,12 @@ enum class EduBoardRoomPhase(val value: Int) {
             }
         }
     }
+}
+
+enum class EduContextMediaStreamType(val value: Int) {
+    Audio(0),
+    Video(1),
+    All(2)
 }
 
 enum class State(val value: Int) {

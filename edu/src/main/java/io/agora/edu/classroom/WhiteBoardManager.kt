@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.google.gson.Gson
 import com.herewhite.sdk.*
 import com.herewhite.sdk.domain.*
@@ -40,8 +37,10 @@ import io.agora.whiteboard.netless.listener.BoardEventListener
 import io.agora.whiteboard.netless.listener.GlobalStateChangeListener
 import io.agora.whiteboard.netless.manager.BoardProxy
 import org.json.JSONObject
+import wendu.dsbridge.DWebView
 import java.io.File
 
+@SuppressLint("ClickableViewAccessibility")
 class WhiteBoardManager(
         val context: Context,
         val launchConfig: AgoraEduLaunchConfig,
@@ -108,19 +107,20 @@ class WhiteBoardManager(
     }
 
     init {
+        DWebView.setWebContentsDebuggingEnabled(true)
         whiteBoardView.setBackgroundColor(0)
         whiteBoardView.settings.allowFileAccessFromFileURLs = true
         whiteBoardView.webViewClient = webViewClient
         whiteBoardView.setOnTouchListener(onTouchListener)
-        whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
-                                                   bottom: Int, oldLeft: Int, oldTop: Int,
-                                                   oldRight: Int, oldBottom: Int ->
-            if (context is Activity && (context.isFinishing) ||
-                    (context as Activity).isDestroyed) {
-                return@addOnLayoutChangeListener
-            }
-            boardProxy.refreshViewSize()
-        }
+//        whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
+//                                                   bottom: Int, oldLeft: Int, oldTop: Int,
+//                                                   oldRight: Int, oldBottom: Int ->
+//            if (context is Activity && (context.isFinishing) ||
+//                    (context as Activity).isDestroyed) {
+//                return@addOnLayoutChangeListener
+//            }
+//            boardProxy.refreshViewSize()
+//        }
         whiteboardContext.getHandlers()?.forEach {
             it.onDrawingEnabled(!boardProxy.isDisableDeviceInputs)
             it.onPagingEnabled(!boardProxy.isDisableDeviceInputs)
@@ -165,8 +165,7 @@ class WhiteBoardManager(
         }
     }
 
-    fun initBoardWithRoomToken(uuid: String?, boardToken: String?, localUserUuid: String?,
-                               firstJoin: Boolean = true) {
+    fun initBoardWithRoomToken(uuid: String?, boardToken: String?, localUserUuid: String?) {
         if (TextUtils.isEmpty(uuid) || TextUtils.isEmpty(boardToken)) {
             return
         }
@@ -211,6 +210,12 @@ class WhiteBoardManager(
             it.onPagingEnabled(!disabled)
         }
         boardProxy.disableDeviceInputs(disabled)
+        // 未授权时禁止点击h5的翻页按钮/授权时可以点击
+        whiteBoardView.evaluateJavascript("javascript: (function() {\n" +
+                "    room.getInvisiblePlugin(\"IframeBridge\") && room.getInvisiblePlugin(\"IframeBridge\").computedZindex();\n" +
+                "    room.getInvisiblePlugin(\"IframeBridge\") && room.getInvisiblePlugin(\"IframeBridge\").updateStyle();\n" +
+                "    console.log(\"getInvisiblePlugin-computedZindex-updateStyle\");\n" +
+                "})();")
     }
 
     fun disableCameraTransform(disabled: Boolean) {
@@ -315,6 +320,9 @@ class WhiteBoardManager(
 
     private fun applianceConvert(appliance: String): WhiteboardApplianceType {
         return when (appliance) {
+            Appliance.CLICKER -> {
+                WhiteboardApplianceType.Clicker
+            }
             SELECTOR -> {
                 WhiteboardApplianceType.Select
             }
@@ -337,7 +345,7 @@ class WhiteBoardManager(
                 WhiteboardApplianceType.Text
             }
             else -> {
-                WhiteboardApplianceType.Select
+                WhiteboardApplianceType.Clicker
             }
         }
     }
@@ -355,7 +363,7 @@ class WhiteBoardManager(
         if (!TextUtils.isEmpty(boardProxy.appliance)) {
             onApplianceSelected(curDrawingConfig.activeAppliance)
         } else {
-            onApplianceSelected(WhiteboardApplianceType.Select)
+            onApplianceSelected(WhiteboardApplianceType.Clicker)
         }
         if (boardProxy.strokeColor != null) {
             onColorSelected(curDrawingConfig.color)
@@ -495,7 +503,7 @@ class WhiteBoardManager(
 
     override fun onDisconnectWithError(e: Exception?) {
         Constants.AgoraLog.e("$tag:onDisconnectWithError->${e?.printStackTrace()}")
-        initBoardWithRoomToken(curLocalUuid, curLocalToken, localUserUuid, false)
+        initBoardWithRoomToken(curLocalUuid, curLocalToken, localUserUuid)
     }
 
     /** GlobalStateChangeListener */
@@ -504,11 +512,15 @@ class WhiteBoardManager(
             val latestBoardState = state as BoardState
             if (latestBoardState.isFullScreen == curBoardState?.isFullScreen) {
             } else if (latestBoardState!!.isFullScreen) {
+                // when board`s size changed, scalePptToFit
+                boardProxy.scalePptToFit()
                 whiteboardContext.getHandlers()?.forEach {
                     it.onFullScreenChanged(true)
                     it.onFullScreenEnabled(false)
                 }
             } else if (!latestBoardState!!.isFullScreen) {
+                // when board`s size changed, scalePptToFit
+                boardProxy.scalePptToFit()
                 whiteboardContext.getHandlers()?.forEach {
                     it.onFullScreenChanged(false)
                     it.onFullScreenEnabled(true)
@@ -644,6 +656,8 @@ class WhiteBoardManager(
 
     fun onBoardFullScreen(full: Boolean) {
         Log.e(tag, "onFullScreen->$full")
+        // when board`s size changed, scalePptToFit
+        boardProxy.scalePptToFit()
         whiteboardContext.getHandlers()?.forEach {
             it.onFullScreenChanged(full)
         }

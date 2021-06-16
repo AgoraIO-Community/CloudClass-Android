@@ -13,6 +13,7 @@ import io.agora.uikit.impl.AbsComponent
 import io.agora.uikit.R
 import io.agora.uikit.educontext.handlers.ScreenShareHandler
 import io.agora.uikit.educontext.handlers.WhiteboardHandler
+import io.agora.uikit.impl.loading.AgoraUILoadingView
 
 class AgoraUIWhiteBoard(
         context: Context,
@@ -32,7 +33,7 @@ class AgoraUIWhiteBoard(
     private var rootLayout: RelativeLayout = contentView.findViewById(R.id.root_Layout)
     private var whiteboardContainerOutlineLayout: RelativeLayout = contentView.findViewById(R.id.whiteboard_container_outline)
     private var boardContainer: RelativeLayout = contentView.findViewById(R.id.whiteboard_container)
-    private var boardLoadingView: AgoraUIBoardLoadingView = contentView.findViewById(R.id.whiteboard_loading_view)
+    private var loadingView: AgoraUILoadingView = contentView.findViewById(R.id.whiteboard_loading_view)
     private var boardPreloadProgressView: AgoraUIBoardPreloadProgressView? = null
     private var boardPreloadFailedView: AgoraUIBoardPreloadFailedView? = null
 
@@ -94,25 +95,25 @@ class AgoraUIWhiteBoard(
         params.leftMargin = left.toInt()
         contentView.layoutParams = params
 
-        boardLoadingView.z = shadowWidth + 100.0f
+        loadingView.z = shadowWidth + 100.0f
 
         eduContext?.whiteboardContext()?.addHandler(whiteboardHandler)
         eduContext?.screenShareContext()?.addHandler(screenShareHandler)
     }
 
     fun setLoadingState(phase: EduBoardRoomPhase) {
-        boardLoadingView.visibility = if (phase == EduBoardRoomPhase.connected) GONE else VISIBLE
+        loadingView.visibility = if (phase == EduBoardRoomPhase.connected) GONE else VISIBLE
         if (phase == EduBoardRoomPhase.connecting) {
-            boardLoadingView.setContent(true)
+            loadingView.setContent(true)
         } else if (phase == EduBoardRoomPhase.reconnecting) {
-            boardLoadingView.setContent(false)
+            loadingView.setContent(false)
         }
     }
 
     fun setDownloadProgress(url: String, progress: Float) {
         if (boardPreloadProgressView == null) {
             boardPreloadProgressView = AgoraUIBoardPreloadProgressView.show(rootLayout, url, this)
-            boardPreloadProgressView!!.z = boardLoadingView.z + 100.0f
+            boardPreloadProgressView!!.z = loadingView.z + 100.0f
         } else if (boardPreloadProgressView != null && boardPreloadProgressView!!.parent == null) {
             boardPreloadProgressView!!.show(rootLayout, url)
         }

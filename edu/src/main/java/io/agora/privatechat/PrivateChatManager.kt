@@ -155,9 +155,9 @@ class PrivateChatManager(
 
             val info = EduContextPrivateChatInfo(
                     EduContextUserInfo(fromUserId!!, "",
-                            properties = getAgoraCustomProps(fromUserId!!)),
+                            properties = getUserFlexProps(fromUserId!!)),
                     EduContextUserInfo(toUserUuid!!, "",
-                            properties = getAgoraCustomProps(toUserUuid!!)))
+                            properties = getUserFlexProps(toUserUuid!!)))
 
             privateChatContext?.getHandlers()?.forEach { h ->
                 h.onPrivateChatStarted(info)

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 
 class AgoraExtAppEngine(
         private var context: Context,
@@ -100,7 +101,7 @@ class AgoraExtAppEngine(
      * @param identifier id of the extension app
      * @param formatted whether the identifier is a formatted one.
      */
-    @Synchronized fun launchExtApp(identifier: String, formatted: Boolean = false): Int {
+    @Synchronized fun launchExtApp(identifier: String, formatted: Boolean = false, currentTime: Long): Int {
         if (formatted && launchedExtAppMapTransformed.containsKey(identifier)) {
             Log.w(tag, "launch ext app: app $identifier has been launched")
             return AgoraExtAppErrorCode.ExtAppIdDuplicated
@@ -123,6 +124,9 @@ class AgoraExtAppEngine(
             item.instance = null
         }
 
+        //sync the server ts
+        TimeUtil.calibrateTimestamp(currentTime)
+
         item.instance = item.extAppClass.newInstance()
         item.instance?.init(item.appIdentifier, this)
         Log.d(tag, "launch ext app, extension app initialized, app id ${item.appIdentifier}")
@@ -131,7 +135,7 @@ class AgoraExtAppEngine(
         launchedExtAppMap[item.appIdentifier] = item
         launchedExtAppMapTransformed[item.formatIdentifier] = item
 
-        context.mainExecutor.execute {
+        ContextCompat.getMainExecutor(context).execute {
             item.contentView = item.instance?.onCreateView(context)
             if (item.contentView != null) {
                 container.addView(item.contentView, RelativeLayout.LayoutParams(
@@ -161,7 +165,7 @@ class AgoraExtAppEngine(
         }
 
         app?.let { item ->
-            context.mainExecutor.execute {
+            ContextCompat.getMainExecutor(context).execute {
                 item.instance?.onExtAppUnloaded()
                 (container as? ViewGroup)?.removeView(item.contentView)
             }
@@ -202,7 +206,7 @@ class AgoraExtAppEngine(
     @Synchronized fun onExtAppPropertyUpdated(identifier: String,
                                 properties: MutableMap<String, Any?>?,
                                 cause: MutableMap<String, Any?>?,
-                                state: MutableMap<String, Any?>?): Int {
+                                state: MutableMap<String, Any?>?, currentTime: Long): Int {
 
         val shouldLaunch = parseExtAppLaunched(state)
         var launched = launchedExtAppMapTransformed[identifier] != null
@@ -212,7 +216,7 @@ class AgoraExtAppEngine(
                 "launched: $shouldLaunch, currently launched: $launched")
 
         if (shouldLaunch && !launched) {
-            ret = launchExtApp(identifier, true)
+            ret = launchExtApp(identifier, true,currentTime)
         } else if (!shouldLaunch && launched) {
             ret = stopExtApp(identifier, true)
         } else {

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Rect
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import io.agora.educontext.*
@@ -14,6 +16,7 @@ import io.agora.uikit.impl.chat.AgoraUIChatWindow
 import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.chat.tabs.ChatTabConfig
 import io.agora.uikit.impl.handsup.AgoraUIHandsUp
+import io.agora.uikit.impl.loading.AgoraUILoading
 import io.agora.uikit.impl.room.AgoraUIRoomStatus
 import io.agora.uikit.impl.screenshare.AgoraUIFullScreenBtn
 import io.agora.uikit.impl.screenshare.AgoraUIScreenShare
@@ -36,6 +39,16 @@ abstract class AbsUIContainer(
      * Container needs to receive and display room errors and tips
      */
     private val containerRoomEventHandler = object : RoomHandler() {
+        override fun onConnectionStateChanged(state: EduContextConnectionState) {
+            super.onConnectionStateChanged(state)
+            agoraUILoading?.setVisibility(if (state == EduContextConnectionState.Connected) GONE else VISIBLE)
+            if (state == EduContextConnectionState.Connecting) {
+                agoraUILoading?.setContent(true)
+            } else if (state == EduContextConnectionState.Reconnecting) {
+                agoraUILoading?.setContent(false)
+            }
+        }
+
         override fun onClassTip(tip: String) {
             AgoraUIToastManager.showShort(tip)
         }
@@ -155,6 +168,7 @@ abstract class AbsUIContainer(
     protected var studentVideoGroup: AgoraUserListVideoLayout? = null
     protected var roster: AgoraUIRoster? = null
     protected var rewardWindow: AgoraUIReward? = null
+    protected var agoraUILoading: AgoraUILoading? = null
 
     // Hyphenate chat im, a separate chat widget, different
     // from agora chat window, with its own identifier.
@@ -234,12 +248,10 @@ abstract class AbsUIContainer(
     override fun layout(): ViewGroup? {
         return this.layout
     }
-
-    protected abstract fun release()
 }
 
 enum class AgoraContainerType {
-    OneToOne, SmallClass, LargeClass
+    OneToOne, SmallClass, LargeClass, Debug
 }
 
 data class AgoraContainerConfig(

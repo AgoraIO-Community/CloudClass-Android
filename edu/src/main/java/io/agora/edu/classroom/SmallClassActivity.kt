@@ -1,9 +1,8 @@
 package io.agora.edu.classroom
 
 import android.os.Bundle
-import android.view.ViewGroup
+import android.util.Log
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.herewhite.sdk.domain.SDKError
 import io.agora.edu.R
@@ -74,15 +73,27 @@ class SmallClassActivity : BaseClassActivity() {
                 if (contentLayout!!.width > 0 && contentLayout!!.height > 0) {
                     contentLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
 
-                    container = AgoraUIContainer.create(contentLayout!!,
-                            0, 0, contentLayout!!.width,
-                            contentLayout!!.height,
-                            AgoraContainerType.SmallClass, eduContext,
-                            AgoraContainerConfig(chatTabConfigs =
-                            listOf(
-                                    ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
-                                    ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
-                            )))
+                    if (EduDebugMode.useDebugUI) {
+                        Log.i(tag, "create debug ui container")
+                        container = AgoraUIContainer.create(
+                                contentLayout!!,
+                                0, 0,
+                                contentLayout!!.width,
+                                contentLayout!!.height,
+                                AgoraContainerType.Debug,
+                                eduContext,
+                                AgoraContainerConfig(listOf()))
+                    } else {
+                        container = AgoraUIContainer.create(contentLayout!!,
+                                0, 0, contentLayout!!.width,
+                                contentLayout!!.height,
+                                AgoraContainerType.SmallClass, eduContext,
+                                AgoraContainerConfig(chatTabConfigs =
+                                listOf(
+                                        ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
+                                        ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
+                                )))
+                    }
 
                     whiteboardContext.getHandlers()?.forEach {
                         it.getBoardContainer()?.let { viewGroup ->
@@ -122,7 +133,7 @@ class SmallClassActivity : BaseClassActivity() {
     }
 
     override fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError?) {
-
+        super.onRoomJoined(success, student, error)
     }
 
     override fun onDestroy() {
@@ -131,13 +142,11 @@ class SmallClassActivity : BaseClassActivity() {
         screenShareManager?.dispose()
         userListManager?.dispose()
         handsUpManager?.dispose()
-        roomStatusManager?.dispose()
+        roomStateManager?.dispose()
     }
 
     override fun onRemoteUsersInitialized(users: List<EduUserInfo>, classRoom: EduRoom) {
         super.onRemoteUsersInitialized(users, classRoom)
-        whiteBoardManager!!.initBoardWithRoomToken(preCheckData!!.board.boardId,
-                preCheckData!!.board.boardToken, launchConfig!!.userUuid)
     }
 
     override fun onRemoteUsersJoined(users: List<EduUserInfo>, classRoom: EduRoom) {
@@ -210,11 +219,13 @@ class SmallClassActivity : BaseClassActivity() {
 
     override fun onRoomStatusChanged(type: EduRoomChangeType, operatorUser: EduUserInfo?, classRoom: EduRoom) {
         super.onRoomStatusChanged(type, operatorUser, classRoom)
-        roomStatusManager?.updateClassState(type)
+        roomStateManager?.updateClassState(type)
     }
 
-    override fun onRoomPropertiesChanged(classRoom: EduRoom, cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-        super.onRoomPropertiesChanged(classRoom, cause, operator)
+    override fun onRoomPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                         classRoom: EduRoom, cause: MutableMap<String, Any>?,
+                                         operator: EduBaseUserInfo?) {
+        super.onRoomPropertiesChanged(changedProperties, classRoom, cause, operator)
         handsUpManager?.notifyHandsUpEnable(cause)
         handsUpManager?.notifyHandsUpState(cause)
         userListManager?.notifyListByPropertiesChanged(cause)
@@ -248,8 +259,10 @@ class SmallClassActivity : BaseClassActivity() {
         userListManager?.updateAudioVolumeIndication(speakers)
     }
 
-    override fun onRemoteUserPropertiesChanged(classRoom: EduRoom, userInfo: EduUserInfo,
+    override fun onRemoteUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                               classRoom: EduRoom, userInfo: EduUserInfo,
                                                cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
+        super.onRemoteUserPropertiesChanged(changedProperties, classRoom, userInfo, cause, operator)
         teacherVideoManager?.updateRemoteDeviceState(userInfo, cause)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         userListManager?.updateRemoteDeviceState(userInfo, cause)
@@ -257,8 +270,10 @@ class SmallClassActivity : BaseClassActivity() {
         chatManager?.notifyUserChatMuteStatus(userInfo, cause, operator)
     }
 
-    override fun onLocalUserPropertiesChanged(userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+    override fun onLocalUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                              userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
                                               operator: EduBaseUserInfo?) {
+        super.onLocalUserPropertiesChanged(changedProperties, userInfo, cause, operator)
         userListManager?.notifyListByPropertiesChanged(cause)
         chatManager?.notifyUserChatMuteStatus(userInfo, cause, operator)
     }

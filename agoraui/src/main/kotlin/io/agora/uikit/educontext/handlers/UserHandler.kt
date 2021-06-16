@@ -27,4 +27,7 @@ open class UserHandler : IUserHandler {
 
     override fun onRoster(context: Context, anchor: View, type: Int?) {
     }
+
+    override fun onFlexUserPropsChanged(changedProperties: MutableMap<String, Any>, properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?, fromUser: EduContextUserDetailInfo, operator: EduContextUserInfo?) {
+    }
 }

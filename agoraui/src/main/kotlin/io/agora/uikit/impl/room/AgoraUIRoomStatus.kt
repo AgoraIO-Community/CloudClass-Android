@@ -1,6 +1,7 @@
 package io.agora.uikit.impl.room
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Rect
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,10 @@ import androidx.appcompat.widget.AppCompatTextView
 import io.agora.educontext.EduContextClassState
 import io.agora.educontext.EduContextNetworkState
 import io.agora.educontext.EduContextPool
+import io.agora.educontext.EduContextUserInfo
 import io.agora.uikit.impl.AbsComponent
 import io.agora.uikit.R
+import io.agora.uikit.component.dialog.AgoraUIDialog
 import io.agora.uikit.component.dialog.AgoraUIDialogBuilder
 import io.agora.uikit.educontext.handlers.RoomHandler
 import io.agora.uikit.impl.setting.AgoraUIDeviceSettingDialog
@@ -34,6 +37,8 @@ class AgoraUIRoomStatus(parent: ViewGroup,
     private val classTimeText: AppCompatTextView
     private val settingBtn: AppCompatImageView
     private val uploadLogBtn: AppCompatImageView
+
+    private var destroyClassDialog: AgoraUIDialog? = null
 
     private val eventHandler = object : RoomHandler() {
         override fun onClassroomName(name: String) {
@@ -61,6 +66,16 @@ class AgoraUIRoomStatus(parent: ViewGroup,
             //set log updated dialog
             Log.d("updated log", "log updated ->$logData")
             setUploadLogDialog(logData)
+        }
+
+        override fun onFlexRoomPropsInitialized(properties: MutableMap<String, Any>) {
+            super.onFlexRoomPropsInitialized(properties)
+            Log.i(tag, "onFlexRoomPropsInitialized->")
+        }
+
+        override fun onFlexRoomPropsChanged(changedProperties: MutableMap<String, Any>, properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?, operator: EduContextUserInfo?) {
+            super.onFlexRoomPropsChanged(changedProperties, properties, cause, operator)
+            Log.i(tag, "onRoomPropertiesChanged->")
         }
     }
 
@@ -118,13 +133,19 @@ class AgoraUIRoomStatus(parent: ViewGroup,
 
     private fun destroyClassDialog() {
         className.post {
-            AgoraUIDialogBuilder(className.context)
-                    .title(className.context.resources.getString(R.string.agora_dialog_class_destroy_title))
-                    .message(className.context.resources.getString(R.string.agora_dialog_class_destroy))
-                    .positiveText(className.context.resources.getString(R.string.confirm))
-                    .positiveClick(View.OnClickListener { eduContext?.roomContext()?.leave() })
-                    .build()
-                    .show()
+            if (destroyClassDialog != null && destroyClassDialog!!.isShowing) {
+                return@post
+            }
+            val context = className.context
+            if (context is Activity && !context.isFinishing && !context.isDestroyed) {
+                destroyClassDialog = AgoraUIDialogBuilder(context)
+                        .title(className.context.resources.getString(R.string.agora_dialog_class_destroy_title))
+                        .message(className.context.resources.getString(R.string.agora_dialog_class_destroy))
+                        .positiveText(className.context.resources.getString(R.string.confirm))
+                        .positiveClick(View.OnClickListener { eduContext?.roomContext()?.leave() })
+                        .build()
+                destroyClassDialog?.show()
+            }
         }
     }
 

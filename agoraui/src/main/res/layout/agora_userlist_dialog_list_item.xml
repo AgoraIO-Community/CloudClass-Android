@@ -90,7 +90,7 @@
             android:drawableStart="@drawable/agora_userlist_star_icon"
             android:enabled="true"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/padding_medium"
+            android:paddingHorizontal="@dimen/padding_small"
             tools:text="x1" />
 
     </FrameLayout>

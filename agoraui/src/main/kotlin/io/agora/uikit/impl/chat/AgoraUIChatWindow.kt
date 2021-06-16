@@ -76,6 +76,9 @@ class AgoraUIChatWindow : AgoraAbsWidget() {
     private val chatHandler = object : ChatHandler() {
         override fun onReceiveMessage(item: EduContextChatItem) {
             tabManager.addMessage(TabType.Public, AgoraUIChatItem.fromContextItem(item))
+            if (hidden) {
+                showUnreadMessages(true)
+            }
         }
 
         override fun onReceiveChatHistory(history: List<EduContextChatItem>) {
@@ -122,7 +125,7 @@ class AgoraUIChatWindow : AgoraAbsWidget() {
         this.tabConfigs = tabConfigs
     }
 
-    override fun init(parent: ViewGroup, width: Int, height: Int, top: Int, left: Int) {
+    override fun init(parent: ViewGroup, width: Int, height: Int, left: Int, top: Int) {
         this.parent = parent
         this.width = width
         this.height = height
@@ -450,9 +453,11 @@ class AgoraUIChatWindow : AgoraAbsWidget() {
 
     @UiThread
     private fun showUnreadMessages(add: Boolean) {
-        if (add) unReadCount++
-        if (unreadText.visibility == View.GONE) unreadText.visibility = View.VISIBLE
-        unreadText.text = if (unReadCount > 99) "99+" else unReadCount.toString()
+        unreadText.post {
+            if (add) unReadCount++
+            if (unreadText.visibility == View.GONE) unreadText.visibility = View.VISIBLE
+            unreadText.text = if (unReadCount > 99) "99+" else unReadCount.toString()
+        }
     }
 
     @UiThread

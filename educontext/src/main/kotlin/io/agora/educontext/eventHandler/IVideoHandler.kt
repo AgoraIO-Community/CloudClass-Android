@@ -9,8 +9,4 @@ interface IVideoHandler {
     fun onVolumeUpdated(volume: Int, streamUuid: String)
 
     fun onMessageUpdated(msg: String)
-
-//    /** @param  operator this is null when server update props */
-//    fun onUserPropertiesChanged(fromUser: EduContextUserDetailInfo, changed: MutableMap<String, String>,
-//                                cause: MutableMap<String, String>, operator: EduContextUserInfo?)
 }

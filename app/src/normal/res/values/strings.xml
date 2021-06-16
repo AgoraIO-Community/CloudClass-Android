@@ -11,6 +11,7 @@
     <string name="large_class">Lecture Hall</string>
     <string name="breakout">Breakout Classroom</string>
     <string name="intermediate">Medium Classroom</string>
+    <string name="debug">Debug Page</string>
     <string name="eye_care_mode">Eye protection</string>
     <string name="join">Join</string>
     <string name="setting">Setting</string>

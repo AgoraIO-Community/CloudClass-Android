@@ -9,6 +9,8 @@ interface EduContextPool {
 
     fun roomContext(): RoomContext?
 
+    fun mediaContext(): MediaContext?
+
     fun deviceContext(): DeviceContext?
 
     fun screenShareContext(): ScreenShareContext?

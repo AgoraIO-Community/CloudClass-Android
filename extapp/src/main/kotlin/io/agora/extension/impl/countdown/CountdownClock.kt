@@ -1,6 +1,7 @@
 package io.agora.extension.impl.countdown
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.CountDownTimer
 import android.util.AttributeSet
@@ -78,6 +79,7 @@ class CountDownClock : LinearLayout {
 
     fun startCountDown(timeToNextEvent: Long) {
         countDownTimer?.cancel()
+        setDigitTextColor(Color.BLACK)
         var hasCalledAlmostFinished = false
 
         countDownTimer = object : CountDownTimer(timeToNextEvent, countdownTickInterval.toLong()) {

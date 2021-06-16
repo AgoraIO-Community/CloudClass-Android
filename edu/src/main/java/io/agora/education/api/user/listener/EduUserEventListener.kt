@@ -35,6 +35,7 @@ interface EduUserEventListener {
 
     fun onLocalUserLeft(userEvent: EduUserEvent, leftType: EduUserLeftType)
 
-    fun onLocalUserPropertiesChanged(userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+    fun onLocalUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                     userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
                                      operator: EduBaseUserInfo?)
 }

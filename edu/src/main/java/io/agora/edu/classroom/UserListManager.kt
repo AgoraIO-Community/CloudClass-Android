@@ -6,11 +6,20 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.agora.edu.classroom.bean.PropertyData
+import io.agora.edu.classroom.bean.PropertyData.muteChatKey
+import io.agora.edu.classroom.bean.PropertyData.muteKey
+import io.agora.edu.classroom.bean.PropertyData.nameKey
+import io.agora.edu.classroom.bean.PropertyData.rewardKey
+import io.agora.edu.classroom.bean.PropertyData.studentsKey
+import io.agora.edu.common.api.FlexProps
+import io.agora.edu.common.bean.flexpropes.RoomFlexPropsReq
+import io.agora.edu.common.bean.flexpropes.UserFlexPropsReq
 import io.agora.edu.common.bean.handsup.HandsUpAction
 import io.agora.edu.common.bean.handsup.HandsUpConfig
 import io.agora.edu.common.bean.handsup.HandsUpConfig.Companion.handsUpKey
 import io.agora.edu.common.bean.handsup.HandsUpConfig.Companion.processesKey
 import io.agora.edu.common.bean.handsup.HandsUpResData
+import io.agora.edu.common.impl.FlexPropsImpl
 import io.agora.edu.launch.AgoraEduLaunchConfig
 import io.agora.education.api.EduCallback
 import io.agora.education.api.base.EduError
@@ -19,13 +28,14 @@ import io.agora.education.api.stream.data.EduStreamInfo
 import io.agora.education.api.user.EduUser
 import io.agora.education.api.user.data.EduUserInfo
 import io.agora.education.impl.Constants
+import io.agora.educontext.EduContextError
 import io.agora.educontext.EduContextUserDetailInfo
 import io.agora.educontext.EduContextUserInfo
 import io.agora.educontext.EduContextUserRole
 import io.agora.educontext.context.UserContext
 import io.agora.rtc.IRtcEngineEventHandler
 
-class UserListManager(
+open class UserListManager(
         context: Context,
         launchConfig: AgoraEduLaunchConfig,
         eduRoom: EduRoom?,
@@ -47,6 +57,12 @@ class UserListManager(
         }
 
     private val curCoHostList = mutableListOf<EduContextUserDetailInfo>()
+
+    private val flexProps: FlexProps
+
+    init {
+        flexProps = FlexPropsImpl(launchConfig.appId, launchConfig.roomUuid)
+    }
 
     private fun backupCoHostList(list: MutableList<EduContextUserDetailInfo>) {
         curCoHostList.clear()
@@ -85,11 +101,16 @@ class UserListManager(
         return muteChat
     }
 
-    fun notifyUserList() {
+    private fun parseHandsUpConfig(): HandsUpConfig? {
         val processesJson = getProperty(eduRoom?.roomProperties, processesKey)
         val processesMap: MutableMap<String, Any>? = Gson().fromJson(processesJson, object : TypeToken<MutableMap<String, Any>>() {}.type)
         val handsUpJson = getProperty(processesMap, handsUpKey)
         val handsUpConfig = Gson().fromJson(handsUpJson, HandsUpConfig::class.java)
+        return handsUpConfig
+    }
+
+    fun notifyUserList() {
+        val handsUpConfig = parseHandsUpConfig()
         if (handsUpConfig == null) {
             Constants.AgoraLog.e("$tag->handsUpConfig is null!")
         }
@@ -138,7 +159,7 @@ class UserListManager(
                                         coHosts.forEach {
                                             val name = getStudentName(it)
                                             val userInfo = EduContextUserInfo(it, name,
-                                                    properties = getAgoraCustomProps(it))
+                                                    properties = getUserFlexProps(it))
                                             val offLineDetailInfo = EduContextUserDetailInfo(userInfo, "")
                                             offLineDetailInfo.isSelf = false
                                             offLineDetailInfo.onLine = false
@@ -258,6 +279,20 @@ class UserListManager(
             }
 
             override fun onFailure(error: EduError) {
+            }
+        })
+    }
+
+    fun updateFlexProps(userUuid: String, properties: MutableMap<String, String>, cause: MutableMap<String, String>?) {
+        val req = UserFlexPropsReq(properties, cause)
+        flexProps.updateFlexUserProperties(userUuid, req, object : EduCallback<Boolean> {
+            override fun onSuccess(res: Boolean?) {
+            }
+
+            override fun onFailure(error: EduError) {
+                userContext.getHandlers()?.forEach {
+                    it.onUserTip("updateFlexUserProperties failed, code->${error.type},msg->${error.msg}")
+                }
             }
         })
     }

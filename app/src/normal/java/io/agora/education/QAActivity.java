@@ -33,6 +33,7 @@ import butterknife.OnTouch;
 import io.agora.base.callback.ThrowableCallback;
 import io.agora.base.network.RetrofitManager;
 import io.agora.download.db.DbHolder;
+import io.agora.edu.classroom.EduDebugMode;
 import io.agora.edu.common.bean.ResponseBody;
 import io.agora.edu.common.bean.board.sceneppt.BoardCoursewareRes;
 import io.agora.edu.common.bean.board.sceneppt.SceneInfo;
@@ -186,9 +187,12 @@ public class QAActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.iv_setting, R.id.et_room_type, R.id.btn_join, R.id.tv_one2one, R.id.tv_small_class,
-            R.id.tv_large_class, R.id.tv_breakout_class, R.id.tv_intermediate_class, R.id.config,
-            R.id.load, R.id.clearCache, R.id.tv_cn, R.id.tv_na, R.id.tv_eu, R.id.tv_ap})
+    @OnClick({R.id.iv_setting, R.id.et_room_type, R.id.btn_join,
+            // R.id.tv_one2one, R.id.tv_small_class, R.id.tv_large_class,
+            // R.id.tv_breakout_class, R.id.tv_intermediate_class,
+            R.id.tv_debug,
+            R.id.config, R.id.load, R.id.clearCache, R.id.tv_cn,
+            R.id.tv_na, R.id.tv_eu, R.id.tv_ap})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
@@ -218,12 +222,16 @@ public class QAActivity extends AppCompatActivity {
                 et_room_type.setText(R.string.large_class);
                 card_room_type.setVisibility(View.GONE);
                 break;
-            case R.id.tv_breakout_class:
-                et_room_type.setText(R.string.breakout);
-                card_room_type.setVisibility(View.GONE);
-                break;
-            case R.id.tv_intermediate_class:
-                et_room_type.setText(R.string.intermediate);
+//            case R.id.tv_breakout_class:
+//                et_room_type.setText(R.string.breakout);
+//                card_room_type.setVisibility(View.GONE);
+//                break;
+//            case R.id.tv_intermediate_class:
+//                et_room_type.setText(R.string.intermediate);
+//                card_room_type.setVisibility(View.GONE);
+//                break;
+            case R.id.tv_debug:
+                et_room_type.setText(R.string.debug);
                 card_room_type.setVisibility(View.GONE);
                 break;
             case R.id.config:
@@ -418,6 +426,9 @@ public class QAActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 try {
+                    EduDebugMode.INSTANCE.setUseDebugUI(true);
+                    Log.d(TAG, "debug ui mode set to true");
+
                     AgoraEduClassRoom classRoom = AgoraEduSDK.launch(QAActivity.this,
                             agoraEduLaunchConfig, (state) -> {
                                 Log.e(TAG, ":launch-课堂状态:" + state.name());
@@ -459,8 +470,10 @@ public class QAActivity extends AppCompatActivity {
             return AgoraEduRoomType.AgoraEduRoomType1V1.getValue();
         } else if (typeName.equals(getString(R.string.small_class))) {
             return AgoraEduRoomType.AgoraEduRoomTypeSmall.getValue();
-        } else {
+        } else if (typeName.equals(getString(R.string.large_class))) {
             return AgoraEduRoomType.AgoraEduRoomTypeBig.getValue();
+        } else {
+            return AgoraEduRoomType.AgoraEduRoomTypeSmall.getValue();
         }
     }
 
@@ -478,4 +491,9 @@ public class QAActivity extends AppCompatActivity {
         }
     }
 
+    public void finish() {
+        super.finish();
+        EduDebugMode.INSTANCE.setUseDebugUI(false);
+        Log.d(TAG, "debug ui mode set to false");
+    }
 }

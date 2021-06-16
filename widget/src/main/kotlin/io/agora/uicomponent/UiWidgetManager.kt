@@ -59,12 +59,12 @@ class UiWidgetManager {
             registerMap[config.id] = config.clz
         }
 
-        private fun getWidgetClass(id: String) : Class<out AbsUiWidget>? {
+        private fun getWidgetClass(id: String): Class<out AbsUiWidget>? {
             return registerMap[id]
         }
     }
 
-    fun create(id: String, context: EduContextPool?, args: Any? = null) : AbsUiWidget? {
+    fun create(id: String, context: EduContextPool?, args: Any? = null): AbsUiWidget? {
         val obj = getWidgetClass(id)?.newInstance()
         return obj?.apply {
             this.setId(id)
@@ -99,7 +99,7 @@ class UiWidgetManager {
         }
     }
 
-    internal fun notify(fromId: String, cmd: String, vararg : Any? = null) {
+    internal fun notify(fromId: String, cmd: String, vararg: Any? = null) {
 
     }
 

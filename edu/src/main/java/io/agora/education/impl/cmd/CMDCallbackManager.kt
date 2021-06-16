@@ -18,8 +18,9 @@ internal class CMDCallbackManager {
         classRoom.eventListener?.onRoomStatusChanged(eventEdu, operatorUser, classRoom)
     }
 
-    fun onRoomPropertyChanged(classRoom: EduRoom, cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-        classRoom.eventListener?.onRoomPropertiesChanged(classRoom, cause, operator)
+    fun onRoomPropertyChanged(changedProperties: MutableMap<String, Any>, classRoom: EduRoom,
+                              cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
+        classRoom.eventListener?.onRoomPropertiesChanged(changedProperties, classRoom, cause, operator)
     }
 
     fun onRoomChatMessageReceived(chatMsg: EduChatMsg, classRoom: EduRoom) {
@@ -56,9 +57,11 @@ internal class CMDCallbackManager {
         classRoom.eventListener?.onRemoteUserUpdated(userEvent, type, classRoom)
     }
 
-    fun onRemoteUserPropertiesUpdated(classRoom: EduRoom, userInfo: EduUserInfo,
-                                      cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-        classRoom.eventListener?.onRemoteUserPropertiesChanged(classRoom, userInfo, cause, operator)
+    fun onRemoteUserPropertiesUpdated(changedProperties: MutableMap<String, Any>, classRoom: EduRoom,
+                                      userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+                                      operator: EduBaseUserInfo?) {
+        classRoom.eventListener?.onRemoteUserPropertiesChanged(changedProperties, classRoom,
+                userInfo, cause, operator)
     }
 
     fun onLocalUserAdded(userInfo: EduUserInfo, eduUser: EduUser) {
@@ -78,8 +81,10 @@ internal class CMDCallbackManager {
         eduUser.eventListener?.onLocalUserLeft(userEvent, if (type == 1) EduUserLeftType.Normal else EduUserLeftType.KickOff)
     }
 
-    fun onLocalUserPropertiesUpdated(cause: MutableMap<String, Any>?, user: EduUser, operator: EduBaseUserInfo?) {
-        user.eventListener?.onLocalUserPropertiesChanged(user.userInfo, cause, operator)
+    fun onLocalUserPropertiesUpdated(changedProperties: MutableMap<String, Any>,
+                                     cause: MutableMap<String, Any>?, user: EduUser,
+                                     operator: EduBaseUserInfo?) {
+        user.eventListener?.onLocalUserPropertiesChanged(changedProperties, user.userInfo, cause, operator)
     }
 
     fun onLocalStreamAdded(streamEvent: EduStreamEvent, eduUser: EduUser) {

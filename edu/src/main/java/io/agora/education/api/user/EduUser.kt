@@ -13,7 +13,7 @@ import io.agora.education.api.user.listener.EduUserEventListener
 
 interface EduUser {
     var userInfo: EduLocalUserInfo
-    var videoEncoderConfig: VideoEncoderConfig
+    var eduVideoEncoderConfig: EduVideoEncoderConfig
 
     var eventListener: EduUserEventListener?
 
@@ -95,7 +95,7 @@ interface EduUser {
     /**code:message
      * 1:parameter XXX is invalid*/
     fun setStreamView(stream: EduStreamInfo, channelId: String, viewGroup: ViewGroup?,
-                      config: VideoRenderConfig = VideoRenderConfig(), top: Boolean = false): EduError
+                      configEdu: EduRenderConfig = EduRenderConfig(), top: Boolean = false): EduError
 
     /**code:message
      * 1:parameter XXX is invalid*/

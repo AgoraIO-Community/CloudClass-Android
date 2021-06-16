@@ -13,6 +13,7 @@ import io.agora.uikit.impl.chat.AgoraUIChatWindow
 import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.chat.OnChatWindowAnimateListener
 import io.agora.uikit.impl.handsup.AgoraUIHandsUp
+import io.agora.uikit.impl.loading.AgoraUILoading
 import io.agora.uikit.impl.room.AgoraUIRoomStatus
 import io.agora.uikit.impl.screenshare.AgoraUIFullScreenBtn
 import io.agora.uikit.impl.screenshare.AgoraUIScreenShare
@@ -74,10 +75,12 @@ class AgoraUISmallClassContainer(
                 whiteboardWindow?.setRect(whiteboardDefaultRect)
                 screenShareWindow?.setRect(whiteboardDefaultRect)
                 toolbar?.setVerticalPosition(toolbarTopHasStudent, toolbarHeightHasStudent)
+                agoraUILoading?.setRect(whiteboardDefaultRect)
             } else {
                 whiteboardWindow?.setRect(whiteboardNoStudentVideoRect)
                 screenShareWindow?.setRect(whiteboardNoStudentVideoRect)
                 toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
+                agoraUILoading?.setRect(whiteboardNoStudentVideoRect)
             }
         }
 
@@ -187,7 +190,7 @@ class AgoraUISmallClassContainer(
         chatWindow = widgetManager.create(UiWidgetManager.DefaultWidgetId.Chat.name, getEduContext()) as? AgoraUIChatWindow
         chatWindow?.let {
             it.setTabConfig(config.chatTabConfigs)
-            it.init(layout, teacherVideoW, chatHeight, chatTop, chatLeft)
+            it.init(layout, teacherVideoW, chatHeight, chatLeft, chatTop)
             it.setContainer(this)
             it.setClosable(false)
             it.showShadow(false)
@@ -260,6 +263,9 @@ class AgoraUISmallClassContainer(
         easeChat?.setContainer(this)
         // ease chat window
 
+        // add loading(show/hide follow rtmConnectionState)
+        agoraUILoading = AgoraUILoading(layout, whiteboardDefaultRect)
+
         // toolbar monitors the rosterDismiss event for restore Status of itemSelected
         AgoraUIRoster.dismissListener = toolbar?.rosterDismissListener
         roster = AgoraUIRoster(getEduContext())
@@ -267,6 +273,8 @@ class AgoraUISmallClassContainer(
 
         // register userHandler
         getEduContext()?.userContext()?.addHandler(smallContainerUserHandler)
+        // joinRoom
+        getEduContext()?.roomContext()?.joinClassRoom()
     }
 
     override fun resize(layout: ViewGroup, left: Int, top: Int, width: Int, height: Int) {
@@ -408,15 +416,18 @@ class AgoraUISmallClassContainer(
             handsUpWindow?.setRect(handsUpFullScreenRect)
             handsUpAnimateRect = Rect(handsUpFullScreenRect)
             toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
+            agoraUILoading?.setRect(whiteboardFullScreenRect)
         } else {
             if (studentVideoGroup!!.isShown()) {
                 whiteboardWindow?.setRect(whiteboardDefaultRect)
                 screenShareWindow?.setRect(whiteboardDefaultRect)
                 toolbar?.setVerticalPosition(toolbarTopHasStudent, toolbarHeightHasStudent)
+                agoraUILoading?.setRect(whiteboardDefaultRect)
             } else {
                 whiteboardWindow?.setRect(whiteboardNoStudentVideoRect)
                 screenShareWindow?.setRect(whiteboardNoStudentVideoRect)
                 toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
+                agoraUILoading?.setRect(whiteboardNoStudentVideoRect)
             }
             chatWindow?.let {
                 it.setFullscreenRect(false, chatRect)
@@ -452,6 +463,7 @@ class AgoraUISmallClassContainer(
 
     override fun release() {
         chatWindow?.release()
+        easeChat?.release()
         widgetManager.release()
     }
 
@@ -474,15 +486,18 @@ class AgoraUISmallClassContainer(
             handsUpWindow?.setRect(rect)
             handsUpAnimateRect = rect
             toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
+            agoraUILoading?.setRect(whiteboardFullScreenRect)
         } else {
             if (studentVideoGroup!!.isShown()) {
                 whiteboardWindow?.setRect(whiteboardDefaultRect)
                 screenShareWindow?.setRect(whiteboardDefaultRect)
                 toolbar?.setVerticalPosition(toolbarTopHasStudent, toolbarHeightHasStudent)
+                agoraUILoading?.setRect(whiteboardDefaultRect)
             } else {
                 whiteboardWindow?.setRect(whiteboardNoStudentVideoRect)
                 screenShareWindow?.setRect(whiteboardNoStudentVideoRect)
                 toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
+                agoraUILoading?.setRect(whiteboardNoStudentVideoRect)
             }
 
             chatWindow?.setFullscreenRect(fullScreen, chatRect)

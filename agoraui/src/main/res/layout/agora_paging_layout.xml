@@ -76,7 +76,7 @@
             android:paddingEnd="@dimen/padding_medium"
             android:paddingRight="@dimen/padding_medium"
             android:paddingBottom="@dimen/padding_small"
-            android:text="11/12"
+            android:text=" / "
             android:textColor="@color/theme_text_color_dark_gray"
             android:textSize="@dimen/number_medium" />
 

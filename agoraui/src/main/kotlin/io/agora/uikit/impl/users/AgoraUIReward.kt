@@ -3,6 +3,7 @@ package io.agora.uikit.impl.users
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -17,8 +18,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import io.agora.uikit.R
 import io.agora.uikit.impl.AbsComponent
-import io.agora.uikit.util.AppUtil
-import io.agora.uikit.util.AppUtil.playWav
 
 class AgoraUIReward(
         context: Context,
@@ -32,6 +31,7 @@ class AgoraUIReward(
 
     private val contentView = LayoutInflater.from(context).inflate(R.layout.agora_reward_layout, parent, false)
     private val rewardImg: AppCompatImageView = contentView.findViewById(R.id.reward_Img)
+    private var mediaPlayer: MediaPlayer? = null
 
     init {
         parent.addView(contentView, width, height)
@@ -47,7 +47,6 @@ class AgoraUIReward(
     }
 
     fun show() {
-        playWav(contentView.context.applicationContext, R.raw.agora_reward_sound)
         contentView.post {
             contentView.visibility = VISIBLE
             Glide.with(contentView.context).asGif().skipMemoryCache(true)
@@ -72,6 +71,21 @@ class AgoraUIReward(
                         }
                     }).into(rewardImg)
         }
+
+        if (mediaPlayer != null) {
+            mediaPlayer!!.stop()
+            mediaPlayer!!.reset()
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+        mediaPlayer = MediaPlayer.create(contentView.context.applicationContext, R.raw.agora_reward_sound)
+        mediaPlayer!!.setOnCompletionListener {
+            mediaPlayer!!.stop()
+            mediaPlayer!!.reset()
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+        this.mediaPlayer!!.start()
     }
 
     fun isShowing(): Boolean {

@@ -162,7 +162,7 @@
     <dimen name="agora_board_loading_img_w">40dp</dimen>
     <dimen name="agora_board_loading_img_h">40dp</dimen>
     <dimen name="agora_board_loading_view_corner_radius">8dp</dimen>
-    <dimen name="agora_board_loading_view_elevation">4dp</dimen>
+    <dimen name="agora_board_loading_view_elevation">2dp</dimen>
     <dimen name="agora_board_progress_view_corner_radius">8dp</dimen>
     <dimen name="agora_board_progress_view_elevation">8dp</dimen>
     <dimen name="agora_board_progress_view_padding_start">12dp</dimen>

@@ -126,13 +126,11 @@ class OneToOneClassActivity : BaseClassActivity() {
     }
 
     override fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError?) {
-
+        super.onRoomJoined(success, student, error)
     }
 
     override fun onRemoteUsersInitialized(users: List<EduUserInfo>, classRoom: EduRoom) {
         super.onRemoteUsersInitialized(users, classRoom)
-        whiteBoardManager!!.initBoardWithRoomToken(preCheckData!!.board.boardId,
-                preCheckData!!.board.boardToken, launchConfig!!.userUuid)
     }
 
     override fun onRoomChatMessageReceived(chatMsg: EduChatMsg, classRoom: EduRoom) {
@@ -140,6 +138,7 @@ class OneToOneClassActivity : BaseClassActivity() {
         val item = EduContextChatItem(
                 chatMsg.fromUser.userName ?: "",
                 chatMsg.fromUser.userUuid ?: "",
+                chatMsg.fromUser.role?.value ?: EduContextUserRole.Student.value,
                 chatMsg.message,
                 "${chatMsg.messageId}",
                 EduContextChatItemType.Text,
@@ -194,7 +193,7 @@ class OneToOneClassActivity : BaseClassActivity() {
 
     override fun onRoomStatusChanged(type: EduRoomChangeType, operatorUser: EduUserInfo?, classRoom: EduRoom) {
         super.onRoomStatusChanged(type, operatorUser, classRoom)
-        roomStatusManager?.updateClassState(type)
+        roomStateManager?.updateClassState(type)
     }
 
     override fun onRemoteVideoStateChanged(rtcChannel: RtcChannel?, uid: Int, state: Int, reason: Int, elapsed: Int) {
@@ -222,14 +221,17 @@ class OneToOneClassActivity : BaseClassActivity() {
         oneToOneVideoManager?.updateAudioVolume(speakers)
     }
 
-    override fun onRemoteUserPropertiesChanged(classRoom: EduRoom, userInfo: EduUserInfo,
+    override fun onRemoteUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                               classRoom: EduRoom, userInfo: EduUserInfo,
                                                cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-        super.onRemoteUserPropertiesChanged(classRoom, userInfo, cause, operator)
+        super.onRemoteUserPropertiesChanged(changedProperties, classRoom, userInfo, cause, operator)
         oneToOneVideoManager?.updateRemoteDeviceState(userInfo, cause)
         oneToOneVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
     }
 
-    override fun onLocalUserPropertiesChanged(userInfo: EduUserInfo, cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?) {
-        super.onLocalUserPropertiesChanged(userInfo, cause, operator)
+    override fun onLocalUserPropertiesChanged(changedProperties: MutableMap<String, Any>,
+                                              userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+                                              operator: EduBaseUserInfo?) {
+        super.onLocalUserPropertiesChanged(changedProperties, userInfo, cause, operator)
     }
 }

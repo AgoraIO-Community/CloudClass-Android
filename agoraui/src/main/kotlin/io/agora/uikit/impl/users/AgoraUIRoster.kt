@@ -8,15 +8,13 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.text.SpannableString
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.*
 import android.widget.CheckedTextView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
-import io.agora.educontext.EduContextDeviceState
-import io.agora.educontext.EduContextPool
-import io.agora.educontext.EduContextUserDetailInfo
-import io.agora.educontext.EduContextUserRole
+import io.agora.educontext.*
 import io.agora.uikit.R
 import io.agora.uikit.educontext.handlers.UserHandler
 import io.agora.uikit.impl.AbsComponent
@@ -27,6 +25,8 @@ import kotlin.collections.ArrayList
 import kotlin.math.min
 
 class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
+    private val tag = "AgoraUIRoster"
+
     private var rosterDialog: RosterDialog? = null
     private var userList: MutableList<EduContextUserDetailInfo> = mutableListOf()
 
@@ -51,6 +51,11 @@ class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
                     showDialog(anchor)
                 }
             }
+        }
+
+        override fun onFlexUserPropsChanged(changedProperties: MutableMap<String, Any>, properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?, fromUser: EduContextUserDetailInfo, operator: EduContextUserInfo?) {
+            super.onFlexUserPropsChanged(changedProperties, properties, cause, fromUser, operator)
+            Log.i(tag, "onFlexUserPropertiesChanged")
         }
     }
 
@@ -436,7 +441,7 @@ class RosterDialog(
 
         override fun bind(item: EduContextUserDetailInfo) {
             tvName?.let { nameTextView ->
-                val nameStr = SpannableString(item.user.userName)
+                val nameStr = SpannableString(item.user.userName.plus(" "))
 
                 if (item.coHost) {
                     nameStr.setSpan(ImageSpan(ContextCompat.getDrawable(view.context,

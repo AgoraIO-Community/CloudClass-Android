@@ -45,6 +45,8 @@
     <string name="agora_message_item_error_text" translatable="false">!</string>
     <string name="agora_message_student_chat_mute_tips">Student is forbidden to send chat</string>
     <string name="agora_message_student_chat_mute_hint">Mute chat</string>
+    <string name="agora_message_item_role_tip" translatable="false">[%s]</string>
+    <string name="agora_message_item_role_assistant">Assistant</string>
 
     <string name="agora_message_chat_student_ban_local">You were silenced by %s</string>
     <string name="agora_message_chat_student_ban_remote">%s was silenced by %s</string>

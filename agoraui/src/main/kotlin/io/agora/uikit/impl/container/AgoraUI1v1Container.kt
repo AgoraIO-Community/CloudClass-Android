@@ -9,6 +9,7 @@ import io.agora.uicomponent.UiWidgetManager
 import io.agora.uikit.R
 import io.agora.uikit.impl.chat.AgoraUIChatWindow
 import io.agora.uikit.impl.chat.EaseChatWidget
+import io.agora.uikit.impl.loading.AgoraUILoading
 import io.agora.uikit.impl.room.AgoraUIRoomStatus
 import io.agora.uikit.impl.screenshare.AgoraUIFullScreenBtn
 import io.agora.uikit.impl.screenshare.AgoraUIScreenShare
@@ -131,9 +132,8 @@ class AgoraUI1v1Container(
         chatRect.set(messageLeft, messageTop, messageLeft + videoLayoutW, messageTop + messageHeight)
 
         chatWindow = widgetManager.create(UiWidgetManager.DefaultWidgetId.Chat.name, getEduContext()) as? AgoraUIChatWindow
-
         chatWindow?.setTabConfig(config.chatTabConfigs)
-        chatWindow?.init(layout, videoLayoutW, messageHeight, messageTop, messageLeft)
+        chatWindow?.init(layout, videoLayoutW, messageHeight, messageLeft, messageTop)
         chatWindow?.setContainer(this)
         chatWindow?.show(false)
 
@@ -153,6 +153,12 @@ class AgoraUI1v1Container(
         easeChat?.init(layout, easeChatW, easeChatH, easeChatTop, easeChatLeft)
         easeChat?.setContainer(this)
         // ease chat window
+
+        // add loading(show/hide follow rtmConnectionState)
+        agoraUILoading = AgoraUILoading(layout, whiteboardRect)
+
+        // joinRoom
+        getEduContext()?.roomContext()?.joinClassRoom()
     }
 
     override fun resize(layout: ViewGroup, left: Int, top: Int, width: Int, height: Int) {
@@ -213,6 +219,11 @@ class AgoraUI1v1Container(
             it.setRect(rect)
         }
 
+//        toolbar?.let {
+//            rect = Rect(0, 0, 0, pagingControlTop - whiteboardRect.top - componentMargin)
+//            it.setRect(rect)
+//        }
+
         val messageLeft = width - videoLayoutW - videoLayoutW - componentMargin
         val messageTop: Int
         val messageHeight: Int
@@ -243,6 +254,7 @@ class AgoraUI1v1Container(
                 it.show(it.isShowing())
                 it.setRect(if (it.isShowing()) chatFullScreenRect else chatFullScreenHideRect)
             }
+            agoraUILoading?.setRect(fullScreenRect)
         } else {
             whiteboardWindow?.setRect(whiteboardRect)
             screenShareWindow?.setRect(whiteboardRect)
@@ -252,6 +264,7 @@ class AgoraUI1v1Container(
                 it.show(it.isShowing())
                 it.setRect(chatRect)
             }
+            agoraUILoading?.setRect(whiteboardRect)
         }
     }
 
@@ -279,12 +292,14 @@ class AgoraUI1v1Container(
             chatWindow?.setFullscreenRect(fullScreen, chatFullScreenHideRect)
             chatWindow?.setFullDisplayRect(chatFullScreenRect)
             chatWindow?.show(false)
+            agoraUILoading?.setRect(fullScreenRect)
         } else {
             whiteboardWindow?.setRect(whiteboardRect)
             screenShareWindow?.setRect(whiteboardRect)
             // chatWindow?.setFullscreenRect(fullScreen, chatRect)
             chatWindow?.setFullDisplayRect(chatRect)
             chatWindow?.show(false)
+            agoraUILoading?.setRect(whiteboardRect)
         }
     }
 
@@ -295,6 +310,7 @@ class AgoraUI1v1Container(
 
     override fun release() {
         chatWindow?.release()
+        easeChat?.release()
         widgetManager.release()
     }
 

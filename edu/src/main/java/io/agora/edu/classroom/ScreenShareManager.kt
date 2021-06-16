@@ -16,7 +16,7 @@ import io.agora.education.api.stream.data.EduStreamEvent
 import io.agora.education.api.stream.data.EduStreamInfo
 import io.agora.education.api.stream.data.VideoSourceType
 import io.agora.education.api.user.EduUser
-import io.agora.educontext.AgoraScreenShareState
+import io.agora.educontext.EduContextScreenShareState
 import io.agora.educontext.EduContextPool
 import java.util.*
 
@@ -40,7 +40,7 @@ class ScreenShareManager(
     private var remoteScreenStream: EduStreamInfo? = null
 
     @Volatile
-    private var curScreenShareState = AgoraScreenShareState.Stop.value
+    private var curScreenShareState = EduContextScreenShareState.Stop.value
 
     // must customize the implementation
     var screenShareStateChangedListener = object : (Boolean) -> Unit {
@@ -76,13 +76,13 @@ class ScreenShareManager(
     }
 
     fun isScreenSharing(): Boolean {
-        return curScreenShareState == AgoraScreenShareState.Start.value
+        return curScreenShareState == EduContextScreenShareState.Start.value
     }
 
-    fun setScreenShareState(state: AgoraScreenShareState) {
+    fun setScreenShareState(state: EduContextScreenShareState) {
         if (state.value != curScreenShareState) {
             curScreenShareState = state.value
-            screenShareStateChangedListener(state.value == AgoraScreenShareState.Start.value)
+            screenShareStateChangedListener(state.value == EduContextScreenShareState.Start.value)
         }
     }
 
@@ -91,8 +91,8 @@ class ScreenShareManager(
             override fun onSuccess(res: MutableList<EduStreamInfo>?) {
                 res?.find { it.streamUuid == streamUuid }?.let {
                     val sharing = container != null
-                    curScreenShareState = if (sharing) AgoraScreenShareState.Start.value else
-                        AgoraScreenShareState.Stop.value
+                    curScreenShareState = if (sharing) EduContextScreenShareState.Start.value else
+                        EduContextScreenShareState.Stop.value
                     eduUser.setStreamView(it, launchConfig.roomUuid, container, sharing)
                 }
             }
@@ -192,12 +192,12 @@ class ScreenShareManager(
                         // determine if remote RTC stream contains screenShare stream
                         Log.e(tag, "remoteOnlineUids->${Gson().toJson(remoteOnlineUids)}, streamUuid->${it.streamUuid}")
                         val contains = remoteOnlineUids.contains(it.streamUuid)
-                        val state = if (contains) AgoraScreenShareState.Start else
-                            AgoraScreenShareState.Pause
+                        val state = if (contains) EduContextScreenShareState.Start else
+                            EduContextScreenShareState.Pause
                         Log.e(tag, "contains->$contains, state->$state")
                         eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
-                            if (state.value == AgoraScreenShareState.Start.value &&
-                                    curScreenShareState == AgoraScreenShareState.Stop.value) {
+                            if (state.value == EduContextScreenShareState.Start.value &&
+                                    curScreenShareState == EduContextScreenShareState.Stop.value) {
                                 h.onScreenShareTip(String.format(
                                         context.getString(R.string.screen_share_start_message_format),
                                         it.publisher.userName))
@@ -206,7 +206,7 @@ class ScreenShareManager(
                             if (curScreenShareState != state.value) {
                                 h.onScreenShareStateUpdated(state, it.streamUuid)
                             }
-                            h.onSelectScreenShare(state == AgoraScreenShareState.Start)
+                            h.onSelectScreenShare(state == EduContextScreenShareState.Start)
                         }
                     } else if (curScenePath?.startsWith(screenShareScenePath) == false && !selectScreenShare) {
                         eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
@@ -223,8 +223,8 @@ class ScreenShareManager(
                                 context.getString(R.string.screen_share_end_message_format),
                                 it.publisher.userName))
                         // purpose state is consistent with current state,return
-                        if (curScreenShareState != AgoraScreenShareState.Stop.value) {
-                            h.onScreenShareStateUpdated(AgoraScreenShareState.Stop, it.streamUuid)
+                        if (curScreenShareState != EduContextScreenShareState.Stop.value) {
+                            h.onScreenShareStateUpdated(EduContextScreenShareState.Stop, it.streamUuid)
                         }
                     }
 

@@ -12,6 +12,8 @@ import io.agora.rte.listener.RteStatisticsReportListener
 interface IRteEngine {
     fun init(context: Context, appId: String, logFileDir: String)
 
+    fun setRtcParameters(parameters: String): Int
+
     fun loginRtm(rtmUid: String, rtmToken: String, @NonNull callback: RteCallback<Unit>)
 
     fun logoutRtm()
@@ -29,6 +31,8 @@ interface IRteEngine {
     /**作用于rtcChannel*/
     fun setClientRole(channelId: String, role: Int): Int
 
+    fun setClientRole(role: Int): Int
+
     /**作用于rtcChannel*/
     fun publish(channelId: String): Int
 
@@ -38,11 +42,25 @@ interface IRteEngine {
     /**作用于全局*/
     fun updateLocalStream(hasAudio: Boolean, hasVideo: Boolean): Int
 
+    fun updateLocalAudioStream(hasAudio: Boolean): Int
+
+    fun updateLocalVideoStream(hasVideo: Boolean): Int
+
     /**作用于rtcChannel*/
     fun muteRemoteStream(channelId: String, uid: Int, muteAudio: Boolean, muteVideo: Boolean): Int
 
     /**作用于全局*/
     fun muteLocalStream(muteAudio: Boolean, muteVideo: Boolean): Int
+
+    fun muteLocalAudioStream(muteAudio: Boolean):Int
+
+    fun muteLocalVideoStream(muteVideo: Boolean):Int
+
+    fun setLocalRenderMode(mode: Int): Int
+
+    fun startPreview(): Int
+
+    fun stopPreview(): Int
 
     /**作用于全局*/
     fun setVideoEncoderConfiguration(config: VideoEncoderConfiguration): Int

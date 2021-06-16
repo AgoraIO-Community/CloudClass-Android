@@ -10,6 +10,7 @@
     <string name="large_class">大班课</string>
     <string name="breakout">超级小班课</string>
     <string name="intermediate">中班课</string>
+    <string name="debug">调试界面</string>
     <string name="eye_care_mode">护眼模式</string>
     <string name="join">加入教室</string>
     <string name="setting">设置</string>

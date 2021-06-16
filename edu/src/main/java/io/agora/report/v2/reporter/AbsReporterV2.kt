@@ -19,7 +19,7 @@ abstract class AbsReporterV2(
 
     // report rest environment 101
     // production environment 1
-    private val qosLevel = 101
+    private val qosLevel = 1
 
     private val service: ReportServiceV2 = RetrofitManager.instance()
             .getService(reportUrlV2(), ReportServiceV2::class.java)

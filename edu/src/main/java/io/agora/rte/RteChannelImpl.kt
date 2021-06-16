@@ -1,5 +1,7 @@
 package io.agora.rte
 
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import androidx.annotation.NonNull
 import io.agora.report.ReportManager
@@ -24,6 +26,8 @@ internal class RteChannelImpl(
         private var eventListener: RteChannelEventListener?
 ) : IRteChannel {
 
+    private var handler: Handler = Handler()
+    private val stateCallbackId: Int = 0x03
     private val tag = RteChannelImpl::class.java.simpleName
     internal var statisticsReportListener: RteStatisticsReportListener? = null
     private val rtmChannelListener = object : RtmChannelListener {
@@ -109,6 +113,17 @@ internal class RteChannelImpl(
             Log.e(tag, "onRemoteVideoStateChanged->$uid, state->$state, reason->$reason")
             val videoState = RteRemoteVideoState.convert(state)
             val changeReason = RteRemoteVideoStateChangeReason.convert(reason)
+            // Solves a small 3 and 2 interval, resulting in video flickering issues
+            if (videoState == RteRemoteVideoState.REMOTE_VIDEO_STATE_FROZEN.value) {
+                val msg = Message.obtain(handler) {
+                    eventListener?.onRemoteVideoStateChanged(rtcChannel, uid, videoState, changeReason, elapsed)
+                }
+                msg.what = stateCallbackId
+                handler.sendMessageDelayed(msg, 1000)
+                return
+            } else if (videoState == RteRemoteVideoState.REMOTE_VIDEO_STATE_DECODING.value) {
+                handler.removeMessages(stateCallbackId)
+            }
             eventListener?.onRemoteVideoStateChanged(rtcChannel, uid, videoState, changeReason, elapsed)
         }
 
@@ -264,6 +279,7 @@ internal class RteChannelImpl(
     override fun release() {
         rtmChannel.release()
         rtcChannel.destroy()
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun getRtcCallId(): String {

@@ -10,9 +10,7 @@ import io.agora.base.network.RetrofitManager;
 import io.agora.edu.common.api.Base;
 import io.agora.edu.common.api.RoomPre;
 import io.agora.edu.common.bean.ResponseBody;
-import io.agora.edu.common.bean.request.AllocateGroupReq;
 import io.agora.edu.common.bean.request.DeviceStateUpdateReq;
-import io.agora.edu.common.bean.request.RoomCreateOptionsReq;
 import io.agora.edu.common.bean.request.RoomPreCheckReq;
 import io.agora.edu.common.bean.response.EduRemoteConfigRes;
 import io.agora.edu.common.bean.response.RoomPreCheckRes;
@@ -21,7 +19,6 @@ import io.agora.edu.launch.AgoraEduSDK;
 import io.agora.edu.util.TimeUtil;
 import io.agora.education.api.EduCallback;
 import io.agora.education.api.base.EduError;
-import io.agora.education.api.room.data.EduRoomInfo;
 import io.agora.report.ReportManager;
 import io.agora.report.reporters.APaasReporter;
 
@@ -32,15 +29,6 @@ public class RoomPreImpl extends Base implements RoomPre {
 
     public RoomPreImpl(@NotNull String appId, @NotNull String roomUuid) {
         super(appId, roomUuid);
-    }
-
-    @Override
-    public void allocateGroup(AllocateGroupReq req, EduCallback<EduRoomInfo> callback) {
-    }
-
-    @Override
-    public void createClassRoom(RoomCreateOptionsReq roomCreateOptionsReq, EduCallback<String> callback) {
-
     }
 
     @Override

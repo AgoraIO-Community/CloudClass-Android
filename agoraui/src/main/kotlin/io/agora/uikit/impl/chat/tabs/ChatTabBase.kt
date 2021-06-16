@@ -112,7 +112,14 @@ abstract class ChatTabBase : FrameLayout, IChatTab {
             val item = chatItemList[pos]
 
             if (item.source != AgoraUIChatSource.System) {
-                holder.name.text = item.name
+                val name = if (item.role == EduContextUserRole.Assistant.value) {
+                    val tmp = String.format(holder.name.context.resources.getString(R.string.agora_message_item_role_tip),
+                            holder.name.context.resources.getString(R.string.agora_message_item_role_assistant))
+                    item.name.plus(tmp)
+                } else {
+                    item.name
+                }
+                holder.name.text = name
                 holder.message.text = item.message
 
                 if (item.source == AgoraUIChatSource.Local) {

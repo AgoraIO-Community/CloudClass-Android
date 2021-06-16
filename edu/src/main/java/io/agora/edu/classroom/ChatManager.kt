@@ -82,7 +82,7 @@ class ChatManager(
                                                 launchConfig.userUuid,
                                                 launchConfig.userName,
                                                 EduContextUserRole.fromValue(launchConfig.roleType),
-                                                getAgoraCustomProps(launchConfig.userUuid)),
+                                                getUserFlexProps(launchConfig.userUuid)),
                                         null, true)
                             }
                         }
@@ -100,6 +100,7 @@ class ChatManager(
         val item = EduContextChatItem(
                 chatMsg.fromUser.userName ?: "",
                 chatMsg.fromUser.userUuid ?: "",
+                chatMsg.fromUser.role?.value ?: EduContextUserRole.Student.value,
                 chatMsg.message,
                 "${chatMsg.messageId}",
                 EduContextChatItemType.Text,
@@ -116,6 +117,7 @@ class ChatManager(
         val item = EduContextChatItem(
                 msg.fromUser.userName ?: "",
                 msg.fromUser.userUuid ?: "",
+                msg.fromUser.role?.value ?: EduContextUserRole.Student.value,
                 msg.message,
                 msg.peerMessageId,
                 EduContextChatItemType.Text,
@@ -189,6 +191,7 @@ class ChatManager(
         return EduContextChatItem(
                 name = item.fromUser.userName,
                 uid = item.fromUser.userUuid,
+                role = item.fromUser.role.toInt(),
                 message = item.message,
                 messageId = "${item.messageId}",
                 type = EduContextChatItemType.Text,
@@ -292,14 +295,14 @@ class ChatManager(
                             userInfo.userUuid,
                             userInfo.userName,
                             EduContextUserRole.fromValue(userInfo.role.value),
-                            getAgoraCustomProps(userInfo.userUuid))
+                            getUserFlexProps(userInfo.userUuid))
 
                     val teacher = if (operator != null) {
                         EduContextUserInfo(
                                 operator.userUuid,
                                 operator.userName,
                                 EduContextUserRole.Teacher,
-                                getAgoraCustomProps(operator.userUuid))
+                                getUserFlexProps(operator.userUuid))
                     } else null
 
                     chatContext?.getHandlers()?.forEach { h ->

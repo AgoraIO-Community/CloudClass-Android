@@ -15,10 +15,6 @@ public class RoomPreCheckRes implements Parcelable {
     private long closeDelay;
     private long lastMessageId;
     /**
-     * {@link io.agora.record.bean.RecordState}
-     */
-    private int recordState;
-    /**
      * {@link io.agora.education.api.room.data.EduMuteState}
      */
     private int muteChat;
@@ -64,14 +60,6 @@ public class RoomPreCheckRes implements Parcelable {
         this.lastMessageId = lastMessageId;
     }
 
-    public int getRecordState() {
-        return recordState;
-    }
-
-    public void setRecordState(int recordState) {
-        this.recordState = recordState;
-    }
-
     public int getMuteChat() {
         return muteChat;
     }
@@ -89,13 +77,12 @@ public class RoomPreCheckRes implements Parcelable {
     }
 
     public RoomPreCheckRes(int state, long startTime, long duration, long closeDelay,
-                           long lastMessageId, int recordState, int muteChat, BoardInfo board) {
+                           long lastMessageId, int muteChat, BoardInfo board) {
         this.state = state;
         this.startTime = startTime;
         this.duration = duration;
         this.closeDelay = closeDelay;
         this.lastMessageId = lastMessageId;
-        this.recordState = recordState;
         this.muteChat = muteChat;
         this.board = board;
     }
@@ -106,7 +93,6 @@ public class RoomPreCheckRes implements Parcelable {
         duration = in.readLong();
         closeDelay = in.readLong();
         lastMessageId = in.readLong();
-        recordState = in.readInt();
         muteChat = in.readInt();
         board = in.readParcelable(BoardInfo.class.getClassLoader());
     }
@@ -118,7 +104,6 @@ public class RoomPreCheckRes implements Parcelable {
         dest.writeLong(duration);
         dest.writeLong(closeDelay);
         dest.writeLong(lastMessageId);
-        dest.writeInt(recordState);
         dest.writeInt(muteChat);
         dest.writeParcelable(board, flags);
     }

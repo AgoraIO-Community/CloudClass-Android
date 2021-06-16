@@ -86,7 +86,6 @@ class AgoraEduLaunchConfig(val userName: String,
         parcel.writeString(appId)
         parcel.writeInt(eyeCare)
         parcel.writeString(whiteBoardAppId)
-        parcel.writeInt(vendorId)
     }
 
     override fun describeContents(): Int {

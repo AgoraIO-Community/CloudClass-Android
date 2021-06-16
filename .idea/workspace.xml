@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dev" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dev" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:apaas" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dev" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dev" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:apaas" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dev" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:apaas" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:dev/apaas/1.1.2-lowlatency" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1861e2fe-ae06-4b45-811d-206618ea4508" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraDebugContainer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/loading/AgoraUILoading.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/debug_container_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/Debug.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/FlexPropsManager.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/api/FlexProps.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/bean/flexpropes/FlexPropsReq.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/impl/FlexPropsImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/service/FlexPropsService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/media/EduMediaControl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/media/EduMediaTrack.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/stream/data/EduRenderConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/media/EduMediaControlImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/media/EduMediaTrackImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/data/RtcAppScenario.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/MediaContext.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IMediaHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/TimeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hyphenate/src/main/res/mipmap-xhdpi/prompt_bg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/RoomHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/RoomHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/ScreenShareHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/ScreenShareHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/UserHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/educontext/handlers/UserHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/AgoraUIChatItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/AgoraUIChatItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/AgoraUIChatWindow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/AgoraUIChatWindow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/EaseChatWidget.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/EaseChatWidget.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/tabs/ChatTabBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/chat/tabs/ChatTabBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AbsUIContainer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AbsUIContainer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUI1v1Container.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUI1v1Container.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUILargeContainer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUILargeContainer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUISmallContainer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/container/AgoraUISmallContainer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/room/AgoraUILoadingDialog.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/room/AgoraUIRoomStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/room/AgoraUIRoomStatus.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/screenshare/AgoraUIScreenShare.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/screenshare/AgoraUIScreenShare.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/tool/AgoraUIToolItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/tool/AgoraUIToolItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/users/AgoraUIReward.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/users/AgoraUIReward.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/users/AgoraUIRoster.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/users/AgoraUIRoster.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/whiteboard/AgoraUIBoardLoadingView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/loading/AgoraUILoadingView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/whiteboard/AgoraUIWhiteBoard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/impl/whiteboard/AgoraUIWhiteBoard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/interfaces/protocols/IAgoraUIContainer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/interfaces/protocols/IAgoraUIContainer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/util/AppUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/kotlin/io/agora/uikit/util/AppUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_board_loading_img.gif" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_ui_loading_img.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_clicker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_select.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_clicker_normal.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_clicker_normal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_clicker_selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_clicker_selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_select_normal.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_select_normal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_select_selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxhdpi/agora_tool_icon_select_selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_clicker_normal.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_clicker_normal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_clicker_selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_clicker_selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_select_normal.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_select_normal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_select_selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable-xxxhdpi/agora_tool_icon_select_selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/drawable/agora_tool_icon_select.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/drawable/agora_tool_icon_clicker.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_board_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_board_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_board_loading_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_ui_loading_view_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_board_reconnect_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_board_reconnect_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_chat_item_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_chat_item_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_paging_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_paging_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_userlist_dialog_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/layout/agora_userlist_dialog_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/layout/agoraui_loading_dialog.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/values-zh/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agoraui/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/agoraui/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/normal/java/io/agora/education/QAActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/normal/java/io/agora/education/QAActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/normal/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/normal/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/normal/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/normal/res/values-zh/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/normal/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/normal/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/config.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/edu/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/base/util/CryptoUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/base/util/UUIDUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/AgoraCoVideoAction.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/AgoraCoVideoListener.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/AgoraCoVideoView.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/CoVideo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/CoVideoSwitchStateInfo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/StudentCoVideoHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/covideo/StudentCoVideoSession.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/base/BaseActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/base/BaseFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/BaseClassActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/BaseClassActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/BaseManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/BaseManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/ChatManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/ChatManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/LargeClassActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/LargeClassActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/OneToOneClassActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/OneToOneClassActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/RoomStatusManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/RoomStateManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/ScreenShareManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/ScreenShareManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/SmallClassActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/SmallClassActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/UserListManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/UserListManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/WhiteBoardManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/WhiteBoardManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/bean/PropertyData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/classroom/bean/PropertyData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/api/RoomPre.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/api/RoomPre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/bean/board/BoardFollowMode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/bean/board/BoardGrantMode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/bean/response/RoomPreCheckRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/bean/response/RoomPreCheckRes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/impl/RoomPreImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/impl/RoomPreImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/service/RoomPreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/common/service/RoomPreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduConstants.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduLaunchConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduLaunchConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduSDK.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduSDK.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/util/NetUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/util/UUIDUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/edu/widget/PolicyDialog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/manager/EduManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/manager/EduManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/room/listener/EduRoomEventListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/room/listener/EduRoomEventListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/stream/data/VideoEncoderConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/stream/data/EduVideoEncoderConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/stream/data/VideoRenderConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/user/EduUser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/user/EduUser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/user/listener/EduUserEventListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/api/user/listener/EduUserEventListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDCallbackManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDCallbackManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDDataMergeProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDDataMergeProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDDispatch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/CMDDispatch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/bean/CMDRoomPropertyRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/bean/CMDRoomPropertyRes.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/bean/CMDUserPropertyRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/cmd/bean/CMDUserPropertyRes.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/manager/EduManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/manager/EduManagerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/room/EduRoomImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/room/EduRoomImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/user/EduUserImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/user/EduUserImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/util/Convert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/util/Convert.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/util/UnCatchExceptionHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/education/impl/util/UnCatchExceptionHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/extapp/AgoraExtAppManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/extapp/AgoraExtAppManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/log/UploadManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/log/UploadManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/privatechat/PrivateChatManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/privatechat/PrivateChatManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/Replay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/ReplayImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/ReplayRes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/ReplayService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/bean/RecordAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/bean/RecordBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/bean/RecordMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/record/bean/RecordState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/report/v2/reporter/AbsReporterV2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/report/v2/reporter/AbsReporterV2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/IRteEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/IRteEngine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/RteChannelImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/RteChannelImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/RteEngineImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/rte/RteEngineImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/SimpleTimeline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/SimpleTimelineManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/Timeline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/TimelineDecorator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/TimelineListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/timeline/TimelineState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/manager/BoardProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/manager/BoardProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/manager/NetlessManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/manager/NetlessManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/service/NetlessService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/service/bean/ResponseBody.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/src/main/java/io/agora/whiteboard/netless/service/bean/response/RoomJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/EduContextPool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/EduContextPool.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/RoomContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/RoomContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/ScreenShareContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/ScreenShareContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/UserContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/context/UserContext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IRoomHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IRoomHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IScreenShareHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IScreenShareHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IUserHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IUserHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IVideoHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/eventHandler/IVideoHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/objects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/educontext/src/main/kotlin/io/agora/educontext/objects.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/AgoraExtAppEngine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/AgoraExtAppEngine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/impl/countdown/CountDownExtApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/impl/countdown/CountDownExtApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/impl/countdown/CountdownClock.kt" beforeDir="false" afterPath="$PROJECT_DIR$/extapp/src/main/kotlin/io/agora/extension/impl/countdown/CountdownClock.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/androidTest/java/com/hyphenate/easeim/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/EaseIM.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/EaseIM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/adapter/GiftGridAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/adapter/GiftGridAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/CachedDanmakuViewPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/CachedDanmakuViewPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/Danmaku.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/Danmaku.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuPositionCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/modules/danmaku/DanmakuPositionCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/utils/ScreenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/utils/ScreenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/widget/ChatTotalLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/widget/ChatTotalLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/widget/GiftView.java" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/java/com/hyphenate/easeim/widget/GiftView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/res/layout/chat_primary_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/res/layout/chat_primary_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/res/layout/chat_total_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/res/layout/chat_total_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/res/layout/gift_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/res/layout/gift_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/res/layout/gift_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/res/layout/gift_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hyphenate/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hyphenate/src/test/java/com/hyphenate/easeim/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/widget/src/main/kotlin/io/agora/uicomponent/UiWidgetManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/widget/src/main/kotlin/io/agora/uicomponent/UiWidgetManager.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev/apaas/1.1.2-preview" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tpWO5AOqxKz8LS28JUNVRURJRc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DEBUGGABLE_DEVICE" value="huawei-tas_al00-JTK5T19C17011864" />
+    <property name="DEBUGGABLE_PROCESS" value="io.agora.education" />
+    <property name="DEBUGGER_ID" value="Auto" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Dependencies" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="CloudClass-Android.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1861e2fe-ae06-4b45-811d-206618ea4508" name="Default Changelist" comment="" />
+      <created>1623466475331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623466475331</updated>
+    </task>
+    <task id="LOCAL-00001" summary="update whiteboard sdk version">
+      <created>1623466927803</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1623466927803</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update prefetch config request url">
+      <created>1623625454731</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1623625454731</updated>
+    </task>
+    <task id="LOCAL-00003" summary="demo select and request auth data from server, instead of using predefined data in projects">
+      <created>1623632696587</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1623632696587</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix conflicts and merge">
+      <created>1623755467451</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1623755467451</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev/apaas/1.1.2-lowlatency" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update whiteboard sdk version" />
+    <MESSAGE value="update prefetch config request url" />
+    <MESSAGE value="demo select and request auth data from server, instead of using predefined data in projects" />
+    <MESSAGE value="fix conflicts and merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix conflicts and merge" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1474" y="448" width="1283" height="800" key="#PSD" timestamp="1623754908266">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="1474" y="448" width="1283" height="800" key="#PSD/0.25.3440.1354@0.25.3440.1354" timestamp="1623754908266" />
+    <state x="932" y="415" key="#com.intellij.ide.util.MemberChooser" timestamp="1623753529175">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="932" y="415" key="#com.intellij.ide.util.MemberChooser/0.25.3440.1354@0.25.3440.1354" timestamp="1623753529175" />
+    <state x="1035" y="443" key="AndroidProcessChooserDialog" timestamp="1623632078708">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="1035" y="443" key="AndroidProcessChooserDialog/0.25.3440.1354@0.25.3440.1354" timestamp="1623632078708" />
+    <state x="337" y="132" width="3018" height="1135" key="DiffContextDialog" timestamp="1623756200873">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="337" y="132" width="3018" height="1135" key="DiffContextDialog/0.25.3440.1354@0.25.3440.1354" timestamp="1623756200873" />
+    <state width="436" height="852" key="Git.Branch.Popup" timestamp="1623752811396">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state width="436" height="852" key="Git.Branch.Popup/0.25.3440.1354@0.25.3440.1354" timestamp="1623752811396" />
+    <state width="2586" height="271" key="GridCell.Tab.0.bottom" timestamp="1623753465996">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.0.bottom/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866285" />
+    <state width="2586" height="271" key="GridCell.Tab.0.bottom/0.25.3440.1354@0.25.3440.1354" timestamp="1623753465996" />
+    <state width="2586" height="271" key="GridCell.Tab.0.center" timestamp="1623753465996">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.0.center/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866284" />
+    <state width="2586" height="271" key="GridCell.Tab.0.center/0.25.3440.1354@0.25.3440.1354" timestamp="1623753465996" />
+    <state width="2586" height="271" key="GridCell.Tab.0.left" timestamp="1623753465995">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.0.left/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866283" />
+    <state width="2586" height="271" key="GridCell.Tab.0.left/0.25.3440.1354@0.25.3440.1354" timestamp="1623753465995" />
+    <state width="2586" height="271" key="GridCell.Tab.0.right" timestamp="1623753465996">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.0.right/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866285" />
+    <state width="2586" height="271" key="GridCell.Tab.0.right/0.25.3440.1354@0.25.3440.1354" timestamp="1623753465996" />
+    <state width="2329" height="271" key="GridCell.Tab.1.bottom" timestamp="1623724866286">
+      <screen x="-900" y="-1415" width="3440" height="1415" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.1.bottom/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866286" />
+    <state width="2329" height="271" key="GridCell.Tab.1.bottom/0.25.3440.1354@0.25.3440.1354" timestamp="1623632303148" />
+    <state width="2329" height="271" key="GridCell.Tab.1.center" timestamp="1623724866286">
+      <screen x="-900" y="-1415" width="3440" height="1415" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.1.center/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866286" />
+    <state width="2329" height="271" key="GridCell.Tab.1.center/0.25.3440.1354@0.25.3440.1354" timestamp="1623632303148" />
+    <state width="2329" height="271" key="GridCell.Tab.1.left" timestamp="1623724866285">
+      <screen x="-900" y="-1415" width="3440" height="1415" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.1.left/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866285" />
+    <state width="2329" height="271" key="GridCell.Tab.1.left/0.25.3440.1354@0.25.3440.1354" timestamp="1623632303148" />
+    <state width="2329" height="271" key="GridCell.Tab.1.right" timestamp="1623724866286">
+      <screen x="-900" y="-1415" width="3440" height="1415" />
+    </state>
+    <state width="2329" height="271" key="GridCell.Tab.1.right/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724866286" />
+    <state width="2329" height="271" key="GridCell.Tab.1.right/0.25.3440.1354@0.25.3440.1354" timestamp="1623632303148" />
+    <state x="249" y="232" key="MergeDialog" timestamp="1623753408906">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="249" y="232" key="MergeDialog/0.25.3440.1354@0.25.3440.1354" timestamp="1623753408906" />
+    <state x="1016" y="481" width="1218" height="613" key="MultipleFileMergeDialog" timestamp="1623753409063">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="1016" y="481" width="1218" height="613" key="MultipleFileMergeDialog/0.25.3440.1354@0.25.3440.1354" timestamp="1623753409063" />
+    <state x="165" y="-1017" key="RollbackChangesDialog" timestamp="1623724861922">
+      <screen x="-900" y="-1415" width="3440" height="1415" />
+    </state>
+    <state x="165" y="-1017" key="RollbackChangesDialog/-900.-1415.3440.1415/0.25.1680.964@-900.-1415.3440.1415" timestamp="1623724861922" />
+    <state x="1358" y="432" key="Vcs.Push.Dialog.v2" timestamp="1623755482197">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="1358" y="432" key="Vcs.Push.Dialog.v2/0.25.3440.1354@0.25.3440.1354" timestamp="1623755482197" />
+    <state x="1476" y="613" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1623809775936">
+      <screen x="0" y="25" width="3440" height="1354" />
+    </state>
+    <state x="1476" y="613" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.3440.1354@0.25.3440.1354" timestamp="1623809775936" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/edu/src/main/java/io/agora/edu/launch/AgoraEduSDK.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/normal/java/io/agora/education/MainActivity2.kt</url>
+          <line>290</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

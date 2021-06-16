@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.collection.ArrayMap;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
@@ -24,6 +25,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -34,13 +36,25 @@ import io.agora.log.service.LogService;
 import io.agora.log.service.bean.ResponseBody;
 import io.agora.log.service.bean.response.LogParamsRes;
 
-public class UploadManager {
+import static io.agora.log.UploadManager.Params.TYPE;
 
-    public static final String ZIP = "zip";
-    public static final String LOG = "log";
+public class UploadManager {
     private static final String callbackPath = "/monitor/apps/{appId}/v1/log/oss/callback";
     private static final String APP_JSON = "application/json";
     private static Object object = new Object();
+
+    static {
+        Params.AndroidLog.put(TYPE, "Android-log");
+        Params.AndroidException.put(TYPE, "Android-exception");
+    }
+
+    public static class Params {
+        public static final String ZIP = "zip";
+        public static final String LOG = "log";
+        public static final String TYPE = "type";
+        public static final Map<String, String> AndroidLog = new ArrayMap();
+        public static final Map<String, String> AndroidException = new ArrayMap();
+    }
 
     public static class UploadParam {
         public String appVersion;
@@ -74,8 +88,6 @@ public class UploadManager {
                               @NonNull String host, @NonNull String uploadPath,
                               @NonNull UploadParam param, @Nullable ThrowableCallback<String> callback) {
         LogService service = RetrofitManager.instance().getService(host, LogService.class);
-//        long timeStamp = System.currentTimeMillis();
-//        String sign = sign(appSecret, param, timeStamp);
         service.logParams(appId, APP_JSON, param)
                 .enqueue(new RetrofitManager.Callback<>(0, new ThrowableCallback<ResponseBody<LogParamsRes>>() {
                     @Override
@@ -147,66 +159,8 @@ public class UploadManager {
                 });
                 countDownLatch.await(70 * 1000, TimeUnit.MILLISECONDS);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-//    private static String sign(String appSecret, UploadParam param, long timeStamp) {
-//        StringBuilder stringBuilder = new StringBuilder(appSecret);
-//        Map<String, Object> map = new TreeMap<>();
-//        if (!TextUtils.isEmpty(param.appId)) {
-//            map.put("appId", param.appId);
-//        }
-//        if (!TextUtils.isEmpty(param.roomId)) {
-//            map.put("roomId", param.roomId);
-//        }
-//        if (!TextUtils.isEmpty(param.fileExt)) {
-//            map.put("fileExt", param.fileExt);
-//        }
-//        if (!TextUtils.isEmpty(param.appCode)) {
-//            map.put("appCode", param.appCode);
-//        }
-//        if (!TextUtils.isEmpty(param.osType)) {
-//            map.put("osType", param.osType);
-//        }
-//        if (!TextUtils.isEmpty(param.terminalType)) {
-//            map.put("terminalType", param.terminalType);
-//        }
-//        if (!TextUtils.isEmpty(param.appVersion)) {
-//            map.put("appVersion", param.appVersion);
-//        }
-//        Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
-//        while (iterator.hasNext()) {
-//            Map.Entry element = iterator.next();
-//            stringBuilder.append(element.getValue());
-//        }
-//        stringBuilder.append(timeStamp);
-//        return getMD5Str(stringBuilder.toString());
-//    }
-
-    private static String sign(String appSecret, UploadParam param, long timeStamp) {
-        StringBuilder stringBuilder = new StringBuilder(appSecret);
-        String json = new Gson().toJson(param);
-        stringBuilder.append(json).append(timeStamp);
-        return getMD5Str(stringBuilder.toString());
-    }
-
-    private static String getMD5Str(String str) {
-        byte[] digest = null;
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("md5");
-            digest = md5.digest(str.getBytes("utf-8"));
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        //16是表示转换为16进制数
-        String md5Str = new BigInteger(1, digest).toString(16);
-        return md5Str;
     }
 }

@@ -23,8 +23,9 @@ interface EduRoomEventListener {
 
     fun onRemoteUserUpdated(userEvent: EduUserEvent, type: EduUserStateChangeType, classRoom: EduRoom)
 
-    fun onRemoteUserPropertiesChanged(classRoom: EduRoom, userInfo: EduUserInfo,
-                                      cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?)
+    fun onRemoteUserPropertiesChanged(changedProperties: MutableMap<String, Any>, classRoom: EduRoom,
+                                      userInfo: EduUserInfo, cause: MutableMap<String, Any>?,
+                                      operator: EduBaseUserInfo?)
 
     fun onRoomMessageReceived(message: EduMsg, classRoom: EduRoom)
 
@@ -46,7 +47,8 @@ interface EduRoomEventListener {
 
     /**引起roomProperty发生改变的原因
      * 对应EduUser中的updateRoomProperty*/
-    fun onRoomPropertiesChanged(classRoom: EduRoom, cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?)
+    fun onRoomPropertiesChanged(changedProperties: MutableMap<String, Any>, classRoom: EduRoom,
+                                cause: MutableMap<String, Any>?, operator: EduBaseUserInfo?)
 
     fun onNetworkQualityChanged(quality: NetworkQuality, user: EduBaseUserInfo, classRoom: EduRoom)
 

@@ -7,12 +7,15 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.text.TextUtils
 import com.google.gson.Gson
+import io.agora.base.PreferenceManager
 import io.agora.base.callback.ThrowableCallback
 import io.agora.base.network.BusinessException
 import io.agora.edu.BuildConfig
 import io.agora.education.impl.Constants
 import io.agora.education.impl.Constants.Companion.AgoraLog
 import io.agora.log.UploadManager
+import io.agora.log.UploadManager.Params.AndroidException
+import io.agora.log.UploadManager.Params.ZIP
 import java.io.*
 import java.lang.reflect.Field
 import kotlin.collections.HashMap
@@ -32,6 +35,10 @@ class UnCatchExceptionHandler : Thread.UncaughtExceptionHandler {
     companion object {
         @SuppressLint("StaticFieldLeak")
         private val unCatchExceptionHandler: UnCatchExceptionHandler = UnCatchExceptionHandler()
+        const val ANDROID_EXCEPTION = "androidException"
+        fun hasException(): Boolean {
+            return PreferenceManager.get(ANDROID_EXCEPTION, false)
+        }
 
         fun getExceptionHandler(): UnCatchExceptionHandler {
             return unCatchExceptionHandler
@@ -53,6 +60,7 @@ class UnCatchExceptionHandler : Thread.UncaughtExceptionHandler {
             }
             context = null
         }
+        android.os.Process.killProcess(android.os.Process.myPid())
     }
 
     private fun isInternalException(e: Throwable): Boolean {
@@ -74,7 +82,8 @@ class UnCatchExceptionHandler : Thread.UncaughtExceptionHandler {
             }
             collectErrorMessages()
             writeErrMsg(e)
-            uploadLog(t, e)
+            PreferenceManager.put(ANDROID_EXCEPTION, true)
+//            uploadLog(t, e)
             return true
         }
         return false
@@ -138,17 +147,17 @@ class UnCatchExceptionHandler : Thread.UncaughtExceptionHandler {
         AgoraLog.e(sb.toString())
     }
 
-    private fun uploadLog(t: Thread?, e: Throwable?) {
+    fun uploadAndroidException() {
         val uploadParam = UploadManager.UploadParam(BuildConfig.SDK_VERSION, Build.DEVICE,
-                Build.VERSION.SDK, "ZIP", "Android", null)
+                Build.VERSION.SDK, ZIP, "Android", AndroidException)
         AgoraLog.i("$tag: Call the uploadLog function to upload logs when handleUnCatchException，parameter->${Gson().toJson(uploadParam)}")
         UploadManager.upload(context!!, Constants.APPID, BuildConfig.LOG_OSS_CALLBACK_HOST, logDir, uploadParam,
                 object : ThrowableCallback<String> {
                     override fun onSuccess(res: String?) {
                         res?.let {
                             AgoraLog.e("$tag: Log uploaded successfully->$res")
+                            PreferenceManager.put(ANDROID_EXCEPTION, false)
                         }
-                        android.os.Process.killProcess(android.os.Process.myPid())
                     }
 
                     override fun onFailure(throwable: Throwable?) {
@@ -156,7 +165,7 @@ class UnCatchExceptionHandler : Thread.UncaughtExceptionHandler {
                         error = error ?: BusinessException(throwable?.message)
                         error.code.let {
                             AgoraLog.e("$tag: Log upload error->code:${error.code}, reason:${
-                                error.message ?: throwable?.message
+                            error.message ?: throwable?.message
                             }")
                         }
                         android.os.Process.killProcess(android.os.Process.myPid())

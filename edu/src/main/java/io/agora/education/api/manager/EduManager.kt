@@ -9,6 +9,7 @@ import io.agora.education.api.base.EduError
 import io.agora.education.api.logger.DebugItem
 import io.agora.education.api.logger.LogLevel
 import io.agora.education.api.manager.listener.EduManagerEventListener
+import io.agora.education.api.media.EduMediaControl
 import io.agora.education.api.room.EduRoom
 import io.agora.education.api.room.data.RoomCreateOptions
 import io.agora.rte.RteEngineImpl
@@ -91,6 +92,11 @@ abstract class EduManager(
 
     abstract fun release()
 
+    /**appScenario: 0代表1v1， 1代表小版本， 2代表大班课，3代表超小， 4代表互动小班课（apaas的小班课）
+     * serviceType: 0代表aPaaS， 1代表PaaS
+     * appVersion:当前aPaaS版本 */
+    abstract fun reportAppScenario(appScenario: Int, serviceType: Int, appVersion: String)
+
     /**code:message
      * 1:parameter XXX is invalid
      * 2:internal error：可以内部订阅具体什么错误*/
@@ -103,4 +109,6 @@ abstract class EduManager(
      * 2:internal error：可以内部订阅具体什么错误
      * 301:network error，透传后台错误msg字段*/
     abstract fun uploadDebugItem(item: DebugItem, callback: EduCallback<String>): EduError
+
+    abstract fun getEduMediaControl(): EduMediaControl
 }

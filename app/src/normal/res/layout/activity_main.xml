@@ -189,86 +189,14 @@
                 android:paddingEnd="@dimen/dp_9"
                 android:paddingBottom="@dimen/dp_7">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE" />
-
                 <TextView
-                    android:id="@+id/tv_one2one"
+                    android:id="@+id/tv_debug"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_44"
                     android:gravity="center_vertical"
-                    android:text="@string/one2one_class"
-                    android:textColor="@color/gray_333333"
-                    android:textSize="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE" />
-
-                <TextView
-                    android:id="@+id/tv_small_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:gravity="center_vertical"
-                    android:text="@string/small_class"
-                    android:textColor="@color/gray_333333"
-                    android:textSize="@dimen/sp_14" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE"/>
-
-                <TextView
-                    android:id="@+id/tv_large_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:gravity="center_vertical"
-                    android:text="@string/large_class"
+                    android:text="@string/debug"
                     android:textColor="@color/gray_333333"
                     android:textSize="@dimen/sp_14"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_breakout_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:gravity="center_vertical"
-                    android:text="@string/breakout"
-                    android:textColor="@color/gray_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_intermediate_class"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:gravity="center_vertical"
-                    android:text="@string/intermediate"
-                    android:textColor="@color/gray_333333"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/gray_EEEEEE"
-                    android:visibility="gone" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

@@ -1,13 +1,11 @@
 package io.agora.uikit.impl.chat
 
-import io.agora.educontext.EduContextChatItem
-import io.agora.educontext.EduContextChatItemType
-import io.agora.educontext.EduContextChatSource
-import io.agora.educontext.EduContextChatState
+import io.agora.educontext.*
 
 data class AgoraUIChatItem(
         var name: String = "",
         var uid: String = "",
+        var role: Int = EduContextUserRole.Student.value,
         var message: String = "",
         var messageId: String = "",
         var type: AgoraUIChatItemType = AgoraUIChatItemType.Text,
@@ -20,6 +18,7 @@ data class AgoraUIChatItem(
             return AgoraUIChatItem(
                     item.name,
                     item.uid,
+                    item.role,
                     item.message,
                     item.messageId,
                     AgoraUIChatItemType.fromContextChatItemType(item.type),

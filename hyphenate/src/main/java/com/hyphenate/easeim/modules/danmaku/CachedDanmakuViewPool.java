@@ -1,8 +1,6 @@
 package com.hyphenate.easeim.modules.danmaku;
 
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.interfaces.Pool;
-import com.hyphenate.util.EMLog;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
@@ -61,7 +59,6 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
      */
     private void scheduleCheckUnusedViews() {
         mChecker.scheduleWithFixedDelay(() -> {
-            EMLog.e(TAG, "scheduleCheckUnusedViews: mInUseSize=" + mInUseSize + ", mCacheSize=" + mCache.size());
             long current = System.currentTimeMillis();
             while (!mCache.isEmpty()) {
                 DanmakuViewWithExpireTime first = mCache.getFirst();
@@ -121,7 +118,7 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
     @Override
     public void removeView(String msgId) {
         for (DanmakuViewWithExpireTime viewWithTime:mCache
-             ) {
+        ) {
             if(viewWithTime.danmakuView.getMessage().equals(msgId)) {
                 mCache.remove(viewWithTime);
             }

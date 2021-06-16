@@ -53,8 +53,29 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     public void init(WhiteSdk sdk, RoomParams params) {
         this.whiteSdk = sdk;
         this.roomParams = params;
-        Log.e(TAG, "joinRoom-");
-        sdk.joinRoom(params, this, promise);
+//        if (t != null) {
+//            Log.i(TAG, "joinRoom-disconnect");
+//            disconnect(new Promise() {
+//                @Override
+//                public void then(Object o) {
+//                    Log.i(TAG, "joinRoom-disconnect-success");
+//                    Log.i(TAG, "joinRoom-");
+//                    sdk.joinRoom(params, BoardProxy.this, promise);
+//                }
+//
+//                @Override
+//                public void catchEx(SDKError t) {
+//                    Log.i(TAG, "joinRoom-disconnect-failed->" + t.getJsStack());
+//                    Log.i(TAG, "joinRoom-");
+//                    sdk.joinRoom(params, BoardProxy.this, promise);
+//                }
+//            });
+//        } else {
+//            Log.i(TAG, "joinRoom-");
+//            sdk.joinRoom(params, BoardProxy.this, promise);
+//        }
+        Log.i(TAG, "joinRoom-");
+        sdk.joinRoom(params, BoardProxy.this, promise);
     }
 
     public void setAppliance(@Appliance String appliance) {
@@ -183,6 +204,7 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     public void scalePptToFit(AnimationMode mode) {
         if (t != null) {
             t.scalePptToFit(mode);
+            t.scaleIframeToFit();
         }
     }
 
@@ -324,6 +346,12 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
         }
     }
 
+    public void disconnect(Promise promise) {
+        if (t != null) {
+            t.disconnect(promise);
+        }
+    }
+
     @Override
     public void onPhaseChanged(RoomPhase phase) {
         Log.e(TAG, "onPhaseChanged->" + phase.name());
@@ -350,7 +378,7 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
         Log.e(TAG, "onRoomStateChanged->" + new Gson().toJson(modifyState));
         if (modifyState.getBroadcastState() != null && modifyState.getBroadcastState()
                 .getBroadcasterId() == null) {
-            t.scalePptToFit(AnimationMode.Continuous);
+            scalePptToFit(AnimationMode.Continuous);
         }
         if (listener != null) {
             GlobalState state = modifyState.getGlobalState();

@@ -2,6 +2,7 @@ package io.agora.extension.impl.countdown;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 import io.agora.extension.AgoraExtAppBase;
 import io.agora.extension.R;
+import io.agora.extension.TimeUtil;
 import kotlin.jvm.Synchronized;
 
 public class CountDownExtApp extends AgoraExtAppBase {
@@ -156,7 +158,7 @@ public class CountDownExtApp extends AgoraExtAppBase {
 
         if (!paused) {
             if (started) {
-                long currentTime = System.currentTimeMillis() / 1000;
+                long currentTime = TimeUtil.currentTimeMillis() / 1000;
                 leftSecond = (int) (startTime + duration - currentTime);
                 if (leftSecond > 0 && mCountDownClock != null) {
                     startCountDownInSeconds(leftSecond);
@@ -334,6 +336,20 @@ public class CountDownExtApp extends AgoraExtAppBase {
 
         long finalLeft = left;
         if (mCountDownClock.isAttachedToWindow()) {
+
+            mCountDownClock.setCountdownListener(new CountDownClock.CountdownCallBack() {
+                @Override
+                public void countdownAboutToFinish() {
+                    Log.d(TAG,"Countdown is about to finish");
+                    mCountDownClock.setDigitTextColor(Color.RED);
+                }
+
+                @Override
+                public void countdownFinished() {
+                    Log.d(TAG,"Countdown finished");
+                }
+            });
+
             mCountDownClock.post(() -> mCountDownClock.startCountDown(finalLeft * 1000));
         } else {
             Log.w(TAG, "extension app view has not attached to window, UI operations fail");
