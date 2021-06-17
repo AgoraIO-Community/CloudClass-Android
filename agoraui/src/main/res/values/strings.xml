@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+
+    <!--  WhiteBoard  -->
+    <string name="agora_board_preload_progress_view_content">Courseware is loading,\nplease wait...</string>
+    <string name="agora_board_preload_progress_view_timeout_jumpover">Cancel</string>
+    <string name="agora_board_preload_failed_view_title">Failed load!</string>
+    <string name="agora_board_preload_failed_view_content">Failed load, you can retry or cancel</string>
+    <string name="agora_board_preload_failed_view_close">Close</string>
+    <string name="agora_board_preload_failed_view_retry">Retry</string>
+    <string name="agora_board_loading">Loading...</string>
+    <string name="agora_board_reconnect">Reconnecting...</string>
+
+    <!--  Toast  -->
+    <string name="agora_toast_board_permission_true">You can now use the whiteboard tools</string>
+    <string name="agora_toast_board_permission_false">Your cannot use the whiteboard tools</string>
+
+    <!--  Dialog  -->
+    <string name="agora_dialog_end_class_confirm_title">Quit</string>
+    <string name="agora_dialog_sent_log_success">Logs sent successfully!</string>
+    <string name="agora_dialog_end_class_confirm_message">Are you sure you want to exit the classroom?</string>
+    <string name="agora_dialog_kicked_title">Kicked</string>
+    <string name="agora_dialog_kicked_message">You have been kicked out of the classroom.</string>
+    <string name="agora_dialog_class_destroy_title">Tips</string>
+    <string name="agora_dialog_class_destroy">Class is end!</string>
+
+    <!-- Setting -->
+    <string name="agora_setting_title">Setting</string>
+    <string name="agora_setting_camera">Camera</string>
+    <string name="agora_setting_facing">Facing</string>
+    <string name="agora_setting_facing_front">Front</string>
+    <string name="agora_setting_facing_back">Back</string>
+    <string name="agora_setting_mic">Mic</string>
+    <string name="agora_setting_speaker">Speaker</string>
+    <string name="agora_setting_leave">Leave</string>
+
+    <!-- Chat -->
+    <string name="agora_chat_tab_message">Message</string>
+    <string name="agora_chat_tab_private">Question</string>
+    <string name="agora_message_none_text">No Message</string>
+    <string name="agora_message_send">Send</string>
+    <string name="agora_message_input_hint">Input</string>
+    <string name="agora_message_item_error_text" translatable="false">!</string>
+    <string name="agora_message_student_chat_mute_tips">Student is forbidden to send chat</string>
+    <string name="agora_message_student_chat_mute_hint">Mute chat</string>
+    <string name="agora_message_item_role_tip" translatable="false">[%s]</string>
+    <string name="agora_message_item_role_assistant">Assistant</string>
+
+    <string name="agora_message_chat_student_ban_local">You were silenced by %s</string>
+    <string name="agora_message_chat_student_ban_remote">%s was silenced by %s</string>
+    <string name="agora_message_chat_student_allow_local">You were allowed to chat by %s</string>
+    <string name="agora_message_chat_student_allow_remote">%s was allowed to chat by %s</string>
+
+    <!-- Video -->
+    <string name="agora_video_reward" translatable="false">X%d</string>
+
+    <!-- UserList -->
+    <string name="agora_userlist_dialog_title">Member List</string>
+    <string name="agora_userlist_teacher_name">Teacher:</string>
+    <string name="agora_userlist_table_title_student_name">Student</string>
+    <string name="agora_userlist_table_title_get_on_off">Stage</string>
+    <string name="agora_userlist_table_title_access">Auth</string>
+    <string name="agora_userlist_table_title_camera">Camera</string>
+    <string name="agora_userlist_table_title_mic">Mute</string>
+    <string name="agora_userlist_table_title_silence">Silence</string>
+    <string name="agora_userlist_table_title_reward">Rewards</string>
+
+    <!-- HandsUp -->
+    <string-array name="agora_hands_up_count_down_texts">
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <!-- Room Status -->
+    <string name="agora_room_state_not_started">Class will start:&#160;&#160;</string>
+    <string name="agora_room_state_started">Class started:&#160;&#160;</string>
+    <string name="agora_room_state_end">Class end:&#160;&#160;</string>
+
+    <string-array name="agora_tool_fonts">
+        <item>22pt</item>
+        <item>24pt</item>
+        <item>26pt</item>
+        <item>30pt</item>
+        <item>36pt</item>
+        <item>42pt</item>
+    </string-array>
+
+    <string-array name="agora_tool_color_plate">
+        <item>#FFFFFF</item>
+        <item>#9B9B9B</item>
+        <item>#4A4A4A</item>
+        <item>#000000</item>
+        <item>#D0021B</item>
+        <item>#F5A623</item>
+        <item>#F8E71C</item>
+        <item>#7ED321</item>
+        <item>#9013FE</item>
+        <item>#50E3C2</item>
+        <item>#0073FF</item>
+        <item>#FFC8E2</item>
+    </string-array>
+
+    <string-array name="agora_tool_color_plate_border">
+        <item>#E1E1EA</item>
+        <item>#9B9B9B</item>
+        <item>#4A4A4A</item>
+        <item>#000000</item>
+        <item>#D0021B</item>
+        <item>#F5A623</item>
+        <item>#F8E71C</item>
+        <item>#7ED321</item>
+        <item>#9013FE</item>
+        <item>#50E3C2</item>
+        <item>#0073FF</item>
+        <item>#FFC8E2</item>
+    </string-array>
+
+    <string-array name="agora_tool_color_plate_select">
+        <item>#343434</item>
+        <item>#9B9B9B</item>
+        <item>#4A4A4A</item>
+        <item>#000000</item>
+        <item>#D0021B</item>
+        <item>#F5A623</item>
+        <item>#F8E71C</item>
+        <item>#7ED321</item>
+        <item>#9013FE</item>
+        <item>#50E3C2</item>
+        <item>#0073FF</item>
+        <item>#FFC8E2</item>
+    </string-array>
+</resources>
