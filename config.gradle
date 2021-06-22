@@ -6,7 +6,7 @@ ext {
             'targetSdkVersion' : 29,
             'rtcSDKVersion'    : "2.9.107.144",
             'rtmSDKVersion'    : "1.4.1",
-            'boardSDKVersion'  : "2.12.35",
+            'boardSDKVersion'  : "2.13.5",
     ]
     dependencies = [
             'junit:junit'                                     : '4.12',
