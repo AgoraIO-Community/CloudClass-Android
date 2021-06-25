@@ -901,6 +901,8 @@ abstract class BaseClassActivity : BaseActivity(),
             initExtAppManager(layout, config)
         }
 
+        easeImManager = IMManager()
+
         getLocalUser(object : EduCallback<EduUser?> {
             override fun onSuccess(res: EduUser?) {
                 res?.let { localUser ->

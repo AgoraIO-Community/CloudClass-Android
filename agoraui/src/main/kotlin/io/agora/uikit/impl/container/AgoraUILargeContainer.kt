@@ -455,6 +455,7 @@ class AgoraUILargeClassContainer(
 
     override fun release() {
         chatWindow?.release()
+        easeChat?.release()
         widgetManager.release()
     }
 
