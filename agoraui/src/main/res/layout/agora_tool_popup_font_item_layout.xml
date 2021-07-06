@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/agora_tool_popup_font_item_height"
+    android:background="@drawable/agora_tool_font_item_bg">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_tool_font_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/agora_tool_popup_font_item_height"
+        android:layout_centerInParent="true"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:textSize="@dimen/agora_tool_popup_style_text_size"
+        android:textColor="@color/agora_tool_font_item_text_color"/>
+</RelativeLayout>

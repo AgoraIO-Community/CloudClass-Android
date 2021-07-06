@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_tool_fold_layout"
+    android:layout_width="@dimen/agora_tool_switch_layout_size"
+    android:layout_height="wrap_content"
+    android:background="@drawable/agora_tool_fold_btn_bg">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_switch"
+        android:layout_width="@dimen/agora_tool_switch_btn_size"
+        android:layout_height="@dimen/agora_tool_switch_btn_size"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/agora_tool_unfold_btn"/>
+</RelativeLayout>
