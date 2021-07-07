@@ -24,4 +24,6 @@ interface EduContextPool {
     fun privateChatContext(): PrivateChatContext?
 
     fun extAppContext(): ExtAppContext?
+
+    fun widgetContext(): WidgetContext?
 }

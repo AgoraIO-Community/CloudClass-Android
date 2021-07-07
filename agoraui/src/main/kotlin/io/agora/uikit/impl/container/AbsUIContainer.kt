@@ -14,6 +14,7 @@ import io.agora.uikit.R
 import io.agora.uikit.component.toast.AgoraUIToastManager
 import io.agora.uikit.educontext.handlers.*
 import io.agora.uikit.impl.chat.AgoraUIChatWindow
+import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.chat.tabs.ChatTabConfig
 import io.agora.uikit.impl.handsup.AgoraUIHandsUp
 import io.agora.uikit.impl.loading.AgoraUILoading
@@ -169,6 +170,12 @@ abstract class AbsUIContainer(
     protected var roster: AgoraUIRoster? = null
     protected var rewardWindow: AgoraUIReward? = null
     protected var agoraUILoading: AgoraUILoading? = null
+
+    // Hyphenate chat im, a separate chat widget, different
+    // from agora chat window, with its own identifier.
+    // Containers have both agora and hyphenate chat widgets,
+    // and they are independent of each other
+    protected var easeChat: EaseChatWidget? = null
 
     private var context: Context? = null
     private var layout: ViewGroup? = null

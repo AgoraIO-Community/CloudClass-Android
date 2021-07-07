@@ -49,7 +49,7 @@ import io.agora.report.ReportManager;
 import io.agora.report.reporters.APaasReporter;
 import io.agora.uicomponent.UiWidgetConfig;
 import io.agora.uicomponent.UiWidgetManager;
-import io.agora.uikit.impl.chat.AgoraUIChatWindow;
+import io.agora.uikit.impl.chat.EaseChatWidget;
 
 import static io.agora.edu.common.impl.RoomPreImpl.ROOMEND;
 import static io.agora.edu.common.impl.RoomPreImpl.ROOMFULL;
@@ -208,8 +208,8 @@ public class AgoraEduSDK {
         // mechanism, so we handle it at the beginning of the classroom launch.
         ArrayList<UiWidgetConfig> widgetConfigs = new ArrayList<>();
         widgetConfigs.add(new UiWidgetConfig(
-                UiWidgetManager.DefaultWidgetId.Chat.name(),
-                AgoraUIChatWindow.class));
+                UiWidgetManager.DefaultWidgetId.HyphenateChat.name(),
+                EaseChatWidget.class));
         UiWidgetManager.Companion.registerDefaultOnce(widgetConfigs);
 
         // Register user-defined widgets as long as they maintain

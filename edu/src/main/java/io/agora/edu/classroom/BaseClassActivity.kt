@@ -84,6 +84,7 @@ abstract class BaseClassActivity : BaseActivity(),
     protected var roomStateManager: RoomStateManager? = null
     protected var deviceManager: DeviceManager? = null
     protected var chatManager: ChatManager? = null
+    protected var easeImManager: IMManager? = null
     protected var handsUpManager: HandsUpManager? = null
     protected var oneToOneVideoManager: OneToOneVideoManager? = null
     protected var teacherVideoManager: TeacherVideoManager? = null
@@ -485,6 +486,31 @@ abstract class BaseClassActivity : BaseActivity(),
 
         }
 
+        override fun localUserInfo(): EduContextUserInfo {
+            var uid = ""
+            var name = ""
+            var properties: MutableMap<String, String>? = null
+
+            eduRoom?.getLocalUser(object : EduCallback<EduUser> {
+                override fun onSuccess(res: EduUser?) {
+                    res?.let {
+                        uid = it.userInfo.userUuid
+                        name = it.userInfo.userName
+                        properties = userListManager?.getAgoraCustomProps(uid)
+                    }
+                }
+
+                override fun onFailure(error: EduError) {
+
+                }
+            })
+
+            return EduContextUserInfo(
+                    userUuid = uid,
+                    userName = name,
+                    properties = properties)
+        }
+
         override fun muteVideo(muted: Boolean) {
             userListManager?.muteLocalVideo(muted)
         }
@@ -679,6 +705,17 @@ abstract class BaseClassActivity : BaseActivity(),
         }
     }
 
+    private val widgetContext = object : WidgetContext {
+        override fun getWidgetProperties(type: WidgetType): Map<String, Any>? {
+            return when (type) {
+                WidgetType.IM -> {
+                    easeImManager?.parseEaseIMProperties(
+                            eduRoom?.roomProperties?.get(IMManager.propertiesKey) as? Map<String, Any>)
+                }
+            }
+        }
+    }
+
     protected val eduContext = object : EduContextPool {
         override fun chatContext(): ChatContext {
             return chatContext
@@ -722,6 +759,10 @@ abstract class BaseClassActivity : BaseActivity(),
 
         override fun extAppContext(): ExtAppContext {
             return extAppContext
+        }
+
+        override fun widgetContext(): WidgetContext? {
+            return widgetContext
         }
     }
 
@@ -870,6 +911,8 @@ abstract class BaseClassActivity : BaseActivity(),
         contentLayout?.let { layout ->
             initExtAppManager(layout, config)
         }
+
+        easeImManager = IMManager()
 
         getLocalUser(object : EduCallback<EduUser?> {
             override fun onSuccess(res: EduUser?) {

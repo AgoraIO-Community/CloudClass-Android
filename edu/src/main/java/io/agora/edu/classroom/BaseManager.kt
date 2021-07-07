@@ -159,6 +159,29 @@ open class BaseManager(
         return null
     }
 
+    fun getAgoraCustomProps(userUuid: String): MutableMap<String, String>? {
+        val lock = CountDownLatch(1)
+        var result: MutableMap<String, String>? = null
+        getCurRoomFullUser(object : EduCallback<MutableList<EduUserInfo>> {
+            override fun onSuccess(res: MutableList<EduUserInfo>?) {
+                res?.find { it.userUuid == userUuid }?.let {
+                    result = it.userProperties[FLEX] as? MutableMap<String, String>
+                }
+                lock.countDown()
+            }
+
+            override fun onFailure(error: EduError) {
+                lock.countDown()
+            }
+        })
+        try {
+            lock.await()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return result
+    }
+
     fun getUserFlexProps(userUuid: String): MutableMap<String, String>? {
         val lock = CountDownLatch(1)
         var result: MutableMap<String, String>? = null

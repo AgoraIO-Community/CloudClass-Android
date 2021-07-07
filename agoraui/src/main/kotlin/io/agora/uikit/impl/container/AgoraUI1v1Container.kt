@@ -8,6 +8,7 @@ import io.agora.educontext.EduContextVideoMode
 import io.agora.uicomponent.UiWidgetManager
 import io.agora.uikit.R
 import io.agora.uikit.impl.chat.AgoraUIChatWindow
+import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.loading.AgoraUILoading
 import io.agora.uikit.impl.room.AgoraUIRoomStatus
 import io.agora.uikit.impl.screenshare.AgoraUIFullScreenBtn
@@ -139,15 +140,26 @@ class AgoraUI1v1Container(
         val chatFullScreenRight = width - border - componentMargin
         val chatFullScreenBottom = height - componentMargin
         chatFullScreenRect.set(width - videoLayoutW - margin, messageTop, chatFullScreenRight, chatFullScreenBottom)
-        val chatFullScreenHideTop = chatFullScreenBottom - chatWindow?.hideIconSize!!
-        val chatFullScreenHideLeft = chatFullScreenRight - chatWindow?.hideIconSize!!
+        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
+        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
         chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
 
         // add loading(show/hide follow rtmConnectionState)
         agoraUILoading = AgoraUILoading(layout, whiteboardRect)
 
+        // ease chat window
+        val easeChatW = whiteboardW
+        val easeChatH = whiteboardH
+        val easeChatTop = statusBarHeight + margin
+        val easeChatLeft = border
+        easeChat = widgetManager.create(UiWidgetManager.DefaultWidgetId.HyphenateChat.name, getEduContext()) as? EaseChatWidget
+        easeChat?.init(layout, easeChatW, easeChatH, easeChatTop, easeChatLeft)
+        easeChat?.setContainer(this)
+        // ease chat window
+
         // joinRoom
         getEduContext()?.roomContext()?.joinClassRoom()
+
     }
 
     override fun resize(layout: ViewGroup, left: Int, top: Int, width: Int, height: Int) {
@@ -230,8 +242,8 @@ class AgoraUI1v1Container(
         val chatFullScreenRight = width - border - componentMargin
         val chatFullScreenBottom = height - componentMargin
         chatFullScreenRect.set(width - videoLayoutW - margin, messageTop, chatFullScreenRight, chatFullScreenBottom)
-        val chatFullScreenHideTop = chatFullScreenBottom - chatWindow?.hideIconSize!!
-        val chatFullScreenHideLeft = chatFullScreenRight - chatWindow?.hideIconSize!!
+        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
+        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
         chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
 
         if (isFullScreen) {
@@ -300,6 +312,7 @@ class AgoraUI1v1Container(
     override fun release() {
         chatWindow?.release()
         widgetManager.release()
+        easeChat?.release()
     }
 
     override fun willLaunchExtApp(appIdentifier: String): Int {

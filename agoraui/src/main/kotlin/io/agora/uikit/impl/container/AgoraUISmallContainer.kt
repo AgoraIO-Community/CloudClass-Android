@@ -10,6 +10,7 @@ import io.agora.uicomponent.UiWidgetManager
 import io.agora.uikit.R
 import io.agora.uikit.educontext.handlers.UserHandler
 import io.agora.uikit.impl.chat.AgoraUIChatWindow
+import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.chat.OnChatWindowAnimateListener
 import io.agora.uikit.impl.handsup.AgoraUIHandsUp
 import io.agora.uikit.impl.loading.AgoraUILoading
@@ -206,11 +207,11 @@ class AgoraUISmallClassContainer(
 
         chatFullScreenRect.set(chatFullScreenLeft, chatFullScreenTop,
                 chatFullScreenRight, chatFullScreenBottom)
-        val chatFullScreenHideTop = chatFullScreenBottom - chatWindow?.hideIconSize!!
-        val chatFullScreenHideLeft = chatFullScreenRight - chatWindow?.hideIconSize!!
+        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
+        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
         chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
 
-        chatWindow!!.setAnimateListener(object : OnChatWindowAnimateListener {
+        chatWindow?.setAnimateListener(object : OnChatWindowAnimateListener {
             private var lastLeft = 0
 
             override fun onChatWindowAnimate(enlarge: Boolean, fraction: Float, left: Int,
@@ -250,6 +251,16 @@ class AgoraUISmallClassContainer(
 
         // add loading(show/hide follow rtmConnectionState)
         agoraUILoading = AgoraUILoading(layout, whiteboardDefaultRect)
+
+        // ease chat window
+//        val easeChatW = whiteboardW
+//        val easeChatH = whiteboardH
+//        val easeChatTop = statusBarHeight + margin
+//        val easeChatLeft = border
+        easeChat = widgetManager.create(UiWidgetManager.DefaultWidgetId.HyphenateChat.name, getEduContext()) as? EaseChatWidget
+        easeChat?.init(layout, teacherVideoW, chatHeight, chatTop, chatLeft)
+        easeChat?.setContainer(this)
+        // ease chat window
 
         // toolbar monitors the rosterDismiss event for restore Status of itemSelected
         AgoraUIRoster.dismissListener = toolbar?.rosterDismissListener
@@ -365,8 +376,8 @@ class AgoraUISmallClassContainer(
 
         chatFullScreenRect.set(chatFullScreenLeft, chatFullScreenTop,
                 chatFullScreenRight, chatFullScreenBottom)
-        val chatFullScreenHideTop = chatFullScreenBottom - chatWindow?.hideIconSize!!
-        val chatFullScreenHideLeft = chatFullScreenRight - chatWindow?.hideIconSize!!
+        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
+        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
         chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
 
         val handsUpWidth = layout.context.resources.getDimensionPixelSize(R.dimen.agora_hands_up_view_w)
@@ -449,6 +460,7 @@ class AgoraUISmallClassContainer(
     override fun release() {
         chatWindow?.release()
         widgetManager.release()
+        easeChat?.release()
     }
 
     override fun willLaunchExtApp(appIdentifier: String): Int {

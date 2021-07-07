@@ -294,3 +294,7 @@ enum class State(val value: Int) {
     NO(0),
     YES(1)
 }
+
+enum class WidgetType {
+    IM
+}

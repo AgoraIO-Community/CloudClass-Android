@@ -14,7 +14,7 @@ class UiWidgetManager {
      * what have been defined here.
      */
     enum class DefaultWidgetId {
-        Chat
+        Chat, HyphenateChat
     }
 
     companion object {
