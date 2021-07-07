@@ -17,4 +17,9 @@ interface ChatPagerListener {
      */
     fun onIconHideenClick()
 
+    /**
+     * 收到新消息
+     */
+    fun onMessageReceived()
+
 }

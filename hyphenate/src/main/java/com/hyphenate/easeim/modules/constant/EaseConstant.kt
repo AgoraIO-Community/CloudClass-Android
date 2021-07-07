@@ -16,7 +16,7 @@ object EaseConstant {
     const val AVATAR_URL = "avatarUrl"
     const val NICK_NAME = "nickName"
 
-    const val IS_ALL_MUTED = "isMuted"
+    const val OPERATION = "operation"
     const val SET_ALL_MUTE = "setAllMute"
     const val REMOVE_ALL_MUTE = "removeAllMute"
     const val NOTIFY = "notify"

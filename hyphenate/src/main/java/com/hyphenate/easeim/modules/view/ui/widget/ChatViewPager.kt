@@ -166,7 +166,8 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onMessageReceived(messages: MutableList<EMMessage>?) {
         messages?.let {
             for (message in messages) {
-                if (message.type == EMMessage.Type.TXT || message.type == EMMessage.Type.CUSTOM) {
+                if (message.type == EMMessage.Type.TXT) {
+                    chatPagerListener?.onMessageReceived()
                     if (chooseTab != 0) {
                         showUnread()
                     }
@@ -182,24 +183,26 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         messages?.forEach { message ->
             if (message.chatType == EMMessage.ChatType.ChatRoom && message.to == chatRoomId) {
                 val body = message.body as EMCmdMessageBody
+                val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
+                val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
                 when (body.action()) {
                     EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
-                        val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
-                        val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
-                        notifyBody.params = mutableMapOf(Pair(EaseConstant.IS_ALL_MUTED, body.action()))
-                        notifyMessage.body = notifyBody
-                        notifyMessage.to = chatRoomId
-                        notifyMessage.chatType = EMMessage.ChatType.ChatRoom
-                        notifyMessage.setStatus(EMMessage.Status.SUCCESS)
-                        notifyMessage.msgTime = message.msgTime
-                        EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+                        notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                     }
                     EaseConstant.DEL -> {
                         val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
                         EaseRepository.instance.deleteMessage(chatRoomId, msgId)
+                        notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                     }
-
                 }
+                notifyMessage.body = notifyBody
+                notifyMessage.to = chatRoomId
+                notifyMessage.chatType = EMMessage.ChatType.ChatRoom
+                notifyMessage.setStatus(EMMessage.Status.SUCCESS)
+                notifyMessage.msgTime = message.msgTime
+                notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
+                EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+                chatPagerListener?.onMessageReceived()
             }
         }
         refreshUI()

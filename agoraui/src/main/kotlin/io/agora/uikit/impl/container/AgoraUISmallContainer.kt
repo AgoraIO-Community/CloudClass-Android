@@ -12,6 +12,7 @@ import io.agora.uikit.educontext.handlers.UserHandler
 import io.agora.uikit.impl.chat.AgoraUIChatWindow
 import io.agora.uikit.impl.chat.EaseChatWidget
 import io.agora.uikit.impl.chat.OnChatWindowAnimateListener
+import io.agora.uikit.impl.chat.OnEaseChatWidgetAnimateListener
 import io.agora.uikit.impl.handsup.AgoraUIHandsUp
 import io.agora.uikit.impl.loading.AgoraUILoading
 import io.agora.uikit.impl.room.AgoraUIRoomStatus
@@ -207,9 +208,9 @@ class AgoraUISmallClassContainer(
 
         chatFullScreenRect.set(chatFullScreenLeft, chatFullScreenTop,
                 chatFullScreenRight, chatFullScreenBottom)
-        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
-        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
-        chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
+//        val chatFullScreenHideTop = chatFullScreenBottom - (chatWindow?.hideIconSize ?: 0)
+//        val chatFullScreenHideLeft = chatFullScreenRight - (chatWindow?.hideIconSize ?: 0)
+//        chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
 
         chatWindow?.setAnimateListener(object : OnChatWindowAnimateListener {
             private var lastLeft = 0
@@ -246,8 +247,8 @@ class AgoraUISmallClassContainer(
         handsUpRect.set(handsUpLeft, handsUpTop, handsUpLeft + handsUpWidth, handsUpTop + handsUpHeight)
         handsUpWindow = AgoraUIHandsUp(layout.context, getEduContext(), layout, handsUpLeft, handsUpTop, handsUpWidth, handsUpHeight)
         handsUpWindow!!.setContainer(this)
-        handsUpFullScreenRect.set(chatFullScreenHideLeft - margin - handsUpWidth, handsUpTop,
-                chatFullScreenHideLeft - margin, handsUpTop + handsUpHeight)
+//        handsUpFullScreenRect.set(chatFullScreenHideLeft - margin - handsUpWidth, handsUpTop,
+//                chatFullScreenHideLeft - margin, handsUpTop + handsUpHeight)
 
         // add loading(show/hide follow rtmConnectionState)
         agoraUILoading = AgoraUILoading(layout, whiteboardDefaultRect)
@@ -260,6 +261,37 @@ class AgoraUISmallClassContainer(
         easeChat = widgetManager.create(UiWidgetManager.DefaultWidgetId.HyphenateChat.name, getEduContext()) as? EaseChatWidget
         easeChat?.init(layout, teacherVideoW, chatHeight, chatTop, chatLeft)
         easeChat?.setContainer(this)
+        val chatFullScreenHideTop = chatFullScreenBottom - (easeChat?.hideIconSize ?: 0)
+        val chatFullScreenHideLeft = chatFullScreenRight - (easeChat?.hideIconSize ?: 0)
+        chatFullScreenHideRect.set(chatFullScreenHideLeft, chatFullScreenHideTop, chatFullScreenRight, chatFullScreenBottom)
+        handsUpFullScreenRect.set(chatFullScreenHideLeft - margin - handsUpWidth, handsUpTop,
+                chatFullScreenHideLeft - margin, handsUpTop + handsUpHeight)
+        easeChat?.setAnimateListener(object: OnEaseChatWidgetAnimateListener{
+            private var lastLeft = 0
+            override fun onChatWindowAnimate(enlarge: Boolean, fraction: Float, left: Int, top: Int, width: Int, height: Int) {
+                if (fraction.compareTo(0) == 0) lastLeft = left
+
+                val chatWindowWidth = chatFullScreenRight - chatFullScreenLeft
+                val diff = left - lastLeft
+                lastLeft = left
+
+                if (chatWindowWidth - left <= easeChat!!.hideIconSize) {
+                    if (!enlarge) {
+                        val rect = Rect(chatFullScreenHideRect.left - (handsUpRect.right - handsUpRect.left) - margin,
+                                handsUpRect.top, chatFullScreenHideRect.left - margin,
+                                handsUpRect.bottom)
+                        handsUpWindow?.setRect(rect)
+                        handsUpAnimateRect = rect
+                    }
+                    return
+                }
+
+                handsUpAnimateRect.left += diff
+                handsUpAnimateRect.right += diff
+                handsUpWindow?.setRect(handsUpAnimateRect)
+            }
+        })
+
         // ease chat window
 
         // toolbar monitors the rosterDismiss event for restore Status of itemSelected
@@ -401,13 +433,13 @@ class AgoraUISmallClassContainer(
         if (isFullScreen) {
             whiteboardWindow?.setRect(whiteboardFullScreenRect)
             screenShareWindow?.setRect(whiteboardFullScreenRect)
-            chatWindow?.let {
-//                it.setFullscreenRect(true, chatFullScreenHideRect)
+            easeChat?.let {
+                it.setFullscreenRect(true, chatFullScreenHideRect)
                 it.setFullDisplayRect(chatFullScreenRect)
                 it.show(it.isShowing())
                 it.setRect(if (it.isShowing()) chatFullScreenRect else chatFullScreenHideRect)
-                it.setClosable(true)
-                it.showShadow(true)
+//                it.setClosable(true)
+//                it.showShadow(true)
             }
             handsUpWindow?.setRect(handsUpFullScreenRect)
             handsUpAnimateRect = Rect(handsUpFullScreenRect)
@@ -425,11 +457,11 @@ class AgoraUISmallClassContainer(
                 toolbar?.setVerticalPosition(toolbarTopNoStudent, toolbarHeightNoStudent)
                 agoraUILoading?.setRect(whiteboardNoStudentVideoRect)
             }
-            chatWindow?.let {
+            easeChat?.let {
                 it.setFullscreenRect(false, chatRect)
                 it.setFullDisplayRect(chatRect)
-                it.setClosable(false)
-                it.showShadow(false)
+//                it.setClosable(false)
+//                it.showShadow(false)
                 it.show(true)
             }
             handsUpWindow?.setRect(handsUpRect)
@@ -472,10 +504,8 @@ class AgoraUISmallClassContainer(
         if (fullScreen) {
             whiteboardWindow?.setRect(whiteboardFullScreenRect)
             screenShareWindow?.setRect(whiteboardFullScreenRect)
-            chatWindow?.setFullscreenRect(fullScreen, chatFullScreenHideRect)
-            chatWindow?.setFullDisplayRect(chatFullScreenRect)
-            chatWindow?.setClosable(true)
-            chatWindow?.showShadow(true)
+            easeChat?.setFullscreenRect(fullScreen, chatFullScreenHideRect)
+            easeChat?.setFullDisplayRect(chatFullScreenRect)
             val rect = Rect(chatFullScreenHideRect.left - (handsUpRect.right - handsUpRect.left) - margin,
                     handsUpRect.top, chatFullScreenHideRect.left - margin,
                     handsUpRect.bottom)
@@ -496,11 +526,9 @@ class AgoraUISmallClassContainer(
                 agoraUILoading?.setRect(whiteboardNoStudentVideoRect)
             }
 
-            chatWindow?.setFullscreenRect(fullScreen, chatRect)
-            chatWindow?.setFullDisplayRect(chatRect)
-            chatWindow?.setClosable(false)
-            chatWindow?.showShadow(false)
-            chatWindow?.show(true)
+            easeChat?.setFullscreenRect(fullScreen, chatRect)
+            easeChat?.setFullDisplayRect(chatRect)
+            easeChat?.show(true)
             handsUpWindow?.setRect(handsUpRect)
         }
     }

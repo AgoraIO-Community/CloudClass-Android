@@ -8,7 +8,7 @@ import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 import com.hyphenate.easeim.modules.view.viewholder.ChatRowViewHolder
-import com.hyphenate.easeim.modules.view.viewholder.MuteViewHolder
+import com.hyphenate.easeim.modules.view.viewholder.NotifyViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.TextViewHolder
 
 /**
@@ -71,9 +71,9 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.recv_message_item, parent, false), itemClickListener, parent.context
             )
-            DIRECT_CUSTOM -> MuteViewHolder(
+            DIRECT_CUSTOM -> NotifyViewHolder(
                     LayoutInflater.from(parent.context)
-                            .inflate(R.layout.mute_message_item, parent, false), itemClickListener, parent.context
+                            .inflate(R.layout.notify_message_item, parent, false), itemClickListener, parent.context
             )
             else -> TextViewHolder(
                 LayoutInflater.from(parent.context)

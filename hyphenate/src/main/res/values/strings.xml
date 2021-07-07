@@ -23,4 +23,5 @@
     <string name="join_chat_room_failed">加入聊天室失败</string>
     <string name="login_chat_failed">登录聊天失败</string>
     <string name="send_message_failed">发送消息失败</string>
+    <string name="remove_message_notify">%s删除了一条消息</string>
 </resources>

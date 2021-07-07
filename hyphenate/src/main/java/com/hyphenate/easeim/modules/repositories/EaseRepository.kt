@@ -43,23 +43,26 @@ class EaseRepository {
                 value?.data?.forEach { message ->
                     if (message.type == EMMessage.Type.CMD) {
                         val body = message.body as EMCmdMessageBody
+                        val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
+                        val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
                         when (body.action()) {
                             EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
-                                val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
-                                val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
-                                notifyBody.params = mutableMapOf(Pair(EaseConstant.IS_ALL_MUTED, body.action()))
-                                notifyMessage.body = notifyBody
-                                notifyMessage.to = conversationId
-                                notifyMessage.chatType = EMMessage.ChatType.ChatRoom
-                                notifyMessage.setStatus(EMMessage.Status.SUCCESS)
-                                notifyMessage.msgTime = message.msgTime
-                                EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+
                             }
                             EaseConstant.DEL -> {
                                 val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
                                 deleteMessage(conversationId, msgId)
+                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                             }
                         }
+                        notifyMessage.body = notifyBody
+                        notifyMessage.to = conversationId
+                        notifyMessage.chatType = EMMessage.ChatType.ChatRoom
+                        notifyMessage.setStatus(EMMessage.Status.SUCCESS)
+                        notifyMessage.msgTime = message.msgTime
+                        notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
+                        EMClient.getInstance().chatManager().saveMessage(notifyMessage)
                     }
                 }
                 ThreadManager.instance.runOnMainThread {

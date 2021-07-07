@@ -13,19 +13,22 @@ import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListene
 /**
  * 全员禁言提示ViewhHolder
  */
-class MuteViewHolder(view: View,
-                      itemClickListener: MessageListItemClickListener,
-                     context: Context
+class NotifyViewHolder(view: View,
+                       itemClickListener: MessageListItemClickListener,
+                       context: Context
 ) : ChatRowViewHolder(view, itemClickListener, context) {
     val content: TextView = itemView.findViewById(R.id.notify_content)
     override fun onSetUpView() {
         val body = message.body as EMCustomMessageBody
-        when(body.params[EaseConstant.IS_ALL_MUTED]){
+        when(body.params[EaseConstant.OPERATION]){
             EaseConstant.SET_ALL_MUTE -> {
                 content.text = context.getString(R.string.muted_all)
             }
             EaseConstant.REMOVE_ALL_MUTE -> {
                 content.text = context.getString(R.string.cancel_muted_all)
+            }
+            EaseConstant.DEL -> {
+                content.text = String.format(context.getString(R.string.remove_message_notify), message.getStringAttribute(EaseConstant.NICK_NAME))
             }
         }
     }

@@ -6,7 +6,7 @@
     android:gravity="center"
     android:padding="@dimen/padding_normal"
     android:layout_margin="@dimen/margin_normal"
-    android:background="@drawable/nute_msg_item_bg"
+    android:background="@drawable/mute_msg_item_bg"
     >
     
     <ImageView

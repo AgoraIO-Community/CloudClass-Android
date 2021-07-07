@@ -12,7 +12,9 @@
         android:background="@color/announcement_bg"
         android:gravity="center_horizontal"
         android:paddingStart="@dimen/padding_normal"
-        tools:ignore="RtlSymmetry">
+        tools:ignore="RtlSymmetry"
+        android:visibility="gone"
+        >
 
         <ImageView
             android:layout_width="wrap_content"

@@ -185,4 +185,13 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
         faceView.isClickable = true
         faceIcon.visibility = VISIBLE
     }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        if(visibility == VISIBLE){
+            handler.postDelayed({
+                refresh()
+            }, 300)
+
+        }
+    }
 }
