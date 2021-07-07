@@ -167,10 +167,10 @@ class AgoraExtAppEngine(
         app?.let { item ->
             ContextCompat.getMainExecutor(context).execute {
                 item.instance?.onExtAppUnloaded()
+                item.instance = null
                 (container as? ViewGroup)?.removeView(item.contentView)
             }
 
-            item.instance = null
             launchedExtAppMapTransformed.remove(item.formatIdentifier)
             launchedExtAppMap.remove(item.appIdentifier)
             launchedExtAppList.remove(item)
