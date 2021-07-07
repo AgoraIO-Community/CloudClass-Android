@@ -229,7 +229,7 @@
 
     <!-- HandsUp Window -->
     <dimen name="agora_hands_up_view_w">50dp</dimen>
-    <dimen name="agora_hands_up_view_h">101dp</dimen>
+    <dimen name="agora_hands_up_view_h">50dp</dimen>
     <dimen name="agora_hands_up_bubble_height">47dp</dimen>
     <dimen name="agora_hands_up_count_down_text_size">24sp</dimen>
     <dimen name="agora_hands_up_count_down_text_margin_bottom">5dp</dimen>

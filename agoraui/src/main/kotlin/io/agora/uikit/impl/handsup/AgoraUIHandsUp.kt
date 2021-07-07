@@ -9,9 +9,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.isVisible
 import io.agora.educontext.EduContextError
 import io.agora.educontext.EduContextHandsUpState
 import io.agora.educontext.EduContextPool
@@ -33,35 +33,18 @@ class AgoraUIHandsUp(
     private val tag = "AgoraUIHandsUp"
 
     private val layout: View = LayoutInflater.from(context).inflate(R.layout.agora_hands_up_layout, parent, false)
-    private val countDownLayout: RelativeLayout = layout.findViewById(R.id.count_down_layout)
-    private val countDownText: AppCompatTextView = layout.findViewById(R.id.count_down_text)
-    private val handImg: AppCompatImageView = layout.findViewById(R.id.hands_up_img)
+    private val handImg: ImageView = layout.findViewById(R.id.hands_up_img)
+    private val countDownText: TextView = layout.findViewById(R.id.count_down_text)
     private val countDownTexts: Array<String> = context.resources.getStringArray(R.array.agora_hands_up_count_down_texts)
-    private val handsUpImgs: Array<Int> = arrayOf(
-            R.drawable.agora_handsup_up_img,
-            R.drawable.agora_handsup_down_img,
-            R.drawable.agora_handsup_cohost_img)
 
     private var curState: EduContextHandsUpState = EduContextHandsUpState.Init
     private var coHost = false
 
-    private var handsUpCountDownTimer: CountDownTimer = object : CountDownTimer(3200, 1000) {
-        override fun onFinish() {
-            countDownLayout.visibility = INVISIBLE
-            countDownText.text = countDownTexts[0]
-            eduContext?.handsUpContext()?.performHandsUp(EduContextHandsUpState.HandsUp)
-        }
-
-        override fun onTick(millisUntilFinished: Long) {
-            val index: Int = (3 - (millisUntilFinished / 1000)).toInt() + 1
-            countDownText.text = countDownTexts[index]
-        }
-    }
-
     private var cancelCountDownTimer: CountDownTimer = object : CountDownTimer(3200, 1000) {
         override fun onFinish() {
-            countDownLayout.visibility = INVISIBLE
-            countDownText.text = countDownTexts[0]
+            countDownText.text = ""
+            countDownText.isVisible = false
+            handImg.setBackgroundResource(R.drawable.agora_handsup_down_img)
             eduContext?.handsUpContext()?.performHandsUp(EduContextHandsUpState.HandsDown)
         }
 
@@ -99,30 +82,30 @@ class AgoraUIHandsUp(
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                countDownLayout.visibility = VISIBLE
                 if (curState == EduContextHandsUpState.Init || curState == EduContextHandsUpState.HandsDown) {
-                    handsUpCountDownTimer.start()
-                } else if(curState == EduContextHandsUpState.HandsUp) {
-                    cancelCountDownTimer.start()
+                    eduContext?.handsUpContext()?.performHandsUp(EduContextHandsUpState.HandsUp)
                 }
+                cancelCountDownTimer.cancel()
             }
             MotionEvent.ACTION_UP -> {
-                countDownLayout.visibility = INVISIBLE
-                handsUpCountDownTimer.cancel()
-                cancelCountDownTimer.cancel()
+                handsUpStart()
             }
         }
         return true
     }
 
+    private fun handsUpStart() {
+        cancelCountDownTimer.start()
+        countDownText.isVisible = true
+        countDownText.text = countDownTexts[1]
+    }
+
     fun setHandsUpEnable(enable: Boolean) {
         layout.post {
-            layout.visibility = if (enable) VISIBLE else GONE
+            // layout.visibility = if (enable) VISIBLE else GONE
             if (enable) {
                 layout.visibility = VISIBLE
             } else {
-                handsUpCountDownTimer.cancel()
-                countDownLayout.visibility = INVISIBLE
                 cancelCountDownTimer.cancel()
                 layout.visibility = INVISIBLE
             }
@@ -134,16 +117,14 @@ class AgoraUIHandsUp(
         this.coHost = coHost
         layout.post {
             if (coHost) {
-                handsUpCountDownTimer.cancel()
-                countDownLayout.visibility = INVISIBLE
-                handImg.setOnTouchListener(null)
-                handImg.setImageResource(handsUpImgs[2])
+                cancelCountDownTimer.cancel()
+                countDownText.isVisible = false
+                handImg.isEnabled = false
+                handImg.setBackgroundResource(R.drawable.agora_handsup_cohost_img)
             } else {
-                handImg.setOnTouchListener(this)
-                if (state == EduContextHandsUpState.HandsUp) {
-                    handImg.setImageResource(handsUpImgs[0])
-                } else {
-                    handImg.setImageResource(handsUpImgs[1])
+                handImg.isEnabled = true
+                if (state == EduContextHandsUpState.HandsDown) {
+                    handImg.setBackgroundResource(R.drawable.agora_handsup_down_img)
                 }
             }
         }
