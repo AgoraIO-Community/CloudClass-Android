@@ -20,4 +20,6 @@ object EaseConstant {
     const val SET_ALL_MUTE = "setAllMute"
     const val REMOVE_ALL_MUTE = "removeAllMute"
     const val NOTIFY = "notify"
+    const val DEL = "DEL"
+    const val MSG_ID = "msgId"
 }

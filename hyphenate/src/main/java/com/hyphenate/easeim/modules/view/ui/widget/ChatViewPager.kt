@@ -194,6 +194,10 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                         notifyMessage.msgTime = message.msgTime
                         EMClient.getInstance().chatManager().saveMessage(notifyMessage)
                     }
+                    EaseConstant.DEL -> {
+                        val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
+                        EaseRepository.instance.deleteMessage(chatRoomId, msgId)
+                    }
 
                 }
             }
