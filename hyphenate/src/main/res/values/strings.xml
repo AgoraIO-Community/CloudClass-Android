@@ -24,4 +24,5 @@
     <string name="login_chat_failed">登录聊天失败</string>
     <string name="send_message_failed">发送消息失败</string>
     <string name="remove_message_notify">%s删除了一条消息</string>
+    <string name="message_incloud_illegal_content">发送失败，消息包含非法字符</string>
 </resources>

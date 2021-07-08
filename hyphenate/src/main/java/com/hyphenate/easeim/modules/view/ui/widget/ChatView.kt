@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hyphenate.EMError
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
@@ -85,8 +86,10 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
             }
 
             override fun onMessageError(message: EMMessage, code: Int, error: String?) {
-                ThreadManager.instance.runOnMainThread{
-                    Toast.makeText(context, context.getString(R.string.send_message_failed)+": $code = $error", Toast.LENGTH_SHORT).show()
+                if (code == EMError.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+                    ThreadManager.instance.runOnMainThread {
+                        Toast.makeText(context, context.getString(R.string.message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
+                    }
                 }
                 EMLog.e(TAG, "onMessageError:$code = $error")
             }
@@ -112,11 +115,11 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     /**
      * 刷新聊天列表
      */
-    fun refresh(){
+    fun refresh() {
         easeRepository.loadMessages(chatRoomId)
     }
 
-    fun announcementChange(announcement: String){
+    fun announcementChange(announcement: String) {
         if (announcement.isNotEmpty()) {
             announcementView.visibility = VISIBLE
             announcementContent.text = announcement
@@ -144,19 +147,19 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     }
 
     override fun fetchChatRoomAllMutedStatus(isMuted: Boolean) {
-        if(isMuted){
+        if (isMuted) {
             showMutedView()
         }
     }
 
     override fun fetchChatRoomSingleMutedStatus(isMuted: Boolean) {
-        if(isMuted){
+        if (isMuted) {
             showMutedView()
         }
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.tv_content -> {
                 viewClickListener?.onMsgContentClick()
             }
@@ -169,7 +172,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     /**
      * 显示禁言UI
      */
-    fun showMutedView(){
+    fun showMutedView() {
         tvContent.hint = context.getString(R.string.muted)
         tvContent.isClickable = false
         faceView.isClickable = false
@@ -179,7 +182,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     /**
      * 隐藏禁言UI
      */
-    fun hideMutedView(){
+    fun hideMutedView() {
         tvContent.hint = context.getString(R.string.enter_contents)
         tvContent.isClickable = true
         faceView.isClickable = true
@@ -187,7 +190,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
-        if(visibility == VISIBLE){
+        if (visibility == VISIBLE) {
             handler.postDelayed({
                 refresh()
             }, 300)

@@ -5,6 +5,12 @@
     android:padding="@dimen/margin_normal"
     >
 
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        >
     <ImageView
         android:id="@+id/iv_avatar"
         android:layout_width="@dimen/avatar_size"
@@ -15,52 +21,46 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/iv_avatar"
+        android:layout_weight="1"
         android:textSize="@dimen/minSp"
         android:text="@string/nickname"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:lines="1"
-        android:layout_alignBottom="@+id/iv_avatar"
-        android:ellipsize="end"
-        />
+        android:ellipsize="middle"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/tv_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tv_name"
         android:layout_marginStart="@dimen/margin_normal"
         android:textSize="@dimen/minSp"
         android:text="@string/teacher"
         android:theme="@style/normal_role_bg_style"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        android:layout_alignBottom="@+id/iv_avatar"
         />
 
     <TextView
         android:id="@+id/tv_mute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tv_role"
         android:layout_marginStart="@dimen/margin_normal"
         android:textSize="@dimen/minSp"
         android:text="@string/mute"
         android:theme="@style/mute_bg_style"
-        android:layout_alignBottom="@+id/iv_avatar"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:visibility="gone"
         />
-
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name"
+        android:layout_below="@+id/title"
         android:textSize="@dimen/textSize"
         android:text="@string/message"
         android:padding="@dimen/margin_normal"

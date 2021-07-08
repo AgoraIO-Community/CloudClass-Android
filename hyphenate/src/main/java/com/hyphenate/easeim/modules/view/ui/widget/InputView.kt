@@ -8,13 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import com.hyphenate.EMCallBack
+import com.hyphenate.EMError
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
+import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.adapter.EmojiGridAdapter
+import com.hyphenate.util.EMLog
 import org.json.JSONObject
 
 /**
@@ -119,6 +123,24 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
      */
     private fun sendMessage(message: EMMessage) {
         message.chatType = EMMessage.ChatType.ChatRoom
+        message.setMessageStatusCallback(object: EMCallBack{
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(code: Int, error: String?) {
+                if (code == EMError.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+                    ThreadManager.instance.runOnMainThread {
+                        Toast.makeText(context, context.getString(R.string.message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                EMLog.e(TAG, "onMessageError:$code = $error")
+            }
+
+            override fun onProgress(progress: Int, status: String?) {
+
+            }
+        })
         EMClient.getInstance().chatManager().sendMessage(message)
     }
 

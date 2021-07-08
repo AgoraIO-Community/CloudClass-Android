@@ -13,4 +13,5 @@
     <dimen name="hide_icon_size">50dp</dimen>
     <dimen name="unread_count_size">12dp</dimen>
     <dimen name="margin_small">3dp</dimen>
+    <dimen name="nickName_max_width">100dp</dimen>
 </resources>
