@@ -144,7 +144,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
 
         val userProps = getEduContext()?.userContext()?.localUserInfo()?.properties
         userProps?.let {
-//            avatarUrl = it["avatar"]?: avatarUrl
+            avatarUrl = it["avatar"]?: avatarUrl
         }
     }
 
