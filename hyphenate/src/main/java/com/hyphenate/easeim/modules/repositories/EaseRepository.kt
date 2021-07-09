@@ -245,4 +245,8 @@ class EaseRepository {
         listeners.add(operationListener)
     }
 
+    fun removeOperationListener(operationListener: EaseOperationListener) {
+        listeners.remove(operationListener)
+    }
+
 }

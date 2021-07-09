@@ -62,5 +62,9 @@ class AnnouncementView(context: Context, attributeSet: AttributeSet?, defStyleAt
         // 不需要处理
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        easeRepository.removeOperationListener(this)
+    }
 
 }

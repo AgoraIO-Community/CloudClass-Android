@@ -197,4 +197,9 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
 
         }
     }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        easeRepository.removeOperationListener(this)
+    }
 }
