@@ -6,4 +6,9 @@ interface InputMsgListener {
      */
     fun onSendMsg()
 
+    /**
+     * 点击输入框以外区域
+     */
+    fun onOutsideClick()
+
 }

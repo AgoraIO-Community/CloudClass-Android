@@ -23,7 +23,7 @@ import com.hyphenate.util.EMLog
 import org.json.JSONObject
 
 
-class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EMMessageListener, EMChatRoomChangeListener, ViewClickListener {
+class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EMMessageListener, EMChatRoomChangeListener, ViewClickListener, EMConnectionListener {
 
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
@@ -121,6 +121,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
         EMClient.getInstance().chatManager().addMessageListener(this)
         EMClient.getInstance().chatroomManager().addChatRoomChangeListener(this)
+        EMClient.getInstance().addConnectionListener(this)
     }
 
     private fun getTabView(context: Context, title:String) : View {
@@ -130,16 +131,6 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         text.text = title
         return view
     }
-
-    /**
-     * 初始选中状态
-     */
-//    private fun chooseFirst() {
-//        val view = tabLayout.getTabAt(0)?.customView
-//        view?.findViewById<TextView>(R.id.title)?.setTextColor(Color.BLUE)
-//        view?.findViewById<TextView>(R.id.title)?.typeface =
-//                Typeface.defaultFromStyle(Typeface.BOLD)
-//    }
 
     /**
      * 重置状态
@@ -312,6 +303,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         EMClient.getInstance().chatManager().removeMessageListener(this)
         EMClient.getInstance().chatroomManager().removeChatRoomListener(this)
         EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
+        EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
         EMClient.getInstance().logout(false)
     }
 
@@ -393,6 +385,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
             override fun onError(error: Int, errorMsg: String) {
                 EMLog.e(TAG, "join failed: $error:$errorMsg")
+                if(error == EMError.CHATROOM_ALREADY_JOINED) {
+                    ThreadManager.instance.runOnMainThread {
+                        initView()
+                    }
+                    return
+                }
                 if (joinLimit == 2) {
                     ThreadManager.instance.runOnMainThread{
                         Toast.makeText(context, context.getString(R.string.join_chat_room_failed), Toast.LENGTH_SHORT).show()
@@ -450,5 +448,24 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         ThreadManager.instance.runOnMainThread {
             chatView.refresh()
         }
+    }
+
+    override fun onConnected() {
+        EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom> {
+            override fun onSuccess(value: EMChatRoom?) {
+                EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
+            }
+
+            override fun onError(error: Int, errorMsg: String?) {
+                if(error == EMError.CHATROOM_ALREADY_JOINED)
+                    EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
+            }
+
+        })
+
+    }
+
+    override fun onDisconnected(errorCode: Int) {
+        EaseRepository.instance.refreshLastMessageId(chatRoomId)
     }
 }

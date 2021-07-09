@@ -391,6 +391,10 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         inputView?.visibility = GONE
     }
 
+    override fun onOutsideClick() {
+        inputView?.visibility = GONE
+    }
+
     override fun onAnnouncementClick() {
 
     }

@@ -122,7 +122,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     fun announcementChange(announcement: String) {
         if (announcement.isNotEmpty()) {
             announcementView.visibility = VISIBLE
-            announcementContent.text = announcement
+            announcementContent.text = announcement.replace("\n", " ")
         } else {
             announcementView.visibility = GONE
         }

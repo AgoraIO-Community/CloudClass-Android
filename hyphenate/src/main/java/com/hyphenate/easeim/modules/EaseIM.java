@@ -44,6 +44,7 @@ public class EaseIM {
         EMOptions options = new EMOptions();
         options.setAutoLogin(false);
         options.setAppKey(appkey);
+        options.setDeleteMessagesAsExitChatRoom(false);
         EMClient.getInstance().init(context, options);
         EMClient.getInstance().setDebugMode(true);
         sdkInited = true;

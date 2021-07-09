@@ -16,6 +16,9 @@ class EaseRepository {
     }
 
     var listeners = mutableListOf<EaseOperationListener>()
+    var brokenMsgId = ""
+    var lastMsgId = ""
+    var fetchMsgNum = 0
 
     /**
      * 加载本地消息
@@ -61,6 +64,7 @@ class EaseRepository {
                         notifyMessage.chatType = EMMessage.ChatType.ChatRoom
                         notifyMessage.setStatus(EMMessage.Status.SUCCESS)
                         notifyMessage.msgTime = message.msgTime
+                        notifyMessage.msgId = message.msgId
                         notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
                         EMClient.getInstance().chatManager().saveMessage(notifyMessage)
                     }
@@ -79,6 +83,74 @@ class EaseRepository {
             }
 
         })
+    }
+
+    fun refreshLastMessageId(conversationId: String) {
+        val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+        brokenMsgId = conversation.lastMessage?.msgId.toString()
+    }
+
+    fun reconnectionLoadMessages(conversationId: String) {
+        if (brokenMsgId.isNotEmpty()) {
+            EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, lastMsgId, object : EMValueCallBack<EMCursorResult<EMMessage>> {
+                override fun onSuccess(value: EMCursorResult<EMMessage>?) {
+                    value?.data?.forEach { message ->
+                        if (message.type == EMMessage.Type.CMD) {
+                            val body = message.body as EMCmdMessageBody
+                            val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
+                            val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
+                            when (body.action()) {
+                                EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
+                                    notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+
+                                }
+                                EaseConstant.DEL -> {
+                                    val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
+                                    deleteMessage(conversationId, msgId)
+                                    notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                                }
+                            }
+                            notifyMessage.body = notifyBody
+                            notifyMessage.to = conversationId
+                            notifyMessage.chatType = EMMessage.ChatType.ChatRoom
+                            notifyMessage.setStatus(EMMessage.Status.SUCCESS)
+                            notifyMessage.msgTime = message.msgTime
+                            notifyMessage.msgId = message.msgId
+                            notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
+                            EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+                        }
+                        fetchMsgNum++
+                        lastMsgId = message.msgId
+                    }
+                    value?.data?.forEach { message ->
+                        if (message.msgId == brokenMsgId) {
+                            loadMoreMsgFromDB(conversationId, fetchMsgNum)
+                            return@onSuccess
+                        }
+                    }
+                    reconnectionLoadMessages(conversationId)
+                }
+
+                override fun onError(error: Int, errorMsg: String?) {
+                    EMLog.e(TAG, "loadHistoryMessages failed: $error = $errorMsg")
+                }
+            })
+        }else{
+            loadHistoryMessages(conversationId)
+        }
+    }
+
+    fun loadMoreMsgFromDB(conversationId: String, msgNum: Int) {
+        ThreadManager.instance.runOnMainThread {
+            val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+            conversation.loadMoreMsgFromDB("", msgNum)
+            brokenMsgId = ""
+            lastMsgId = ""
+            fetchMsgNum = 0
+            for (listener in listeners) {
+                listener.loadHistoryMessageFinish()
+            }
+        }
     }
 
     /**

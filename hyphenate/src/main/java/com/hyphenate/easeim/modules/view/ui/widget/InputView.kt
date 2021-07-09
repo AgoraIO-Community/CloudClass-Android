@@ -28,6 +28,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
 
+    lateinit var inputRoot: RelativeLayout
     lateinit var bottomView: LinearLayout
     lateinit var editContent: EditText
     lateinit var faceView: RelativeLayout
@@ -53,6 +54,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     }
 
     private fun initView(){
+        inputRoot = findViewById(R.id.input_root)
         bottomView = findViewById(R.id.bottom_root)
         editContent = findViewById(R.id.edit_content)
         faceView = findViewById(R.id.face_view)
@@ -70,6 +72,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         emojiView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             clickEmojiItem(emojiList[position])
         }
+        inputRoot.setOnClickListener(this)
         editContent.setOnClickListener(this)
         faceView.setOnClickListener(this)
         btnSend.setOnClickListener(this)
@@ -149,6 +152,10 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             R.id.edit_content -> {if(normalFace.visibility != VISIBLE) hideFaceView()}
             R.id.face_view -> clickFace()
             R.id.btn_send -> clickSend()
+            R.id.input_root -> {
+                CommonUtil.hideSoftKeyboard(editContent)
+                inputMsgListener?.onOutsideClick()
+            }
         }
     }
 

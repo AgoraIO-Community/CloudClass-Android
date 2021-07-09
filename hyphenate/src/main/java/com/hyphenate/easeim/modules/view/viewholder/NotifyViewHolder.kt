@@ -11,7 +11,7 @@ import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 
 /**
- * 全员禁言提示ViewhHolder
+ * 提示消息ViewhHolder
  */
 class NotifyViewHolder(view: View,
                        itemClickListener: MessageListItemClickListener,
