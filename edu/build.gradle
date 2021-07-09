@@ -74,7 +74,6 @@ dependencies {
     api project(path: ':agoraui')
 
     implementation "com.google.android.material:material:${safeExtGet('dependencies', 'com.google.android.material:material', '1.2.1')}"
-    implementation "com.google.android.exoplayer:exoplayer:${safeExtGet('dependencies', 'com.google.android.exoplayer:exoplayer', '2.8.1')}"
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${safeExtGet('dependencies', 'com.github.CymChad:BaseRecyclerViewAdapterHelper', '3.0.0-beta11')}"
 
     implementation "com.jakewharton:butterknife:${safeExtGet('dependencies', 'com.jakewharton:butterknife', '10.2.1')}"
@@ -100,6 +99,6 @@ dependencies {
     implementation "com.elvishew:xlog:${safeExtGet('dependencies', 'com.elvishew:xlog', '1.6.1')}"
     implementation "com.aliyun.dpa:oss-android-sdk:${safeExtGet('dependencies', 'com.aliyun.dpa:oss-android-sdk', '2.9.4')}"
     implementation "com.github.agorabuilder:agora-special-full:${safeExtGet('dependencies', 'com.github.agorabuilder:agora-special-full', rootProject.ext.android.rtcSDKVersion)}"
-    implementation "io.agora.rtm:rtm-sdk:${safeExtGet('dependencies', 'io.agora.rtm:rtm-sdk', rootProject.ext.android.rtmSDKVersion)}"
+    implementation "com.github.agorabuilder:rtm-sdk:${safeExtGet('dependencies', 'com.github.agorabuilder:rtm-sdk', rootProject.ext.android.rtmSDKVersion)}"
     implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', rootProject.ext.android.boardSDKVersion)}"
 }
