@@ -1,0 +1,110 @@
+def safeExtGet(prop, key, fallback) {
+    if (rootProject.ext.has(prop)) {
+        def map = rootProject.ext.get(prop)
+        if (map.containsKey(key)) {
+            return map.get(key)
+        }
+    }
+    return fallback
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion safeExtGet('android', 'compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('android', 'buildToolsVersion', '29.0.3')
+
+    defaultConfig {
+        applicationId "io.agora.education"
+        minSdkVersion safeExtGet('android', 'minSdkVersion', 21)
+        targetSdkVersion safeExtGet('android', 'targetSdkVersion', 29)
+        versionCode 10
+        versionName "6.2.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        buildConfigField 'String', 'RELEASE_TIME', String.format("\"%s\"", releaseTime())
+        buildConfigField 'String', 'RTC_VERSION', String.format("\"%s\"", rootProject.ext.android.rtcSDKVersion)
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+//            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+        normal {
+            dimension "app"
+            applicationId "io.agora.education"
+            buildConfigField 'String', 'CODE', '"edu-demo"'
+            buildConfigField 'String', 'EXTRA', '"AgoraEducation"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy.MM.dd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+dependencies {
+
+    implementation "com.google.android.material:material:${safeExtGet('dependencies', 'com.google.android.material:material', '1.2.1')}"
+    implementation "com.jakewharton:butterknife:${safeExtGet('dependencies', 'com.jakewharton:butterknife', '10.2.1')}"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    annotationProcessor "com.jakewharton:butterknife-compiler:${safeExtGet('dependencies', 'com.jakewharton:butterknife-compiler', '10.2.1')}"
+
+    // RtmTokenBuilder need
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
+
+    if (dependAAR.toBoolean()) {
+        logger.warn('dependAAR is true')
+
+        implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+        implementation "com.github.bumptech.glide:glide:${safeExtGet('dependencies', 'com.github.bumptech.glide:glide', '4.11.0')}"
+        annotationProcessor "com.github.bumptech.glide:compiler:${safeExtGet('dependencies', 'com.github.bumptech.glide:compiler', '4.11.0')}"
+
+        api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+        api 'androidx.core:core-ktx:1.3.2'
+        api "androidx.preference:preference:${safeExtGet('dependencies', 'androidx.preference:preference', '1.1.1')}"
+        api "com.google.code.gson:gson:${safeExtGet('dependencies', 'com.google.code.gson:gson', '2.8.6')}"
+        api "com.squareup.retrofit2:retrofit:${safeExtGet('dependencies', 'com.squareup.retrofit2:retrofit', '2.9.0')}"
+        api "com.squareup.okhttp3:logging-interceptor:${safeExtGet('dependencies', 'com.squareup.okhttp3:logging-interceptor', '4.7.2')}"
+        api "com.squareup.retrofit2:converter-gson:${safeExtGet('dependencies', 'com.squareup.retrofit2:converter-gson', '2.9.0')}"
+        api "androidx.constraintlayout:constraintlayout:${safeExtGet('dependencies', 'androidx.constraintlayout:constraintlayout', '2.0.4')}"
+
+
+        implementation "com.google.protobuf:protobuf-java:${safeExtGet('dependencies', 'com.google.protobuf:protobuf-java', '3.17.0')}"
+        implementation "com.elvishew:xlog:${safeExtGet('dependencies', 'com.elvishew:xlog', '1.6.1')}"
+        implementation "com.aliyun.dpa:oss-android-sdk:${safeExtGet('dependencies', 'com.aliyun.dpa:oss-android-sdk', '2.9.4')}"
+        implementation "com.github.agorabuilder:agora-special-full:${safeExtGet('dependencies', 'com.github.agorabuilder:agora-special-full', rootProject.ext.android.rtcSDKVersion)}"
+        implementation "com.github.agorabuilder:rtm-sdk:${safeExtGet('dependencies', 'com.github.agorabuilder:rtm-sdk', rootProject.ext.android.rtmSDKVersion)}"
+        implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', rootProject.ext.android.boardSDKVersion)}"
+
+        implementation project(path: ':agoraui')
+    } else {
+        logger.warn('dependAAR is false')
+        implementation project(path: ':edu')
+        compileOnly project(path: ':extapp')
+    }
+}
