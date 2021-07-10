@@ -20,13 +20,8 @@ interface EaseOperationListener {
     fun fetchAnnouncementFinish(announcement: String)
 
     /**
-     * 获取聊天室全员禁言状态
+     * 获取聊天室禁言状态
      */
-    fun fetchChatRoomAllMutedStatus(isMuted: Boolean)
-
-    /**
-     * 获取聊天室自己的禁言状态
-     */
-    fun fetchChatRoomSingleMutedStatus(isMuted: Boolean)
+    fun fetchChatRoomMutedStatus(isMuted: Boolean)
 
 }

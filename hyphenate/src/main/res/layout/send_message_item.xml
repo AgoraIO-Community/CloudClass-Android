@@ -36,11 +36,11 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:maxWidth="@dimen/nickName_max_width"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:ellipsize="middle"
+            android:ellipsize="end"
             android:singleLine="true"
             android:text="@string/nickname"
             android:textColor="@color/black"

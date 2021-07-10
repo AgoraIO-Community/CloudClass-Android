@@ -41,6 +41,7 @@ class EaseRepository {
      * 漫游50条历史消息
      */
     fun loadHistoryMessages(conversationId: String) {
+        EMLog.e("test:", "loadHistoryMessages")
         EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, "", object : EMValueCallBack<EMCursorResult<EMMessage>> {
             override fun onSuccess(value: EMCursorResult<EMMessage>?) {
                 value?.data?.forEach { message ->
@@ -87,9 +88,14 @@ class EaseRepository {
 
     fun refreshLastMessageId(conversationId: String) {
         val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
-        brokenMsgId = conversation.lastMessage?.msgId.toString()
+        if (conversation.allMessages.size != 0)
+            brokenMsgId = conversation.lastMessage?.msgId.toString()
     }
 
+    /**
+     * 重连之后拉取消息
+     */
+    @Synchronized
     fun reconnectionLoadMessages(conversationId: String) {
         if (brokenMsgId.isNotEmpty()) {
             EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, lastMsgId, object : EMValueCallBack<EMCursorResult<EMMessage>> {
@@ -135,7 +141,7 @@ class EaseRepository {
                     EMLog.e(TAG, "loadHistoryMessages failed: $error = $errorMsg")
                 }
             })
-        }else{
+        } else {
             loadHistoryMessages(conversationId)
         }
     }
@@ -177,14 +183,42 @@ class EaseRepository {
     }
 
     /**
-     * 获取聊天室全员禁言状态
+     * 获取聊天室自己是否被禁言
      */
-    fun fetchChatRoomAllMutedStatus(chatRoomId: String) {
-        EMClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : EMValueCallBack<EMChatRoom> {
-            override fun onSuccess(value: EMChatRoom?) {
+    @Synchronized
+    fun fetchChatRoomSingleMutedStatus(chatRoomId: String) {
+        EMClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
+                chatRoomId, object : EMValueCallBack<Boolean> {
+            override fun onSuccess(value: Boolean?) {
                 ThreadManager.instance.runOnMainThread {
                     for (listener in listeners) {
-                        value?.isAllMemberMuted?.let { listener.fetchChatRoomAllMutedStatus(it) }
+                        value?.let { listener.fetchChatRoomMutedStatus(it) }
+                    }
+                }
+            }
+
+            override fun onError(error: Int, errorMsg: String?) {
+                EMLog.e(TAG, "fetchChatRoomSingleMutedStatus failed: $error = $errorMsg")
+            }
+        })
+    }
+
+    /**
+     * 获取聊天室全员禁言状态
+     */
+    @Synchronized
+    fun fetchChatRoomMutedStatus(chatRoomId: String) {
+        EMClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : EMValueCallBack<EMChatRoom> {
+            override fun onSuccess(value: EMChatRoom?) {
+                value?.isAllMemberMuted?.let {
+                    if (it) {
+                        ThreadManager.instance.runOnMainThread {
+                            for (listener in listeners) {
+                                listener.fetchChatRoomMutedStatus(it)
+                            }
+                        }
+                    } else {
+                        fetchChatRoomSingleMutedStatus(chatRoomId)
                     }
                 }
             }
@@ -193,26 +227,6 @@ class EaseRepository {
                 EMLog.e(TAG, "fetchChatRoomAllMutedStatus failed: $error = $errorMsg")
             }
 
-        })
-    }
-
-    /**
-     * 获取聊天室自己是否被禁言
-     */
-    fun fetchChatRoomSingleMutedStatus(chatRoomId: String) {
-        EMClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
-                chatRoomId, object : EMValueCallBack<Boolean> {
-            override fun onSuccess(value: Boolean?) {
-                ThreadManager.instance.runOnMainThread {
-                    for (listener in listeners) {
-                        value?.let { listener.fetchChatRoomSingleMutedStatus(it) }
-                    }
-                }
-            }
-
-            override fun onError(error: Int, errorMsg: String?) {
-                EMLog.e(TAG, "fetchChatRoomSingleMutedStatus failed: $error = $errorMsg")
-            }
         })
     }
 

@@ -54,11 +54,7 @@ class AnnouncementView(context: Context, attributeSet: AttributeSet?, defStyleAt
         announcementChange(announcement)
     }
 
-    override fun fetchChatRoomAllMutedStatus(allMuted: Boolean) {
-        // 不需要处理
-    }
-
-    override fun fetchChatRoomSingleMutedStatus(isMuted: Boolean) {
+    override fun fetchChatRoomMutedStatus(allMuted: Boolean) {
         // 不需要处理
     }
 

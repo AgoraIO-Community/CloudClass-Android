@@ -124,7 +124,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         EMClient.getInstance().addConnectionListener(this)
     }
 
-    private fun getTabView(context: Context, title:String) : View {
+    private fun getTabView(context: Context, title: String): View {
         val view: View =
                 LayoutInflater.from(context).inflate(R.layout.re_tab_item_layout, null)
         val text = view.findViewById<TextView>(R.id.title)
@@ -191,6 +191,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 notifyMessage.chatType = EMMessage.ChatType.ChatRoom
                 notifyMessage.setStatus(EMMessage.Status.SUCCESS)
                 notifyMessage.msgTime = message.msgTime
+                notifyMessage.msgId = message.msgId
                 notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
                 EMClient.getInstance().chatManager().saveMessage(notifyMessage)
                 chatPagerListener?.onMessageReceived()
@@ -305,6 +306,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
         EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
         EMClient.getInstance().logout(false)
+        EaseRepository.instance.brokenMsgId = ""
     }
 
 
@@ -325,7 +327,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     fun setUserName(userName: String) {
-        this.userName = userName
+        this.userName = userName.toLowerCase()
     }
 
     fun setUserUuid(userUuid: String) {
@@ -352,7 +354,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             override fun onError(code: Int, error: String) {
                 EMLog.e(TAG, "login failed:$code:$error")
                 if (loginLimit == 2) {
-                    ThreadManager.instance.runOnMainThread{
+                    ThreadManager.instance.runOnMainThread {
                         Toast.makeText(context, context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
                     }
                     return
@@ -385,14 +387,14 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
             override fun onError(error: Int, errorMsg: String) {
                 EMLog.e(TAG, "join failed: $error:$errorMsg")
-                if(error == EMError.CHATROOM_ALREADY_JOINED) {
+                if (error == EMError.CHATROOM_ALREADY_JOINED) {
                     ThreadManager.instance.runOnMainThread {
                         initView()
                     }
                     return
                 }
                 if (joinLimit == 2) {
-                    ThreadManager.instance.runOnMainThread{
+                    ThreadManager.instance.runOnMainThread {
                         Toast.makeText(context, context.getString(R.string.join_chat_room_failed), Toast.LENGTH_SHORT).show()
                     }
                     return
@@ -451,21 +453,25 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     override fun onConnected() {
+        EMLog.e(TAG, "onConnected")
         EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom> {
             override fun onSuccess(value: EMChatRoom?) {
                 EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
+                EaseRepository.instance.fetchChatRoomMutedStatus(chatRoomId)
             }
 
             override fun onError(error: Int, errorMsg: String?) {
-                if(error == EMError.CHATROOM_ALREADY_JOINED)
+                if (error == EMError.CHATROOM_ALREADY_JOINED) {
                     EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
+                    EaseRepository.instance.fetchChatRoomMutedStatus(chatRoomId)
+                }
             }
-
         })
 
     }
 
     override fun onDisconnected(errorCode: Int) {
+        EMLog.e(TAG, "onDisconnected:$errorCode")
         EaseRepository.instance.refreshLastMessageId(chatRoomId)
     }
 }

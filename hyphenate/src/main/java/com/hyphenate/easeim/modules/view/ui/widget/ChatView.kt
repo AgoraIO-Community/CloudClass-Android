@@ -108,8 +108,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     private fun initData() {
         easeRepository.loadHistoryMessages(chatRoomId)
         easeRepository.fetchAnnouncement(chatRoomId)
-        easeRepository.fetchChatRoomAllMutedStatus(chatRoomId)
-        easeRepository.fetchChatRoomSingleMutedStatus(chatRoomId)
+        easeRepository.fetchChatRoomMutedStatus(chatRoomId)
     }
 
     /**
@@ -146,16 +145,11 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
         announcementChange(announcement)
     }
 
-    override fun fetchChatRoomAllMutedStatus(isMuted: Boolean) {
-        if (isMuted) {
+    override fun fetchChatRoomMutedStatus(isMuted: Boolean) {
+        if (isMuted)
             showMutedView()
-        }
-    }
-
-    override fun fetchChatRoomSingleMutedStatus(isMuted: Boolean) {
-        if (isMuted) {
-            showMutedView()
-        }
+        else
+            hideMutedView()
     }
 
     override fun onClick(v: View?) {
