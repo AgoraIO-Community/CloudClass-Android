@@ -7,4 +7,7 @@
     <string name="accuracy">正确率：</string>
     <string name="my_answers">我的答案：</string>
     <string name="correct_answers">正确答案：</string>
+    <string name="vote">投票</string>
+    <string name="single">单选</string>
+    <string name="multi">多选</string>
 </resources>
