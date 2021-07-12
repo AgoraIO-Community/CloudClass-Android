@@ -14,6 +14,7 @@ import io.agora.extension.AgoraExtAppConfiguration;
 import io.agora.extension.AgoraExtAppLayoutParam;
 import io.agora.extension.impl.countdown.CountDownExtApp;
 import io.agora.extension.impl.iclicker.IClickerExtApp;
+import io.agora.extension.impl.vote.VoteExtApp;
 
 public class EduApplication extends Application {
     private static final String TAG = "EduApplication";
@@ -57,6 +58,14 @@ public class EduApplication extends Application {
                         AgoraExtAppLayoutParam.wrap,
                         AgoraExtAppLayoutParam.wrap),
                 IClickerExtApp.class,
+                Locale.getDefault().getLanguage(),
+                null));
+        list.add(new AgoraExtAppConfiguration(
+                "io.agora.vote",
+                new AgoraExtAppLayoutParam(
+                        AgoraExtAppLayoutParam.wrap,
+                        AgoraExtAppLayoutParam.wrap),
+                VoteExtApp.class,
                 Locale.getDefault().getLanguage(),
                 null));
         AgoraEduSDK.registerExtApps(list);
