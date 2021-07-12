@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/input_root"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        >
+    <LinearLayout
+        android:id="@+id/bottom_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="bottom"
+        android:minHeight="52dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/edit_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ease_send_message_et_bg"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionSend|flagNoExtractUi"
+                android:minHeight="32dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/face_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:id="@+id/face_normal"
+                android:layout_width="@dimen/input_icon_size"
+                android:layout_height="@dimen/input_icon_size"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/emoji_normal" />
+
+            <ImageView
+                android:id="@+id/face_checked"
+                android:layout_width="@dimen/input_icon_size"
+                android:layout_height="@dimen/input_icon_size"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/keyboard_normal"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/input_margin_right"
+            android:layout_marginRight="@dimen/input_margin_right"
+            android:background="@null"
+            android:text="@string/send"
+            android:textColor="#04AEF0"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/emoji_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="none"
+        android:gravity="center"
+        android:horizontalSpacing="6dp"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:verticalSpacing="6dp"
+        android:layout_below="@+id/bottom_root"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

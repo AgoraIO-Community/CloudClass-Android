@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/agora_board_failed_view_corner_radius"
+        app:cardElevation="@dimen/agora_board_failed_view_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/agora_board_failed_view_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:id="@+id/title_Layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/agora_board_preload_failed_view_title_margin_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/failedTitle_Ic"
+                    android:layout_width="@dimen/agora_board_preload_failed_view_title_ic_w"
+                    android:layout_height="@dimen/agora_board_preload_failed_view_title_ic_h"
+                    android:src="@drawable/agora_board_preload_failed_view_title_ic" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/failedTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agora_board_preload_failed_view_title"
+                    android:layout_marginTop="@dimen/agora_board_preload_failed_view_title_text_margin_top"
+                    android:textColor="@color/theme_text_color_black"
+                    android:textSize="@dimen/agora_board_preload_failed_view_title_text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/failedContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/agora_board_preload_failed_view_content_margin_start"
+                android:layout_marginTop="@dimen/agora_board_preload_failed_view_content_margin_top"
+                android:layout_marginEnd="@dimen/agora_board_preload_failed_view_content_margin_end"
+                android:gravity="center_horizontal"
+                android:text="@string/agora_board_preload_failed_view_content"
+                android:textColor="@color/theme_text_color_dark_gray"
+                android:textSize="@dimen/agora_board_preload_failed_view_content_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_Layout" />
+
+            <View
+                android:id="@+id/line_horizontal"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/agora_board_preload_failed_view_line_horizontal_h"
+                android:layout_marginTop="@dimen/agora_board_preload_failed_view_line_horizontal_margin_top"
+                android:background="@color/theme_divider_color_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/failedContent" />
+
+            <View
+                android:id="@+id/line_vertical"
+                android:layout_width="@dimen/agora_board_preload_failed_view_line_vertical_w"
+                android:layout_height="@dimen/agora_board_preload_failed_view_line_vertical_h"
+                android:background="@color/theme_divider_color_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_horizontal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/close_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agora_board_preload_failed_view_close"
+                android:textColor="@color/theme_blue_light"
+                android:textSize="@dimen/agora_board_preload_failed_view_close_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/line_vertical"
+                app:layout_constraintEnd_toStartOf="@id/line_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/line_vertical" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/retry_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agora_board_preload_failed_view_retry"
+                android:textColor="@color/theme_blue_light"
+                android:textSize="@dimen/agora_board_preload_failed_view_retry_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/line_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line_vertical"
+                app:layout_constraintTop_toTopOf="@id/line_vertical" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

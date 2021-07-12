@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="avatar_size">20dp</dimen>
+    <dimen name="margin_normal">5dp</dimen>
+    <dimen name="padding_normal">5dp</dimen>
+
+    <dimen name="text_size_smallest">8sp</dimen>
+    <dimen name="minSp">12sp</dimen>
+    <dimen name="textSize">14sp</dimen>
+    <dimen name="tab_textSize">16sp</dimen>
+    <dimen name="input_icon_size">34dp</dimen>
+    <dimen name="input_margin_right">16dp</dimen>
+    <dimen name="hide_icon_size">50dp</dimen>
+    <dimen name="unread_count_size">12dp</dimen>
+    <dimen name="margin_small">3dp</dimen>
+    <dimen name="nickName_max_width">100dp</dimen>
+</resources>
