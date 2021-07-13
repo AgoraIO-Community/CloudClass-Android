@@ -37,8 +37,10 @@ class AnnouncementView(context: Context, attributeSet: AttributeSet?, defStyleAt
         if (announcement.isNotEmpty()) {
             defaultLayout.visibility = GONE
             content.text = announcement
+            content.visibility = VISIBLE
         } else {
             defaultLayout.visibility = VISIBLE
+            content.visibility = GONE
         }
     }
 

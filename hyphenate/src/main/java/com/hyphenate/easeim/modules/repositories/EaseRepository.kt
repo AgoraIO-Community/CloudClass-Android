@@ -19,6 +19,8 @@ class EaseRepository {
     var brokenMsgId = ""
     var lastMsgId = ""
     var fetchMsgNum = 0
+    var singleMuted = false
+    var allMuted = false
 
     /**
      * 加载本地消息
@@ -41,7 +43,7 @@ class EaseRepository {
      * 漫游50条历史消息
      */
     fun loadHistoryMessages(conversationId: String) {
-        EMLog.e("test:", "loadHistoryMessages")
+        EMLog.e(TAG, "loadHistoryMessages")
         EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, "", object : EMValueCallBack<EMCursorResult<EMMessage>> {
             override fun onSuccess(value: EMCursorResult<EMMessage>?) {
                 value?.data?.forEach { message ->
@@ -57,6 +59,12 @@ class EaseRepository {
                             EaseConstant.DEL -> {
                                 val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
                                 deleteMessage(conversationId, msgId)
+                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                            }
+                            EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
+                                val member = message.getStringAttribute(EaseConstant.MUTE_MEMEBER, "")
+                                if (!member.equals(EMClient.getInstance().currentUser))
+                                    return@forEach
                                 notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                             }
                         }
@@ -90,6 +98,7 @@ class EaseRepository {
         val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
         if (conversation.allMessages.size != 0)
             brokenMsgId = conversation.lastMessage?.msgId.toString()
+        EMLog.e(TAG, "brokenMsgId=$brokenMsgId")
     }
 
     /**
@@ -97,6 +106,7 @@ class EaseRepository {
      */
     @Synchronized
     fun reconnectionLoadMessages(conversationId: String) {
+        EMLog.e(TAG, "reconnectionLoadMessages:lastMsgId=$lastMsgId")
         if (brokenMsgId.isNotEmpty()) {
             EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, lastMsgId, object : EMValueCallBack<EMCursorResult<EMMessage>> {
                 override fun onSuccess(value: EMCursorResult<EMMessage>?) {
@@ -115,6 +125,12 @@ class EaseRepository {
                                     deleteMessage(conversationId, msgId)
                                     notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                                 }
+                                EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
+                                    val member = message.getStringAttribute(EaseConstant.MUTE_MEMEBER, "")
+                                    if (!member.equals(EMClient.getInstance().currentUser))
+                                        return@forEach
+                                    notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                                }
                             }
                             notifyMessage.body = notifyBody
                             notifyMessage.to = conversationId
@@ -130,7 +146,7 @@ class EaseRepository {
                     }
                     value?.data?.forEach { message ->
                         if (message.msgId == brokenMsgId) {
-                            loadMoreMsgFromDB(conversationId, fetchMsgNum)
+                            loadMoreMsgFromDB(conversationId)
                             return@onSuccess
                         }
                     }
@@ -146,13 +162,11 @@ class EaseRepository {
         }
     }
 
-    fun loadMoreMsgFromDB(conversationId: String, msgNum: Int) {
+    fun loadMoreMsgFromDB(conversationId: String) {
         ThreadManager.instance.runOnMainThread {
             val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
-            conversation.loadMoreMsgFromDB("", msgNum)
-            brokenMsgId = ""
-            lastMsgId = ""
-            fetchMsgNum = 0
+            conversation.loadMoreMsgFromDB("", fetchMsgNum)
+            reset()
             for (listener in listeners) {
                 listener.loadHistoryMessageFinish()
             }
@@ -190,9 +204,15 @@ class EaseRepository {
         EMClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
                 chatRoomId, object : EMValueCallBack<Boolean> {
             override fun onSuccess(value: Boolean?) {
-                ThreadManager.instance.runOnMainThread {
-                    for (listener in listeners) {
-                        value?.let { listener.fetchChatRoomMutedStatus(it) }
+                value?.let {
+                    singleMuted = it
+                    ThreadManager.instance.runOnMainThread {
+                        for (listener in listeners) {
+                            if(allMuted || singleMuted)
+                                listener.fetchChatRoomMutedStatus(true)
+                            else
+                                listener.fetchChatRoomMutedStatus(false)
+                        }
                     }
                 }
             }
@@ -204,22 +224,23 @@ class EaseRepository {
     }
 
     /**
-     * 获取聊天室全员禁言状态
+     * 获取聊天室禁言状态
      */
     @Synchronized
     fun fetchChatRoomMutedStatus(chatRoomId: String) {
         EMClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : EMValueCallBack<EMChatRoom> {
             override fun onSuccess(value: EMChatRoom?) {
                 value?.isAllMemberMuted?.let {
-                    if (it) {
-                        ThreadManager.instance.runOnMainThread {
-                            for (listener in listeners) {
-                                listener.fetchChatRoomMutedStatus(it)
-                            }
-                        }
-                    } else {
-                        fetchChatRoomSingleMutedStatus(chatRoomId)
-                    }
+                    allMuted = it
+//                    if (it) {
+//                        ThreadManager.instance.runOnMainThread {
+//                            for (listener in listeners) {
+//                                listener.fetchChatRoomMutedStatus(it)
+//                            }
+//                        }
+//                    } else {
+                    fetchChatRoomSingleMutedStatus(chatRoomId)
+//                    }
                 }
             }
 
@@ -249,10 +270,20 @@ class EaseRepository {
      * 删除消息
      */
     fun deleteMessage(conversationId: String, messageId: String) {
+        EMLog.e(TAG, "deleteMessage")
         ThreadManager.instance.runOnMainThread {
             val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
             conversation.removeMessage(messageId)
         }
+    }
+
+    fun reset() {
+        EMLog.e(TAG, "reset")
+        brokenMsgId = ""
+        lastMsgId = ""
+        fetchMsgNum = 0
+        singleMuted = false
+        allMuted = false
     }
 
     fun addOperationListener(operationListener: EaseOperationListener) {

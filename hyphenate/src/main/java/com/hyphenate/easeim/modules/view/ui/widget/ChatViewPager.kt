@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.hyphenate.*
@@ -150,7 +151,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         val title = tab?.view?.findViewById<TextView>(R.id.title)
         val unread = tab?.view?.findViewById<ImageView>(R.id.iv_tips)
         title?.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-        title?.setTextColor(Color.BLUE)
+        title?.setTextColor(ContextCompat.getColor(context, R.color.blue))
         unread?.visibility = View.INVISIBLE
     }
 
@@ -185,6 +186,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                         EaseRepository.instance.deleteMessage(chatRoomId, msgId)
                         notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                     }
+                    EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
+                        val member = message.getStringAttribute(EaseConstant.MUTE_MEMEBER, "")
+                        if (!member.equals(userName))
+                            return@forEach
+                        notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                    }
                 }
                 notifyMessage.body = notifyBody
                 notifyMessage.to = chatRoomId
@@ -195,6 +202,9 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
                 EMClient.getInstance().chatManager().saveMessage(notifyMessage)
                 chatPagerListener?.onMessageReceived()
+                if (chooseTab != 0) {
+                    showUnread()
+                }
             }
         }
         refreshUI()
@@ -248,9 +258,10 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onWhiteListAdded(chatRoomId: String?, whitelist: MutableList<String>?) {
         whitelist?.forEach {
             if (it == userName) {
+                EaseRepository.instance.singleMuted = true
                 ThreadManager.instance.runOnMainThread {
                     chatView.showMutedView()
-                    chatPagerListener?.onSingleMuted(true)
+                    chatPagerListener?.onMuted(true)
                 }
             }
         }
@@ -259,21 +270,31 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onWhiteListRemoved(chatRoomId: String?, whitelist: MutableList<String>?) {
         whitelist?.forEach {
             if (it == userName) {
+                EaseRepository.instance.singleMuted = false
                 ThreadManager.instance.runOnMainThread {
-                    chatView.hideMutedView()
-                    chatPagerListener?.onSingleMuted(false)
+                    if (!EaseRepository.instance.allMuted) {
+                        chatView.hideMutedView()
+                        chatPagerListener?.onMuted(false)
+                    }
                 }
             }
         }
     }
 
     override fun onAllMemberMuteStateChanged(chatRoomId: String?, isMuted: Boolean) {
+        EaseRepository.instance.allMuted = isMuted
         ThreadManager.instance.runOnMainThread {
-            chatPagerListener?.onAllMemberMuted(isMuted)
-            if (isMuted)
+            if (isMuted) {
                 chatView.showMutedView()
-            else
-                chatView.hideMutedView()
+                chatPagerListener?.onMuted(isMuted)
+            } else {
+                if (EaseRepository.instance.singleMuted) {
+                    chatView.showMutedView()
+                }else{
+                    chatView.hideMutedView()
+                    chatPagerListener?.onMuted(isMuted)
+                }
+            }
         }
     }
 
@@ -303,10 +324,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         handler.removeCallbacksAndMessages(null)
         EMClient.getInstance().chatManager().removeMessageListener(this)
         EMClient.getInstance().chatroomManager().removeChatRoomListener(this)
+        EMClient.getInstance().removeConnectionListener(this)
         EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
         EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
         EMClient.getInstance().logout(false)
-        EaseRepository.instance.brokenMsgId = ""
+        EaseRepository.instance.reset()
     }
 
 
@@ -473,5 +495,9 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onDisconnected(errorCode: Int) {
         EMLog.e(TAG, "onDisconnected:$errorCode")
         EaseRepository.instance.refreshLastMessageId(chatRoomId)
+    }
+
+    fun setInputContent(content: String){
+        chatView.setInputContent(content)
     }
 }

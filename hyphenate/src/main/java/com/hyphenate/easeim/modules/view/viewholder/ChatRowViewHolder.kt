@@ -51,10 +51,11 @@ abstract class ChatRowViewHolder(
         }
 
         name?.text = message.getStringAttribute(EaseConstant.NICK_NAME, "")
-        role?.text = if (message.getIntAttribute(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT) == EaseConstant.ROLE_STUDENT) {
-            context.getString(R.string.student)
-        } else {
-            context.getString(R.string.teacher)
+        if (message.getIntAttribute(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT) == EaseConstant.ROLE_TEACHER) {
+            role?.text = context.getString(R.string.teacher)
+            role?.visibility = View.VISIBLE
+        }else {
+            role?.visibility = View.GONE
         }
 
         onSetUpView()

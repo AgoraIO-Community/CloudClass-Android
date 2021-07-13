@@ -11,50 +11,51 @@
         android:layout_height="wrap_content"
         android:gravity="bottom"
         >
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="@dimen/avatar_size"
-        android:layout_height="@dimen/avatar_size"
-        android:layout_marginEnd="@dimen/margin_normal"
-        android:src="@mipmap/default_avatar"
-        />
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:src="@mipmap/default_avatar"
+            />
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="@dimen/nickName_max_width"
-        android:textSize="@dimen/minSp"
-        android:text="@string/nickname"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:ellipsize="end"
-        android:singleLine="true" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/nickName_max_width"
+            android:textSize="@dimen/textSize"
+            android:text="@string/nickname"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:ellipsize="end"
+            android:singleLine="true" />
 
-    <TextView
-        android:id="@+id/tv_role"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:textSize="@dimen/minSp"
-        android:text="@string/teacher"
-        android:theme="@style/normal_role_bg_style"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        />
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:textSize="@dimen/minSp"
+            android:text="@string/teacher"
+            android:theme="@style/normal_role_bg_style"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:visibility="gone"
+            />
 
-    <TextView
-        android:id="@+id/tv_mute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_normal"
-        android:textSize="@dimen/minSp"
-        android:text="@string/mute"
-        android:theme="@style/mute_bg_style"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:visibility="gone"
-        />
+        <TextView
+            android:id="@+id/tv_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:textSize="@dimen/minSp"
+            android:text="@string/mute"
+            android:theme="@style/mute_bg_style"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:visibility="gone"
+            />
     </LinearLayout>
     <TextView
         android:id="@+id/tv_content"

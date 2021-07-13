@@ -6,7 +6,7 @@
 
     <dimen name="text_size_smallest">8sp</dimen>
     <dimen name="minSp">12sp</dimen>
-    <dimen name="textSize">14sp</dimen>
+    <dimen name="textSize">13sp</dimen>
     <dimen name="tab_textSize">16sp</dimen>
     <dimen name="input_icon_size">34dp</dimen>
     <dimen name="input_margin_right">16dp</dimen>

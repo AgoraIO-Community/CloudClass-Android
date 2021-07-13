@@ -32,7 +32,9 @@
             android:paddingEnd="5dp"
             android:text="@string/student"
             android:textSize="@dimen/minSp"
-            android:theme="@style/normal_role_bg_style" />
+            android:theme="@style/normal_role_bg_style"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/tv_name"
@@ -44,7 +46,7 @@
             android:singleLine="true"
             android:text="@string/nickname"
             android:textColor="@color/black"
-            android:textSize="@dimen/minSp"
+            android:textSize="@dimen/textSize"
             android:textStyle="bold" />
 
         <ImageView

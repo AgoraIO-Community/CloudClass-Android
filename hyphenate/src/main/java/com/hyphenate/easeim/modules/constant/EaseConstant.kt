@@ -6,6 +6,7 @@ object EaseConstant {
     const val NORMAL_MSG = 0
 
     const val ROLE = "role"
+    const val ROLE_TEACHER = 1
     const val ROLE_STUDENT = 2
 
     const val ROOM_UUID = "roomUuid"
@@ -18,4 +19,8 @@ object EaseConstant {
     const val NOTIFY = "notify"
     const val DEL = "DEL"
     const val MSG_ID = "msgId"
+    const val MUTE = "mute"
+    const val UN_MUTE = "unmute"
+    const val MUTE_MEMEBER = "muteMember"
+    const val MUTE_NICK_NAME = "muteNickName"
 }

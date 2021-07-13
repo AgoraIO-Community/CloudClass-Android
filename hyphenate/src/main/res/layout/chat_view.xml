@@ -10,15 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="@color/announcement_bg"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:paddingStart="@dimen/padding_normal"
         tools:ignore="RtlSymmetry"
         android:visibility="gone"
         >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@mipmap/icon_announcement" />
 
         <TextView
@@ -26,10 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:ellipsize="end"
             android:lines="1"
-            android:text="@string/default_announcement"
-            android:textSize="14sp" />
+            android:textSize="@dimen/minSp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -46,7 +44,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/input_view"
         android:layout_below="@+id/announcement_view"
-        android:background="@color/white"
         android:gravity="center">
 
         <LinearLayout
@@ -64,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_message"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textSize" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -73,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
         android:background="@drawable/chatview_input_bg"
         android:padding="10dp">
 
@@ -85,7 +83,7 @@
             android:hint="@string/enter_contents"
             android:ellipsize="end"
             android:lines="1"
-            android:textSize="14sp"
+            android:textSize="@dimen/minSp"
             android:textColor="@color/black"
             />
 
@@ -96,14 +94,14 @@
             >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@mipmap/emoji_mute" />
 
             <ImageView
                 android:id="@+id/iv_face"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@mipmap/emoji" />
         </FrameLayout>
 

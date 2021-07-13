@@ -30,6 +30,12 @@ class NotifyViewHolder(view: View,
             EaseConstant.DEL -> {
                 content.text = String.format(context.getString(R.string.remove_message_notify), message.getStringAttribute(EaseConstant.NICK_NAME))
             }
+            EaseConstant.MUTE -> {
+                content.text = String.format(context.getString(R.string.you_have_been_muted_by_teacher), message.getStringAttribute(EaseConstant.NICK_NAME))
+            }
+            EaseConstant.UN_MUTE -> {
+                content.text = String.format(context.getString(R.string.you_have_been_unmuted_by_teacher), message.getStringAttribute(EaseConstant.NICK_NAME))
+            }
         }
     }
 }

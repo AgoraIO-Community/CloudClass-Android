@@ -43,6 +43,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     private lateinit var tvContent: TextView
     private lateinit var faceView: FrameLayout
     private lateinit var faceIcon: ImageView
+    private var inputContent = ""
 
     var viewClickListener: ViewClickListener? = null
 
@@ -95,7 +96,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
             }
 
         })
-        announcementContent.setOnClickListener {
+        announcementView.setOnClickListener {
             viewClickListener?.onAnnouncementClick()
         }
         tvContent.setOnClickListener(this)
@@ -121,7 +122,10 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     fun announcementChange(announcement: String) {
         if (announcement.isNotEmpty()) {
             announcementView.visibility = VISIBLE
-            announcementContent.text = announcement.replace("\n", " ")
+            if("\n" in announcement)
+                announcementContent.text = announcement.split("\n")[0]
+            else
+                announcementContent.text = announcement
         } else {
             announcementView.visibility = GONE
         }
@@ -167,7 +171,11 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
      * 显示禁言UI
      */
     fun showMutedView() {
-        tvContent.hint = context.getString(R.string.muted)
+        if(EaseRepository.instance.allMuted){
+            tvContent.hint = context.getString(R.string.all_muted)
+        }else if(EaseRepository.instance.singleMuted){
+            tvContent.hint = context.getString(R.string.single_muted)
+        }
         tvContent.isClickable = false
         faceView.isClickable = false
         faceIcon.visibility = INVISIBLE
@@ -178,6 +186,9 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
      */
     fun hideMutedView() {
         tvContent.hint = context.getString(R.string.enter_contents)
+        if(inputContent.isNotEmpty()){
+            tvContent.hint = inputContent
+        }
         tvContent.isClickable = true
         faceView.isClickable = true
         faceIcon.visibility = VISIBLE
@@ -195,5 +206,12 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         easeRepository.removeOperationListener(this)
+    }
+
+    fun setInputContent(content: String){
+        inputContent = content
+        if(!EaseRepository.instance.singleMuted || EaseRepository.instance.allMuted){
+            hideMutedView()
+        }
     }
 }

@@ -3,6 +3,7 @@ package io.agora.uikit.impl.chat
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -81,7 +82,6 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
 
     private val roomHandler = object : RoomHandler() {
         override fun onJoinedClassRoom() {
-            EMLog.d(TAG, "Classroom joined success")
             addEaseIM()
         }
     }
@@ -127,8 +127,11 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
             ) { isSoftInputShow, softInputHeight, viewOffset ->
                 if (isSoftInputShow)
                     inputView!!.translationY = inputView!!.translationY - viewOffset
-                else
+                else {
                     inputView!!.translationY = 0F
+                    if(inputView!!.isNormalFace())
+                        inputView!!.visibility = GONE
+                }
             }
         }
     }
@@ -281,45 +284,43 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
      * of the chat list
      */
     fun show(show: Boolean) {
-        layout?.post {
-            if (show) {
-                var params = contentLayout?.layoutParams as ViewGroup.MarginLayoutParams
-                params.width = contentWidth
-                params.height = contentHeight
-                params.leftMargin = contentLeftMargin
-                params.topMargin = contentTopMargin
-                contentLayout?.layoutParams = params
+        if (show) {
+            var params = contentLayout?.layoutParams as ViewGroup.MarginLayoutParams
+            params.width = contentWidth
+            params.height = contentHeight
+            params.leftMargin = contentLeftMargin
+            params.topMargin = contentTopMargin
+            contentLayout?.layoutParams = params
 
-                params = layout?.layoutParams as ViewGroup.MarginLayoutParams
-                params.width = width
-                params.height = height
-                params.topMargin = top
-                params.leftMargin = left
-                layout?.layoutParams = params
+            params = layout?.layoutParams as ViewGroup.MarginLayoutParams
+            params.width = width
+            params.height = height
+            params.topMargin = top
+            params.leftMargin = left
+            layout?.layoutParams = params
 
-                hideLayout.visibility = GONE
-                contentLayout?.visibility = VISIBLE
-                hidden = false
-            } else {
-                var params = contentLayout?.layoutParams as ViewGroup.MarginLayoutParams
-                params.width = 0
-                params.height = minHeight
-                params.leftMargin = contentLeftMargin
-                params.topMargin = contentTopMargin
-                contentLayout?.layoutParams = params
+            hideLayout.visibility = GONE
+            contentLayout?.visibility = VISIBLE
+            hidden = false
+        } else {
+            var params = contentLayout?.layoutParams as ViewGroup.MarginLayoutParams
+            params.width = 0
+            params.height = minHeight
+            params.leftMargin = contentLeftMargin
+            params.topMargin = contentTopMargin
+            contentLayout?.layoutParams = params
 
-                params = layout?.layoutParams as ViewGroup.MarginLayoutParams
-                params.width = hideIconSize
-                params.height = hideIconSize
-                params.leftMargin = this.left + this.width - hideIconSize
-                params.topMargin = this.top + this.height - hideIconSize
-                layout?.layoutParams = params
+            params = layout?.layoutParams as ViewGroup.MarginLayoutParams
+            params.width = hideIconSize
+            params.height = hideIconSize
+            params.leftMargin = this.left + this.width - hideIconSize
+            params.topMargin = this.top + this.height - hideIconSize
+            layout?.layoutParams = params
 
-                hideLayout.visibility = VISIBLE
-                contentLayout?.visibility = GONE
+            hideLayout.visibility = VISIBLE
+            contentLayout?.visibility = GONE
 
-                hidden = true
-            }
+            hidden = true
         }
     }
 
@@ -397,6 +398,10 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         inputView?.visibility = GONE
     }
 
+    override fun onContentChange(content: String) {
+        chatViewPager?.setInputContent(content)
+    }
+
     override fun onAnnouncementClick() {
 
     }
@@ -411,14 +416,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         inputView?.showFaceView()
     }
 
-    override fun onAllMemberMuted(isMuted: Boolean) {
-        if (isMuted && inputView?.isVisible == true) {
-            inputView?.editContent?.let { CommonUtil.hideSoftKeyboard(it) }
-            inputView?.visibility = GONE
-        }
-    }
-
-    override fun onSingleMuted(isMuted: Boolean) {
+    override fun onMuted(isMuted: Boolean) {
         if (isMuted && inputView?.isVisible == true) {
             inputView?.editContent?.let { CommonUtil.hideSoftKeyboard(it) }
             inputView?.visibility = GONE

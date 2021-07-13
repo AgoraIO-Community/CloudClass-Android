@@ -2,12 +2,15 @@ package com.hyphenate.easeim.modules.view.ui.widget
 
 import android.app.Activity
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.core.view.isVisible
 import com.hyphenate.EMCallBack
 import com.hyphenate.EMError
 import com.hyphenate.chat.EMClient
@@ -34,7 +37,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     lateinit var faceView: RelativeLayout
     lateinit var normalFace: ImageView
     lateinit var checkedFace: ImageView
-    lateinit var btnSend: Button
+    lateinit var btnSend: TextView
     lateinit var emojiView: GridView
     lateinit var emojiAdapter: EmojiGridAdapter
     private val emojiList = arrayOf("\uD83D\uDE0A", "\uD83D\uDE03", "\uD83D\uDE09", "\uD83D\uDE2E", "\uD83D\uDE0B", "\uD83D\uDE0E", "\uD83D\uDE21", "\uD83D\uDE16", "\uD83D\uDE33", "\uD83D\uDE1E", "\uD83D\uDE2D", "\uD83D\uDE10", "\uD83D\uDE07", "\uD83D\uDE2C", "\uD83D\uDE06", "\uD83D\uDE31", "\uD83C\uDF85", "\uD83D\uDE34", "\uD83D\uDE15", "\uD83D\uDE37", "\uD83D\uDE2F", "\uD83D\uDE0F", "\uD83D\uDE11", "\uD83D\uDC96", "\uD83D\uDC94", "\uD83C\uDF19", "\uD83C\uDF1F", "\uD83C\uDF1E", "\uD83C\uDF08", "\uD83D\uDE1A", "\uD83D\uDE0D", "\uD83D\uDC8B", "\uD83C\uDF39", "\uD83C\uDF42", "\uD83D\uDC4D")
@@ -87,17 +90,19 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             } else
                 false
         }
-    }
+        editContent.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-    override fun onVisibilityChanged(changedView: View, visibility: Int) {
-        super.onVisibilityChanged(changedView, visibility)
-        if (visibility == VISIBLE) {
-            // When visible, let the edit text have a focus,
-            // thus it can immediately receive click events.
-            editContent.requestFocus()
-        } else {
-            editContent.clearFocus()
-        }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.toString()?.let { inputMsgListener?.onContentChange(it) }
+            }
+        })
     }
 
     private fun clickFace() {
@@ -180,9 +185,14 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     fun showFaceView(){
         normalFace.visibility = GONE
         checkedFace.visibility = VISIBLE
+        editContent.requestFocus()
         CommonUtil.hideSoftKeyboard(editContent)
         handler.postDelayed({
             emojiView.visibility = VISIBLE
         }, 100)
+    }
+
+    fun isNormalFace(): Boolean{
+        return normalFace.visibility == VISIBLE
     }
 }
