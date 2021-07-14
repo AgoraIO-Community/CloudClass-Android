@@ -32,6 +32,7 @@ class EaseChatWidget : AgoraAbsWidget() {
     private var nickName = "学生A"
     private var avatarUrl = "https://download-sdk.oss-cn-beijing.aliyuncs.com/downloads/IMDemo/avatar/Image1.png"
     private var roomUuid = ""
+    private var announcement = ""
 
     private var loginLimit = 0
     private var joinLimit = 0
@@ -48,6 +49,7 @@ class EaseChatWidget : AgoraAbsWidget() {
                     mChatRoomId, object : EMValueCallBack<String> {
                 override fun onSuccess(value: String) {
                     if (value.isEmpty()) {
+                        updateAnnouncement("")
                         totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
                     } else {
                         when (value.substring(0, 1)) {
@@ -56,11 +58,13 @@ class EaseChatWidget : AgoraAbsWidget() {
                                 totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.send_danmaku), true)
                             }
                             "1" -> {
+
                                 isAllMute = true
                                 totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.total_silence), false)
                             }
                             else -> EMLog.e(TAG, "fetch_announcement:$value")
                         }
+                        updateAnnouncement(value.substring(1, value.length))
                     }
                     checkSingleMute
                 }
@@ -287,6 +291,7 @@ class EaseChatWidget : AgoraAbsWidget() {
                             totalLayout!!.sendHandleEnable(mContext!!.resources.getString(R.string.total_silence), false)
                         }
                     }
+                    updateAnnouncement(announcement.substring(1, announcement.length))
                 }
             }
         }
@@ -384,5 +389,12 @@ class EaseChatWidget : AgoraAbsWidget() {
 
     override fun setRect(rect: Rect) {
 
+    }
+
+    fun updateAnnouncement(roomAnnouncement: String){
+        if(announcement != roomAnnouncement){
+            // 公告更新
+            announcement = roomAnnouncement
+        }
     }
 }
