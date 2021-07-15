@@ -1,0 +1,11 @@
+package io.agora.education.impl
+
+import io.agora.log.LogManager
+
+internal class Constants {
+    companion object {
+        lateinit var APPID: String
+        lateinit var AgoraLog: LogManager
+        const val LOGS_DIR_NAME = "logs"
+    }
+}

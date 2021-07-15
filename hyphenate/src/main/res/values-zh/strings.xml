@@ -1,0 +1,26 @@
+<resources>
+    <string name="mute">禁言</string>
+    <string name="teacher">老师</string>
+    <string name="nickname">昵称</string>
+    <string name="recall">撤回</string>
+    <string name="student">学生</string>
+    <string name="message">消息</string>
+    <string name="enter_contents">请输入消息</string>
+    <string name="send">发送</string>
+    <string name="chat">聊天</string>
+    <string name="announcement">公告</string>
+    <string name="default_announcement">暂无公告</string>
+    <string name="all_muted">全体禁言中</string>
+    <string name="single_muted">您已被老师禁言，请谨慎发言</string>
+    <string name="no_message">还没有消息</string>
+    <string name="muted_all">已开启全体学生禁言</string>
+    <string name="cancel_muted_all">已取消全体学生禁言</string>
+    <string name="join_chat_room_failed">加入聊天室失败</string>
+    <string name="login_chat_failed">登录聊天失败</string>
+    <string name="send_message_failed">发送消息失败</string>
+    <string name="remove_message_notify">%s删除了一条消息</string>
+    <string name="message_incloud_illegal_content">发送失败，消息包含非法字符</string>
+    <string name="you_have_been_muted_by_teacher">您被%s老师禁止发言了</string>
+    <string name="you_have_been_unmuted_by_teacher">您被%s老师允许发言了</string>
+    <string name="say_something">说点什么</string>
+</resources>

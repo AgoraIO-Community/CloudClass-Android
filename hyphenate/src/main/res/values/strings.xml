@@ -1,0 +1,26 @@
+<resources>
+    <string name="mute">Mute</string>
+    <string name="teacher">Teacher</string>
+    <string name="nickname">Nickname</string>
+    <string name="recall">Recall</string>
+    <string name="student">Student</string>
+    <string name="message">Message</string>
+    <string name="enter_contents">Please enter message</string>
+    <string name="send">Send</string>
+    <string name="chat">Chat</string>
+    <string name="announcement">Notice</string>
+    <string name="default_announcement">No Announcement</string>
+    <string name="all_muted">All Muted</string>
+    <string name="single_muted">You are muted by teacher</string>
+    <string name="no_message">No Message</string>
+    <string name="muted_all">The teacher mute all</string>
+    <string name="cancel_muted_all">The teacher unmute all</string>
+    <string name="join_chat_room_failed">Join chatroom failed</string>
+    <string name="login_chat_failed">Login chat failed</string>
+    <string name="send_message_failed">Send message Failed</string>
+    <string name="remove_message_notify">%s remove a message</string>
+    <string name="message_incloud_illegal_content">Send faild,message contain sensitive word</string>
+    <string name="you_have_been_muted_by_teacher">muted by %s teacher</string>
+    <string name="you_have_been_unmuted_by_teacher">unmuted by %s teacher</string>
+    <string name="say_something">Say something</string>
+</resources>

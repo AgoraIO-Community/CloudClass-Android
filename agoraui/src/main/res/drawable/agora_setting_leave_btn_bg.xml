@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/white"/>
+    <stroke android:color="@color/agora_setting_leave_text_color"
+        android:width="@dimen/stroke_small"/>
+    <size android:height="@dimen/agora_setting_dialog_leave_button_height"/>
+    <corners android:radius="@dimen/agora_setting_dialog_leave_button_radius"/>
+</shape>
