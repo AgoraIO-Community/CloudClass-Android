@@ -13,8 +13,8 @@ interface ChatPagerListener {
     fun onIconHideenClick()
 
     /**
-     * 收到新消息
+     * 显示未读
      */
-    fun onMessageReceived()
+    fun onShowUnread(show: Boolean)
 
 }

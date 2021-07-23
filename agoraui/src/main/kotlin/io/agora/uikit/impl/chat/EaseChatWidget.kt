@@ -129,7 +129,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
                     inputView!!.translationY = inputView!!.translationY - viewOffset
                 else {
                     inputView!!.translationY = 0F
-                    if(inputView!!.isNormalFace())
+                    if (inputView!!.isNormalFace())
                         inputView!!.visibility = GONE
                 }
             }
@@ -147,7 +147,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
 
         val userProps = getEduContext()?.userContext()?.localUserInfo()?.properties
         userProps?.let {
-            avatarUrl = it["avatar"]?: avatarUrl
+            avatarUrl = it["avatar"] ?: avatarUrl
         }
     }
 
@@ -262,7 +262,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
                                 params.topMargin, params.width, params.height)
                     }
                     .withStartAction {
-                        unreadText.visibility = GONE
+                        chatViewPager?.showOuterLayerUnread()
                         hideLayout.visibility = GONE
                         contentLayout?.visibility = VISIBLE
 
@@ -432,10 +432,12 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         }
     }
 
-    override fun onMessageReceived() {
-        ThreadManager.instance.runOnMainThread{
+    override fun onShowUnread(show: Boolean) {
+        ThreadManager.instance.runOnMainThread {
             if(hideLayout.isVisible)
                 unreadText.visibility = VISIBLE
+            else
+                unreadText.visibility = if(show) VISIBLE else GONE
         }
     }
 }
