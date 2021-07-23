@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.hyphenate.*
@@ -86,7 +87,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             )
 
         recoverItem()
-        chooseTab(tabLayout.getTabAt(0))
+        chooseFirstTab()
         initListener()
     }
 
@@ -145,6 +146,18 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     /**
+     * 默认选中第一个tab
+     */
+    private fun chooseFirstTab() {
+        val tab = tabLayout.getTabAt(0)
+        val title = tab?.view?.findViewById<TextView>(R.id.title)
+        val unread = tab?.view?.findViewById<ImageView>(R.id.iv_tips)
+        title?.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+        title?.setTextColor(ContextCompat.getColor(context, R.color.blue))
+        unread?.visibility = View.INVISIBLE
+    }
+
+    /**
      * 选中状态
      */
     private fun chooseTab(tab: TabLayout.Tab?) {
@@ -153,17 +166,20 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         title?.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
         title?.setTextColor(ContextCompat.getColor(context, R.color.blue))
         unread?.visibility = View.INVISIBLE
+        showOuterLayerUnread()
     }
 
     override fun onMessageReceived(messages: MutableList<EMMessage>?) {
         messages?.let {
             for (message in messages) {
                 if (message.type == EMMessage.Type.TXT) {
-                    chatPagerListener?.onMessageReceived()
-                    if (chooseTab != 0) {
-                        showUnread()
+                    ThreadManager.instance.runOnMainThread {
+                        if (chooseTab != 0) {
+                            showUnread(0)
+                        }
+                        showOuterLayerUnread()
+                        refreshUI()
                     }
-                    refreshUI()
                 }
             }
         }
@@ -201,9 +217,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 notifyMessage.msgId = message.msgId
                 notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
                 EMClient.getInstance().chatManager().saveMessage(notifyMessage)
-                chatPagerListener?.onMessageReceived()
-                if (chooseTab != 0) {
-                    showUnread()
+                ThreadManager.instance.runOnMainThread {
+                    if (chooseTab != 0) {
+                        showUnread(0)
+                    }
+                    showOuterLayerUnread()
                 }
             }
         }
@@ -290,7 +308,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             } else {
                 if (EaseRepository.instance.singleMuted) {
                     chatView.showMutedView()
-                }else{
+                } else {
                     chatView.hideMutedView()
                     chatPagerListener?.onMuted(isMuted)
                 }
@@ -315,6 +333,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             announcement?.let {
                 chatView.announcementChange(announcement)
                 announcementView.announcementChange(announcement)
+                ThreadManager.instance.runOnMainThread {
+                    if (chooseTab != 1)
+                        showUnread(1)
+                    showOuterLayerUnread()
+                }
             }
         }
     }
@@ -458,11 +481,9 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     /**
      * 展示未读标识
      */
-    private fun showUnread() {
-        ThreadManager.instance.runOnMainThread {
-            val unread = tabLayout.getTabAt(0)?.view?.findViewById<ImageView>(R.id.iv_tips)
-            unread?.visibility = View.VISIBLE
-        }
+    private fun showUnread(index: Int) {
+        val unread = tabLayout.getTabAt(index)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        unread?.visibility = View.VISIBLE
     }
 
     /**
@@ -497,7 +518,13 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         EaseRepository.instance.refreshLastMessageId(chatRoomId)
     }
 
-    fun setInputContent(content: String){
+    fun setInputContent(content: String) {
         chatView.setInputContent(content)
+    }
+
+    fun showOuterLayerUnread() {
+        val chatUnread = tabLayout.getTabAt(0)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        val noticeUnread = tabLayout.getTabAt(1)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        chatPagerListener?.onShowUnread(chatUnread?.visibility == VISIBLE || noticeUnread?.visibility == VISIBLE)
     }
 }

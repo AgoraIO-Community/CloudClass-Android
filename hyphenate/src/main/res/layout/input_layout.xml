@@ -40,6 +40,7 @@
                     android:background="@drawable/ease_send_message_et_bg"
                     android:focusableInTouchMode="true"
                     android:imeOptions="actionSend|flagNoExtractUi"
+                    android:inputType="text"
                     android:minHeight="30dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="3dp"
