@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.hyphenate.*
@@ -35,7 +34,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout
+    private var tabLayout: TabLayout? = null
     private lateinit var iconHidden: ImageView
     lateinit var chatView: ChatView
     private lateinit var announcementView: AnnouncementView
@@ -57,6 +56,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     init {
         LayoutInflater.from(context).inflate(R.layout.chat_total_layout, this)
         container = findViewById(R.id.total_layout)
+        initView()
     }
 
     /**
@@ -65,7 +65,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     fun initView() {
         iconHidden = findViewById(R.id.hidden)
         viewPager = findViewById(R.id.viewPager)
-        chatView = ChatView(chatRoomId, context)
+        chatView = ChatView(context)
         announcementView = AnnouncementView(context)
         val pagerList = listOf<View>(chatView, announcementView)
         val titleList = listOf<String>(
@@ -77,14 +77,16 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 //        viewPager.offscreenPageLimit = 2
         tabLayout = findViewById(R.id.tab_layout)
         for (index in pagerList.indices)
-            tabLayout.addTab(
-                    tabLayout.newTab().setCustomView(context?.let {
-                        getTabView(
-                                it.applicationContext,
-                                titleList[index]
-                        )
-                    })
-            )
+            tabLayout?.newTab()?.let {
+                tabLayout?.addTab(
+                        it.setCustomView(context?.let {
+                            getTabView(
+                                    it.applicationContext,
+                                    titleList[index]
+                            )
+                        })
+                )
+            }
 
         recoverItem()
         chooseFirstTab()
@@ -95,7 +97,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
      * 注册监听
      */
     private fun initListener() {
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 recoverItem()
                 chooseTab(tab)
@@ -118,9 +120,10 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         iconHidden.setOnClickListener {
             chatPagerListener?.onIconHideenClick()
         }
-
         chatView.viewClickListener = this
+    }
 
+    private fun initIMListener(){
         EMClient.getInstance().chatManager().addMessageListener(this)
         EMClient.getInstance().chatroomManager().addChatRoomChangeListener(this)
         EMClient.getInstance().addConnectionListener(this)
@@ -139,7 +142,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
      */
     private fun recoverItem() {
         for (i in 0..2) {
-            val title = tabLayout.getTabAt(i)?.view?.findViewById<TextView>(R.id.title)
+            val title = tabLayout?.getTabAt(i)?.view?.findViewById<TextView>(R.id.title)
             title?.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
             title?.setTextColor(Color.BLACK)
         }
@@ -149,7 +152,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
      * 默认选中第一个tab
      */
     private fun chooseFirstTab() {
-        val tab = tabLayout.getTabAt(0)
+        val tab = tabLayout?.getTabAt(0)
         val title = tab?.view?.findViewById<TextView>(R.id.title)
         val unread = tab?.view?.findViewById<ImageView>(R.id.iv_tips)
         title?.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
@@ -345,12 +348,14 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         handler.removeCallbacksAndMessages(null)
-        EMClient.getInstance().chatManager().removeMessageListener(this)
-        EMClient.getInstance().chatroomManager().removeChatRoomListener(this)
-        EMClient.getInstance().removeConnectionListener(this)
-        EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
-        EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
-        EMClient.getInstance().logout(false)
+        if(EaseRepository.instance.isLogin){
+            EMClient.getInstance().chatManager().removeMessageListener(this)
+            EMClient.getInstance().chatroomManager().removeChatRoomListener(this)
+            EMClient.getInstance().removeConnectionListener(this)
+            EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
+            EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
+            EMClient.getInstance().logout(false)
+        }
         EaseRepository.instance.reset()
     }
 
@@ -361,6 +366,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     fun setChatRoomId(chatRoomId: String) {
         this.chatRoomId = chatRoomId
+        chatView.chatRoomId = chatRoomId
     }
 
     fun setNickName(nickName: String) {
@@ -400,7 +406,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 EMLog.e(TAG, "login failed:$code:$error")
                 if (loginLimit == 2) {
                     ThreadManager.instance.runOnMainThread {
-                        Toast.makeText(context, context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.login_chat_failed)+":$code:$error", Toast.LENGTH_SHORT).show()
                     }
                     return
                 }
@@ -426,7 +432,9 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             override fun onSuccess(value: EMChatRoom?) {
                 EMLog.e("Login:", "join success")
                 ThreadManager.instance.runOnMainThread {
-                    initView()
+                    EaseRepository.instance.isLogin = true
+                    initIMListener()
+                    chatView.initData()
                 }
             }
 
@@ -434,13 +442,15 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 EMLog.e(TAG, "join failed: $error:$errorMsg")
                 if (error == EMError.CHATROOM_ALREADY_JOINED) {
                     ThreadManager.instance.runOnMainThread {
-                        initView()
+                        EaseRepository.instance.isLogin = true
+                        initIMListener()
+                        chatView.initData()
                     }
                     return
                 }
                 if (joinLimit == 2) {
                     ThreadManager.instance.runOnMainThread {
-                        Toast.makeText(context, context.getString(R.string.join_chat_room_failed), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.login_chat_failed)+"--"+context.getString(R.string.join_chat_room_failed)+":$error:$errorMsg", Toast.LENGTH_SHORT).show()
                     }
                     return
                 }
@@ -460,14 +470,17 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             } catch (e: HyphenateException) {
                 e.printStackTrace()
                 EMLog.e(TAG, "create failed:" + e.errorCode + ":" + e.description)
+                ThreadManager.instance.runOnMainThread {
+                    Toast.makeText(context, context.getString(R.string.login_chat_failed)+"--"+context.getString(R.string.create_failed)+":" + e.errorCode + ":" + e.description, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     override fun onAnnouncementClick() {
         chooseTab = 1
-        chooseTab(tabLayout.getTabAt(1))
-        tabLayout.getTabAt(1)?.let { viewPager.setCurrentItem(it.position, true) }
+        chooseTab(tabLayout?.getTabAt(1))
+        tabLayout?.getTabAt(1)?.let { viewPager.setCurrentItem(it.position, true) }
     }
 
     override fun onMsgContentClick() {
@@ -482,7 +495,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
      * 展示未读标识
      */
     private fun showUnread(index: Int) {
-        val unread = tabLayout.getTabAt(index)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        val unread = tabLayout?.getTabAt(index)?.view?.findViewById<ImageView>(R.id.iv_tips)
         unread?.visibility = View.VISIBLE
     }
 
@@ -523,8 +536,8 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     fun showOuterLayerUnread() {
-        val chatUnread = tabLayout.getTabAt(0)?.view?.findViewById<ImageView>(R.id.iv_tips)
-        val noticeUnread = tabLayout.getTabAt(1)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        val chatUnread = tabLayout?.getTabAt(0)?.view?.findViewById<ImageView>(R.id.iv_tips)
+        val noticeUnread = tabLayout?.getTabAt(1)?.view?.findViewById<ImageView>(R.id.iv_tips)
         chatPagerListener?.onShowUnread(chatUnread?.visibility == VISIBLE || noticeUnread?.visibility == VISIBLE)
     }
 }
