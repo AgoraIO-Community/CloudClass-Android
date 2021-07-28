@@ -23,4 +23,6 @@
     <string name="you_have_been_muted_by_teacher">您被%s老师禁止发言了</string>
     <string name="you_have_been_unmuted_by_teacher">您被%s老师允许发言了</string>
     <string name="say_something">说点什么</string>
+    <string name="appKey_is_empty">AppKey为空</string>
+    <string name="create_failed">注册聊天失败</string>
 </resources>
