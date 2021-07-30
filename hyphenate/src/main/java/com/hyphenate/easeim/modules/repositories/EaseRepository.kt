@@ -170,7 +170,9 @@ class EaseRepository {
         ThreadManager.instance.runOnMainThread {
             val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
             conversation.loadMoreMsgFromDB("", fetchMsgNum)
-            reset()
+            brokenMsgId = ""
+            lastMsgId = ""
+            fetchMsgNum = 0
             for (listener in listeners) {
                 listener.loadHistoryMessageFinish()
             }
