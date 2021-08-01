@@ -190,8 +190,7 @@ public class QAActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.iv_setting, R.id.et_room_type, R.id.btn_join,
-            // R.id.tv_one2one, R.id.tv_small_class, R.id.tv_large_class,
-            // R.id.tv_breakout_class, R.id.tv_intermediate_class,
+             R.id.tv_one2one, R.id.tv_small_class, R.id.tv_large_class,
             R.id.tv_debug,
             R.id.config, R.id.load, R.id.clearCache, R.id.tv_cn,
             R.id.tv_na, R.id.tv_eu, R.id.tv_ap})

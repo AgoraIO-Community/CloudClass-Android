@@ -5,6 +5,8 @@ import android.os.Handler
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.agora.edu.R
 import io.agora.edu.common.api.FlexProps
 import io.agora.edu.common.bean.flexpropes.RoomFlexPropsReq
@@ -114,6 +116,9 @@ class RoomStateManager(
 
     private val flexProps: FlexProps
 
+    private val scheduleKey = "schedule"
+    private val startTimeKey = "startTime"
+
     init {
         flexProps = FlexPropsImpl(launchConfig.appId, launchConfig.roomUuid)
     }
@@ -128,6 +133,11 @@ class RoomStateManager(
         eduRoom?.getRoomStatus(object : EduCallback<EduRoomStatus> {
             override fun onSuccess(res: EduRoomStatus?) {
                 res?.let {
+                    if (it.courseState != EduRoomState.INIT) {
+                        refreshStartTime()?.let {
+                            launchConfig.startTime = it
+                        }
+                    }
                     setClassState(
                             it.courseState,
                             preCheckData.startTime,
@@ -160,12 +170,33 @@ class RoomStateManager(
         }
     }
 
+    private fun getProperty(properties: Map<String, Any>?, key: String): String? {
+        if (properties != null) {
+            for ((key1, value) in properties) {
+                if (key1 == key) {
+                    return Gson().toJson(value)
+                }
+            }
+        }
+        return null
+    }
+
+    private fun refreshStartTime(): Long? {
+        val scheduleJson = getProperty(eduRoom!!.roomProperties, scheduleKey)
+        val scheduleMap: MutableMap<String, Any>? = Gson().fromJson(scheduleJson,
+                object : TypeToken<MutableMap<String, Any>>() {}.type)
+        return getProperty(scheduleMap, startTimeKey)?.toDouble()?.toLong()
+    }
+
     fun updateClassState(event: EduRoomChangeType) {
         if (event == EduRoomChangeType.CourseState) {
             eduRoom?.getRoomStatus(object : EduCallback<EduRoomStatus> {
                 override fun onSuccess(res: EduRoomStatus?) {
                     res?.let {
                         if (res.courseState == EduRoomState.START) {
+                            refreshStartTime()?.let {
+                                launchConfig.startTime = it
+                            }
                             setClassState(EduRoomState.START,
                                     preCheckData.startTime,
                                     preCheckData.duration,
