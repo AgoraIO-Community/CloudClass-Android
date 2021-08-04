@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agora_app_id" translatable="false">Your AppId</string>
-    <string name="agora_app_cert" translatable="false">Your AppCertificate</string>
-    <string name="agora_api_host" translatable="false">Agora API Host</string>
+    <string name="agora_app_id" translatable="false">f488493d1886435f963dfb3d95984fd4</string>
+    <string name="agora_app_cert" translatable="false">1560d3b87dd040b1bfe9cb506cbeeaed</string>
+    <string name="agora_api_host" translatable="false">https://api-solutions-dev.bj2.agoralab.co/</string>
     <string name="agora_report_host" translatable="false">Report API Host</string>
 </resources>

@@ -1,11 +1,11 @@
 package io.agora.educontext.context
 
 import androidx.annotation.UiThread
-import io.agora.extension.AgoraExtAppInfo
+import io.agora.educontext.EduContextExtAppInfo
 
 interface ExtAppContext {
     @UiThread
     fun launchExtApp(appIdentifier: String): Int
 
-    fun getRegisteredExtApps(): List<AgoraExtAppInfo>
+    fun getRegisteredExtApps(): List<EduContextExtAppInfo>
 }
