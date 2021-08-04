@@ -68,4 +68,8 @@ open class WhiteboardHandler : IWhiteboardHandler {
     override fun onPermissionGranted(granted: Boolean) {
 
     }
+
+    override fun onWhiteboardGlobalStateChanged(state: Map<String, Any>) {
+
+    }
 }
