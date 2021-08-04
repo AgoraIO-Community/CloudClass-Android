@@ -71,4 +71,6 @@ interface IWhiteboardHandler {
      * Called when the whiteboard authorization is granted or not
      */
     fun onPermissionGranted(granted: Boolean)
+
+    fun onWhiteboardGlobalStateChanged(state: Map<String, Any>)
 }

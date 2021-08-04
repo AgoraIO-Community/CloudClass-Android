@@ -1,6 +1,5 @@
 package com.hyphenate.easeim.modules.view.ui.widget
 
-import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.core.view.isVisible
 import com.hyphenate.EMCallBack
 import com.hyphenate.EMError
 import com.hyphenate.chat.EMClient
@@ -23,7 +21,6 @@ import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.adapter.EmojiGridAdapter
 import com.hyphenate.util.EMLog
-import org.json.JSONObject
 
 /**
  * 输入框控件
@@ -133,6 +130,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             Toast.makeText(context, context.getString(R.string.send_message_failed) + ":" + context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
             return
         }
+
         val msgContent = editContent.text.toString()
         if (msgContent.isNotEmpty()) {
             val message = EMMessage.createTxtSendMessage(msgContent, chatRoomId)

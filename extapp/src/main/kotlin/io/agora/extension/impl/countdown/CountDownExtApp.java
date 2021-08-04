@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+import io.agora.educontext.EduContextPool;
 import io.agora.extension.AgoraExtAppBase;
 import io.agora.extension.R;
 import io.agora.extension.TimeUtil;
@@ -81,7 +82,7 @@ public class CountDownExtApp extends AgoraExtAppBase {
     }
 
     @Override
-    public void onExtAppLoaded(@NotNull Context context, @NonNull RelativeLayout container) {
+    public void onExtAppLoaded(@NotNull Context context, @NonNull RelativeLayout container, @Nullable EduContextPool eduContextPool) {
         Log.d(TAG, "onExtAppLoaded, appId=" + getIdentifier());
         synchronized (this) {
             mAppLoaded = true;

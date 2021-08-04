@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import io.agora.educontext.EduContextPool
 
 class AgoraExtAppEngine(
         private var context: Context,
         private var container: RelativeLayout,
+        private var eduContext: EduContextPool,
         internal var aPaaSEntry: IAgoraExtAppAPaaSEntry) {
 
     private val tag = "AgoraExtAppEngine"
@@ -101,7 +103,8 @@ class AgoraExtAppEngine(
      * @param identifier id of the extension app
      * @param formatted whether the identifier is a formatted one.
      */
-    @Synchronized fun launchExtApp(identifier: String, formatted: Boolean = false, currentTime: Long): Int {
+    @Synchronized
+    fun launchExtApp(identifier: String, formatted: Boolean = false, currentTime: Long): Int {
         if (formatted && launchedExtAppMapTransformed.containsKey(identifier)) {
             Log.w(tag, "launch ext app: app $identifier has been launched")
             return AgoraExtAppErrorCode.ExtAppIdDuplicated
@@ -140,7 +143,7 @@ class AgoraExtAppEngine(
             if (item.contentView != null) {
                 container.addView(item.contentView, RelativeLayout.LayoutParams(
                         item.param.width, item.param.height))
-                item.instance?.onExtAppLoaded(this.context, container)
+                item.instance?.onExtAppLoaded(this.context, container, eduContext)
             } else {
                 Log.w(tag, "launch ext app: cannot find container or content view, app $identifier")
             }
@@ -149,7 +152,8 @@ class AgoraExtAppEngine(
         return AgoraExtAppErrorCode.ExtAppNoError
     }
 
-    @Synchronized fun stopExtApp(identifier: String, formatted: Boolean = false): Int {
+    @Synchronized
+    fun stopExtApp(identifier: String, formatted: Boolean = false): Int {
         if (formatted && !registeredAppMapTransformed.containsKey(identifier)) {
             Log.w(tag, "stop ext app: app $identifier is not registered")
             return AgoraExtAppErrorCode.ExtAppIdNonExist
@@ -203,7 +207,8 @@ class AgoraExtAppEngine(
         aPaaSEntry.deleteProperties(identifier, propertyKeys, cause, callback)
     }
 
-    @Synchronized fun onExtAppPropertyUpdated(identifier: String,
+    @Synchronized
+    fun onExtAppPropertyUpdated(identifier: String,
                                 properties: MutableMap<String, Any?>?,
                                 cause: MutableMap<String, Any?>?,
                                 state: MutableMap<String, Any?>?, currentTime: Long): Int {
