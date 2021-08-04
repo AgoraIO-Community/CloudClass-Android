@@ -3,7 +3,6 @@ package io.agora.uikit.impl.chat
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -26,7 +25,6 @@ import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.ui.widget.ChatViewPager
 import com.hyphenate.easeim.modules.view.ui.widget.InputView
-import com.hyphenate.util.EMLog
 import io.agora.educontext.WidgetType
 import io.agora.uikit.educontext.handlers.RoomHandler
 import io.agora.uikit.impl.AgoraAbsWidget
@@ -129,7 +127,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
                     inputView!!.translationY = inputView!!.translationY - viewOffset
                 else {
                     inputView!!.translationY = 0F
-                    if(inputView!!.isNormalFace())
+                    if (inputView!!.isNormalFace())
                         inputView!!.visibility = GONE
                 }
             }
@@ -147,7 +145,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
 
         val userProps = getEduContext()?.userContext()?.localUserInfo()?.properties
         userProps?.let {
-            avatarUrl = it["avatar"]?: avatarUrl
+            avatarUrl = it["avatar"] ?: avatarUrl
         }
     }
 
@@ -262,7 +260,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
                                 params.topMargin, params.width, params.height)
                     }
                     .withStartAction {
-                        unreadText.visibility = GONE
+                        chatViewPager?.showOuterLayerUnread()
                         hideLayout.visibility = GONE
                         contentLayout?.visibility = VISIBLE
 
@@ -432,10 +430,12 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         }
     }
 
-    override fun onMessageReceived() {
-        ThreadManager.instance.runOnMainThread{
-            if(hideLayout.isVisible)
+    override fun onShowUnread(show: Boolean) {
+        ThreadManager.instance.runOnMainThread {
+            if (hideLayout.isVisible)
                 unreadText.visibility = VISIBLE
+            else
+                unreadText.visibility = if(show) VISIBLE else GONE
         }
     }
 }
