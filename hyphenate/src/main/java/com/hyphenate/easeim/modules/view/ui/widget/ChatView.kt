@@ -22,9 +22,9 @@ import com.hyphenate.util.EMLog
 /**
  * 聊天页
  */
-class ChatView(private val chatRoomId: String, context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EaseOperationListener, View.OnClickListener {
-    constructor(chatRoomId: String, context: Context) : this(chatRoomId, context, null)
-    constructor(chatRoomId: String, context: Context, attributeSet: AttributeSet?) : this(chatRoomId, context, attributeSet, 0)
+class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EaseOperationListener, View.OnClickListener {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
 
     //伴生对象
     companion object {
@@ -44,6 +44,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     private lateinit var faceView: FrameLayout
     private lateinit var faceIcon: ImageView
     private var inputContent = ""
+    var chatRoomId = ""
 
     var viewClickListener: ViewClickListener? = null
 
@@ -69,7 +70,6 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         initListener()
-        initData()
     }
 
     /**
@@ -106,7 +106,7 @@ class ChatView(private val chatRoomId: String, context: Context, attributeSet: A
     /**
      * 初始化数据
      */
-    private fun initData() {
+    fun initData() {
         easeRepository.loadHistoryMessages(chatRoomId)
         easeRepository.fetchAnnouncement(chatRoomId)
         easeRepository.fetchChatRoomMutedStatus(chatRoomId)

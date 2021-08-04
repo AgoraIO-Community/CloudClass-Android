@@ -18,6 +18,7 @@ import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
+import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.adapter.EmojiGridAdapter
@@ -47,16 +48,16 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     var nickName = ""
     var avatarUrl = ""
 
-    companion object{
+    companion object {
         private const val TAG = "InputView"
     }
 
-    init{
+    init {
         LayoutInflater.from(context).inflate(R.layout.input_layout, this)
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
         inputRoot = findViewById(R.id.input_root)
         bottomView = findViewById(R.id.bottom_root)
         editContent = findViewById(R.id.edit_content)
@@ -71,7 +72,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         initListener()
     }
 
-    private fun initListener(){
+    private fun initListener() {
         emojiView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             clickEmojiItem(emojiList[position])
         }
@@ -90,7 +91,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             } else
                 false
         }
-        editContent.addTextChangedListener(object: TextWatcher{
+        editContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -117,14 +118,21 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     }
 
     private fun clickFace() {
-        if(normalFace.visibility != VISIBLE) {
+        if (normalFace.visibility != VISIBLE) {
             hideFaceView()
-        }else {
+        } else {
             showFaceView()
         }
     }
 
     private fun clickSend() {
+        if (!(EaseRepository.instance.isInit && EaseRepository.instance.isLogin)) {
+            editContent.text.clear()
+            inputMsgListener?.onSendMsg()
+            CommonUtil.hideSoftKeyboard(editContent)
+            Toast.makeText(context, context.getString(R.string.send_message_failed) + ":" + context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
+            return
+        }
         val msgContent = editContent.text.toString()
         if (msgContent.isNotEmpty()) {
             val message = EMMessage.createTxtSendMessage(msgContent, chatRoomId)
@@ -153,7 +161,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
      */
     private fun sendMessage(message: EMMessage) {
         message.chatType = EMMessage.ChatType.ChatRoom
-        message.setMessageStatusCallback(object: EMCallBack{
+        message.setMessageStatusCallback(object : EMCallBack {
             override fun onSuccess() {
 
             }
@@ -175,8 +183,10 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.edit_content -> {if(normalFace.visibility != VISIBLE) hideFaceView()}
+        when (v?.id) {
+            R.id.edit_content -> {
+                if (normalFace.visibility != VISIBLE) hideFaceView()
+            }
             R.id.face_view -> clickFace()
             R.id.btn_send -> clickSend()
             R.id.input_root -> {
@@ -186,14 +196,14 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         }
     }
 
-    fun hideFaceView(){
+    fun hideFaceView() {
         normalFace.visibility = VISIBLE
         checkedFace.visibility = GONE
         emojiView.visibility = GONE
         CommonUtil.showSoftKeyboard(editContent)
     }
 
-    fun showFaceView(){
+    fun showFaceView() {
         normalFace.visibility = GONE
         checkedFace.visibility = VISIBLE
         editContent.requestFocus()
@@ -203,7 +213,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         }, 100)
     }
 
-    fun isNormalFace(): Boolean{
+    fun isNormalFace(): Boolean {
         return normalFace.visibility == VISIBLE
     }
 }

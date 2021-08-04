@@ -3,6 +3,7 @@ package io.agora.uikit.impl.chat
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.hyphenate.*
@@ -18,6 +20,7 @@ import com.hyphenate.chat.*
 import io.agora.uikit.R
 import com.hyphenate.easeim.modules.EaseIM
 import com.hyphenate.easeim.modules.manager.ThreadManager
+import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.utils.SoftInputUtil
 import com.hyphenate.easeim.modules.view.`interface`.ChatPagerListener
@@ -25,7 +28,9 @@ import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.ui.widget.ChatViewPager
 import com.hyphenate.easeim.modules.view.ui.widget.InputView
+import com.hyphenate.util.EMLog
 import io.agora.educontext.WidgetType
+import io.agora.uikit.component.toast.AgoraUIToastManager
 import io.agora.uikit.educontext.handlers.RoomHandler
 import io.agora.uikit.impl.AgoraAbsWidget
 
@@ -92,6 +97,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
         roomUuid = getEduContext()?.roomContext()?.roomInfo()?.roomUuid ?: ""
 
         parseProperties()
+
         chatViewPager = mContext?.let { ChatViewPager(it) }
         chatViewPager?.let {
             it.setAvatarUrl(avatarUrl)
@@ -101,12 +107,16 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
             it.setUserName(userName)
             it.setUserUuid(userUuid)
         }
-
-        if (EaseIM.getInstance().init(mContext, appKey)) {
-            contentLayout?.addView(chatViewPager)
-            chatViewPager?.loginIM()
-            chatViewPager?.viewClickListener = this
-            chatViewPager?.chatPagerListener = this
+        contentLayout?.addView(chatViewPager)
+        chatViewPager?.viewClickListener = this
+        chatViewPager?.chatPagerListener = this
+        if (appKey.isNotEmpty()) {
+            if (EaseIM.getInstance().init(mContext, appKey)) {
+                EaseRepository.instance.isInit = true
+                chatViewPager?.loginIM()
+            }
+        }else{
+            AgoraUIToastManager.showShort(mContext?.getString(com.hyphenate.easeim.R.string.login_chat_failed)+"--"+mContext?.getString(com.hyphenate.easeim.R.string.appKey_is_empty))
         }
         mContext?.let {
             inputView = InputView(it)
@@ -435,7 +445,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
             if (hideLayout.isVisible)
                 unreadText.visibility = VISIBLE
             else
-                unreadText.visibility = if(show) VISIBLE else GONE
+                unreadText.visibility = if (show) VISIBLE else GONE
         }
     }
 }
