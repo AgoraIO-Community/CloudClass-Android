@@ -26,7 +26,6 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
 
-    //伴生对象
     companion object {
         private const val TAG = "ChatFragment"
     }

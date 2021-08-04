@@ -54,27 +54,6 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     public void init(WhiteSdk sdk, RoomParams params) {
         this.whiteSdk = sdk;
         this.roomParams = params;
-//        if (t != null) {
-//            Log.i(TAG, "joinRoom-disconnect");
-//            disconnect(new Promise() {
-//                @Override
-//                public void then(Object o) {
-//                    Log.i(TAG, "joinRoom-disconnect-success");
-//                    Log.i(TAG, "joinRoom-");
-//                    sdk.joinRoom(params, BoardProxy.this, promise);
-//                }
-//
-//                @Override
-//                public void catchEx(SDKError t) {
-//                    Log.i(TAG, "joinRoom-disconnect-failed->" + t.getJsStack());
-//                    Log.i(TAG, "joinRoom-");
-//                    sdk.joinRoom(params, BoardProxy.this, promise);
-//                }
-//            });
-//        } else {
-//            Log.i(TAG, "joinRoom-");
-//            sdk.joinRoom(params, BoardProxy.this, promise);
-//        }
         Log.i(TAG, "joinRoom-");
         sdk.joinRoom(params, BoardProxy.this, promise);
     }
@@ -351,6 +330,12 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     public void disconnect() {
         if (t != null) {
             t.disconnect();
+        }
+    }
+
+    public void setGlobalState(GlobalState state) {
+        if (t != null) {
+            t.setGlobalState(state);
         }
     }
 

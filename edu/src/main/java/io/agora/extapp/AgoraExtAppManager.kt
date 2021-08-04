@@ -9,6 +9,7 @@ import io.agora.edu.classroom.bean.PropertyData
 import io.agora.edu.common.bean.ResponseBody
 import io.agora.edu.launch.AgoraEduSDK
 import io.agora.edu.util.TimeUtil
+import io.agora.educontext.EduContextPool
 import io.agora.extension.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,13 +19,14 @@ abstract class AgoraExtAppManager(
         private val appId: String,
         private val context: Context,
         private val container: RelativeLayout,
-        private val roomUuid: String) : IAgoraExtAppAPaaSEntry {
+        private val roomUuid: String,
+        eduContext: EduContextPool) : IAgoraExtAppAPaaSEntry {
 
     private val tag = "AgoraExtAppManager"
     private val keyAppProperties = "extApps"
     private val keyAppCommon = "extAppsCommon"
 
-    private val extAppEngine = AgoraExtAppEngine(context, container, this)
+    private val extAppEngine = AgoraExtAppEngine(context, container, eduContext, this)
 
     fun launchExtApp(identifier: String, currentTime: Long) : Int {
         return extAppEngine.launchExtApp(identifier,false,currentTime)

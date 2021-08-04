@@ -298,3 +298,9 @@ enum class State(val value: Int) {
 enum class WidgetType {
     IM
 }
+
+data class EduContextExtAppInfo(
+    val appIdentifier: String,
+    val language: String,
+    val imageResource: Int? = null
+)

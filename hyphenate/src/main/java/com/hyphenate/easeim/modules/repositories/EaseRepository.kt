@@ -28,7 +28,7 @@ class EaseRepository {
      * 加载本地消息
      */
     fun loadMessages(conversationId: String) {
-        if(isInit) {
+        if (isInit) {
             val conversation = EMClient.getInstance().chatManager()
                     .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
             val msgList = conversation.allMessages
@@ -37,6 +37,7 @@ class EaseRepository {
                 if (message.type == EMMessage.Type.TXT || message.type == EMMessage.Type.CUSTOM)
                     norMsgList.add(message)
             }
+
             for (listener in listeners) {
                 listener.loadMessageFinish(norMsgList)
             }

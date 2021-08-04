@@ -362,15 +362,6 @@ class WhiteBoardManager(
     }
 
     private fun initWhiteBoardAppliance() {
-//        if (boardProxy.appliance == null) {
-//            boardProxy.appliance = SELECTOR
-//        }
-//        if (boardProxy.strokeColor == null) {
-//            boardProxy.strokeColor = ColorUtil.colorToArray(context.resources.getColor(R.color.agora_board_default_stroke))
-//        }
-//        if (boardProxy.textSize == null) {
-//            boardProxy.textSize = context.resources.getInteger(R.integer.agora_board_default_font_size).toDouble()
-//        }
         if (!TextUtils.isEmpty(boardProxy.appliance)) {
             onApplianceSelected(curDrawingConfig.activeAppliance)
         } else {
@@ -592,11 +583,24 @@ class WhiteBoardManager(
                     }
                 }
             }
+
             if (grantChanted(latestBoardState)) {
                 boardProxy.follow(!latestBoardState.isGranted(localUserUuid))
                 // if granted，try recovery cameraConfig
                 recoveryCameraState2(state)
             }
+
+            // Check if user defined properties have changed.
+            // User defined properties are internal concepts, managed
+            // as part of the entire whiteboard global state.
+            // However, they are translated to "GlobalState"
+            // of whiteboard in the current room.
+            if (!state.userDefinedPropertyEquals(curBoardState)) {
+                whiteboardContext.getHandlers()?.forEach {
+                    it.onWhiteboardGlobalStateChanged(state.userDefinedProperties)
+                }
+            }
+
             curBoardState = state
             if (!curBoardState!!.isTeacherFirstLogin && courseware != null && scenePpts != null
                     && loadPreviewPpt) {
@@ -757,6 +761,16 @@ class WhiteBoardManager(
     fun onBoardNextPage() {
         Log.e(tag, "onNextPage")
         boardProxy.pptNextStep()
+    }
+
+    fun getUserDefinedWhiteboardProperties(): Map<String, Any> {
+        return curBoardState?.userDefinedProperties ?: mapOf()
+    }
+
+    fun setUserDefinedWhiteboardProperties(properties: Map<String, Any>) {
+        val state = curBoardState?.copy() ?: BoardState();
+        state.userDefinedProperties = properties
+        boardProxy.setGlobalState(state)
     }
 }
 
