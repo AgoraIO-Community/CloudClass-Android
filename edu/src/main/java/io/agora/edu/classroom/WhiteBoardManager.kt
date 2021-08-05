@@ -1,7 +1,6 @@
 package io.agora.edu.classroom
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
@@ -595,9 +594,9 @@ class WhiteBoardManager(
             // as part of the entire whiteboard global state.
             // However, they are translated to "GlobalState"
             // of whiteboard in the current room.
-            if (!state.userDefinedPropertyEquals(curBoardState)) {
+            if (!state.flexBoardStateEquals(curBoardState)) {
                 whiteboardContext.getHandlers()?.forEach {
-                    it.onWhiteboardGlobalStateChanged(state.userDefinedProperties)
+                    it.onWhiteboardGlobalStateChanged(state.flexBoardState)
                 }
             }
 
@@ -763,13 +762,13 @@ class WhiteBoardManager(
         boardProxy.pptNextStep()
     }
 
-    fun getUserDefinedWhiteboardProperties(): Map<String, Any> {
-        return curBoardState?.userDefinedProperties ?: mapOf()
+    fun getFlexWhiteboardGlobalState(): Map<String, Any> {
+        return curBoardState?.flexBoardState ?: mapOf()
     }
 
-    fun setUserDefinedWhiteboardProperties(properties: Map<String, Any>) {
+    fun setFlexWhiteboardGlobalState(properties: Map<String, Any>) {
         val state = curBoardState?.copy() ?: BoardState();
-        state.userDefinedProperties = properties
+        state.flexBoardState = properties
         boardProxy.setGlobalState(state)
     }
 }

@@ -20,7 +20,7 @@ public class BoardState extends GlobalState implements Parcelable {
     private List<BoardDynamicTaskInfo> dynamicTaskUuidList = new ArrayList<>();
     private List<BoardDynamicTaskInfo> materialList = new ArrayList<>();
     private boolean isFullScreen = false;
-    private Map<String, Object> userDefinedProperties = new HashMap<>();
+    private Map<String, Object> flexBoardState = new HashMap<>();
 
     public BoardState() {
 
@@ -53,7 +53,7 @@ public class BoardState extends GlobalState implements Parcelable {
         dynamicTaskUuidList = in.createTypedArrayList(BoardDynamicTaskInfo.CREATOR);
         materialList = in.createTypedArrayList(BoardDynamicTaskInfo.CREATOR);
         isFullScreen = in.readByte() != 0;
-        in.readMap(userDefinedProperties, ClassLoader.getSystemClassLoader());
+        in.readMap(flexBoardState, ClassLoader.getSystemClassLoader());
     }
 
     @Override
@@ -65,8 +65,8 @@ public class BoardState extends GlobalState implements Parcelable {
         dest.writeTypedList(dynamicTaskUuidList);
         dest.writeTypedList(materialList);
         dest.writeByte((byte) (isFullScreen ? 1 : 0));
-        dest.writeMap(userDefinedProperties != null
-                ? userDefinedProperties
+        dest.writeMap(flexBoardState != null
+                ? flexBoardState
                 : new HashMap<String, Object>());
     }
 
@@ -143,26 +143,26 @@ public class BoardState extends GlobalState implements Parcelable {
         this.isFullScreen = fullScreen;
     }
 
-    public void setUserDefinedProperties(@NonNull Map<String, Object> properties) {
-        userDefinedProperties = properties;
+    public void setFlexBoardState(@NonNull Map<String, Object> properties) {
+        flexBoardState = properties;
     }
 
-    public @NonNull Map<String, Object> getUserDefinedProperties() {
-        return userDefinedProperties;
+    public @NonNull Map<String, Object> getFlexBoardState() {
+        return flexBoardState;
     }
 
-    public boolean userDefinedPropertyEquals(BoardState another) {
+    public boolean flexBoardStateEquals(BoardState another) {
         if (another != null) {
-            return this.userDefinedProperties.equals(another.userDefinedProperties);
+            return this.flexBoardState.equals(another.flexBoardState);
         } else {
-            return this.userDefinedProperties.isEmpty();
+            return this.flexBoardState.isEmpty();
         }
     }
 
     public BoardState copy() {
         BoardState state = new BoardState(follow, grantUsers, granted,
                 teacherFirstLogin, dynamicTaskUuidList, materialList, isFullScreen);
-        state.userDefinedProperties = userDefinedProperties;
+        state.flexBoardState = flexBoardState;
         return state;
     }
 }
