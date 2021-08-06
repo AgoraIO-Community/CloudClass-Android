@@ -160,7 +160,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             val endTime = properties[PROPERTIES_KEY_END_TIME].toString().toLong()
             val correctAnswers = (properties[PROPERTIES_KEY_ANSWER] as ArrayList<*>).filterIsInstance<String>()
             val students = properties[PROPERTIES_KEY_STUDENTS] as ArrayList<*>
-            val replies = ArrayList<ReplyItem>()
+            val replies = mutableMapOf<String, ReplyItem>()
             mTimerText.post {
                 mTimerText.text = TimeUtil.stringForTimeHMS(endTime - startTime, "%02d:%02d:%02d")
             }
@@ -169,7 +169,7 @@ class IClickerExtApp : AgoraExtAppBase() {
                 if (student != DELETED) {
                     val reply = Gson().fromJson(student, ReplyItem::class.java)
                     if (reply != null) {
-                        replies.add(reply)
+                        replies[uuid as String] = reply
                     }
                 }
 
@@ -178,7 +178,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             Log.i(TAG, "IClicker end: correct answers " + correctAnswers +
                     ", replies:" + replies)
 
-            showResult(replies.toTypedArray(), correctAnswers.toTypedArray(), students.size)
+            showResult(replies, correctAnswers.toTypedArray(), students.size)
         }
     }
 
@@ -291,7 +291,7 @@ class IClickerExtApp : AgoraExtAppBase() {
         }
     }
 
-    private fun showResult(replies: Array<ReplyItem>, right: Array<String>, total: Int) {
+    private fun showResult(replies: MutableMap<String, ReplyItem>, right: Array<String>, total: Int) {
         mTimer.cancel()
 
         val content: FrameLayout = mLayout.findViewById(R.id.iclicker_content)
@@ -304,7 +304,7 @@ class IClickerExtApp : AgoraExtAppBase() {
                 content , false)
             content.addView(result)
 
-            val submits = replies.filterNot { it.answer.isNullOrEmpty() }
+            val submits = replies.filterNot { it.value.answer.isNullOrEmpty() }.values
             val rightString = right.sorted().reduce { acc, s -> acc + s }
             val sumCorrect = submits.filter { it.answer.sorted().reduce { acc, s -> acc + s } == rightString }.size
             val respondents = submits.size.toString() + "/" + total
@@ -314,8 +314,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             result.findViewById<TextView>(R.id.accuracy).text = accuracy
             result.findViewById<TextView>(R.id.correct_answers).text = rightString
 
-            var myAnswers = ""
-            mAnswerAdapter.getCheckedItems().sorted().forEach { myAnswers += 'A' + it }
+            val myAnswers = replies[getLocalUserInfo()?.userUuid]?.answer?.joinToString("")
             val myAnswersTextView = result.findViewById<TextView>(R.id.my_answers)
             myAnswersTextView.text = myAnswers
             myAnswersTextView.isSelected = rightString == myAnswers
