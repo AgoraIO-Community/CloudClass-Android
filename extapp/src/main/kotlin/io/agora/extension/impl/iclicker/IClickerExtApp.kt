@@ -3,10 +3,7 @@ package io.agora.extension.impl.iclicker
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.*
 import androidx.core.view.children
 import com.google.gson.Gson
@@ -35,12 +32,13 @@ class IClickerExtApp : AgoraExtAppBase() {
     private var mStartTime: Long = 0
     private var mTickCount: Long = 0
 
-    class AnswerAdapter (var context: Context,var dataSet: Array<String>) : BaseAdapter(){
-        val checkedArrays = mutableSetOf<Int>()
+    class AnswerAdapter (var context: Context, private var dataSet: Array<String>) : BaseAdapter(){
+        private val checkedArrays = mutableSetOf<Int>()
         private var onCheckChangedListener: OnCheckChangedListener? = null
+        private var isEnabled = true
 
         inner class ViewHolder {
-            lateinit var textView : TextView
+            lateinit var textView : CheckedTextView
         }
 
         interface OnCheckChangedListener {
@@ -57,7 +55,7 @@ class IClickerExtApp : AgoraExtAppBase() {
                 viewHolder.textView = view.findViewById(R.id.iclicker_answer_item_text)
                 viewHolder.textView.setOnClickListener {
                     val contain = isCheckedPosition(position)
-                    viewHolder.textView.isSelected = !contain
+                    viewHolder.textView.isChecked = !contain
                     if (contain) {
                         checkedArrays.remove(position)
                     } else {
@@ -72,7 +70,8 @@ class IClickerExtApp : AgoraExtAppBase() {
             }
 
             viewHolder.textView.text = dataSet[position]
-            viewHolder.textView.isSelected = isCheckedPosition(position)
+            viewHolder.textView.isChecked = isCheckedPosition(position)
+            viewHolder.textView.isEnabled = isEnabled
 
             return view!!
         }
@@ -87,6 +86,15 @@ class IClickerExtApp : AgoraExtAppBase() {
             dataSet = data
         }
 
+        fun setChecked(selected: List<Int>) {
+            checkedArrays.clear()
+            checkedArrays.addAll(selected)
+        }
+
+        fun setEnabled(enabled: Boolean) {
+            isEnabled = enabled
+        }
+
         private fun isCheckedPosition(position: Int): Boolean {
             if (checkedArrays.isEmpty()) {
                 return false
@@ -94,7 +102,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             return checkedArrays.indexOf(position) != -1
         }
 
-        fun isChecked() = checkedArrays.isNotEmpty()
+        private fun isChecked() = checkedArrays.isNotEmpty()
 
         fun getCheckedItems() = checkedArrays
 
@@ -112,8 +120,6 @@ class IClickerExtApp : AgoraExtAppBase() {
         mAppLoaded = true
         mContainer = parent
         mContainer!!.post {
-            setLayoutParams()
-
             if (mPendingPropertyUpdate) {
                 val properties = if (mPendingProperties != null) mPendingProperties.toString() else ""
                 val cause = if (mPendingCause != null) mPendingCause.toString() else ""
@@ -157,7 +163,16 @@ class IClickerExtApp : AgoraExtAppBase() {
                 mTickCount = tick
             }
 
-            showAnswers(answers.toTypedArray())
+            var myAnswers: Array<String>? = null
+            val student = properties[PROPERTIES_KEY_STUDENT + getLocalUserInfo()?.userUuid].toString()
+            if (student != DELETED) {
+                val reply = Gson().fromJson(student, ReplyItem::class.java)
+                if (reply != null) {
+                    myAnswers = reply.answer
+                }
+            }
+
+            showAnswers(answers.toTypedArray(), myAnswers)
         } else if (mState == STATE_END) {
             val startTime = properties[PROPERTIES_KEY_START_TIME].toString().toLong()
             val endTime = properties[PROPERTIES_KEY_END_TIME].toString().toLong()
@@ -222,26 +237,25 @@ class IClickerExtApp : AgoraExtAppBase() {
         return mLayout
     }
 
-    private fun setLayoutParams() {
-        mLayout.viewTreeObserver.addOnGlobalLayoutListener(
-            object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    Log.d(TAG, "onExtAppLoaded, layout, $this")
-                    if (mLayout.width > 0 && mLayout.height > 0) {
-                        if (mLayout.viewTreeObserver.isAlive) {
-                            mLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        }
+    private fun reLayout() {
+        val params = mLayout.layoutParams as RelativeLayout.LayoutParams
+        mLayout.measure(0, 0)
+        val width = mLayout.measuredWidth
+        val height = mLayout.measuredHeight
+        var top = params.topMargin
+        var left = params.leftMargin
+        val parentWidth = mContainer!!.width
+        val parentHeight = mContainer!!.height
 
-                        // The content layout will be default in the center of parent container view
-                        val width = mContainer!!.width
-                        val height = mContainer!!.height
-                        val params = mLayout.layoutParams as RelativeLayout.LayoutParams
-                        params.leftMargin = (width - mLayout.width) / 2
-                        params.topMargin = (height - mLayout.height) / 2
-                        mLayout.layoutParams = params
-                    }
-                }
-            })
+        if (left + width > parentWidth) {
+            left = parentWidth - width
+        }
+        if (top + height > parentHeight) {
+            top = parentHeight - height
+        }
+        params.leftMargin = left
+        params.topMargin = top
+        mLayout.layoutParams = params
     }
 
     private fun onSubmitClick() {
@@ -252,20 +266,24 @@ class IClickerExtApp : AgoraExtAppBase() {
         }
     }
 
-    private fun submitAnswers() {
+    private fun submitAnswers(doSubmit: Boolean = true) {
         mState = STATE_SUBMITTED
         mSubmitBtn.isSelected = true
         mSubmitBtn.setText(R.string.modify_answer)
+        mAnswerAdapter.setEnabled(false)
         for (view in mAnswersGridView.children) {
             view.isEnabled = false
         }
-        submitProperties()
+        if (doSubmit) {
+            submitProperties()
+        }
     }
 
     private fun modifyAnswers() {
         mState = STATE_START
         mSubmitBtn.isSelected = false
         mSubmitBtn.setText(R.string.submit_answer)
+        mAnswerAdapter.setEnabled(true)
         for (view in mAnswersGridView.children) {
             view.isEnabled = true
         }
@@ -287,9 +305,14 @@ class IClickerExtApp : AgoraExtAppBase() {
             mutableMapOf(), null)
     }
 
-    private fun showAnswers(answers: Array<String>) {
+    private fun showAnswers(answers: Array<String>, my: Array<String>?) {
         mAnswersGridView.post {
             mAnswerAdapter.setData(answers)
+            my?.map { it.toCharArray()[0] }?.map { it - 'A' }?.let {
+                mAnswerAdapter.setChecked(it)
+                mSubmitBtn.isEnabled = true
+                submitAnswers(false)
+            }
             mAnswerAdapter.notifyDataSetChanged()
         }
     }
@@ -320,7 +343,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             myAnswersTextView.text = myAnswers
             myAnswersTextView.isSelected = rightString == myAnswers
 
-            setLayoutParams()
+            reLayout()
         }
     }
 
