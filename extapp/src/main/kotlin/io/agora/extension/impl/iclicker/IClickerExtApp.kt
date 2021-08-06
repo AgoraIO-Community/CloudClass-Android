@@ -149,11 +149,21 @@ class IClickerExtApp : AgoraExtAppBase() {
             Log.i(TAG, "IClicker started: start time:" + mStartTime +
                     ", answers:" + answers)
 
+            val  tick = TimeUtil.currentTimeMillis() / 1000 - mStartTime
+            if (tick > 0) {
+                mTickCount = tick
+            }
+
             showAnswers(answers.toTypedArray())
         } else if (mState == STATE_END) {
+            val startTime = properties[PROPERTIES_KEY_START_TIME].toString().toLong()
+            val endTime = properties[PROPERTIES_KEY_END_TIME].toString().toLong()
             val correctAnswers = (properties[PROPERTIES_KEY_ANSWER] as ArrayList<*>).filterIsInstance<String>()
             val students = properties[PROPERTIES_KEY_STUDENTS] as ArrayList<*>
             val replies = ArrayList<ReplyItem>()
+            mTimerText.post {
+                mTimerText.text = TimeUtil.stringForTimeHMS(endTime - startTime, "%02d:%02d:%02d")
+            }
             students.forEach { uuid ->
                 val student = properties[PROPERTIES_KEY_STUDENT + uuid].toString()
                 if (student != DELETED) {
@@ -318,6 +328,7 @@ class IClickerExtApp : AgoraExtAppBase() {
         private const val TAG = "iClickerExtApp"
         private const val PROPERTIES_KEY_STATE = "state"
         private const val PROPERTIES_KEY_START_TIME = "startTime"
+        private const val PROPERTIES_KEY_END_TIME = "endTime"
         private const val PROPERTIES_KEY_ITEMS = "items"
         private const val PROPERTIES_KEY_ANSWER = "answer"
         private const val PROPERTIES_KEY_STUDENT = "student"
