@@ -1,3 +1,13 @@
+def safeExtGet(prop, key, fallback) {
+    if (rootProject.ext.has(prop)) {
+        def map = rootProject.ext.get(prop)
+        if (map.containsKey(key)) {
+            return map.get(key)
+        }
+    }
+    return fallback
+}
+
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
@@ -32,7 +42,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    sourceSets { main.java.srcDirs += 'src/main/kotlin' }
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            res.srcDirs += 'src/main/resIClicker'
+        }
+    }
 }
 
 dependencies {
@@ -43,5 +58,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    compileOnly "com.google.code.gson:gson:${safeExtGet('dependencies', 'com.google.code.gson:gson', '2.8.6')}"
     compileOnly project(path: ':educontext')
 }

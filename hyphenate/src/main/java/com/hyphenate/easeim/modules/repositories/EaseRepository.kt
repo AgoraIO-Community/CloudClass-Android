@@ -28,9 +28,9 @@ class EaseRepository {
      * 加载本地消息
      */
     fun loadMessages(conversationId: String) {
-        if (isInit) {
+        if(isInit) {
             val conversation = EMClient.getInstance().chatManager()
-                    .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+                .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
             val msgList = conversation.allMessages
             val norMsgList = mutableListOf<EMMessage>()
             for (message in msgList) {

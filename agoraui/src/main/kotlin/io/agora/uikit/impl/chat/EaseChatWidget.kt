@@ -442,7 +442,7 @@ class EaseChatWidget : AgoraAbsWidget(), InputMsgListener, ViewClickListener, Ch
 
     override fun onShowUnread(show: Boolean) {
         ThreadManager.instance.runOnMainThread {
-            if (hideLayout.isVisible)
+            if(hideLayout.isVisible)
                 unreadText.visibility = VISIBLE
             else
                 unreadText.visibility = if(show) VISIBLE else GONE

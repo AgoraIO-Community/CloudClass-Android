@@ -594,7 +594,7 @@ class WhiteBoardManager(
             // as part of the entire whiteboard global state.
             // However, they are translated to "GlobalState"
             // of whiteboard in the current room.
-            if (!state.flexBoardStateEquals(curBoardState)) {
+            if (!state.userDefinedPropertyEquals(curBoardState)) {
                 whiteboardContext.getHandlers()?.forEach {
                     it.onWhiteboardGlobalStateChanged(state.flexBoardState)
                 }
@@ -762,11 +762,11 @@ class WhiteBoardManager(
         boardProxy.pptNextStep()
     }
 
-    fun getFlexWhiteboardGlobalState(): Map<String, Any> {
+    fun getFlexWhiteboardState(): Map<String, Any> {
         return curBoardState?.flexBoardState ?: mapOf()
     }
 
-    fun setFlexWhiteboardGlobalState(properties: Map<String, Any>) {
+    fun setFlexWhiteboardState(properties: Map<String, Any>) {
         val state = curBoardState?.copy() ?: BoardState();
         state.flexBoardState = properties
         boardProxy.setGlobalState(state)
