@@ -638,11 +638,11 @@ abstract class BaseClassActivity : BaseActivity(),
         }
 
         override fun setWhiteboardGlobalState(state: Map<String, Any>) {
-            whiteBoardManager?.setFlexWhiteboardGlobalState(state)
+            whiteBoardManager?.setFlexWhiteboardState(state)
         }
 
         override fun getWhiteboardGlobalState(): Map<String, Any> {
-            return whiteBoardManager?.getFlexWhiteboardGlobalState() ?: mapOf()
+            return whiteBoardManager?.getFlexWhiteboardState() ?: mapOf()
         }
     }
 

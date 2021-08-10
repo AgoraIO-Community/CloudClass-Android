@@ -1,5 +1,6 @@
 package com.hyphenate.easeim.modules.view.ui.widget
 
+import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -49,7 +50,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         private const val TAG = "InputView"
     }
 
-    init {
+    init{
         LayoutInflater.from(context).inflate(R.layout.input_layout, this)
         initView()
     }
@@ -88,7 +89,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             } else
                 false
         }
-        editContent.addTextChangedListener(object : TextWatcher {
+        editContent.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -159,7 +160,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
      */
     private fun sendMessage(message: EMMessage) {
         message.chatType = EMMessage.ChatType.ChatRoom
-        message.setMessageStatusCallback(object : EMCallBack {
+        message.setMessageStatusCallback(object: EMCallBack{
             override fun onSuccess() {
 
             }
@@ -183,7 +184,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.edit_content -> {
-                if (normalFace.visibility != VISIBLE) hideFaceView()
+                if(normalFace.visibility != VISIBLE) hideFaceView()
             }
             R.id.face_view -> clickFace()
             R.id.btn_send -> clickSend()

@@ -151,7 +151,7 @@ public class BoardState extends GlobalState implements Parcelable {
         return flexBoardState;
     }
 
-    public boolean flexBoardStateEquals(BoardState another) {
+    public boolean userDefinedPropertyEquals(BoardState another) {
         if (another != null) {
             return this.flexBoardState.equals(another.flexBoardState);
         } else {

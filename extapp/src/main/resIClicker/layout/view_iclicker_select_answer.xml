@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="20dp">
+
+    <GridView
+        android:id="@+id/answers"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:columnWidth="40dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="16dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/submit_answer"
+        android:enabled="false"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:background="@drawable/btn_bg"
+        android:text="@string/submit_answer"
+        android:textSize="13sp"
+        android:textColor="@color/iclicker_btn_text_color"/>
+
+</LinearLayout>

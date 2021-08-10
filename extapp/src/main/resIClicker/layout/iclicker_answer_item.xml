@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/iclicker_answer_item_text"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_gravity="center"
+    android:textAlignment="gravity"
+    android:gravity="center"
+    android:background="@drawable/iclicker_answer_item_bg"
+    android:textSize="20sp"
+    android:textColor="@color/iclicker_answer_item_text_color" />

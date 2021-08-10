@@ -49,7 +49,7 @@ abstract class AgoraExtAppManager(
             appMap.forEach { (s, any) ->
                 run {
                     Log.d(tag, "ext app initialize id $s, ${any.toString()}")
-                    val state = (roomProperties?.get(keyAppCommon) as Map<String, Any>)?.get(s)
+                    val state = (roomProperties?.get(keyAppCommon) as? Map<String, Any>)?.get(s)
                     val currentTime = TimeUtil.currentTimeMillis()
                     updateExtAppProperties(s, any as? MutableMap<String, Any?>,
                             null, state as? MutableMap<String, Any?>,currentTime)
