@@ -3,10 +3,7 @@ package io.agora.extension.impl.iclicker
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.*
 import androidx.core.view.children
 import com.google.gson.Gson
@@ -15,6 +12,7 @@ import io.agora.extension.R
 import io.agora.extension.TimeUtil
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 class IClickerExtApp : AgoraExtAppBase() {
     private var mContainer: RelativeLayout? = null
@@ -33,6 +31,11 @@ class IClickerExtApp : AgoraExtAppBase() {
     private var mState = ""
     private var mStartTime: Long = 0
     private var mTickCount: Long = 0
+
+    private var mLastPointerId = -1
+    private var mLastTouchX = -1
+    private var mLastTouchY = -2
+    private var mTouched = false
 
     class AnswerAdapter (var context: Context, private var dataSet: Array<String>) : BaseAdapter(){
         private val checkedArrays = mutableSetOf<Int>()
@@ -208,9 +211,49 @@ class IClickerExtApp : AgoraExtAppBase() {
         mTimer.cancel()
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint("ClickableViewAccessibility", "InflateParams")
     override fun onCreateView(content: Context): View {
         mLayout = LayoutInflater.from(content).inflate(R.layout.extapp_iclicker, null, false)
+
+        mLayout.isClickable = true
+        mLayout.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Only detect the touch events of the first pointer
+                    if (mLastPointerId != -1) {
+                        if (mLastPointerId != event.getPointerId(0)) {
+                            // Current touching pointer is not the pointer of current touch event,
+                            // this event will be ignored.
+                            return@setOnTouchListener false
+                        }
+                    } else {
+                        mLastPointerId = event.getPointerId(0)
+                    }
+                    mLastTouchX = event.rawX.toInt()
+                    mLastTouchY = event.rawY.toInt()
+                    mTouched = true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (!mTouched || event.getPointerId(0) != mLastPointerId) {
+                        return@setOnTouchListener false
+                    }
+                    if (!coordinateInRange(event.rawX.toInt(), event.rawY.toInt())) {
+                        return@setOnTouchListener false
+                    }
+                    val x = event.rawX.toInt()
+                    val y = event.rawY.toInt()
+                    reLayout(x, y)
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    Log.d(TAG, "on layout touch up or canceled")
+                    mLastPointerId = -1
+                    mLastTouchX = -1
+                    mLastTouchY = -1
+                    mTouched = false
+                }
+            }
+            false
+        }
 
         mTimerText = mLayout.findViewById(R.id.iclicker_timer_text)
 
@@ -259,6 +302,93 @@ class IClickerExtApp : AgoraExtAppBase() {
                     }
                 }
             })
+    }
+
+    private fun coordinateInRange(x: Int, y: Int): Boolean {
+        val location = IntArray(2)
+        mLayout.getLocationOnScreen(location)
+        val layoutX = location[0]
+        val layoutY = location[1]
+        val layoutW = mLayout.width
+        val layoutH = mLayout.height
+        return layoutX <= x && x <= layoutX + layoutW &&
+                layoutY <= y && y <= layoutY + layoutH
+    }
+
+    private fun reLayout(x: Int, y: Int) {
+        if (mContainer == null) {
+            return
+        }
+        if (mLayout.parent !== mContainer) {
+            return
+        }
+        var diffX: Int = x - mLastTouchX
+        var diffY: Int = y - mLastTouchY
+        if (abs(diffX) < MIN_MOVE_DISTANCE_X) {
+            diffX = 0
+        }
+        if (abs(diffY) < MIN_MOVE_DISTANCE_Y) {
+            diffY = 0
+        }
+        val params = mLayout.layoutParams as RelativeLayout.LayoutParams
+        val width = mLayout.width
+        val height = mLayout.height
+        var top = params.topMargin
+        var left = params.leftMargin
+        val parentWidth = mContainer!!.width
+        val parentHeight = mContainer!!.height
+        if (diffX < 0) {
+            if (left + diffX < 0) {
+                left = 0
+            } else {
+                left += diffX
+            }
+        } else {
+            if (left + width + diffX > parentWidth) {
+                left = parentWidth - width
+            } else {
+                left += diffX
+            }
+        }
+        if (diffY < 0) {
+            if (top + diffY < 0) {
+                top = 0
+            } else {
+                top += diffY
+            }
+        } else {
+            if (top + height + diffY > parentHeight) {
+                top = parentHeight - height
+            } else {
+                top += diffY
+            }
+        }
+        params.leftMargin = left
+        params.topMargin = top
+        mLayout.layoutParams = params
+        mLastTouchX += diffX
+        mLastTouchY += diffY
+    }
+
+    private fun reLayout() {
+        val params = mLayout.layoutParams as RelativeLayout.LayoutParams
+        mLayout.measure(0, 0)
+        val width = mLayout.measuredWidth
+        val height = mLayout.measuredHeight
+        var top = params.topMargin
+        var left = params.leftMargin
+        val parentWidth = mContainer!!.width
+        val parentHeight = mContainer!!.height
+
+        if (left + width > parentWidth) {
+            left = parentWidth - width
+        }
+        if (top + height > parentHeight) {
+            top = parentHeight - height
+        }
+        params.leftMargin = left
+        params.topMargin = top
+        mLayout.layoutParams = params
     }
 
     private fun onSubmitClick() {
@@ -348,7 +478,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             myAnswersTextView.text = myAnswers
             myAnswersTextView.isSelected = rightString == myAnswers
 
-            setLayoutParams()
+            reLayout()
         }
     }
 
@@ -366,5 +496,8 @@ class IClickerExtApp : AgoraExtAppBase() {
         private const val STATE_START = "start"
         private const val STATE_SUBMITTED = "submitted"
         private const val STATE_END = "end"
+
+        private const val MIN_MOVE_DISTANCE_X = 10
+        private const val MIN_MOVE_DISTANCE_Y = 8
     }
 }
