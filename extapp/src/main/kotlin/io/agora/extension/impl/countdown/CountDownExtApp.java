@@ -5,15 +5,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.Map;
 
@@ -31,16 +28,9 @@ public class CountDownExtApp extends AgoraExtAppBase {
     private static final String PROPERTIES_KEY_STATE = "state";
     private static final int MAX_SECONDS = 3600;
 
-    private static final int MIN_MOVE_DISTANCE_X = 10;
-    private static final int MIN_MOVE_DISTANCE_Y = 8;
-
     private RelativeLayout mContainer;
     private View mLayout;
     private CountDownClock mCountDownClock;
-    private int mLastPointerId = -1;
-    private int mLastTouchX = -1;
-    private int mLastTouchY = -2;
-    private boolean mTouched = false;
 
     private int leftSecond;
     private boolean mCountdownStarted = false;
@@ -58,7 +48,6 @@ public class CountDownExtApp extends AgoraExtAppBase {
                 try {
                     value = Integer.parseInt((String) obj);
                 } catch (NumberFormatException e) {
-                    value = 0;
                     e.printStackTrace();
                 }
             }
@@ -72,7 +61,6 @@ public class CountDownExtApp extends AgoraExtAppBase {
                 try {
                     value = Long.parseLong((String) obj);
                 } catch (NumberFormatException e) {
-                    value = 0;
                     e.printStackTrace();
                 }
             }
@@ -82,39 +70,16 @@ public class CountDownExtApp extends AgoraExtAppBase {
     }
 
     @Override
-    public void onExtAppLoaded(@NotNull Context context, @NonNull RelativeLayout container, @Nullable EduContextPool eduContextPool) {
+    public void onExtAppLoaded(@NonNull Context context, @NonNull RelativeLayout parent,
+                               @NonNull View view,  @Nullable EduContextPool eduContextPool) {
+        super.onExtAppLoaded(context, parent, view, eduContextPool);
         Log.d(TAG, "onExtAppLoaded, appId=" + getIdentifier());
         synchronized (this) {
+            setDraggable(true);
             mAppLoaded = true;
+            mContainer = parent;
 
-            mContainer = container;
             mContainer.post(() -> {
-                if (mLayout != null) {
-                    mLayout.getViewTreeObserver().addOnGlobalLayoutListener(
-                            new ViewTreeObserver.OnGlobalLayoutListener() {
-                                @Override
-                                public void onGlobalLayout() {
-                                    Log.d(TAG, "onExtAppLoaded, layout, ${this}");
-                                    if (mLayout.getWidth() > 0 && mLayout.getHeight() > 0) {
-                                        mLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                                        // The content layout will be default in the center of parent container view
-                                        int width = mContainer.getWidth();
-                                        int height = mContainer.getHeight();
-                                        int w = mLayout.getWidth();
-                                        int h = mLayout.getHeight();
-                                        RelativeLayout.LayoutParams params =
-                                                (RelativeLayout.LayoutParams) mLayout.getLayoutParams();
-                                        params.width = w;
-                                        params.height = h;
-                                        params.leftMargin = (width - params.width) / 2;
-                                        params.topMargin = (height - params.height) / 2;
-                                        mLayout.setLayoutParams(params);
-                                    }
-                                }
-                            });
-                }
-
                 if (mPendingPropertyUpdate) {
                     String properties = mPendingProperties != null ? mPendingProperties.toString() : "";
                     String cause = mPendingCause != null ? mPendingCause.toString() : "";
@@ -143,7 +108,7 @@ public class CountDownExtApp extends AgoraExtAppBase {
         }
     }
 
-    @Synchronized private void parseProperties(@NotNull Map<String, Object> properties, @Nullable Map<String, Object> cause) {
+    @Synchronized private void parseProperties(@NonNull Map<String, Object> properties, @Nullable Map<String, Object> cause) {
         // Countdown state means whether the count down is started, stopped or paused
         int state = NumberParser.parseStringIntOrZero(properties.get(PROPERTIES_KEY_STATE));
         boolean started = state == 1;
@@ -194,136 +159,19 @@ public class CountDownExtApp extends AgoraExtAppBase {
         }
     }
 
-    @NotNull
+    @NonNull
     @Override
     @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
-    public View onCreateView(@NotNull Context content) {
+    public View onCreateView(@NonNull Context content) {
         mLayout = LayoutInflater.from(content).inflate(R.layout.extapp_countdown, null, false);
         mLayout.setClickable(true);
-        mLayout.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    // Only detect the touch events of the first pointer
-                    if (mLastPointerId != -1) {
-                        if (mLastPointerId != event.getPointerId(0)) {
-                            // Current touching pointer is not the pointer of current touch event,
-                            // this event will be ignored.
-                            break;
-                        }
-                    } else {
-                        mLastPointerId = event.getPointerId(0);
-                    }
 
-                    mLastTouchX = (int) event.getRawX();
-                    mLastTouchY = (int) event.getRawY();
-                    mTouched = true;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (!mTouched || event.getPointerId(0) != mLastPointerId) {
-                        break;
-                    }
-
-                    if (!coordinateInRange((int) event.getRawX(), (int) event.getRawY())) {
-                        break;
-                    }
-
-                    int x = (int) event.getRawX();
-                    int y = (int) event.getRawY();
-                    reLayout(x, y);
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    Log.d(TAG, "on layout touch up or canceled");
-                    mLastPointerId = -1;
-                    mLastTouchX = -1;
-                    mLastTouchY = -1;
-                    mTouched = false;
-                    break;
-            }
-            return false;
-        });
 
         // parseProperties(getProperties(), null);
         mCountDownClock = mLayout.findViewById(R.id.countdown_clock);
         mCountDownClock.resetCountdownTimer();
 
         return mLayout;
-    }
-
-    private boolean coordinateInRange(int x, int y) {
-        int[] location = new int[2];
-        mLayout.getLocationOnScreen(location);
-        int layoutX = location[0];
-        int layoutY = location[1];
-        int layoutW = mLayout.getWidth();
-        int layoutH = mLayout.getHeight();
-        return (layoutX <= x && x <= layoutX + layoutW) &&
-                (layoutY <= y && y <= layoutY + layoutH);
-    }
-
-    private void reLayout(int x, int y) {
-        if (mLayout == null || mContainer == null) {
-            return;
-        }
-
-        if (mLayout.getParent() != mContainer) {
-            return;
-        }
-
-        int diffX = x - mLastTouchX;
-        int diffY = y - mLastTouchY;
-
-        if (Math.abs(diffX) < MIN_MOVE_DISTANCE_X) {
-            diffX = 0;
-        }
-
-        if (Math.abs(diffY) < MIN_MOVE_DISTANCE_Y) {
-            diffY = 0;
-        }
-
-        RelativeLayout.LayoutParams params =
-                (RelativeLayout.LayoutParams) mLayout.getLayoutParams();
-        int width = params.width;
-        int height = params.height;
-        int top = params.topMargin;
-        int left = params.leftMargin;
-        int parentWidth = mContainer.getWidth();
-        int parentHeight = mContainer.getHeight();
-
-        if (diffX < 0) {
-            if (left + diffX < 0) {
-                left = 0;
-            } else {
-                left += diffX;
-            }
-        } else {
-            if (left + width + diffX > parentWidth) {
-                left = parentWidth - width;
-            } else {
-                left += diffX;
-            }
-        }
-
-        if (diffY < 0) {
-            if (top + diffY < 0) {
-                top = 0;
-            } else {
-                top += diffY;
-            }
-        } else {
-            if (top + height + diffY > parentHeight) {
-                top = parentHeight - height;
-            } else {
-                top += diffY;
-            }
-        }
-
-        params.leftMargin = left;
-        params.topMargin = top;
-        mLayout.setLayoutParams(params);
-
-        mLastTouchX += diffX;
-        mLastTouchY += diffY;
     }
 
     private void startCountDownInSeconds(long seconds) {
