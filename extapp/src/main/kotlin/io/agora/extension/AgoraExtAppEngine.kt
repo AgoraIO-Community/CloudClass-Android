@@ -143,7 +143,7 @@ class AgoraExtAppEngine(
             if (item.contentView != null) {
                 container.addView(item.contentView, RelativeLayout.LayoutParams(
                         item.param.width, item.param.height))
-                item.instance?.onExtAppLoaded(this.context, container, eduContext)
+                item.instance?.onExtAppLoaded(this.context, container, item.contentView!!, eduContext)
             } else {
                 Log.w(tag, "launch ext app: cannot find container or content view, app $identifier")
             }

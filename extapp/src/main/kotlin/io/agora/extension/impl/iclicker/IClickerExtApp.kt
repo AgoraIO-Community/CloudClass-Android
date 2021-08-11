@@ -104,8 +104,11 @@ class IClickerExtApp : AgoraExtAppBase() {
     }
 
     @Synchronized
-    override fun onExtAppLoaded(context: Context, parent: RelativeLayout, eduContextPool: EduContextPool?) {
+    override fun onExtAppLoaded(context: Context, parent: RelativeLayout, view: View, eduContextPool: EduContextPool?) {
+        super.onExtAppLoaded(context, parent, view, eduContextPool)
         Log.d(TAG, "onExtAppLoaded, appId=$identifier")
+        setDraggable(true)
+
         mAppLoaded = true
         mContainer = parent
         mContainer!!.post {
@@ -119,7 +122,6 @@ class IClickerExtApp : AgoraExtAppBase() {
                 mPendingPropertyUpdate = false
             }
         }
-
     }
 
     @Synchronized
