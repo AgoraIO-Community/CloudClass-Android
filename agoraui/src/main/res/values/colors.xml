@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Theme colors -->
+    <!-- Theme color -->
     <color name="theme_blue_light">#357BF6</color>
     <color name="theme_blue_gray">#639AFA</color>
     <color name="theme_white_ivory">#F9F9F9</color>
@@ -12,7 +12,7 @@
     <color name="theme_gray_dialog_bg">#E1EBFC</color>
     <color name="theme_gray_dark">#ECECF1</color>
 
-    <!-- Theme text colors -->
+    <!-- Theme text color -->
     <color name="theme_text_bg_color_gray">#F4F4F8</color>
     <color name="theme_text_color_black">#191919</color>
     <color name="theme_text_color_dark_gray">#586376</color>

@@ -302,7 +302,7 @@ class MainActivity2 : AppCompatActivity(), View.OnClickListener {
                     RtmTokenBuilder.Role.Rtm_User, 0)
             /**默认开始时间是当前时间点；默认持续310秒*/
             val startTime = System.currentTimeMillis()
-            var duration = 1800L
+            var duration = 86400L
             val agoraEduLaunchConfig = AgoraEduLaunchConfig(userName, userUuid, roomName, roomUuid,
                     roleType, roomType, rtmToken, startTime, duration, roomRegion, AgoraBoardFitMode.Retain,
                     null, null)
