@@ -36,4 +36,9 @@ abstract class WhiteboardContext : AbsHandlerPool<IWhiteboardHandler>() {
     abstract fun setPrevPage()
 
     abstract fun setNextPage()
+
+    // State management
+    abstract fun setWhiteboardGlobalState(state: Map<String, Any>)
+
+    abstract fun getWhiteboardGlobalState(): Map<String, Any>
 }

@@ -636,6 +636,14 @@ abstract class BaseClassActivity : BaseActivity(),
         override fun setNextPage() {
             whiteBoardManager?.onBoardNextPage()
         }
+
+        override fun setWhiteboardGlobalState(state: Map<String, Any>) {
+            whiteBoardManager?.setFlexWhiteboardState(state)
+        }
+
+        override fun getWhiteboardGlobalState(): Map<String, Any> {
+            return whiteBoardManager?.getFlexWhiteboardState() ?: mapOf()
+        }
     }
 
     protected val privateChatContext = object : PrivateChatContext() {
@@ -700,8 +708,16 @@ abstract class BaseClassActivity : BaseActivity(),
                     ?: AgoraExtAppErrorCode.ExtAppEngineError
         }
 
-        override fun getRegisteredExtApps(): List<AgoraExtAppInfo> {
-            return extAppManager?.getRegisteredApps() ?: mutableListOf()
+        override fun getRegisteredExtApps(): List<EduContextExtAppInfo> {
+            val result = mutableListOf<EduContextExtAppInfo>()
+            extAppManager?.getRegisteredApps()?.forEach {
+                result.add(EduContextExtAppInfo(
+                    it.appIdentifier,
+                    it.language,
+                    it.imageResource
+                ))
+            }
+            return result
         }
     }
 
@@ -1007,7 +1023,8 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     private fun initExtAppManager(layout: RelativeLayout, config: AgoraEduLaunchConfig) {
-        extAppManager = object : AgoraExtAppManager(config.appId, this, layout, config.roomUuid) {
+        extAppManager = object : AgoraExtAppManager(config.appId, this,
+            layout, config.roomUuid, eduContext) {
             override fun getRoomInfo(): AgoraExtAppRoomInfo {
                 return AgoraExtAppRoomInfo(
                         config.roomUuid,

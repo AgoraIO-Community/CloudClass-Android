@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="25dp"
+    android:paddingHorizontal="55dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:text="@string/number_of_respondents"/>
+        <TextView
+            android:id="@+id/number_of_respondents"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+    <Space android:layout_width="match_parent" android:layout_height="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:text="@string/accuracy"/>
+        <TextView
+            android:id="@+id/accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+    <Space android:layout_width="match_parent" android:layout_height="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:text="@string/correct_answers"/>
+        <TextView
+            android:id="@+id/correct_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+    <Space android:layout_width="match_parent" android:layout_height="10dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:text="@string/my_answers"/>
+        <TextView
+            android:id="@+id/my_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/iclicker_answer_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

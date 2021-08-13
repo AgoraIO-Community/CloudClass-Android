@@ -102,6 +102,9 @@ dependencies {
         implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', rootProject.ext.android.boardSDKVersion)}"
 
         implementation project(path: ':agoraui')
+        implementation project(path: ':educontext')
+        implementation project(path: ':widget')
+        implementation project(path: ':extapp')
     } else {
         logger.warn('dependAAR is false')
         implementation project(path: ':edu')

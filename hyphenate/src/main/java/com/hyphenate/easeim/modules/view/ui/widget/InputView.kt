@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.core.view.isVisible
 import com.hyphenate.EMCallBack
 import com.hyphenate.EMError
 import com.hyphenate.chat.EMClient
@@ -23,7 +22,6 @@ import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.adapter.EmojiGridAdapter
 import com.hyphenate.util.EMLog
-import org.json.JSONObject
 
 /**
  * 输入框控件
@@ -52,7 +50,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         private const val TAG = "InputView"
     }
 
-    init {
+    init{
         LayoutInflater.from(context).inflate(R.layout.input_layout, this)
         initView()
     }
@@ -91,7 +89,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             } else
                 false
         }
-        editContent.addTextChangedListener(object : TextWatcher {
+        editContent.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -133,6 +131,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
             Toast.makeText(context, context.getString(R.string.send_message_failed) + ":" + context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
             return
         }
+
         val msgContent = editContent.text.toString()
         if (msgContent.isNotEmpty()) {
             val message = EMMessage.createTxtSendMessage(msgContent, chatRoomId)
@@ -161,7 +160,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
      */
     private fun sendMessage(message: EMMessage) {
         message.chatType = EMMessage.ChatType.ChatRoom
-        message.setMessageStatusCallback(object : EMCallBack {
+        message.setMessageStatusCallback(object: EMCallBack{
             override fun onSuccess() {
 
             }
@@ -185,7 +184,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.edit_content -> {
-                if (normalFace.visibility != VISIBLE) hideFaceView()
+                if(normalFace.visibility != VISIBLE) hideFaceView()
             }
             R.id.face_view -> clickFace()
             R.id.btn_send -> clickSend()

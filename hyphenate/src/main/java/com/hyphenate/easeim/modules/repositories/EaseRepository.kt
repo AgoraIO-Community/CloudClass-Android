@@ -30,13 +30,14 @@ class EaseRepository {
     fun loadMessages(conversationId: String) {
         if(isInit) {
             val conversation = EMClient.getInstance().chatManager()
-                    .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
-            val msgList = conversation?.allMessages
+                .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+            val msgList = conversation.allMessages
             val norMsgList = mutableListOf<EMMessage>()
             msgList?.forEach { message ->
                 if (message.type == EMMessage.Type.TXT || message.type == EMMessage.Type.CUSTOM)
                     norMsgList.add(message)
             }
+
             for (listener in listeners) {
                 listener.loadMessageFinish(norMsgList)
             }

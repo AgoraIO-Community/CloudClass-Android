@@ -71,7 +71,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    api project(path: ':agoraui')
+    implementation project(path: ':agoraui')
+    implementation project(path: ':educontext')
+    implementation project(path: ':widget')
+    implementation project(path: ':extapp')
 
     implementation "com.google.android.material:material:${safeExtGet('dependencies', 'com.google.android.material:material', '1.2.1')}"
 
