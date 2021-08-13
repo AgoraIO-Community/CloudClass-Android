@@ -281,12 +281,13 @@ class IClickerExtApp : AgoraExtAppBase() {
 
         val replyItem = getLocalUserInfo()?.userUuid?.let {
             ReplyItem(
+                mStartTime.toString(),
                 (TimeUtil.currentTimeMillis() / 1000).toString(),
                 myAnswers
             )
         }
         updateProperties(mutableMapOf(PROPERTIES_KEY_STUDENT + getLocalUserInfo()?.userUuid to replyItem),
-            mutableMapOf(), null)
+            mutableMapOf("startTime" to mStartTime.toString()), null)
     }
 
     private fun showAnswers(answers: Array<String>, my: Array<String>?) {
