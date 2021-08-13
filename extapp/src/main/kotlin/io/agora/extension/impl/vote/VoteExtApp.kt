@@ -242,12 +242,13 @@ class VoteExtApp : AgoraExtAppBase() {
     private fun submitVote() {
         val replyItem = getLocalUserInfo()?.userUuid?.let {
             ReplyItem(
+                mStartTime.toString(),
                 TimeUtil.currentTimeMillis().toString(),
                 mChoiceAdapter.getCheckedItems().toTypedArray()
             )
         }
         updateProperties(mutableMapOf(PROPERTIES_KEY_STUDENT + getLocalUserInfo()?.userUuid to replyItem),
-            mutableMapOf(), null)
+            mutableMapOf("startTime" to mStartTime.toString()), null)
     }
 
     private fun showVote(title: String, multiChoice: Boolean) {
