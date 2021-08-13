@@ -167,8 +167,8 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
             }
 
             val params = it.layoutParams as ViewGroup.MarginLayoutParams
-            val width = params.width
-            val height = params.height
+            val width = it.width
+            val height = it.height
             var top = params.topMargin
             var left = params.leftMargin
             val parentWidth: Int = parent?.width ?: 0
