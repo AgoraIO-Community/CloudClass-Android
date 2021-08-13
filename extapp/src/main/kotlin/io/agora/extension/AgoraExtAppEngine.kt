@@ -263,8 +263,13 @@ class AgoraExtAppEngine(
     }
 
     fun dispose() {
+        val launchedAppId = mutableListOf<String>()
         launchedExtAppMap.forEach { item ->
-            stopExtApp(item.value.appIdentifier)
+            launchedAppId.add(item.value.appIdentifier)
+        }
+
+        launchedAppId.forEach { id ->
+            stopExtApp(id)
         }
     }
 }
