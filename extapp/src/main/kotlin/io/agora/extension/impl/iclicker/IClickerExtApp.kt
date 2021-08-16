@@ -317,7 +317,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             val rightString = right.sorted().reduce { acc, s -> acc + s }
             val sumCorrect = submits.filter { it.answer.sorted().reduce { acc, s -> acc + s } == rightString }.size
             val respondents = submits.size.toString() + "/" + total
-            val accuracy = if (sumCorrect != 0) (sumCorrect * 100 / submits.size).toString() + "%" else "0%"
+            val accuracy = if (sumCorrect != 0) (sumCorrect * 100 / total).toString() + "%" else "0%"
 
             result.findViewById<TextView>(R.id.number_of_respondents).text = respondents
             result.findViewById<TextView>(R.id.accuracy).text = accuracy
