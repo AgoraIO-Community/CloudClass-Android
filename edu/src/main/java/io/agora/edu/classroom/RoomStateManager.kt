@@ -116,6 +116,8 @@ class RoomStateManager(
 
     private val flexProps: FlexProps
 
+    // when initialization, startTime from this key
+    // when roomStatus is Start, refreshStartTime from roomStatus
     private val scheduleKey = "schedule"
     private val startTimeKey = "startTime"
 
@@ -134,7 +136,7 @@ class RoomStateManager(
             override fun onSuccess(res: EduRoomStatus?) {
                 res?.let {
                     if (it.courseState != EduRoomState.INIT) {
-                        refreshStartTime()?.let {
+                        parseStartTime(scheduleKey)?.let {
                             launchConfig.startTime = it
                         }
                     }
@@ -181,11 +183,11 @@ class RoomStateManager(
         return null
     }
 
-    private fun refreshStartTime(): Long? {
-        val scheduleJson = getProperty(eduRoom!!.roomProperties, scheduleKey)
-        val scheduleMap: MutableMap<String, Any>? = Gson().fromJson(scheduleJson,
+    private fun parseStartTime(key: String): Long? {
+        val roomJson = getProperty(eduRoom!!.roomProperties, key)
+        val roomMap: MutableMap<String, Any>? = Gson().fromJson(roomJson,
                 object : TypeToken<MutableMap<String, Any>>() {}.type)
-        return getProperty(scheduleMap, startTimeKey)?.toDouble()?.toLong()
+        return getProperty(roomMap, startTimeKey)?.toDouble()?.toLong()
     }
 
     fun updateClassState(event: EduRoomChangeType) {
@@ -194,9 +196,8 @@ class RoomStateManager(
                 override fun onSuccess(res: EduRoomStatus?) {
                     res?.let {
                         if (res.courseState == EduRoomState.START) {
-                            refreshStartTime()?.let {
-                                launchConfig.startTime = it
-                            }
+                            launchConfig.startTime = it.startTime
+                            preCheckData.startTime = it.startTime
                             setClassState(EduRoomState.START,
                                     preCheckData.startTime,
                                     preCheckData.duration,
