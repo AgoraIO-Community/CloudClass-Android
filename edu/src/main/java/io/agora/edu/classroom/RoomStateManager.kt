@@ -135,10 +135,14 @@ class RoomStateManager(
         eduRoom?.getRoomStatus(object : EduCallback<EduRoomStatus> {
             override fun onSuccess(res: EduRoomStatus?) {
                 res?.let {
-                    if (it.courseState != EduRoomState.INIT) {
-                        parseStartTime(scheduleKey)?.let {
-                            launchConfig.startTime = it
+                    if (it.courseState == EduRoomState.INIT) {
+                        parseStartTime(scheduleKey)?.let { startTime ->
+                            launchConfig.startTime = startTime
+                            preCheckData.startTime = startTime
                         }
+                    } else {
+                        launchConfig.startTime = it.startTime
+                        preCheckData.startTime = it.startTime
                     }
                     setClassState(
                             it.courseState,
