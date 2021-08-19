@@ -1,5 +1,6 @@
 package io.agora.edu.classroom
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
@@ -7,6 +8,7 @@ import android.widget.RelativeLayout
 import com.herewhite.sdk.domain.SDKError
 import io.agora.edu.R
 import com.herewhite.sdk.domain.SceneState
+import io.agora.edu.classroom.view.ActivityFitLayout
 import io.agora.edu.launch.AgoraEduCourseware
 import io.agora.edu.launch.AgoraEduSDK
 import io.agora.education.api.base.EduError
@@ -29,6 +31,8 @@ import io.agora.uikit.impl.container.AgoraContainerType
 
 class SmallClassActivity : BaseClassActivity() {
     private val tag = "SmallClassActivity"
+
+    private var classContainer: RelativeLayout? = null
 
     private val whiteBoardManagerEventListener = object : WhiteBoardManagerEventListener {
         override fun onWhiteBoardJoinSuccess(config: WhiteboardDrawingConfig) {
@@ -76,23 +80,26 @@ class SmallClassActivity : BaseClassActivity() {
                     if (EduDebugMode.useDebugUI) {
                         Log.i(tag, "create debug ui container")
                         container = AgoraUIContainer.create(
-                                contentLayout!!,
-                                0, 0,
-                                contentLayout!!.width,
-                                contentLayout!!.height,
-                                AgoraContainerType.Debug,
-                                eduContext,
-                                AgoraContainerConfig(listOf()))
+                            classContainer!!,
+
+                            0, 0,
+                            classContainer!!.width,
+                            classContainer!!.height,
+                            AgoraContainerType.Debug,
+                            eduContext,
+                            AgoraContainerConfig(listOf()))
                     } else {
-                        container = AgoraUIContainer.create(contentLayout!!,
-                                0, 0, contentLayout!!.width,
-                                contentLayout!!.height,
-                                AgoraContainerType.SmallClass, eduContext,
-                                AgoraContainerConfig(chatTabConfigs =
-                                listOf(
-                                        ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
-                                        ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
-                                )))
+                        container = AgoraUIContainer.create(
+                            classContainer!!,
+                            0, 0,
+                            classContainer!!.width,
+                            classContainer!!.height,
+                            AgoraContainerType.SmallClass, eduContext,
+                            AgoraContainerConfig(
+                                chatTabConfigs = listOf(
+                                    ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
+                                    ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
+                            )))
                     }
 
                     whiteboardContext.getHandlers()?.forEach {
@@ -121,7 +128,22 @@ class SmallClassActivity : BaseClassActivity() {
     }
 
     override fun onContentViewLayout(): RelativeLayout {
-        contentLayout = RelativeLayout(this)
+
+        RelativeLayout(this).let { container ->
+            container.setBackgroundColor(Color.BLACK)
+            contentLayout = container
+
+            ActivityFitLayout(this).let {
+                classContainer = it
+                it.setBackgroundColor(resources.getColor(R.color.gray_F9F9FC))
+                val param = RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.MATCH_PARENT)
+                param.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
+                container.addView(it, param)
+            }
+        }
+
         return contentLayout!!
     }
 

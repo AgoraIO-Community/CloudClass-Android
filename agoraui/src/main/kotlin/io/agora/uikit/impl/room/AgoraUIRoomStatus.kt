@@ -18,7 +18,6 @@ import io.agora.uikit.R
 import io.agora.uikit.component.dialog.AgoraUIDialog
 import io.agora.uikit.component.dialog.AgoraUIDialogBuilder
 import io.agora.uikit.educontext.handlers.RoomHandler
-import io.agora.uikit.impl.setting.AgoraUIDeviceSettingDialog
 
 @SuppressLint("InflateParams")
 class AgoraUIRoomStatus(parent: ViewGroup,
@@ -35,8 +34,6 @@ class AgoraUIRoomStatus(parent: ViewGroup,
     private val className: AppCompatTextView
     private val classStateText: AppCompatTextView
     private val classTimeText: AppCompatTextView
-    private val settingBtn: AppCompatImageView
-    private val uploadLogBtn: AppCompatImageView
 
     private var destroyClassDialog: AgoraUIDialog? = null
 
@@ -63,9 +60,6 @@ class AgoraUIRoomStatus(parent: ViewGroup,
 
         override fun onLogUploaded(logData: String) {
             super.onLogUploaded(logData)
-            //set log updated dialog
-            Log.d("updated log", "log updated ->$logData")
-            setUploadLogDialog(logData)
         }
 
         override fun onFlexRoomPropsInitialized(properties: MutableMap<String, Any>) {
@@ -90,19 +84,6 @@ class AgoraUIRoomStatus(parent: ViewGroup,
         className = contentView.findViewById(R.id.agora_status_bar_classroom_name)
         classStateText = contentView.findViewById(R.id.agora_status_bar_class_started_text)
         classTimeText = contentView.findViewById(R.id.agora_status_bar_class_time_text)
-        settingBtn = contentView.findViewById(R.id.agora_status_bar_setting_icon)
-        uploadLogBtn = contentView.findViewById(R.id.agora_status_bar_upload_log_icon)
-
-        settingBtn.setOnClickListener {
-//            showLeaveDialog()
-            showDeviceSettingDialog()
-        }
-
-        uploadLogBtn.setOnClickListener {
-            if (eduContext != null) {
-                eduContext.roomContext()?.uploadLog()
-            }
-        }
 
         setNetworkState(EduContextNetworkState.Unknown)
         eduContext?.roomContext()?.addHandler(eventHandler)
@@ -119,16 +100,6 @@ class AgoraUIRoomStatus(parent: ViewGroup,
                     .build()
                     .show()
         }
-    }
-
-    private fun showDeviceSettingDialog() {
-        settingBtn.isActivated = true
-        val dialog = AgoraUIDeviceSettingDialog(settingBtn.context, settingBtn, Runnable { showLeaveDialog() },
-                eduContext)
-        dialog.setOnDismissListener {
-            settingBtn.isActivated = false
-        }
-        dialog.show()
     }
 
     private fun destroyClassDialog() {
@@ -192,17 +163,6 @@ class AgoraUIRoomStatus(parent: ViewGroup,
     fun setNetworkState(state: EduContextNetworkState) {
         networkImage.post {
             networkImage.setImageResource(getNetworkStateIcon(state))
-        }
-    }
-
-    fun setUploadLogDialog(logData: String) {
-        uploadLogBtn.post {
-            AgoraUIDialogBuilder(uploadLogBtn.context)
-                    .title(uploadLogBtn.context.resources.getString(R.string.agora_dialog_sent_log_success))
-                    .message(logData)
-                    .positiveText(uploadLogBtn.context.resources.getString(R.string.confirm))
-                    .build()
-                    .show()
         }
     }
 

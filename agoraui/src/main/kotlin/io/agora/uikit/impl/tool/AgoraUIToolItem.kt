@@ -28,7 +28,7 @@ enum class AgoraUIApplianceType {
 }
 
 enum class AgoraUIToolType {
-    All, Whiteboard
+    All, Whiteboard, Refact
 }
 
 object AgoraUIToolItemList {
@@ -65,7 +65,6 @@ object AgoraUIToolItemList {
                     AgoraUIToolItem(AgoraUIToolItemType.Color, R.drawable.agora_tool_icon_color, true),
                     AgoraUIToolItem(AgoraUIToolItemType.Text, R.drawable.agora_tool_icon_text, true),
                     AgoraUIToolItem(AgoraUIToolItemType.Eraser, R.drawable.agora_tool_icon_eraser, false),
-                    // AgoraUIToolItem(AgoraUIToolItemType.Toolbox, R.drawable.agora_tool_icon_toolbox, true),
                     AgoraUIToolItem(AgoraUIToolItemType.Roster, R.drawable.agora_tool_icon_userlist, true))
         } else {
             mutableListOf(
@@ -79,14 +78,18 @@ object AgoraUIToolItemList {
         }
     }
 
+    fun getRefactorList(): MutableList<AgoraUIToolItem> {
+        return mutableListOf(
+            AgoraUIToolItem(AgoraUIToolItemType.Clicker, R.drawable.agora_tool_icon_clicker, false),
+            AgoraUIToolItem(AgoraUIToolItemType.Select, R.drawable.agora_tool_icon_select, false),
+            AgoraUIToolItem(AgoraUIToolItemType.Pen, R.drawable.agora_tool_icon_pen, true),
+            AgoraUIToolItem(AgoraUIToolItemType.Color, R.drawable.agora_tool_icon_color, true),
+            AgoraUIToolItem(AgoraUIToolItemType.Text, R.drawable.agora_tool_icon_text, true),
+            AgoraUIToolItem(AgoraUIToolItemType.Eraser, R.drawable.agora_tool_icon_eraser, false))
+    }
+
     fun getRosterOnlyList(): MutableList<AgoraUIToolItem> {
-        return if (AgoraExtAppEngine.getRegisteredExtApps().isNotEmpty()) {
-            mutableListOf(
-//                    AgoraUIToolItem(AgoraUIToolItemType.Toolbox, R.drawable.agora_tool_icon_toolbox, true),
-                    AgoraUIToolItem(AgoraUIToolItemType.Roster, R.drawable.agora_tool_icon_userlist, true))
-        } else {
-            mutableListOf(AgoraUIToolItem(AgoraUIToolItemType.Roster, R.drawable.agora_tool_icon_userlist, true))
-        }
+        return mutableListOf(AgoraUIToolItem(AgoraUIToolItemType.Roster, R.drawable.agora_tool_icon_userlist, true))
     }
 }
 

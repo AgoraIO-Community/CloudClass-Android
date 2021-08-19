@@ -1,14 +1,14 @@
 package io.agora.edu.classroom
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.view.WindowManager
+import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import io.agora.agoraactionprocess.AgoraActionListener
 import io.agora.agoraactionprocess.AgoraActionMsgRes
 import io.agora.base.callback.Callback
@@ -57,7 +57,7 @@ import io.agora.rte.data.RteRemoteVideoStats
 import io.agora.uikit.impl.container.AgoraUI1v1Container
 import io.agora.uikit.impl.container.AgoraUILargeClassContainer
 import io.agora.uikit.impl.container.AgoraUISmallClassContainer
-import io.agora.uikit.impl.users.AgoraUIRoster
+import io.agora.uikit.impl.users.RosterType
 import io.agora.uikit.interfaces.protocols.IAgoraUIContainer
 
 abstract class BaseClassActivity : BaseActivity(),
@@ -73,6 +73,8 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     private val tag = "BaseClassActivity"
+
+    private lateinit var windowController: WindowInsetsControllerCompat
 
     protected var launchConfig: AgoraEduLaunchConfig? = null
     protected var preCheckData: RoomPreCheckRes? = null
@@ -594,8 +596,8 @@ abstract class BaseClassActivity : BaseActivity(),
             userContext.getHandlers()?.forEach { handler ->
                 handler.onRoster(this@BaseClassActivity, anchor,
                         when (container) {
-                            is AgoraUISmallClassContainer -> AgoraUIRoster.RosterType.SmallClass.value()
-                            is AgoraUILargeClassContainer -> AgoraUIRoster.RosterType.LargeClass.value()
+                            is AgoraUISmallClassContainer -> RosterType.SmallClass.value()
+                            is AgoraUILargeClassContainer -> RosterType.LargeClass.value()
                             else -> null
                         })
             }
@@ -1053,8 +1055,11 @@ abstract class BaseClassActivity : BaseActivity(),
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+
         super.onCreate(savedInstanceState)
         val view = onContentViewLayout()
         view.fitsSystemWindows = true
@@ -1088,41 +1093,18 @@ abstract class BaseClassActivity : BaseActivity(),
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        isNavigationBarChanged(this, object : OnNavigationStateListener {
-            override fun onNavigationState(isShowing: Boolean, b: Int) {
-                Log.e(tag, "isNavigationBarExist->$isShowing")
-                contentLayout?.viewTreeObserver?.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        contentLayout?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
-                        val w = contentLayout!!.width
-                        val h = contentLayout!!.height
-                        container?.resize(contentLayout!!, 0, 0, w, h)
-                    }
-                })
-            }
-        })
-    }
 
-    private fun isNavigationBarChanged(
-            activity: Activity,
-            onNavigationStateListener: OnNavigationStateListener?
-    ) {
-        val height: Int = getNavigationBarHeight(activity)
-        ViewCompat.setOnApplyWindowInsetsListener(activity.window.decorView) { v, insets ->
-            var isShowing = false
-            var l = 0
-            var r = 0
-            var b = 0
-            if (insets != null) {
-                l = insets.systemWindowInsetLeft
-                r = insets.systemWindowInsetRight
-                b = insets.systemWindowInsetBottom
-                isShowing = l == height || r == height || b == height
+        val flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window?.decorView?.systemUiVisibility = flag
+        window?.decorView?.setOnSystemUiVisibilityChangeListener { visibility ->
+            if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                window?.decorView?.systemUiVisibility = flag
             }
-            if (onNavigationStateListener != null && b <= height) {
-                onNavigationStateListener.onNavigationState(isShowing, b)
-            }
-            ViewCompat.onApplyWindowInsets(v, insets)
         }
     }
 

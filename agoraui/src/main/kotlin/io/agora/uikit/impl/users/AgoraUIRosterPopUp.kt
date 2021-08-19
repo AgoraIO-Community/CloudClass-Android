@@ -1,56 +1,57 @@
 package io.agora.uikit.impl.users
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
-import android.graphics.Color
 import android.graphics.Rect
 import android.text.SpannableString
 import android.text.style.ImageSpan
+import android.util.AttributeSet
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckedTextView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.*
 import io.agora.educontext.*
 import io.agora.uikit.R
 import io.agora.uikit.educontext.handlers.UserHandler
-import io.agora.uikit.impl.AbsComponent
-import io.agora.uikit.impl.container.AgoraUIConfig.clickInterval
+import io.agora.uikit.impl.container.AgoraUIConfig
 import io.agora.uikit.util.TextPinyinUtil
-import kotlin.Comparator
-import kotlin.collections.ArrayList
 import kotlin.math.min
 
-class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
-    private val tag = "AgoraUIRoster"
+class AgoraUIRosterPopUp : RelativeLayout {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attr: AttributeSet) : super(context, attr)
+    constructor(context: Context, attr: AttributeSet, defStyleAttr: Int) : super(context, attr, defStyleAttr)
 
-    private var rosterDialog: RosterDialog? = null
+    private val tag = "AgoraUIRosterPopUp"
     private var userList: MutableList<EduContextUserDetailInfo> = mutableListOf()
+
+    private var parent: ViewGroup? = null
+    private var contentWidth = 0
+    private var contentHeight = 0
+    private var marginRight = 0
+    private var marginBottom = 0
+
+    private var recyclerView: RecyclerView? = null
+    private var userListAdapter: UserListAdapter? = null
+    private var tvTeacherName: TextView? = null
+
+    private var eduContext: EduContextPool? = null
+    private var rosterType = RosterType.SmallClass
+
+    var closeRunnable: Runnable? = null
 
     private val handler = object : UserHandler() {
         override fun onUserListUpdated(list: MutableList<EduContextUserDetailInfo>) {
             super.onUserListUpdated(list)
             val list1 = sort(list)
             updateUserList(list1)
-            rosterDialog?.updateUserList(userList)
-        }
-
-        override fun onRoster(context: Context, anchor: View, type: Int?) {
-            when (type) {
-                RosterType.SmallClass.value() -> RosterType.SmallClass
-                RosterType.LargeClass.value() -> RosterType.LargeClass
-                else -> null
-            }?.let { rosterType ->
-                dismiss()
-                RosterDialog(context, rosterType, eduContext, userList).let { dialog ->
-                    dialog.setOnDismissListener(dismissListener)
-                    rosterDialog = dialog
-                    showDialog(anchor)
-                }
-            }
+            updateUserListAdapter(userList)
         }
 
         override fun onFlexUserPropsChanged(changedProperties: MutableMap<String, Any>, properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?, fromUser: EduContextUserDetailInfo, operator: EduContextUserInfo?) {
@@ -59,13 +60,114 @@ class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
         }
     }
 
-    companion object {
-        var dismissListener: DialogInterface.OnDismissListener? = null
+    fun setEduContext(eduContextPool: EduContextPool?) {
+        this.eduContext = eduContextPool
+        this.eduContext?.userContext()?.addHandler(handler)
+    }
+
+    fun initView(parent: ViewGroup, right: Int, bottom: Int) {
+        this.parent = parent
+        marginRight = right
+        marginBottom = bottom
+    }
+
+    fun setType(type: RosterType) {
+        this.rosterType = type
+    }
+
+    fun show() {
+        this.parent?.let { parent ->
+            LayoutInflater.from(parent.context).inflate(getLayoutRes(this.rosterType), this)
+            parent.addView(this)
+            val param = this.layoutParams as MarginLayoutParams
+            contentWidth = getLayoutWidth(rosterType)
+            param.width = contentWidth
+            contentHeight = getLayoutHeight(rosterType)
+            param.height = contentHeight
+            param.rightMargin = marginRight
+            param.bottomMargin = marginBottom
+            param.leftMargin = parent.width - marginRight - contentWidth
+            param.topMargin = parent.height - marginBottom - contentHeight
+            this.layoutParams = param
+
+            recyclerView = findViewById(R.id.recycler_view)
+            tvTeacherName = findViewById(R.id.tv_teacher_name)
+            findViewById<View>(R.id.iv_close).setOnClickListener {
+                dismiss()
+                closeRunnable?.run()
+            }
+
+            userListAdapter = UserListAdapter(object : UserItemClickListener {
+                override fun onCameraCheckChanged(item: EduContextUserDetailInfo, checked: Boolean) {
+                    eduContext?.userContext()?.muteVideo(!checked)
+                }
+
+                override fun onMicCheckChanged(item: EduContextUserDetailInfo, checked: Boolean) {
+                    eduContext?.userContext()?.muteAudio(!checked)
+                }
+            })
+
+            recyclerView?.addItemDecoration(
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
+                    setDrawable(ContextCompat.getDrawable(context, R.drawable.agora_userlist_divider)!!)
+                })
+
+            recyclerView?.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                val itemHeight = context.resources.getDimensionPixelSize(R.dimen.agora_userlist_row_height)
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                    val layoutParams = view.layoutParams
+                    layoutParams.width = parent.measuredWidth
+                    layoutParams.height = itemHeight
+                    view.layoutParams = layoutParams
+                    super.getItemOffsets(outRect, view, parent, state)
+                }
+            })
+
+            // remove the animator when refresh item
+            recyclerView?.itemAnimator?.addDuration = 0
+            recyclerView?.itemAnimator?.changeDuration = 0
+            recyclerView?.itemAnimator?.moveDuration = 0
+            recyclerView?.itemAnimator?.removeDuration = 0
+            (recyclerView?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+
+            recyclerView?.adapter = userListAdapter
+            val studentList = filterStudent(userList)
+            userListAdapter?.submitList(ArrayList(studentList))
+        }
+    }
+
+    private fun getLayoutRes(type: RosterType) = when (type) {
+        RosterType.SmallClass -> R.layout.agora_userlist_dialog_layout
+        RosterType.LargeClass -> R.layout.agora_userlist_largeclass_dialog_layout
+    }
+
+    private fun getLayoutWidth(type: RosterType): Int = resources.getDimensionPixelSize(
+        when (type) {
+            RosterType.SmallClass -> R.dimen.agora_userlist_dialog_width
+            RosterType.LargeClass -> R.dimen.agora_userlist_largeclass_dialog_width
+        })
+
+    private fun getLayoutHeight(type: RosterType): Int = resources.getDimensionPixelSize(
+        when (type) {
+            RosterType.SmallClass -> R.dimen.agora_userlist_dialog_height
+            RosterType.LargeClass -> R.dimen.agora_userlist_dialog_height
+        }
+    )
+
+    fun dismiss() {
+        parent?.let { parent ->
+            var contains = false
+            parent.forEach {
+                if (it == this) contains = true
+            }
+            if (contains) parent.removeView(this)
+            this.removeAllViews()
+        }
     }
 
     fun sort(list: MutableList<EduContextUserDetailInfo>): MutableList<EduContextUserDetailInfo> {
         var coHosts = mutableListOf<EduContextUserDetailInfo>()
-        var users = mutableListOf<EduContextUserDetailInfo>()
+        val users = mutableListOf<EduContextUserDetailInfo>()
         list.forEach {
             if (it.coHost) {
                 coHosts.add(it)
@@ -139,152 +241,9 @@ class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
         }
     }
 
-    private fun isShowing(): Boolean {
-        return rosterDialog?.isShowing ?: false
-    }
-
-    private fun showDialog(anchor: View) {
-        rosterDialog?.adjustPosition(anchor)
-        rosterDialog?.show()
-    }
-
-    private fun dismiss() {
-        if (isShowing()) {
-            rosterDialog!!.setOnDismissListener(null)
-            rosterDialog!!.dismiss()
-            rosterDialog = null
-        }
-    }
-
-    init {
-        eduContext?.userContext()?.addHandler(handler)
-    }
-
-    override fun setRect(rect: Rect) {
-
-    }
-}
-
-class RosterDialog(
-        appContext: Context,
-        private val type: RosterType,
-        private val eduContext: EduContextPool?,
-        private val userList: MutableList<EduContextUserDetailInfo>
-) : Dialog(appContext, R.style.agora_dialog) {
-
-    private val recyclerView: RecyclerView
-    private val userListAdapter: UserListAdapter
-    private val tvTeacherName: TextView
-
-    init {
-        setCancelable(true)
-        setCanceledOnTouchOutside(true)
-
-        setContentView(getLayoutRes())
-        recyclerView = findViewById(R.id.recycler_view)
-        tvTeacherName = findViewById(R.id.tv_teacher_name)
-        findViewById<View>(R.id.iv_close).setOnClickListener { dismiss() }
-
-        userListAdapter = UserListAdapter(object : UserItemClickListener {
-            override fun onCameraCheckChanged(item: EduContextUserDetailInfo, checked: Boolean) {
-                eduContext?.userContext()?.muteVideo(!checked)
-            }
-
-            override fun onMicCheckChanged(item: EduContextUserDetailInfo, checked: Boolean) {
-                eduContext?.userContext()?.muteAudio(!checked)
-            }
-        })
-
-        recyclerView.addItemDecoration(
-                DividerItemDecoration(context, DividerItemDecoration.VERTICAL).apply {
-                    setDrawable(ContextCompat.getDrawable(context, R.drawable.agora_userlist_divider)!!)
-                })
-
-        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            val itemHeight = context.resources.getDimensionPixelSize(R.dimen.agora_userlist_row_height)
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                val layoutParams = view.layoutParams
-                layoutParams.width = parent.measuredWidth
-                layoutParams.height = itemHeight
-                view.layoutParams = layoutParams
-                super.getItemOffsets(outRect, view, parent, state)
-            }
-        })
-
-        // remove the animator when refresh item
-        recyclerView.itemAnimator?.addDuration = 0
-        recyclerView.itemAnimator?.changeDuration = 0
-        recyclerView.itemAnimator?.moveDuration = 0
-        recyclerView.itemAnimator?.removeDuration = 0
-        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-
-        recyclerView.adapter = userListAdapter
-        val studentList = filterStudent(userList)
-        userListAdapter.submitList(ArrayList(studentList))
-    }
-
-    private fun getLayoutRes() = when (this.type) {
-        RosterType.SmallClass -> R.layout.agora_userlist_dialog_layout
-        RosterType.LargeClass -> R.layout.agora_userlist_largeclass_dialog_layout
-    }
-
-    fun adjustPosition(anchor: View) {
-        when (type) {
-            RosterType.SmallClass -> {
-                adjustPosition(anchor,
-                        context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_width),
-                        context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_height))
-            }
-
-            RosterType.LargeClass -> {
-                adjustPosition(anchor,
-                        context.resources.getDimensionPixelSize(R.dimen.agora_userlist_largeclass_dialog_width),
-                        context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_height))
-            }
-        }
-    }
-
-    @SuppressLint("InflateParams")
-    private fun createItemViewHolder(type: RosterType, parent: ViewGroup, listener: UserItemClickListener): BaseUserHolder {
-        return when (type) {
-            RosterType.SmallClass -> {
-                SmallClassUserHolder(LayoutInflater.from(parent.context)
-                        .inflate(R.layout.agora_userlist_dialog_list_item, null), listener)
-            }
-            RosterType.LargeClass -> {
-                LargeClassUserHolder(LayoutInflater.from(parent.context)
-                        .inflate(R.layout.agora_userlist_largeclass_dialog_list_item, null), listener)
-            }
-        }
-    }
-
-    private fun adjustPosition(anchor: View, width: Int, height: Int) {
-        this.window?.let { window ->
-            hideStatusBar(window)
-
-            val params = window.attributes
-            params.width = width
-            params.height = height
-
-            val posArray = IntArray(2)
-            anchor.getLocationOnScreen(posArray)
-            params.x = posArray[0] + anchor.width + 12
-            params.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
-            window.attributes = params
-        }
-    }
-
-    private fun hideStatusBar(window: Window) {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-        val flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.decorView.systemUiVisibility = (flag or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-    }
-
-    fun updateUserList(list: MutableList<EduContextUserDetailInfo>) {
+    fun updateUserListAdapter(list: MutableList<EduContextUserDetailInfo>) {
         val studentList = filterStudent(list)
-        userListAdapter.submitList(ArrayList(studentList))
+        userListAdapter?.submitList(ArrayList(studentList))
     }
 
     private fun filterStudent(list: MutableList<EduContextUserDetailInfo>): MutableList<EduContextUserDetailInfo> {
@@ -300,21 +259,21 @@ class RosterDialog(
     }
 
     private fun updateTeacher(info: EduContextUserDetailInfo) {
-        tvTeacherName.post { tvTeacherName.text = info.user.userName }
+        tvTeacherName?.post { tvTeacherName?.text = info.user.userName }
     }
 
     private fun updateStudent(info: EduContextUserDetailInfo) {
         val index = findIndex(info)
         if (index >= 0) {
-            userListAdapter.currentList[index] = info
-            userListAdapter.notifyItemChanged(index)
+            userListAdapter?.currentList?.set(index, info)
+            userListAdapter?.notifyItemChanged(index)
         }
     }
 
     private fun findIndex(info: EduContextUserDetailInfo): Int {
         var index = 0
         var foundIndex = -1;
-        for (item in userListAdapter.currentList) {
+        for (item in userListAdapter?.currentList!!) {
             if (item.user.userUuid == info.user.userUuid) {
                 foundIndex = index
                 break
@@ -322,6 +281,22 @@ class RosterDialog(
             index++
         }
         return foundIndex
+    }
+
+    @SuppressLint("InflateParams")
+    private fun createItemViewHolder(type: RosterType,
+                                     parent: ViewGroup,
+                                     listener: UserItemClickListener): BaseUserHolder {
+        return when (type) {
+            RosterType.SmallClass -> {
+                SmallClassUserHolder(LayoutInflater.from(parent.context)
+                    .inflate(R.layout.agora_userlist_dialog_list_item, null), listener)
+            }
+            RosterType.LargeClass -> {
+                LargeClassUserHolder(LayoutInflater.from(parent.context)
+                    .inflate(R.layout.agora_userlist_largeclass_dialog_list_item, null), listener)
+            }
+        }
     }
 
     private class UserListDiff : DiffUtil.ItemCallback<EduContextUserDetailInfo>() {
@@ -343,8 +318,9 @@ class RosterDialog(
     }
 
     private abstract inner class BaseUserHolder(
-            private val type: RosterType,
-            val view: View, val listener: UserItemClickListener) : RecyclerView.ViewHolder(view) {
+        private val type: RosterType,
+        val view: View, val listener: UserItemClickListener
+    ) : RecyclerView.ViewHolder(view) {
         abstract fun bind(item: EduContextUserDetailInfo)
     }
 
@@ -352,7 +328,7 @@ class RosterDialog(
         : ListAdapter<EduContextUserDetailInfo, BaseUserHolder>(UserListDiff()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-                createItemViewHolder(type, parent, listener)
+            createItemViewHolder(rosterType, parent, listener)
 
         override fun onBindViewHolder(holder: BaseUserHolder, position: Int) {
             holder.bind(getItem(position))
@@ -364,7 +340,9 @@ class RosterDialog(
         fun onMicCheckChanged(item: EduContextUserDetailInfo, checked: Boolean)
     }
 
-    private inner class SmallClassUserHolder(view: View, listener: UserItemClickListener) : BaseUserHolder(type, view, listener) {
+    private inner class SmallClassUserHolder(
+        view: View, listener: UserItemClickListener) : BaseUserHolder(rosterType, view, listener) {
+
         private val tvName: TextView? = view.findViewById(R.id.tv_user_name)
         private val ctvDesktop: CheckedTextView? = view.findViewById(R.id.ctv_desktop)
         private val ctvAccess: CheckedTextView? = view.findViewById(R.id.ctv_access)
@@ -394,7 +372,7 @@ class RosterDialog(
                     camera.isClickable = false
                     camera.isChecked = !camera.isChecked
                     listener.onCameraCheckChanged(item, camera.isChecked)
-                    camera.postDelayed({ camera.isClickable = true }, clickInterval)
+                    camera.postDelayed({ camera.isClickable = true }, AgoraUIConfig.clickInterval)
                 }
             }
 
@@ -415,7 +393,7 @@ class RosterDialog(
                     mic.isClickable = false
                     mic.isChecked = !mic.isChecked
                     listener.onMicCheckChanged(item, mic.isChecked)
-                    mic.postDelayed({ mic.isClickable = true }, clickInterval)
+                    mic.postDelayed({ mic.isClickable = true }, AgoraUIConfig.clickInterval)
                 }
             }
 
@@ -426,7 +404,8 @@ class RosterDialog(
         }
     }
 
-    private inner class LargeClassUserHolder(view: View, listener: UserItemClickListener) : BaseUserHolder(type, view, listener) {
+    private inner class LargeClassUserHolder(
+        view: View, listener: UserItemClickListener) : BaseUserHolder(rosterType, view, listener) {
         private val tvName: TextView? = view.findViewById(R.id.tv_user_name)
         private val ctvCamera: CheckedTextView? = view.findViewById(R.id.ctv_camera)
         private val ctvMic: CheckedTextView? = view.findViewById(R.id.ctv_mic)
@@ -436,14 +415,15 @@ class RosterDialog(
                 val nameStr = SpannableString(item.user.userName.plus(" "))
 
                 if (item.coHost) {
-                    nameStr.setSpan(ImageSpan(ContextCompat.getDrawable(view.context,
-                            R.drawable.agora_userlist_desktop_icon)!!.apply {
+                    nameStr.setSpan(
+                        ImageSpan(ContextCompat.getDrawable(view.context,
+                        R.drawable.agora_userlist_desktop_icon)!!.apply {
                         setBounds(10, 0, intrinsicWidth + 10, intrinsicHeight)
                     },
-                            ImageSpan.ALIGN_BASELINE),
-                            nameStr.length - 1,
-                            nameStr.length,
-                            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+                        ImageSpan.ALIGN_BASELINE),
+                        nameStr.length - 1,
+                        nameStr.length,
+                        SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
                 }
 
                 nameTextView.text = nameStr
@@ -466,7 +446,7 @@ class RosterDialog(
                     camera.isClickable = false
                     camera.isChecked = !camera.isChecked
                     listener.onCameraCheckChanged(item, camera.isChecked)
-                    camera.postDelayed({ camera.isClickable = true }, clickInterval)
+                    camera.postDelayed({ camera.isClickable = true }, AgoraUIConfig.clickInterval)
                 }
             }
 
@@ -487,7 +467,7 @@ class RosterDialog(
                     mic.isClickable = false
                     mic.isChecked = !mic.isChecked
                     listener.onMicCheckChanged(item, mic.isChecked)
-                    mic.postDelayed({ mic.isClickable = true }, clickInterval)
+                    mic.postDelayed({ mic.isClickable = true }, AgoraUIConfig.clickInterval)
                 }
             }
         }

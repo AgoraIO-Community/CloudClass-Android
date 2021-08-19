@@ -1,6 +1,7 @@
 package io.agora.edu.classroom
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.ViewGroup
 import com.google.gson.Gson
@@ -18,6 +19,7 @@ import io.agora.education.api.stream.data.VideoSourceType
 import io.agora.education.api.user.EduUser
 import io.agora.educontext.EduContextScreenShareState
 import io.agora.educontext.EduContextPool
+import io.agora.rte.RteEngineImpl
 import java.util.*
 
 class ScreenShareManager(
@@ -42,14 +44,12 @@ class ScreenShareManager(
     @Volatile
     private var curScreenShareState = EduContextScreenShareState.Stop.value
 
-    // must customize the implementation
     var screenShareStateChangedListener = object : (Boolean) -> Unit {
         override fun invoke(p1: Boolean) {
 
         }
     }
 
-    // must customize the implementation
     var getWhiteBoardCurScenePathListener = object : () -> String? {
         override fun invoke(): String? {
             return null
@@ -103,10 +103,6 @@ class ScreenShareManager(
         })
     }
 
-
-    //    h.onScreenShareTip(String.format(
-//    context.getString(R.string.screen_share_end_message_format),
-//    it.publisher.userName))
     fun checkAndNotifyScreenShareStarted(streamEvents: MutableList<EduStreamEvent>) {
         remoteScreenStream = streamEvents.find {
             it.modifiedStream.videoSourceType == VideoSourceType.SCREEN
@@ -183,53 +179,106 @@ class ScreenShareManager(
                 // find screenShare stream
                 res?.find { it.videoSourceType == VideoSourceType.SCREEN }?.let {
                     remoteScreenStream = it
-                    // judge whether the whiteboard is switched successfully
-                    // judge whether the screenShare courseware is selected
-                    val selectScreenShare = isSelectedScreenShare()
-                    val curScenePath = getWhiteBoardCurScenePathListener.invoke()
-                    Log.e(tag, "curScenePath->$curScenePath, selectScreenShare->$selectScreenShare")
-                    if (curScenePath?.startsWith(screenShareScenePath) == true || selectScreenShare) {
-                        // determine if remote RTC stream contains screenShare stream
-                        Log.e(tag, "remoteOnlineUids->${Gson().toJson(remoteOnlineUids)}, streamUuid->${it.streamUuid}")
-                        val contains = remoteOnlineUids.contains(it.streamUuid)
-                        val state = if (contains) EduContextScreenShareState.Start else
-                            EduContextScreenShareState.Pause
-                        Log.e(tag, "contains->$contains, state->$state")
-                        eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
-                            if (state.value == EduContextScreenShareState.Start.value &&
-                                    curScreenShareState == EduContextScreenShareState.Stop.value) {
-                                h.onScreenShareTip(String.format(
-                                        context.getString(R.string.screen_share_start_message_format),
-                                        it.publisher.userName))
-                            }
-                            // purpose state is consistent with current state,return
-                            if (curScreenShareState != state.value) {
-                                h.onScreenShareStateUpdated(state, it.streamUuid)
-                            }
-                            h.onSelectScreenShare(state == EduContextScreenShareState.Start)
-                        }
-                    } else if (curScenePath?.startsWith(screenShareScenePath) == false && !selectScreenShare) {
-                        eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
-                            h.onSelectScreenShare(false)
-                        }
-                    }
-                    return
-                }
-                Log.e(tag, "there is no screenShare stream")
-                // there is no screenShare stream
-                remoteScreenStream?.let {
-                    eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
-                        h.onScreenShareTip(String.format(
-                                context.getString(R.string.screen_share_end_message_format),
-                                it.publisher.userName))
-                        // purpose state is consistent with current state,return
-                        if (curScreenShareState != EduContextScreenShareState.Stop.value) {
-                            h.onScreenShareStateUpdated(EduContextScreenShareState.Stop, it.streamUuid)
-                        }
+                    val state = if (remoteOnlineUids.contains(it.streamUuid)) {
+                        EduContextScreenShareState.Start
+                    } else {
+                        EduContextScreenShareState.Pause
                     }
 
-                    remoteScreenStream=null
+                    eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
+                        if (state.value == EduContextScreenShareState.Start.value &&
+                            curScreenShareState == EduContextScreenShareState.Stop.value) {
+                            h.onScreenShareTip(String.format(
+                                context.getString(R.string.screen_share_start_message_format),
+                                it.publisher.userName))
+                        }
+
+                        // purpose state is consistent with current state,return
+                        if (curScreenShareState != state.value) {
+                            h.onScreenShareStateUpdated(state, it.streamUuid)
+                        }
+                        h.onSelectScreenShare(state == EduContextScreenShareState.Start)
+                    }
+
+                    // If
+                    if (curScreenShareState == EduContextScreenShareState.Start.value) {
+                        setScreenShareBackgroundColor(it.streamUuid, Color.WHITE)
+                    }
+                } ?: run {
+                    // There is no screen share stream cached by room, but currently
+                    // remote screen stream is not.
+                    remoteScreenStream?.let {
+                        eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
+                            h.onScreenShareTip(
+                                String.format(context.getString(R.string.screen_share_end_message_format), it.publisher.userName
+                                )
+                            )
+
+                            if (curScreenShareState != EduContextScreenShareState.Stop.value) {
+                                h.onScreenShareStateUpdated(EduContextScreenShareState.Stop, it.streamUuid)
+                            }
+                        }
+
+                        remoteScreenStream = null
+                    }
                 }
+
+//                res?.find { it.videoSourceType == VideoSourceType.SCREEN }?.let {
+//                    remoteScreenStream = it
+                    // judge whether the whiteboard is switched successfully
+                    // judge whether the screenShare courseware is selected
+                    //val curScenePath = getWhiteBoardCurScenePathListener.invoke()
+                    //Log.e(tag, "curScenePath->$curScenePath, selectScreenShare->$selectScreenShare")
+
+                    // if (curScenePath?.startsWith(screenShareScenePath) == true || selectScreenShare) {
+//                    if (isSelectedScreenShare()) {
+//                        // determine if remote RTC stream contains screenShare stream
+//                        Log.e(tag, "remoteOnlineUids->${Gson().toJson(remoteOnlineUids)}, streamUuid->${it.streamUuid}")
+//                        val contains = remoteOnlineUids.contains(it.streamUuid)
+//                        val state = if (contains) EduContextScreenShareState.Start else
+//                            EduContextScreenShareState.Pause
+//                        Log.e(tag, "contains->$contains, state->$state")
+//
+//                        eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
+//                            if (state.value == EduContextScreenShareState.Start.value &&
+//                                    curScreenShareState == EduContextScreenShareState.Stop.value) {
+//                                h.onScreenShareTip(String.format(
+//                                        context.getString(R.string.screen_share_start_message_format),
+//                                        it.publisher.userName))
+//                            }
+//                            // purpose state is consistent with current state,return
+//                            if (curScreenShareState != state.value) {
+//                                h.onScreenShareStateUpdated(state, it.streamUuid)
+//                            }
+//                            h.onSelectScreenShare(state == EduContextScreenShareState.Start)
+//                        }
+//
+//                        if (curScreenShareState == EduContextScreenShareState.Start.value) {
+//                            setScreenShareBackgroundColor(it.streamUuid, Color.WHITE)
+//                        }
+//                    // } else if (curScenePath?.startsWith(screenShareScenePath) == false && !selectScreenShare) {
+//                    } else {
+//                        eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
+//                            h.onSelectScreenShare(false)
+//                        }
+//                    }
+//                    return
+//                }
+//                Log.e(tag, "there is no screenShare stream")
+//                // there is no screenShare stream
+//                remoteScreenStream?.let {
+//                    eduContext?.screenShareContext()?.getHandlers()?.forEach { h ->
+//                        h.onScreenShareTip(String.format(
+//                                context.getString(R.string.screen_share_end_message_format),
+//                                it.publisher.userName))
+//                        // purpose state is consistent with current state,return
+//                        if (curScreenShareState != EduContextScreenShareState.Stop.value) {
+//                            h.onScreenShareStateUpdated(EduContextScreenShareState.Stop, it.streamUuid)
+//                        }
+//                    }
+//
+//                    remoteScreenStream = null
+//                }
             }
 
             override fun onFailure(error: EduError) {
@@ -237,17 +286,10 @@ class ScreenShareManager(
         })
     }
 
-    private fun isSelectedScreenShare(): Boolean {
-        val screenJson = getProperty(eduRoom?.roomProperties, screenShareKey)
-        val screenMap: MutableMap<String, Any>? = Gson().fromJson(screenJson,
-                object : TypeToken<MutableMap<String, Any>>() {}.type)
-        screenMap?.let {
-            val selected = getProperty(screenMap, selectedKey)
-            selected?.let {
-                val tmp = it.toDouble().toInt() == 1
-                return tmp
-            }
-        }
-        return false
+    private fun setScreenShareBackgroundColor(streamId: String, color: Int) {
+        val format = "{\"che.video.render_background_color\":{\"uid\":%s,\"r\":%d,\"g\":%d,\"b\":%d}}"
+        val value = String.format(format, streamId, Color.red(color), Color.green(color), Color.blue(color))
+        Log.d(tag, "screen share bg color param $value")
+        RteEngineImpl.setRtcParameters(value)
     }
 }

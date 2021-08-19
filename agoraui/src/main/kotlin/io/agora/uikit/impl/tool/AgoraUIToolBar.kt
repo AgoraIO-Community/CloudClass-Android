@@ -245,6 +245,7 @@ class AgoraUIToolBar(context: Context,
                     when (toolBarType) {
                         AgoraUIToolType.All -> AgoraUIToolItemList.getAllItemList()
                         AgoraUIToolType.Whiteboard -> AgoraUIToolItemList.getWhiteboardList()
+                        AgoraUIToolType.Refact -> AgoraUIToolItemList.getRefactorList()
                     }
                 }
                 items.forEachIndexed { index, item ->
@@ -278,6 +279,7 @@ class AgoraUIToolBar(context: Context,
                 when (toolBarType) {
                     AgoraUIToolType.All -> AgoraUIToolItemList.getAllItemList()
                     AgoraUIToolType.Whiteboard -> AgoraUIToolItemList.getWhiteboardList()
+                    AgoraUIToolType.Refact -> AgoraUIToolItemList.getRefactorList()
                 }
             }
 
@@ -292,6 +294,7 @@ class AgoraUIToolBar(context: Context,
             toolBarItems = when (type) {
                 AgoraUIToolType.All -> AgoraUIToolItemList.getAllItemList()
                 AgoraUIToolType.Whiteboard -> AgoraUIToolItemList.getWhiteboardList()
+                AgoraUIToolType.Refact -> AgoraUIToolItemList.getRefactorList()
             }
 
             toolAdapter.notifyDataSetChanged()

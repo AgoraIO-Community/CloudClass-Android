@@ -187,6 +187,7 @@ class WhiteBoardManager(
                         val params = RoomParams(uuid, boardToken)
                         params.cameraBound = CameraBound(miniScale, maxScale)
                         params.isDisableNewPencil = false
+                        params.useMultiViews = true
                         boardProxy.init(whiteSdk, params)
                         ReportManager.getAPaasReporter().reportWhiteBoardStart()
                     }

@@ -30,7 +30,7 @@
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_smaller">12sp</dimen>
-    <dimen name="text_size_smallest">8sp</dimen>
+    <dimen name="text_size_smallest">10dp</dimen>
 
     <dimen name="shadow_width">4dp</dimen>
 
@@ -39,7 +39,7 @@
 
     <dimen name="text_large">17sp</dimen>
     <dimen name="text_medium">14sp</dimen>
-    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_small">9dp</dimen>
 
     <!-- Dialog -->
     <dimen name="agora_dialog_width">260dp</dimen>
@@ -231,8 +231,10 @@
     <dimen name="agora_hands_up_view_w">50dp</dimen>
     <dimen name="agora_hands_up_view_h">101dp</dimen>
     <dimen name="agora_hands_up_bubble_height">47dp</dimen>
-    <dimen name="agora_hands_up_count_down_text_size">24sp</dimen>
-    <dimen name="agora_hands_up_count_down_text_margin_bottom">5dp</dimen>
+    <dimen name="agora_hands_up_count_down_text_size">22sp</dimen>
+    <dimen name="agora_hands_up_count_down_text_margin_bottom">4dp</dimen>
+    <dimen name="agora_hands_up_timer_width">42dp</dimen>
+    <dimen name="agora_hands_up_timer_height">46dp</dimen>
 
     <!-- Reward Window -->
     <dimen name="reward_window_anim_w">80dp</dimen>
@@ -249,4 +251,6 @@
     <dimen name="loading_img_padding_left">45dp</dimen>
     <dimen name="loading_img_padding_right">45dp</dimen>
 
+    <!-- Option Layout -->
+    <dimen name="option_icon_size">42dp</dimen>
 </resources>

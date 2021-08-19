@@ -63,7 +63,7 @@
     <string name="agora_userlist_table_title_reward">奖励</string>
 
     <!-- Room Status -->
-    <string name="agora_room_state_not_started">距离上课还有:&#160;&#160;</string>
-    <string name="agora_room_state_started">已开始上课:&#160;&#160;</string>
+    <string name="agora_room_state_not_started">距离上课还有&#160;</string>
+    <string name="agora_room_state_started">已开始上课&#160;</string>
     <string name="agora_room_state_end">课程已结束</string>
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/count_down_layout"
+    android:layout_width="@dimen/agora_hands_up_timer_width"
+    android:layout_height="@dimen/agora_hands_up_timer_height"
+    android:background="@drawable/agora_handsup_bubble_img">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/count_down_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/agora_hands_up_count_down_text_margin_bottom"
+        android:gravity="center"
+        android:padding="@dimen/shadow_width"
+        android:textAlignment="gravity"
+        android:textColor="@color/theme_blue_light"
+        android:textSize="@dimen/agora_hands_up_count_down_text_size"
+        android:text="2"/>
+</RelativeLayout>

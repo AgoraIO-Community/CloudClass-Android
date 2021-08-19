@@ -155,38 +155,38 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     }
 
     public void zoom(double scale) {
-        if (t != null && !isDisableCameraTransform()) {
-            CameraConfig cameraConfig = new CameraConfig();
-            cameraConfig.setScale(scale);
-            t.moveCamera(cameraConfig);
-        }
+//        if (t != null && !isDisableCameraTransform()) {
+//            CameraConfig cameraConfig = new CameraConfig();
+//            cameraConfig.setScale(scale);
+//            t.moveCamera(cameraConfig);
+//        }
     }
 
     public void moveCamera(CameraConfig cameraConfig) {
-        if (t != null) {
-            t.moveCamera(cameraConfig);
-            t.getRoomState();
-        }
+//        if (t != null) {
+//            t.moveCamera(cameraConfig);
+//            t.getRoomState();
+//        }
     }
 
     public void scalePptToFit() {
-        if (t != null) {
-            t.scalePptToFit();
-            t.scaleIframeToFit();
-        }
+//        if (t != null) {
+//            t.scalePptToFit();
+//            t.scaleIframeToFit();
+//        }
     }
 
     public void follow(boolean follow) {
-        if (t != null) {
-            t.setViewMode(follow ? ViewMode.Follower : ViewMode.Freedom);
-        }
+//        if (t != null) {
+//            t.setViewMode(follow ? ViewMode.Follower : ViewMode.Freedom);
+//        }
     }
 
     public void scalePptToFit(AnimationMode mode) {
-        if (t != null) {
-            t.scalePptToFit(mode);
-            t.scaleIframeToFit();
-        }
+//        if (t != null) {
+//            t.scalePptToFit(mode);
+//            t.scaleIframeToFit();
+//        }
     }
 
     public void hasBroadcaster(Promise<Boolean> promise) {
