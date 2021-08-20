@@ -32,8 +32,6 @@ import io.agora.uikit.impl.container.AgoraContainerType
 class SmallClassActivity : BaseClassActivity() {
     private val tag = "SmallClassActivity"
 
-    private var classContainer: RelativeLayout? = null
-
     private val whiteBoardManagerEventListener = object : WhiteBoardManagerEventListener {
         override fun onWhiteBoardJoinSuccess(config: WhiteboardDrawingConfig) {
             getReporter().reportWhiteBoardResult("1", null, null)
@@ -72,28 +70,28 @@ class SmallClassActivity : BaseClassActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        contentLayout?.viewTreeObserver?.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+        activityLayout?.viewTreeObserver?.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                if (contentLayout!!.width > 0 && contentLayout!!.height > 0) {
-                    contentLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                if (activityLayout!!.width > 0 && activityLayout!!.height > 0) {
+                    activityLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
 
                     if (EduDebugMode.useDebugUI) {
                         Log.i(tag, "create debug ui container")
                         container = AgoraUIContainer.create(
-                            classContainer!!,
+                            contentLayout!!,
 
                             0, 0,
-                            classContainer!!.width,
-                            classContainer!!.height,
+                            contentLayout!!.width,
+                            contentLayout!!.height,
                             AgoraContainerType.Debug,
                             eduContext,
                             AgoraContainerConfig(listOf()))
                     } else {
                         container = AgoraUIContainer.create(
-                            classContainer!!,
+                            contentLayout!!,
                             0, 0,
-                            classContainer!!.width,
-                            classContainer!!.height,
+                            contentLayout!!.width,
+                            contentLayout!!.height,
                             AgoraContainerType.SmallClass, eduContext,
                             AgoraContainerConfig(
                                 chatTabConfigs = listOf(
@@ -128,23 +126,24 @@ class SmallClassActivity : BaseClassActivity() {
     }
 
     override fun onContentViewLayout(): RelativeLayout {
-
         RelativeLayout(this).let { container ->
             container.setBackgroundColor(Color.BLACK)
-            contentLayout = container
+            activityLayout = container
 
             ActivityFitLayout(this).let {
-                classContainer = it
+                contentLayout = it
                 it.setBackgroundColor(resources.getColor(R.color.gray_F9F9FC))
                 val param = RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT)
                 param.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
                 container.addView(it, param)
+
+                setContentView(container)
             }
         }
 
-        return contentLayout!!
+        return activityLayout!!
     }
 
     override fun onRoomJoinConfig(): JoinRoomConfiguration {
@@ -199,27 +198,18 @@ class SmallClassActivity : BaseClassActivity() {
         super.onRemoteStreamsAdded(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareStarted(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onRemoteStreamUpdated(streamEvents: MutableList<EduStreamEvent>, classRoom: EduRoom) {
         super.onRemoteStreamUpdated(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareStarted(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onRemoteStreamsRemoved(streamEvents: MutableList<EduStreamEvent>, classRoom: EduRoom) {
         super.onRemoteStreamsRemoved(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareRemoved(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onLocalStreamAdded(streamEvent: EduStreamEvent) {

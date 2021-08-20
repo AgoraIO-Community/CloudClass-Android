@@ -69,17 +69,17 @@ class OneToOneClassActivity : BaseClassActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        contentLayout?.viewTreeObserver?.addOnGlobalLayoutListener(
+        activityLayout?.viewTreeObserver?.addOnGlobalLayoutListener(
                 object : ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
-                        if (contentLayout!!.width > 0 && contentLayout!!.height > 0) {
-                            contentLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        if (activityLayout!!.width > 0 && activityLayout!!.height > 0) {
+                            activityLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
 
                             container = AgoraUIContainer.create(
-                                    contentLayout!!,
+                                    activityLayout!!,
                                     0, 0,
-                                    contentLayout!!.width,
-                                    contentLayout!!.height,
+                                    activityLayout!!.width,
+                                    activityLayout!!.height,
                                     AgoraContainerType.OneToOne,
                                     eduContext,
                                     AgoraContainerConfig(chatTabConfigs =
@@ -121,8 +121,8 @@ class OneToOneClassActivity : BaseClassActivity() {
     }
 
     override fun onContentViewLayout(): RelativeLayout {
-        contentLayout = RelativeLayout(this)
-        return contentLayout!!
+        activityLayout = RelativeLayout(this)
+        return activityLayout!!
     }
 
     override fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError?) {

@@ -1,24 +1,19 @@
 package io.agora.edu.classroom
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import io.agora.agoraactionprocess.AgoraActionListener
 import io.agora.agoraactionprocess.AgoraActionMsgRes
 import io.agora.base.callback.Callback
 import io.agora.edu.BuildConfig
+import io.agora.edu.common.bean.board.BoardState
 import io.agora.edu.common.bean.response.RoomPreCheckRes
 import io.agora.edu.launch.AgoraEduEvent
 import io.agora.edu.launch.AgoraEduLaunchConfig
 import io.agora.edu.launch.AgoraEduRoleType
 import io.agora.edu.launch.AgoraEduSDK
-import io.agora.edu.util.AppUtil.getNavigationBarHeight
 import io.agora.edu.util.TimeUtil
 import io.agora.edu.widget.EyeProtection
 import io.agora.education.api.EduCallback
@@ -45,6 +40,7 @@ import io.agora.education.impl.Constants.Companion.AgoraLog
 import io.agora.educontext.*
 import io.agora.educontext.context.*
 import io.agora.extapp.AgoraExtAppManager
+import io.agora.extapp.ExtAppTrackListener
 import io.agora.extension.*
 import io.agora.privatechat.PrivateChatManager
 import io.agora.report.ReportManager.getAPaasReporter
@@ -74,12 +70,11 @@ abstract class BaseClassActivity : BaseActivity(),
 
     private val tag = "BaseClassActivity"
 
-    private lateinit var windowController: WindowInsetsControllerCompat
-
     protected var launchConfig: AgoraEduLaunchConfig? = null
     protected var preCheckData: RoomPreCheckRes? = null
     protected var eduRoom: EduRoom? = null
 
+    protected var activityLayout: RelativeLayout? = null
     protected var contentLayout: RelativeLayout? = null
 
     protected var container: IAgoraUIContainer? = null
@@ -814,7 +809,7 @@ abstract class BaseClassActivity : BaseActivity(),
 
     protected abstract fun onRoomJoinConfig(): JoinRoomConfiguration
 
-    open protected fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError? = null) {
+    protected open fun onRoomJoined(success: Boolean, student: EduStudent?, error: EduError? = null) {
         if (success) {
             eduContext.roomContext()?.getHandlers()?.forEach {
                 it.onJoinedClassRoom()
@@ -919,6 +914,11 @@ abstract class BaseClassActivity : BaseActivity(),
     private fun initEduCapabilityManagers(config: AgoraEduLaunchConfig, preCheckData: RoomPreCheckRes) {
         whiteBoardManager?.initBoardWithRoomToken(preCheckData.board.boardId,
                 preCheckData.board.boardToken, config.userUuid)
+        whiteBoardManager?.extAppTrackListener = object : ExtAppTrackListener {
+            override fun onExtAppTrackUpdated(map: Map<String, BoardState.ExtAppMovement>) {
+                extAppManager?.updateExtAppTracksUpdates(map)
+            }
+        }
 
         RoomStateManager(this, eduContext.roomContext(), config, preCheckData, eduRoom).let { manager ->
             roomStateManager = manager
@@ -1037,6 +1037,10 @@ abstract class BaseClassActivity : BaseActivity(),
             override fun getLocalUserInfo(): AgoraExtAppUserInfo {
                 return AgoraExtAppUserInfo(config.userUuid, config.userName,
                         AgoraExtAppUserRole.toType(config.roleType))
+            }
+
+            override fun syncAppPosition(identifier: String, userId: String, x: Float, y: Float) {
+                whiteBoardManager?.setExtAppTrackInfo(identifier, userId, x, y)
             }
         }
 

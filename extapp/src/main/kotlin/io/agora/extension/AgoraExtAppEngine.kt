@@ -250,6 +250,22 @@ class AgoraExtAppEngine(
         return launched
     }
 
+    /**
+     * Sync position info of an ext app to other remote users
+     * @param identifier id of the ext app
+     */
+    internal fun syncAppPosition(identifier: String, userId: String, diffX: Float, diffY: Float) {
+        launchedExtAppMap[identifier]?.let { item ->
+            aPaaSEntry.syncAppPosition(item.appIdentifier, userId, diffX, diffY)
+        }
+    }
+
+    fun onAppPositionSync(identifier: String, userId: String, diffX: Float, diffY: Float) {
+        launchedExtAppMap[identifier]?.let { item ->
+            item.instance?.onPositionSync(userId, diffX, diffY)
+        }
+    }
+
     fun onRoomInfoChanged(roomInfo: AgoraExtAppRoomInfo) {
         launchedExtAppMap.forEach { item ->
             item.value.instance?.onRoomInfoUpdate(roomInfo)

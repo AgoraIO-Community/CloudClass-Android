@@ -17,4 +17,6 @@ interface IAgoraExtAppAPaaSEntry {
                          propertyKeys: MutableList<String>,
                          cause: MutableMap<String, Any?>?,
                          callback: AgoraExtAppCallback<String>?)
+
+    fun syncAppPosition(identifier: String, userId: String, x: Float, y: Float)
 }

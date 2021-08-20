@@ -7,6 +7,7 @@ import androidx.annotation.UiThread
 import io.agora.base.network.RetrofitManager
 import io.agora.edu.classroom.bean.PropertyData
 import io.agora.edu.common.bean.ResponseBody
+import io.agora.edu.common.bean.board.BoardState
 import io.agora.edu.launch.AgoraEduSDK
 import io.agora.edu.util.TimeUtil
 import io.agora.educontext.EduContextPool
@@ -55,7 +56,6 @@ abstract class AgoraExtAppManager(
                             null, state as? MutableMap<String, Any?>,currentTime)
                 }
             }
-
         }
     }
 
@@ -160,4 +160,16 @@ abstract class AgoraExtAppManager(
             }
         })
     }
+
+    fun updateExtAppTracksUpdates(map: Map<String, BoardState.ExtAppMovement>) {
+        map.forEach { entry ->
+            if (!entry.value.userId.isNullOrEmpty()) {
+                extAppEngine.onAppPositionSync(entry.key, entry.value.userId, entry.value.x, entry.value.y)
+            }
+        }
+    }
+}
+
+interface ExtAppTrackListener {
+    fun onExtAppTrackUpdated(map: Map<String, BoardState.ExtAppMovement>)
 }
