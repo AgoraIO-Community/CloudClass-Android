@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import androidx.core.view.forEach
 import com.google.gson.Gson
 import com.herewhite.sdk.*
 import com.herewhite.sdk.domain.*
@@ -238,10 +239,6 @@ class WhiteBoardManager(
 
     fun isGranted(userUuid: String): Boolean {
         return curBoardState?.isGranted(userUuid) ?: false
-    }
-
-    fun setWritable(writable: Boolean) {
-        boardProxy.setWritable(writable)
     }
 
     fun getCurScenePath(): String? {
@@ -642,7 +639,7 @@ class WhiteBoardManager(
                     curFollowState = follow
                 }
                 disableCameraTransform(!granted)
-                setWritable(granted)
+                disableDeviceInputs(!granted)
                 val grantedUsers = curBoardState!!.grantUsers
                 if (curGrantedUsers != grantedUsers) {
                     curGrantedUsers.clear()
