@@ -19,6 +19,8 @@ class AgoraExtAppEngine(
     private val launchedExtAppMap = mutableMapOf<String, AgoraExtAppItem>()
     private val launchedExtAppMapTransformed = mutableMapOf<String, AgoraExtAppItem>()
 
+    private var appDraggable = false
+
     companion object {
         private val registeredAppList = ArrayList<AgoraExtAppItem>()
         private val registeredAppMap = mutableMapOf<String, AgoraExtAppItem>()
@@ -144,6 +146,7 @@ class AgoraExtAppEngine(
                 container.addView(item.contentView, RelativeLayout.LayoutParams(
                         item.param.width, item.param.height))
                 item.instance?.onExtAppLoaded(this.context, container, item.contentView!!, eduContext)
+                item.instance?.setDraggable(appDraggable)
             } else {
                 Log.w(tag, "launch ext app: cannot find container or content view, app $identifier")
             }
@@ -248,6 +251,19 @@ class AgoraExtAppEngine(
             }
         }
         return launched
+    }
+
+    fun setAppDraggable(draggable: Boolean) {
+        this.appDraggable = draggable
+        launchedExtAppMap.forEach { entry ->
+            entry.value.instance?.setDraggable(draggable)
+        }
+    }
+
+    fun enableSendExtAppTracks(enable: Boolean) {
+        launchedExtAppMap.forEach { entry ->
+            entry.value.instance?.enableSendTrack(enable)
+        }
     }
 
     /**

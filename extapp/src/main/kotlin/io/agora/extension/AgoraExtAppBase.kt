@@ -121,7 +121,7 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
      * The default is not to respond to drag events
      */
     @SuppressLint("ClickableViewAccessibility")
-    protected fun setDraggable(draggable: Boolean) {
+    fun setDraggable(draggable: Boolean) {
         if (this.draggable != draggable) {
             layout?.let {
                 this.draggable = draggable
@@ -239,6 +239,10 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
                 }
             }
         }
+    }
+
+    fun enableSendTrack(enabled: Boolean) {
+        shouldSyncPosition = enabled
     }
 
     private fun trySyncAppPosition(x: Int, y: Int) {

@@ -168,6 +168,14 @@ abstract class AgoraExtAppManager(
             }
         }
     }
+
+    fun enableSendAppTracks(enable: Boolean) {
+        extAppEngine.enableSendExtAppTracks(enable)
+    }
+
+    fun setAppDraggable(draggable: Boolean) {
+        extAppEngine.setAppDraggable(draggable)
+    }
 }
 
 interface ExtAppTrackListener {

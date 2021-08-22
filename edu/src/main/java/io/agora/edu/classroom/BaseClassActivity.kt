@@ -50,6 +50,7 @@ import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcChannel
 import io.agora.rte.data.RteLocalVideoStats
 import io.agora.rte.data.RteRemoteVideoStats
+import io.agora.uikit.educontext.handlers.WhiteboardHandler
 import io.agora.uikit.impl.container.AgoraUI1v1Container
 import io.agora.uikit.impl.container.AgoraUILargeClassContainer
 import io.agora.uikit.impl.container.AgoraUISmallClassContainer
@@ -1020,6 +1021,16 @@ abstract class BaseClassActivity : BaseActivity(),
 
             override fun onFailure(error: EduError) {
 
+            }
+        })
+
+        // Whiteboard permission has a restriction to ext app behavior
+        // In the case when not granted the whiteboard permission, local
+        // user also cannot send ext app tracks to remote users.
+        whiteboardContext.addHandler(object : WhiteboardHandler() {
+            override fun onPermissionGranted(granted: Boolean) {
+                extAppManager?.enableSendAppTracks(granted)
+                extAppManager?.setAppDraggable(granted)
             }
         })
     }

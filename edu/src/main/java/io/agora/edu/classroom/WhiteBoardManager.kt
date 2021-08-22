@@ -240,6 +240,10 @@ class WhiteBoardManager(
         return curBoardState?.isGranted(userUuid) ?: false
     }
 
+    fun setWritable(writable: Boolean) {
+        boardProxy.setWritable(writable)
+    }
+
     fun getCurScenePath(): String? {
         return curSceneState?.scenePath
     }
@@ -638,6 +642,7 @@ class WhiteBoardManager(
                     curFollowState = follow
                 }
                 disableCameraTransform(!granted)
+                setWritable(granted)
                 val grantedUsers = curBoardState!!.grantUsers
                 if (curGrantedUsers != grantedUsers) {
                     curGrantedUsers.clear()
