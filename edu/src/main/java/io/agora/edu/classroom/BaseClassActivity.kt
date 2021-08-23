@@ -840,7 +840,8 @@ abstract class BaseClassActivity : BaseActivity(),
 
         isJoining = true
         val options = RoomJoinOptions(uuid!!, name, EduUserRole.STUDENT,
-                RoomMediaOptions(autoSubscribe, autoPublish), launchConfig?.roomType)
+                RoomMediaOptions(autoSubscribe, autoPublish), launchConfig?.roomType,
+                launchConfig?.videoEncoderConfig)
 
         eduRoom?.joinClassroom(options, object : EduCallback<EduUser> {
             override fun onSuccess(res: EduUser?) {

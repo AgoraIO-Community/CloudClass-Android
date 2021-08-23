@@ -80,7 +80,7 @@ class AgoraUIDeviceSettingPopUp : RelativeLayout {
             leaveRoomRunnable?.run()
         }
 
-        cameraSwitch.isActivated = config.cameraEnabled ?: false
+        cameraSwitch.isActivated = config.cameraEnabled
         cameraSwitch.setOnClickListener {
             if (AppUtil.isFastClick(clickInterval)) {
                 return@setOnClickListener
@@ -132,7 +132,19 @@ class AgoraUIDeviceSettingPopUp : RelativeLayout {
 
     fun setEduContextPool(eduContext: EduContextPool?) {
         this.eduContext = eduContext
+        resetDeviceStateButtons()
         eduContext?.deviceContext()?.addHandler(eventHandler)
+    }
+
+    private fun resetDeviceStateButtons() {
+        val config = eduContext?.deviceContext()?.getDeviceConfig()
+        config?.let { it ->
+            cameraSwitch.isActivated = it.cameraEnabled
+            facingFront.isActivated = it.cameraFacing == EduContextCameraFacing.Front
+            facingBack.isActivated = it.cameraFacing == EduContextCameraFacing.Back
+            micSwitch.isActivated = it.micEnabled
+            speakerSwitch.isActivated = it.speakerEnabled
+        }
     }
 
     fun show() {

@@ -423,7 +423,7 @@ public class QAActivity extends AppCompatActivity {
             AgoraEduLaunchConfig agoraEduLaunchConfig =
                     new AgoraEduLaunchConfig(userName, userUuid, roomName, roomUuid, roleType,
                             roomType, rtmToken, startTime, duration, region, AgoraBoardFitMode.Retain,
-                            null, null);
+                            null, null, null);
 
             runOnUiThread(() -> {
                 try {
