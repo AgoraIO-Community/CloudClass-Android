@@ -210,7 +210,7 @@
     <dimen name="agora_video_options_layout_margin">2dp</dimen>
     <dimen name="agora_video_trophy_text_margin_start">4dp</dimen>
     <dimen name="agora_video_trophy_text_size">12sp</dimen>
-    <dimen name="agora_video_volume_margin_top">4dp</dimen>
+    <dimen name="agora_video_volume_margin_top">2dp</dimen>
     <dimen name="agora_video_name_text_h">22dp</dimen>
     <dimen name="agora_video_name_margin_start">2dp</dimen>
     <dimen name="agora_video_name_margin_top">4dp</dimen>

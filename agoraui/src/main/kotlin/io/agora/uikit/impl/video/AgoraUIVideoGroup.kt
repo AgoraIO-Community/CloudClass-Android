@@ -112,6 +112,16 @@ class AgoraUIVideoGroup(
         }
     }
 
+    fun show(show: Boolean, right: Int) {
+        videoLayout.post {
+            videoLayout.visibility = if (show) View.VISIBLE else View.GONE
+            val margin = if (show) right else 0
+            val param = videoLayout.layoutParams as ViewGroup.MarginLayoutParams
+            param.rightMargin = margin
+            videoLayout.layoutParams = param
+        }
+    }
+
     override fun setRect(rect: Rect) {
         videoLayout.post {
             val params = videoLayout.layoutParams as ViewGroup.MarginLayoutParams

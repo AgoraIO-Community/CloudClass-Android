@@ -55,12 +55,12 @@ class AgoraUIVideoList(
 
         teacherVideoWindow = AgoraUIVideoGroup(parent.context,
                 eduContext, videosLayout, 0, 0, videoWidth,
-            videoHeight, 0, EduContextVideoMode.Single)
+            videoHeight, marginHorizontal, EduContextVideoMode.Single)
 
         val studentVideoWidth = ViewGroup.LayoutParams.WRAP_CONTENT
         studentsVideoWindow = AgoraUserListVideoLayout(parent.context,
             eduContext, videosLayout, studentVideoWidth, videoHeight,
-            0, 0, 0f, componentMargin)
+            0, 0, 0f, marginHorizontal)
         studentsVideoWindow.show(false)
     }
 
@@ -71,7 +71,7 @@ class AgoraUIVideoList(
     }
 
     fun showTeacher(show: Boolean) {
-        teacherVideoWindow.show(show)
+        teacherVideoWindow.show(show, marginHorizontal)
     }
 
     fun showStudents(show: Boolean) {

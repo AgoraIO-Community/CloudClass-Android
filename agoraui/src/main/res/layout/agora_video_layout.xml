@@ -19,59 +19,55 @@
             android:id="@+id/video_off_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:visibility="gone">
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/video_off_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/agora_video_img_video_off" />
-
+                android:src="@drawable/agora_video_img_video_off"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/offLine_loading_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
-
+            android:layout_centerInParent="true">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/offLine_loading_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/agora_video_img_offline_loading" />
-
+                android:src="@drawable/agora_video_img_offline_loading"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/no_camera_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:visibility="gone">
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/no_camera_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/agora_video_img_no_camera" />
-
+                android:src="@drawable/agora_video_img_no_camera"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/camera_disable_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_centerInParent="true"
             android:visibility="gone">
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/camera_disable_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/agora_video_img_camera_disable" />
-
+                android:src="@drawable/agora_video_img_camera_disable"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -79,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/agora_video_options_layout_margin">
-
             <LinearLayout
                 android:id="@+id/trophy_Layout"
                 android:layout_width="wrap_content"
@@ -105,34 +100,32 @@
                     android:text="X99"
                     android:textColor="@color/theme_white"
                     android:textSize="@dimen/agora_video_trophy_text_size" />
-
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/audio_Layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/agora_video_name_margin_start"
                 android:layout_marginLeft="@dimen/agora_video_name_margin_start"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/volume_Layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="vertical" />
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/audio_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/agora_video_name_margin_top"
-                    android:src="@drawable/agora_video_ic_audio_bg" />
-
-            </LinearLayout>
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/agora_video_ic_audio_bg"
+                    android:scaleType="fitXY"/>
+                <LinearLayout
+                    android:id="@+id/volume_Layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/audio_ic"
+                    android:layout_marginBottom="@dimen/agora_video_name_margin_top"
+                    android:orientation="vertical"/>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/videoName_Layout"
@@ -161,23 +154,18 @@
                     android:layout_alignTop="@id/video_ic"
                     android:layout_alignBottom="@id/video_ic"
                     android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:textAlignment="gravity"
                     android:layout_marginStart="@dimen/agora_video_name_margin_start"
                     android:layout_marginLeft="@dimen/agora_video_name_margin_start"
                     android:layout_toEndOf="@id/video_ic"
                     android:layout_toRightOf="@id/video_ic"
-                    android:autoSizeMaxTextSize="@dimen/text_size_small"
-                    android:autoSizeMinTextSize="@dimen/text_size_smallest"
-                    android:autoSizeStepGranularity="1sp"
-                    android:autoSizeTextType="uniform"
                     android:ellipsize="end"
-                    android:gravity="center_vertical|start|left"
                     android:maxEms="6"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text=""
                     android:textColor="@color/theme_white"
                     android:textSize="@dimen/agora_video_name_text_size" />
-
             </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -191,9 +179,6 @@
                 android:layout_marginLeft="@dimen/margin_smaller"
                 android:src="@drawable/agora_video_ic_board_granted"
                 android:visibility="invisible" />
-
         </RelativeLayout>
-
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>
