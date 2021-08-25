@@ -19,4 +19,8 @@ interface IAgoraExtAppAPaaSEntry {
                          callback: AgoraExtAppCallback<String>?)
 
     fun syncAppPosition(identifier: String, userId: String, x: Float, y: Float)
+
+    fun getAppPosition(identifier: String): ExtAppPosition
 }
+
+class ExtAppPosition(var userId: String = "", var x: Float = 0F, var y: Float = 0F)

@@ -34,6 +34,7 @@ import io.agora.educontext.WhiteboardApplianceType
 import io.agora.educontext.WhiteboardDrawingConfig
 import io.agora.educontext.context.WhiteboardContext
 import io.agora.extapp.ExtAppTrackListener
+import io.agora.extension.ExtAppPosition
 import io.agora.report.ReportManager
 import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
 import io.agora.whiteboard.netless.listener.BoardEventListener
@@ -777,6 +778,17 @@ class WhiteBoardManager(
         val state = curBoardState?.copy() ?: BoardState()
         state.setExtAppMovement(identifier, userId, x, y)
         boardProxy.setGlobalState(state)
+    }
+
+    fun getExtAppTrack(identifier: String): ExtAppPosition {
+        val track = ExtAppPosition()
+        curBoardState?.extAppMovements?.get(identifier)?.let {
+            track.userId = it.userId
+            track.x = it.x
+            track.y = it.y
+        }
+
+        return track
     }
 }
 

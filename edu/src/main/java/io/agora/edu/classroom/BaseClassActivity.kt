@@ -1054,6 +1054,10 @@ abstract class BaseClassActivity : BaseActivity(),
             override fun syncAppPosition(identifier: String, userId: String, x: Float, y: Float) {
                 whiteBoardManager?.setExtAppTrackInfo(identifier, userId, x, y)
             }
+
+            override fun getAppPosition(identifier: String): ExtAppPosition {
+                return whiteBoardManager?.getExtAppTrack(identifier) ?: ExtAppPosition()
+            }
         }
 
         // Explicitly call extension manager to search for

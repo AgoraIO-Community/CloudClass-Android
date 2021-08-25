@@ -147,6 +147,9 @@ class AgoraExtAppEngine(
                         item.param.width, item.param.height))
                 item.instance?.onExtAppLoaded(this.context, container, item.contentView!!, eduContext)
                 item.instance?.setDraggable(appDraggable)
+
+                val position = aPaaSEntry.getAppPosition(item.appIdentifier)
+                item.instance?.onPositionSync(position.userId, position.x, position.y)
             } else {
                 Log.w(tag, "launch ext app: cannot find container or content view, app $identifier")
             }

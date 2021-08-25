@@ -304,17 +304,19 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
 
     private fun movePositionBySync(x: Float, y: Float) {
         layout?.let { self ->
-            parent?.let { parent ->
-                if (hasFixedToCenter) {
-                    fixToCenter(false)
+            self.post {
+                parent?.let { parent ->
+                    if (hasFixedToCenter) {
+                        fixToCenter(false)
+                    }
+
+                    val param = self.layoutParams as ViewGroup.MarginLayoutParams
+                    param.leftMargin = ((parent.width - self.width) * x).toInt()
+                    param.topMargin = ((parent.height - self.height) * y).toInt()
+                    self.layoutParams = param
+
+                    if (!positionInit) positionInit = true
                 }
-
-                val param = self.layoutParams as ViewGroup.MarginLayoutParams
-                param.leftMargin = ((parent.width - self.width) * x).toInt()
-                param.topMargin = ((parent.height - self.height) * y).toInt()
-                self.layoutParams = param
-
-                if (!positionInit) positionInit = true
             }
         }
     }
