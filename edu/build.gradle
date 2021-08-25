@@ -104,5 +104,5 @@ dependencies {
     implementation "com.github.agorabuilder:rtm-sdk:${safeExtGet('dependencies', 'com.github.agorabuilder:rtm-sdk', rootProject.ext.android.rtmSDKVersion)}"
     //implementation "com.github.duty-os:white-sdk-android:${safeExtGet('dependencies', 'com.github.duty-os:white-sdk-android', rootProject.ext.android.boardSDKVersion)}"
 
-    implementation "com.github.duty-os:white-sdk-android:947af18a54"
+    implementation "com.github.duty-os:white-sdk-android:f092d57237"
 }

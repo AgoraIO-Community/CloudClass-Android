@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import androidx.core.view.forEach
 import com.google.gson.Gson
 import com.herewhite.sdk.*
 import com.herewhite.sdk.domain.*
@@ -183,6 +182,13 @@ class WhiteBoardManager(
                         params.cameraBound = CameraBound(miniScale, maxScale)
                         params.isDisableNewPencil = false
                         params.useMultiViews = true
+
+                        val collectorStyleMap = HashMap<String, String>()
+                        collectorStyleMap["position"] = "fixed"
+                        collectorStyleMap["left"] = "60px"
+                        collectorStyleMap["bottom"] = "12px"
+                        params.collectionStyle = collectorStyleMap
+
                         boardProxy.init(whiteSdk, params)
                         ReportManager.getAPaasReporter().reportWhiteBoardStart()
                     }
