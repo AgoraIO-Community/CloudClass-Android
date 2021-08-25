@@ -147,7 +147,6 @@ class AgoraExtAppEngine(
                         item.param.width, item.param.height))
                 item.instance?.onExtAppLoaded(this.context, container, item.contentView!!, eduContext)
                 item.instance?.setDraggable(appDraggable)
-
                 val position = aPaaSEntry.getAppPosition(item.appIdentifier)
                 item.instance?.onPositionSync(position.userId, position.x, position.y)
             } else {
@@ -177,13 +176,12 @@ class AgoraExtAppEngine(
         app?.let { item ->
             ContextCompat.getMainExecutor(context).execute {
                 (container as? ViewGroup)?.removeView(item.contentView)
+                item.instance?.onExtAppUnloaded()
+                item.instance = null
+                launchedExtAppMapTransformed.remove(item.formatIdentifier)
+                launchedExtAppMap.remove(item.appIdentifier)
+                launchedExtAppList.remove(item)
             }
-
-            item.instance?.onExtAppUnloaded()
-            item.instance = null
-            launchedExtAppMapTransformed.remove(item.formatIdentifier)
-            launchedExtAppMap.remove(item.appIdentifier)
-            launchedExtAppList.remove(item)
         }
 
         if (app == null) {
