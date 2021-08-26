@@ -77,9 +77,9 @@
     </string-array>
 
     <!-- Room Status -->
-    <string name="agora_room_state_not_started">Class will start:&#160;&#160;</string>
-    <string name="agora_room_state_started">Class started:&#160;&#160;</string>
-    <string name="agora_room_state_end">Class end:&#160;&#160;</string>
+    <string name="agora_room_state_not_started">Class will start&#160;</string>
+    <string name="agora_room_state_started">Class started&#160;</string>
+    <string name="agora_room_state_end">Class end&#160;</string>
 
     <string-array name="agora_tool_fonts">
         <item>22pt</item>

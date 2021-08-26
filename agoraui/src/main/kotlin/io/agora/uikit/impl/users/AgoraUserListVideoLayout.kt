@@ -3,23 +3,21 @@ package io.agora.uikit.impl.users
 import android.content.Context
 import android.graphics.Rect
 import android.text.TextUtils
-import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import io.agora.educontext.EduContextPool
 import io.agora.educontext.EduContextUserDetailInfo
 import io.agora.uikit.R
-import io.agora.uikit.component.RatioRelativeLayout
 import io.agora.uikit.component.adapteranimator.FadeInDownAnimator
 import io.agora.uikit.educontext.handlers.UserHandler
 import io.agora.uikit.impl.AbsComponent
-import io.agora.uikit.impl.container.AgoraUIConfig
 import io.agora.uikit.impl.video.AgoraUIVideo
 import io.agora.uikit.interfaces.listeners.IAgoraUIUserListListener
 import io.agora.uikit.interfaces.listeners.IAgoraUIVideoListener
@@ -144,13 +142,29 @@ class AgoraUserListVideoLayout(context: Context,
     private fun adjustRvItemSize(rv: RecyclerView) {
         rv.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                val height = parent.height
-                val lp = view.layoutParams
-                lp.width = height
-                view.layoutParams = lp
                 super.getItemOffsets(outRect, view, parent, state)
+
+                val param = view.layoutParams as ViewGroup.MarginLayoutParams
+                param.width = calculateVideoWidth()
+                param.height = height
+                view.layoutParams = param
+
+                // this callback is invoked for only once per
+                // view add/remove, but here we must insure every
+                // time that all item margins are adjusted correctly
+                // when dynamically insert/remove child items.
+                calculateItemMargins(parent)
             }
         })
+    }
+
+    private fun calculateItemMargins(recyclerView: RecyclerView) {
+        recyclerView.forEach { child ->
+            val param = child.layoutParams as ViewGroup.MarginLayoutParams
+            val position = recyclerView.getChildAdapterPosition(child)
+            param.rightMargin = if (position == recyclerView.adapter?.itemCount ?: 0 - 1) 0 else itemMargin
+            child.layoutParams = param
+        }
     }
 
     private fun adjustRvItemAnimator(rv: RecyclerView) {
@@ -163,7 +177,7 @@ class AgoraUserListVideoLayout(context: Context,
 
     private fun bindArrowWithRv(leftArrow: ImageView, rightArrow: ImageView, rv: RecyclerView) {
         val updateRun = Runnable {
-            val videoW = calculateVideoW()
+            val videoW = calculateVideoWidth()
             leftArrow.isVisible = getRvLeftDistance(rv) > videoW
             rightArrow.isVisible = getRvRightDistance(rv) > videoW
         }
@@ -195,18 +209,6 @@ class AgoraUserListVideoLayout(context: Context,
         }
         rv.layoutManager = lm
 
-        rv.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View,
-                                        parent: RecyclerView, state: RecyclerView.State) {
-                val position = parent.getChildAdapterPosition(view)
-                outRect.right = itemMargin
-
-                if (mVideoAdapter.itemCount > 0 && position == mVideoAdapter.itemCount - 1) {
-                    outRect.right = 0
-                }
-            }
-        })
-
         leftArrow.layoutParams = leftArrow.layoutParams.apply {
             val param = this as ViewGroup.MarginLayoutParams
             param.topMargin = itemShadowWidth.toInt()
@@ -225,15 +227,14 @@ class AgoraUserListVideoLayout(context: Context,
         val layoutManager = rv.layoutManager as LinearLayoutManager
         val lastVisibleItem: View = rv.getChildAt(rv.childCount - 1)
         val lastItemPosition = layoutManager.findLastVisibleItemPosition()
-        if(lastItemPosition < 0) {
+        if (lastItemPosition < 0) {
             return 0
         }
         val itemCount = layoutManager.itemCount
         val recycleViewWidth: Int = rv.width
         val itemWidth = lastVisibleItem.width
         val lastItemRight = layoutManager.getDecoratedRight(lastVisibleItem)
-        val distance = (itemCount - lastItemPosition - 1) * itemWidth - recycleViewWidth + lastItemRight
-        return distance
+        return (itemCount - lastItemPosition - 1) * itemWidth - recycleViewWidth + lastItemRight
     }
 
     private fun getRvLeftDistance(rv: RecyclerView): Int {
@@ -241,13 +242,12 @@ class AgoraUserListVideoLayout(context: Context,
         val layoutManager = rv.layoutManager as LinearLayoutManager
         val firstVisibleItem: View = rv.getChildAt(0)
         val firstItemPosition = layoutManager.findFirstVisibleItemPosition()
-        if(firstItemPosition < 0) {
+        if (firstItemPosition < 0) {
             return 0
         }
         val itemWidth = firstVisibleItem.width
         val firstItemLeft = layoutManager.getDecoratedLeft(firstVisibleItem)
-        val distance = firstItemPosition * itemWidth - firstItemLeft
-        return distance
+        return firstItemPosition * itemWidth - firstItemLeft
     }
 
     private fun updateCoHostList(list: MutableList<EduContextUserDetailInfo>) {
@@ -292,31 +292,16 @@ class AgoraUserListVideoLayout(context: Context,
         }
     }
 
-    private fun calculateVideoW(): Float {
-        val videoW = if (AgoraUIConfig.isLargeScreen) {
-            AgoraUIConfig.SmallClass.teacherVideoWidth * AgoraUIConfig.videoRatio1
-        } else {
-            AgoraUIConfig.SmallClass.teacherVideoWidth * AgoraUIConfig.videoRatio1
-        }
-        return videoW
+    private fun calculateVideoWidth(): Int {
+        return (this.height * 16f / 9).toInt()
     }
 
     private inner class CoHostVideoAdapter(val shadowWidth: Float,
                                            val callback: IAgoraUIUserListListener?) : RecyclerView.Adapter<VideoHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoHolder {
-            val container = if (AgoraUIConfig.isLargeScreen) {
-                val layout = RatioRelativeLayout(parent.context)
-                layout.setRatio(1.0f / AgoraUIConfig.videoRatio1)
-                layout
-            } else {
-//                SquareRelativeLayout(parent.context)
-                val layout = RatioRelativeLayout(parent.context)
-                layout.setRatio(1.0f / AgoraUIConfig.videoRatio1)
-                layout
-            }
-
-            return VideoHolder(container, AgoraUIVideo(parent.context,
-                    container, 0f, 0f, shadowWidth), callback)
+            val layout = RelativeLayout(parent.context)
+            return VideoHolder(layout, AgoraUIVideo(parent.context,
+                layout, 0f, 0f, shadowWidth), callback)
         }
 
         override fun onBindViewHolder(holder: VideoHolder, position: Int) {

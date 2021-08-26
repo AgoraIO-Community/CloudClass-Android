@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kotlin.jvm.Synchronized;
+
 public class BoardState extends GlobalState implements Parcelable {
     private float follow;
     private List<String> grantUsers = new ArrayList<>();
@@ -21,6 +23,7 @@ public class BoardState extends GlobalState implements Parcelable {
     private List<BoardDynamicTaskInfo> materialList = new ArrayList<>();
     private boolean isFullScreen = false;
     private Map<String, Object> flexBoardState = new HashMap<>();
+    private Map<String, ExtAppMovement> extAppMoveTracks = new HashMap<>();
 
     public BoardState() {
 
@@ -54,6 +57,7 @@ public class BoardState extends GlobalState implements Parcelable {
         materialList = in.createTypedArrayList(BoardDynamicTaskInfo.CREATOR);
         isFullScreen = in.readByte() != 0;
         in.readMap(flexBoardState, ClassLoader.getSystemClassLoader());
+        in.readMap(extAppMoveTracks, ClassLoader.getSystemClassLoader());
     }
 
     @Override
@@ -68,6 +72,9 @@ public class BoardState extends GlobalState implements Parcelable {
         dest.writeMap(flexBoardState != null
                 ? flexBoardState
                 : new HashMap<String, Object>());
+        dest.writeMap(extAppMoveTracks != null
+                ? extAppMoveTracks
+                : new HashMap<String, ExtAppMovement>());
     }
 
     @Override
@@ -164,5 +171,54 @@ public class BoardState extends GlobalState implements Parcelable {
                 teacherFirstLogin, dynamicTaskUuidList, materialList, isFullScreen);
         state.flexBoardState = flexBoardState;
         return state;
+    }
+
+    public static class ExtAppMovement {
+        public String userId;
+        public float x;
+        public float y;
+
+        public ExtAppMovement(String userId, float x, float y) {
+            this.userId = userId;
+            this.x = x;
+            this.y = y;
+        }
+
+        public boolean equals(ExtAppMovement another) {
+            if (another == null) return false;
+            if (this.userId == null && another.userId != null) {
+                return false;
+            } else if (this.userId != null) {
+                return this.userId.equals(another.userId) &&
+                        this.x == another.x && this.y == another.y;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    @Synchronized
+    public Map<String, ExtAppMovement> getExtAppMovements() {
+        return extAppMoveTracks;
+    }
+
+    @Synchronized
+    public void setExtAppMovement(String id, String userId, float x, float y) {
+        if (extAppMoveTracks.containsKey(id) && extAppMoveTracks.get(id) != null) {
+            ExtAppMovement m = extAppMoveTracks.get(id);
+            m.userId = userId;
+            m.x = x;
+            m.y = y;
+        } else {
+            extAppMoveTracks.put(id, new ExtAppMovement(userId, x, y));
+        }
+    }
+
+    public boolean extAppTracksEquals(BoardState another) {
+        if (another != null) {
+            return this.extAppMoveTracks.equals(another.extAppMoveTracks);
+        } else {
+            return this.extAppMoveTracks.isEmpty();
+        }
     }
 }

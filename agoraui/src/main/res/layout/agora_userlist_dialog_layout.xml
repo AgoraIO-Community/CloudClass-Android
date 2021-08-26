@@ -4,7 +4,6 @@
     android:layout_height="@dimen/agora_userlist_dialog_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/padding_small"
     android:clipToPadding="false"
     android:clipChildren="false">
 

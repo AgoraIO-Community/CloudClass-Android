@@ -1,5 +1,6 @@
 package io.agora.edu.classroom
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
@@ -7,6 +8,7 @@ import android.widget.RelativeLayout
 import com.herewhite.sdk.domain.SDKError
 import io.agora.edu.R
 import com.herewhite.sdk.domain.SceneState
+import io.agora.edu.classroom.view.ActivityFitLayout
 import io.agora.edu.launch.AgoraEduCourseware
 import io.agora.edu.launch.AgoraEduSDK
 import io.agora.education.api.base.EduError
@@ -68,31 +70,34 @@ class SmallClassActivity : BaseClassActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        contentLayout?.viewTreeObserver?.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+        activityLayout?.viewTreeObserver?.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                if (contentLayout!!.width > 0 && contentLayout!!.height > 0) {
-                    contentLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                if (activityLayout!!.width > 0 && activityLayout!!.height > 0) {
+                    activityLayout!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
 
                     if (EduDebugMode.useDebugUI) {
                         Log.i(tag, "create debug ui container")
                         container = AgoraUIContainer.create(
-                                contentLayout!!,
-                                0, 0,
-                                contentLayout!!.width,
-                                contentLayout!!.height,
-                                AgoraContainerType.Debug,
-                                eduContext,
-                                AgoraContainerConfig(listOf()))
+                            contentLayout!!,
+
+                            0, 0,
+                            contentLayout!!.width,
+                            contentLayout!!.height,
+                            AgoraContainerType.Debug,
+                            eduContext,
+                            AgoraContainerConfig(listOf()))
                     } else {
-                        container = AgoraUIContainer.create(contentLayout!!,
-                                0, 0, contentLayout!!.width,
-                                contentLayout!!.height,
-                                AgoraContainerType.SmallClass, eduContext,
-                                AgoraContainerConfig(chatTabConfigs =
-                                listOf(
-                                        ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
-                                        ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
-                                )))
+                        container = AgoraUIContainer.create(
+                            contentLayout!!,
+                            0, 0,
+                            contentLayout!!.width,
+                            contentLayout!!.height,
+                            AgoraContainerType.SmallClass, eduContext,
+                            AgoraContainerConfig(
+                                chatTabConfigs = listOf(
+                                    ChatTabConfig(getString(R.string.agora_chat_tab_message), TabType.Public, null),
+                                    ChatTabConfig(getString(R.string.agora_chat_tab_private), TabType.Private, null)
+                            )))
                     }
 
                     whiteboardContext.getHandlers()?.forEach {
@@ -121,8 +126,24 @@ class SmallClassActivity : BaseClassActivity() {
     }
 
     override fun onContentViewLayout(): RelativeLayout {
-        contentLayout = RelativeLayout(this)
-        return contentLayout!!
+        RelativeLayout(this).let { container ->
+            container.setBackgroundColor(Color.BLACK)
+            activityLayout = container
+
+            ActivityFitLayout(this).let {
+                contentLayout = it
+                it.setBackgroundColor(resources.getColor(R.color.gray_F9F9FC))
+                val param = RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.MATCH_PARENT)
+                param.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
+                container.addView(it, param)
+
+                setContentView(container)
+            }
+        }
+
+        return activityLayout!!
     }
 
     override fun onRoomJoinConfig(): JoinRoomConfiguration {
@@ -177,27 +198,18 @@ class SmallClassActivity : BaseClassActivity() {
         super.onRemoteStreamsAdded(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareStarted(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onRemoteStreamUpdated(streamEvents: MutableList<EduStreamEvent>, classRoom: EduRoom) {
         super.onRemoteStreamUpdated(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareStarted(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onRemoteStreamsRemoved(streamEvents: MutableList<EduStreamEvent>, classRoom: EduRoom) {
         super.onRemoteStreamsRemoved(streamEvents, classRoom)
         teacherVideoManager?.notifyUserDetailInfo(EduUserRole.TEACHER)
         screenShareManager?.checkAndNotifyScreenShareRemoved(streamEvents)
-//        if (streamEvents.find { it.modifiedStream.publisher.role == EduUserRole.TEACHER } == null) {
-//            userListManager?.notifyUserList()
-//        }
     }
 
     override fun onLocalStreamAdded(streamEvent: EduStreamEvent) {

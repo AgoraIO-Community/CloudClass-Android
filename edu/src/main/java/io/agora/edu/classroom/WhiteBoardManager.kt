@@ -32,6 +32,8 @@ import io.agora.educontext.EduBoardRoomPhase
 import io.agora.educontext.WhiteboardApplianceType
 import io.agora.educontext.WhiteboardDrawingConfig
 import io.agora.educontext.context.WhiteboardContext
+import io.agora.extapp.ExtAppTrackListener
+import io.agora.extension.ExtAppPosition
 import io.agora.report.ReportManager
 import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
 import io.agora.whiteboard.netless.listener.BoardEventListener
@@ -66,6 +68,7 @@ class WhiteBoardManager(
     private var followTips = false
     private var curFollowState = false
     var whiteBoardManagerEventListener: WhiteBoardManagerEventListener? = null
+    var extAppTrackListener: ExtAppTrackListener? = null
 
     // this's not a real-time value
     private var curSceneState: SceneState? = null
@@ -116,15 +119,6 @@ class WhiteBoardManager(
         whiteBoardView.settings.allowFileAccessFromFileURLs = true
         whiteBoardView.webViewClient = webViewClient
         whiteBoardView.setOnTouchListener(onTouchListener)
-//        whiteBoardView.addOnLayoutChangeListener { v: View?, left: Int, top: Int, right: Int,
-//                                                   bottom: Int, oldLeft: Int, oldTop: Int,
-//                                                   oldRight: Int, oldBottom: Int ->
-//            if (context is Activity && (context.isFinishing) ||
-//                    (context as Activity).isDestroyed) {
-//                return@addOnLayoutChangeListener
-//            }
-//            boardProxy.refreshViewSize()
-//        }
         whiteboardContext.getHandlers()?.forEach {
             it.onDrawingEnabled(!boardProxy.isDisableDeviceInputs)
             it.onPagingEnabled(!boardProxy.isDisableDeviceInputs)
@@ -187,6 +181,14 @@ class WhiteBoardManager(
                         val params = RoomParams(uuid, boardToken)
                         params.cameraBound = CameraBound(miniScale, maxScale)
                         params.isDisableNewPencil = false
+                        params.useMultiViews = true
+
+                        val collectorStyleMap = HashMap<String, String>()
+                        collectorStyleMap["position"] = "fixed"
+                        collectorStyleMap["left"] = "60px"
+                        collectorStyleMap["bottom"] = "12px"
+                        params.collectionStyle = collectorStyleMap
+
                         boardProxy.init(whiteSdk, params)
                         ReportManager.getAPaasReporter().reportWhiteBoardStart()
                     }
@@ -600,6 +602,11 @@ class WhiteBoardManager(
                 }
             }
 
+            // whether ext app track states update
+            if (!state.extAppTracksEquals(curBoardState)) {
+                extAppTrackListener?.onExtAppTrackUpdated(state.extAppMovements)
+            }
+
             curBoardState = state
             if (!curBoardState!!.isTeacherFirstLogin && courseware != null && scenePpts != null
                     && loadPreviewPpt) {
@@ -639,6 +646,7 @@ class WhiteBoardManager(
                     curFollowState = follow
                 }
                 disableCameraTransform(!granted)
+                disableDeviceInputs(!granted)
                 val grantedUsers = curBoardState!!.grantUsers
                 if (curGrantedUsers != grantedUsers) {
                     curGrantedUsers.clear()
@@ -767,9 +775,26 @@ class WhiteBoardManager(
     }
 
     fun setFlexWhiteboardState(properties: Map<String, Any>) {
-        val state = curBoardState?.copy() ?: BoardState();
+        val state = curBoardState?.copy() ?: BoardState()
         state.flexBoardState = properties
         boardProxy.setGlobalState(state)
+    }
+
+    internal fun setExtAppTrackInfo(identifier: String, userId: String, x: Float, y: Float) {
+        val state = curBoardState?.copy() ?: BoardState()
+        state.setExtAppMovement(identifier, userId, x, y)
+        boardProxy.setGlobalState(state)
+    }
+
+    fun getExtAppTrack(identifier: String): ExtAppPosition {
+        val track = ExtAppPosition()
+        curBoardState?.extAppMovements?.get(identifier)?.let {
+            track.userId = it.userId
+            track.x = it.x
+            track.y = it.y
+        }
+
+        return track
     }
 }
 

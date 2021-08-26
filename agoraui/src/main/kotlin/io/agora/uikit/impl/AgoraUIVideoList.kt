@@ -30,46 +30,48 @@ class AgoraUIVideoList(
     private val teacherVideoWindow: AgoraUIVideoGroup
     private val studentsVideoWindow: AgoraUserListVideoLayout
 
+    private var videoWidth = 0
+    private var videoHeight = 0
+    private var marginHorizontal = 0
+
     init {
+        calculateValues(width)
+
         videosContainer = LinearLayout(context)
         val videosContainerParams = RelativeLayout.LayoutParams(width, height)
         videosContainerParams.leftMargin = left
         videosContainerParams.topMargin = top
         videosContainer.layoutParams = videosContainerParams
-        videosContainer.gravity = Gravity.CENTER_HORIZONTAL
+        videosContainer.gravity = Gravity.CENTER
         parent.addView(videosContainer)
 
         videosLayout = LinearLayout(parent.context)
-        val videosLayoutTop = componentMargin
         val videosLayoutW = ViewGroup.LayoutParams.WRAP_CONTENT
-        val videosLayoutH = AgoraUIConfig.SmallClass.teacherVideoHeight
-        val videosLayoutParams = LinearLayout.LayoutParams(videosLayoutW, videosLayoutH)
-        videosLayoutParams.topMargin = videosLayoutTop
+        val videosLayoutParams = LinearLayout.LayoutParams(videosLayoutW, videoHeight)
+        videosLayoutParams.topMargin = 0
         videosLayout.layoutParams = videosLayoutParams
         videosLayout.orientation = LinearLayout.HORIZONTAL
         videosContainer.addView(videosLayout)
 
-        val teacherVideoTop = 0
-        val teacherVideoW = AgoraUIConfig.SmallClass.teacherVideoWidth
-        val teacherVideoH = videosLayoutH
         teacherVideoWindow = AgoraUIVideoGroup(parent.context,
-                eduContext, videosLayout, 0, teacherVideoTop, teacherVideoW,
-                teacherVideoH, 0, EduContextVideoMode.Single)
-//        teacherVideoWindow!!.setContainer(this)
+                eduContext, videosLayout, 0, 0, videoWidth,
+            videoHeight, marginHorizontal, EduContextVideoMode.Single)
 
-        val studentVideoLeft = componentMargin
-        val studentVideoTop = 0
         val studentVideoWidth = ViewGroup.LayoutParams.WRAP_CONTENT
-        val studentVideoHeight = AgoraUIConfig.SmallClass.teacherVideoHeight
         studentsVideoWindow = AgoraUserListVideoLayout(parent.context,
-                eduContext, videosLayout, studentVideoWidth, studentVideoHeight, studentVideoLeft,
-                studentVideoTop, 0f, componentMargin)
-//        studentVideoGroup!!.setContainer(this)
+            eduContext, videosLayout, studentVideoWidth, videoHeight,
+            0, 0, 0f, marginHorizontal)
         studentsVideoWindow.show(false)
     }
 
+    private fun calculateValues(width: Int) {
+        videoWidth = (width * 176 / 1280f).toInt()
+        videoHeight = (videoWidth * 9 / 16f).toInt()
+        marginHorizontal = (width * 8 / 1280f).toInt()
+    }
+
     fun showTeacher(show: Boolean) {
-        teacherVideoWindow.show(show)
+        teacherVideoWindow.show(show, marginHorizontal)
     }
 
     fun showStudents(show: Boolean) {

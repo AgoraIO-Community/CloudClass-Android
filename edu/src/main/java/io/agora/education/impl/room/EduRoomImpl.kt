@@ -217,16 +217,16 @@ internal class EduRoomImpl(
         /**Set the video resolution according to the classType*/
         when (getCurRoomType()) {
             RoomType.ONE_ON_ONE -> {
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             RoomType.SMALL_CLASS -> {
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             RoomType.LARGE_CLASS -> {
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
-                syncSession.localUser.eduVideoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
+                syncSession.localUser.videoEncoderConfig.videoDimensionWidth = VideoDimensions_320X240[0]
+                syncSession.localUser.videoEncoderConfig.videoDimensionHeight = VideoDimensions_320X240[1]
             }
             else -> {
                 /**default is 360 * 360*/
@@ -294,8 +294,12 @@ internal class EduRoomImpl(
                                         ReportManager.getHeartbeat()?.startHeartbeat(
                                                 roomEntryRes.room.roomInfo.roomUuid,
                                                 roomEntryRes.user.userUuid)
-
                                         AgoraLog.i("$TAG->Full data pull and merge successfully,init localStream")
+                                        if (options.videoEncoderConfig != null) {
+                                            setVideoEncoderConfig(options.videoEncoderConfig!!)
+                                        } else {
+                                            setVideoEncoderConfig(syncSession.localUser.videoEncoderConfig)
+                                        }
                                         initOrUpdateLocalStream(roomEntryRes, mediaOptions, object : EduCallback<Unit> {
                                             override fun onSuccess(res: Unit?) {
                                                 joinSuccess(syncSession.localUser, joinCallback as EduCallback<EduUser>)
@@ -343,6 +347,16 @@ internal class EduRoomImpl(
                         }
                     }
                 }))
+    }
+
+    private fun setVideoEncoderConfig(videoEncoderConfig: EduVideoEncoderConfig) {
+        val a = RteEngineImpl.setVideoEncoderConfiguration(
+                Convert.convertVideoEncoderConfig(videoEncoderConfig))
+        if (a != RteEngineImpl.OK()) {
+            AgoraLog.e(TAG, "Media error->$a,reason-> set video encoder config failed")
+        } else {
+            AgoraLog.i(TAG, "set video encoder config successfully")
+        }
     }
 
     private fun joinRte(rtcToken: String, rtcUid: Long, channelMediaOptions: ChannelMediaOptions,

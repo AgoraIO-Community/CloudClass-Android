@@ -19,7 +19,7 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
          * Smaller distances are translated as usually finger
          * shaking when a user touches a view.
          */
-        private const val minDistanceX = 10
+        private const val minDistanceX = 8
         private const val minDistanceY = 8
     }
 
@@ -37,6 +37,10 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
     private var lastTouchY = -2
     private var touched = false
     private var hasFixedToCenter = false
+
+    private var shouldSyncPosition = true
+    private var shouldReceiveSyncInfo = true
+    private var positionInit = false
 
     @SuppressLint("ClickableViewAccessibility")
     private val moveTouchListener = View.OnTouchListener { _, event ->
@@ -117,7 +121,7 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
      * The default is not to respond to drag events
      */
     @SuppressLint("ClickableViewAccessibility")
-    protected fun setDraggable(draggable: Boolean) {
+    fun setDraggable(draggable: Boolean) {
         if (this.draggable != draggable) {
             layout?.let {
                 this.draggable = draggable
@@ -158,11 +162,9 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
             var diffX: Int = x - lastTouchX
             var diffY: Int = y - lastTouchY
 
-            if (abs(diffX) < minDistanceX) {
+            if (abs(diffX) < minDistanceX && abs(diffY) < minDistanceY) {
+                // ignore tiny moves
                 diffX = 0
-            }
-
-            if (abs(diffY) < minDistanceY) {
                 diffY = 0
             }
 
@@ -177,12 +179,14 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
             if (diffX < 0) {
                 if (left + diffX < 0) {
                     left = 0
+                    diffX = 0
                 } else {
                     left += diffX
                 }
             } else {
                 if (left + width + diffX > parentWidth) {
                     left = parentWidth - width
+                    diffX = 0
                 } else {
                     left += diffX
                 }
@@ -190,12 +194,14 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
             if (diffY < 0) {
                 if (top + diffY < 0) {
                     top = 0
+                    diffY = 0
                 } else {
                     top += diffY
                 }
             } else {
                 if (top + height + diffY > parentHeight) {
                     top = parentHeight - height
+                    diffY = 0
                 } else {
                     top += diffY
                 }
@@ -206,6 +212,8 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
             layout?.layoutParams = params
             lastTouchX += diffX
             lastTouchY += diffY
+
+            trySyncAppPosition(left, top)
         }
     }
 
@@ -228,6 +236,86 @@ abstract class AgoraExtAppBase : IAgoraExtApp {
                     }
                     layout.layoutParams = param
                     hasFixedToCenter = fix
+                }
+            }
+        }
+    }
+
+    fun enableSendTrack(enabled: Boolean) {
+        shouldSyncPosition = enabled
+    }
+
+    private fun trySyncAppPosition(x: Int, y: Int) {
+        if (shouldSyncPosition) {
+            identifier?.let { id ->
+                val pair = calculateDistancePercentage(x, y)
+                syncPosition(id, pair.first, pair.second)
+            }
+        }
+    }
+
+    private fun calculateDistancePercentage(x: Int, y: Int) : Pair<Float, Float> {
+        var pair: Pair<Float, Float>? = null
+        layout?.let { self ->
+            parent?.let { parent ->
+                val diffXPer = x / (parent.width - self.width).toFloat()
+                val diffYPer = y / (parent.height - self.height).toFloat()
+                pair = Pair(diffXPer, diffYPer)
+            }
+        }
+        return pair ?: Pair(0F, 0F)
+    }
+
+    /**
+     * Sync the position of current ext app to remote users.
+     * Effective distance: the distance an ext app can actually
+     * move along x or y axis, taking into account its size,
+     * because it cannot move outside its parent container.
+     * The absolute value is the width or height of parent layout
+     * minus the width or height of the ext app itself.
+     * @param identifier identifier of the ext app
+     * @param x percentage of effective distance along x axis
+     * @param y percentage of effective distance along y axis
+     */
+    private fun syncPosition(identifier: String, x: Float, y: Float) {
+        extAppContext?.let {
+            engine?.syncAppPosition(identifier, getLocalUserInfo()?.userUuid ?: "", x, y)
+        }
+    }
+
+    internal fun onPositionSync(userId: String, x: Float, y: Float) {
+        if (!shouldReceiveSyncInfo) {
+            return
+        }
+
+        if (!positionInit) {
+            // This ext app has not initialized a sync position,
+            // we should adjust it position in order to keep
+            // the same with room setting
+            movePositionBySync(x, y)
+            return
+        }
+
+        // If this is the update I have just sent out, ignore
+        if (userId == getLocalUserInfo()?.userUuid) return
+
+        movePositionBySync(x, y)
+    }
+
+    private fun movePositionBySync(x: Float, y: Float) {
+        layout?.let { self ->
+            self.post {
+                parent?.let { parent ->
+                    if (hasFixedToCenter) {
+                        fixToCenter(false)
+                    }
+
+                    val param = self.layoutParams as ViewGroup.MarginLayoutParams
+                    param.leftMargin = ((parent.width - self.width) * x).toInt()
+                    param.topMargin = ((parent.height - self.height) * y).toInt()
+                    self.layoutParams = param
+
+                    if (!positionInit) positionInit = true
                 }
             }
         }

@@ -57,7 +57,7 @@ internal open class EduUserImpl(
 ) : EduUser {
     val tag = "EduUserImpl"
 
-    override var eduVideoEncoderConfig = EduVideoEncoderConfig()
+    override var videoEncoderConfig = EduVideoEncoderConfig()
 
     override var eventListener: EduUserEventListener? = null
 
@@ -85,12 +85,12 @@ internal open class EduUserImpl(
             return
         }
         AgoraLog.i("$tag->Start initOrUpdateLocalStream:${Gson().toJson(options)}")
-        val a = RteEngineImpl.setVideoEncoderConfiguration(
-                Convert.convertVideoEncoderConfig(eduVideoEncoderConfig))
-        if (a != OK()) {
-            callback.onFailure(mediaError(a, getError(a)))
-            return
-        }
+//        val a = RteEngineImpl.setVideoEncoderConfiguration(
+//                Convert.convertVideoEncoderConfig(videoEncoderConfig))
+//        if (a != OK()) {
+//            callback.onFailure(mediaError(a, getError(a)))
+//            return
+//        }
         /**enableCamera和enableMicrophone控制是否打开摄像头和麦克风的采集*/
         if (options.enableMicrophone != lastMicState) {
             val c1 = RteEngineImpl.enableLocalAudio(options.enableMicrophone)

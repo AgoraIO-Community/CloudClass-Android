@@ -160,14 +160,6 @@ class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
         eduContext?.userContext()?.addHandler(handler)
     }
 
-    enum class RosterType(private val value: Int) {
-        SmallClass(0), LargeClass(1);
-
-        fun value(): Int {
-            return this.value
-        }
-    }
-
     override fun setRect(rect: Rect) {
 
     }
@@ -175,7 +167,7 @@ class AgoraUIRoster(private val eduContext: EduContextPool?) : AbsComponent() {
 
 class RosterDialog(
         appContext: Context,
-        private val type: AgoraUIRoster.RosterType,
+        private val type: RosterType,
         private val eduContext: EduContextPool?,
         private val userList: MutableList<EduContextUserDetailInfo>
 ) : Dialog(appContext, R.style.agora_dialog) {
@@ -232,19 +224,19 @@ class RosterDialog(
     }
 
     private fun getLayoutRes() = when (this.type) {
-        AgoraUIRoster.RosterType.SmallClass -> R.layout.agora_userlist_dialog_layout
-        AgoraUIRoster.RosterType.LargeClass -> R.layout.agora_userlist_largeclass_dialog_layout
+        RosterType.SmallClass -> R.layout.agora_userlist_dialog_layout
+        RosterType.LargeClass -> R.layout.agora_userlist_largeclass_dialog_layout
     }
 
     fun adjustPosition(anchor: View) {
         when (type) {
-            AgoraUIRoster.RosterType.SmallClass -> {
+            RosterType.SmallClass -> {
                 adjustPosition(anchor,
                         context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_width),
                         context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_height))
             }
 
-            AgoraUIRoster.RosterType.LargeClass -> {
+            RosterType.LargeClass -> {
                 adjustPosition(anchor,
                         context.resources.getDimensionPixelSize(R.dimen.agora_userlist_largeclass_dialog_width),
                         context.resources.getDimensionPixelSize(R.dimen.agora_userlist_dialog_height))
@@ -253,13 +245,13 @@ class RosterDialog(
     }
 
     @SuppressLint("InflateParams")
-    private fun createItemViewHolder(type: AgoraUIRoster.RosterType, parent: ViewGroup, listener: UserItemClickListener): BaseUserHolder {
+    private fun createItemViewHolder(type: RosterType, parent: ViewGroup, listener: UserItemClickListener): BaseUserHolder {
         return when (type) {
-            AgoraUIRoster.RosterType.SmallClass -> {
+            RosterType.SmallClass -> {
                 SmallClassUserHolder(LayoutInflater.from(parent.context)
                         .inflate(R.layout.agora_userlist_dialog_list_item, null), listener)
             }
-            AgoraUIRoster.RosterType.LargeClass -> {
+            RosterType.LargeClass -> {
                 LargeClassUserHolder(LayoutInflater.from(parent.context)
                         .inflate(R.layout.agora_userlist_largeclass_dialog_list_item, null), listener)
             }
@@ -351,7 +343,7 @@ class RosterDialog(
     }
 
     private abstract inner class BaseUserHolder(
-            private val type: AgoraUIRoster.RosterType,
+            private val type: RosterType,
             val view: View, val listener: UserItemClickListener) : RecyclerView.ViewHolder(view) {
         abstract fun bind(item: EduContextUserDetailInfo)
     }

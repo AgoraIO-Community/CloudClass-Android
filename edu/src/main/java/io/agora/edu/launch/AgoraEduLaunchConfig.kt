@@ -2,8 +2,7 @@ package io.agora.edu.launch
 
 import android.os.Parcel
 import android.os.Parcelable
-import io.agora.edu.common.bean.board.sceneppt.BoardCoursewareRes
-import io.agora.edu.common.bean.board.sceneppt.Conversion
+import io.agora.education.api.stream.data.EduVideoEncoderConfig
 import io.agora.uicomponent.UiWidgetConfig
 import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
 
@@ -23,6 +22,7 @@ class AgoraEduLaunchConfig(val userName: String,
                            val duration: Long?,
                            val boardRegion: String,
                            val boardFitMode: AgoraBoardFitMode,
+                           var videoEncoderConfig: EduVideoEncoderConfig? = null,
                            val userProperties: MutableMap<String, String>? = null,
                            val widgetConfigs: MutableList<UiWidgetConfig>? = null) : Parcelable {
 
@@ -41,15 +41,17 @@ class AgoraEduLaunchConfig(val userName: String,
                         appId: String,
                         eyeCare: Int,
                         whiteBoardAppId: String,
+                        videoEncoderConfig: EduVideoEncoderConfig? = null,
                         userProperties: MutableMap<String, String>? = null,
                         widgetConfigs: MutableList<UiWidgetConfig>? = null)
-            : this(userName, userUuid, roomName, roomUuid, roleType, roomType,
-            rtmToken, startTime, duration, boardRegion, boardFitMode, userProperties, widgetConfigs) {
+            : this(userName, userUuid, roomName, roomUuid, roleType, roomType, rtmToken, startTime,
+            duration, boardRegion, boardFitMode, videoEncoderConfig, userProperties, widgetConfigs) {
 
         this.appId = appId
         this.eyeCare = eyeCare
         this.whiteBoardAppId = whiteBoardAppId
         this.vendorId = vendorId
+        this.videoEncoderConfig = videoEncoderConfig
     }
 
     var appId: String = ""
@@ -73,7 +75,8 @@ class AgoraEduLaunchConfig(val userName: String,
                     ?: AgoraBoardFitMode.Auto,
             parcel.readString() ?: "",
             parcel.readInt(),
-            parcel.readString() ?: ""
+            parcel.readString() ?: "",
+            parcel.readParcelable(EduVideoEncoderConfig::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -92,6 +95,7 @@ class AgoraEduLaunchConfig(val userName: String,
         parcel.writeString(appId)
         parcel.writeInt(eyeCare)
         parcel.writeString(whiteBoardAppId)
+        parcel.writeParcelable(videoEncoderConfig, flags)
     }
 
     override fun describeContents(): Int {

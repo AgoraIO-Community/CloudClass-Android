@@ -3,9 +3,11 @@ package io.agora.uikit.impl.video
 import android.content.Context
 import android.graphics.Outline
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.view.View.*
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
@@ -17,6 +19,7 @@ import io.agora.educontext.EduContextUserRole
 import io.agora.uikit.*
 import io.agora.uikit.interfaces.listeners.IAgoraUIVideoListener
 import io.agora.uikit.component.toast.AgoraUIToastManager
+import io.agora.uikit.impl.container.AgoraUIConfig
 import io.agora.uikit.impl.container.AgoraUIConfig.clickInterval
 import io.agora.uikit.impl.container.AgoraUIConfig.isLargeScreen
 import io.agora.uikit.impl.container.AgoraUIConfig.videoOptionIconSizeMax
@@ -48,7 +51,7 @@ internal class AgoraUIVideo(
     private val cameraDisableImg: AppCompatImageView = view.findViewById(R.id.camera_disable_img)
     private val trophyLayout: LinearLayout = view.findViewById(R.id.trophy_Layout)
     private val trophyText: AppCompatTextView = view.findViewById(R.id.trophy_Text)
-    private val audioLayout: LinearLayout = view.findViewById(R.id.audio_Layout)
+    private val audioLayout: RelativeLayout = view.findViewById(R.id.audio_Layout)
     private val volumeLayout: LinearLayout = view.findViewById(R.id.volume_Layout)
     private val audioIc: AppCompatImageView = view.findViewById(R.id.audio_ic)
     private val videoNameLayout: RelativeLayout = view.findViewById(R.id.videoName_Layout)
@@ -88,23 +91,45 @@ internal class AgoraUIVideo(
         cardView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 cardView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val tmp = cardView.right - cardView.left
-                val width = (tmp * videoPlaceHolderImgSizePercent).toInt()
-                videoOffImg.layoutParams.width = width
-                offLineLoadingImg.layoutParams.width = width
-                noCameraImg.layoutParams.width = width
-                cameraDisableImg.layoutParams.width = width
-                val maxSize = if (isLargeScreen) videoOptionIconSizeMaxWithLargeScreen else videoOptionIconSizeMax
-                val audioSize = min((tmp * videoOptionIconSizePercent).toInt(), maxSize)
-                audioLayout.layoutParams.width = audioSize
-                audioIc.layoutParams.width = audioSize
-                audioIc.layoutParams.height = audioSize
-                videoNameLayout.layoutParams.height = audioSize
-                videoIc.layoutParams.width = audioSize
-                videoIc.layoutParams.height = audioSize
-                boardGrantedIc.layoutParams.width = audioSize
-                boardGrantedIc.layoutParams.height = audioSize
+
+                val videoStateIconSize = if (isLargeScreen) {
+                    (parent.height * 66 / 100f).toInt()
+                } else {
+                    (parent.height * 50 / 100f).toInt()
+                }
+
+                videoOffLayout.layoutParams.width = videoStateIconSize
+                videoOffLayout.layoutParams.height = videoStateIconSize
+                videoOffLayout.layoutParams = videoOffLayout.layoutParams
+                offLineLoadingLayout.layoutParams.width = videoStateIconSize
+                offLineLoadingLayout.layoutParams.height = videoStateIconSize
+                offLineLoadingLayout.layoutParams = offLineLoadingLayout.layoutParams
+                noCameraLayout.layoutParams.width = videoStateIconSize
+                noCameraLayout.layoutParams.height = videoStateIconSize
+                noCameraLayout.layoutParams = noCameraLayout.layoutParams
+                cameraDisableLayout.layoutParams.width = videoStateIconSize
+                cameraDisableLayout.layoutParams.height = videoStateIconSize
+                cameraDisableLayout.layoutParams = cameraDisableLayout.layoutParams
+
+                val smallIconSize = (parent.height * 18f / 100).toInt()
+
+                audioLayout.layoutParams.width = smallIconSize
+                audioLayout.layoutParams = audioLayout.layoutParams
+
+                audioIc.layoutParams.width = smallIconSize
+                audioIc.layoutParams.height = smallIconSize
+                audioIc.layoutParams = audioIc.layoutParams
+                videoNameLayout.layoutParams.height = smallIconSize
+                videoNameLayout.layoutParams = videoNameLayout.layoutParams
+                videoIc.layoutParams.width = smallIconSize
+                videoIc.layoutParams.height = smallIconSize
+                videoIc.layoutParams = videoIc.layoutParams
+                boardGrantedIc.layoutParams.width = smallIconSize
+                boardGrantedIc.layoutParams.height = smallIconSize
+                boardGrantedIc.layoutParams = boardGrantedIc.layoutParams
+
                 nameText.layoutParams.width = (nameText.textSize * 6).toInt()
+                nameText.setTextSize(TypedValue.COMPLEX_UNIT_PX, parent.height * 14f / 100)
             }
         })
 
@@ -243,19 +268,21 @@ internal class AgoraUIVideo(
             } else if (volumeLevel > 7) {
                 volumeLevel = 7
             }
-            for (i in 1..(7 - volumeLevel)) {
-                val volumeIc = AppCompatImageView(view.context)
-                volumeIc.setImageResource(R.drawable.agora_video_ic_volume_off)
-                val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                layoutParams.topMargin = view.context.resources.getDimensionPixelSize(R.dimen.agora_video_volume_margin_top)
-                volumeIc.layoutParams = layoutParams
-                volumeLayout.addView(volumeIc)
-            }
+
+            val volumeMargin = view.context.resources
+                .getDimensionPixelSize(R.dimen.agora_video_volume_margin_top)
+
             for (i in 1..volumeLevel) {
                 val volumeIc = AppCompatImageView(view.context)
                 volumeIc.setImageResource(R.drawable.agora_video_ic_volume_on)
-                val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                layoutParams.topMargin = view.context.resources.getDimensionPixelSize(R.dimen.agora_video_volume_margin_top)
+                volumeIc.scaleType = ImageView.ScaleType.FIT_XY
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                layoutParams.height = 8
+                layoutParams.leftMargin = volumeMargin
+                layoutParams.rightMargin = volumeMargin
+                layoutParams.topMargin = volumeMargin
                 volumeIc.layoutParams = layoutParams
                 volumeLayout.addView(volumeIc)
             }

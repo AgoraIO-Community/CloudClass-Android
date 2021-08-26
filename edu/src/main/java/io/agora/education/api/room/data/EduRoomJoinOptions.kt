@@ -1,5 +1,6 @@
 package io.agora.education.api.room.data
 
+import io.agora.education.api.stream.data.EduVideoEncoderConfig
 import io.agora.education.api.user.data.EduUserRole
 import io.agora.rte.data.RteChannelMediaOptions
 
@@ -38,7 +39,8 @@ data class RoomJoinOptions(
         val roleType: EduUserRole,
         val mediaOptions: RoomMediaOptions,
         /*用于RTC-SDK统计各个场景的使用情况*/
-        var tag: Int? = null
+        var tag: Int? = null,
+        var videoEncoderConfig: EduVideoEncoderConfig? = null
 ) {
     fun closeAutoPublish() {
         mediaOptions.autoPublish = false
