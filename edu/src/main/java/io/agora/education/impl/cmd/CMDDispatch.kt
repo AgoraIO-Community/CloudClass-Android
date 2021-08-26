@@ -3,6 +3,8 @@ package io.agora.education.impl.cmd
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.agora.education.api.EduCallback
+import io.agora.education.api.base.EduError
 import io.agora.education.impl.Constants.Companion.AgoraLog
 import io.agora.education.api.manager.listener.EduManagerEventListener
 import io.agora.education.api.message.EduChatMsg
@@ -11,6 +13,7 @@ import io.agora.education.api.room.data.EduRoomChangeType
 import io.agora.education.api.room.data.RoomType
 import io.agora.education.api.stream.data.EduStreamEvent
 import io.agora.education.api.stream.data.EduStreamInfo
+import io.agora.education.api.stream.data.LocalStreamInitOptions
 import io.agora.education.api.user.data.EduBaseUserInfo
 import io.agora.education.api.user.data.EduChatState
 import io.agora.education.api.user.data.EduUserEvent
@@ -344,11 +347,27 @@ internal class CMDDispatch(private val eduRoom: EduRoom) {
                         val element = iterable.next()
                         val streamInfo = element.modifiedStream
                         if (streamInfo.publisher == eduRoom.getCurLocalUserInfo()) {
-                            RteEngineImpl.updateLocalAudioStream(streamInfo.hasAudio)
-                            RteEngineImpl.updateLocalVideoStream(streamInfo.hasVideo)
-                            RteEngineImpl.setClientRole(eduRoom.getCurRoomUuid(),
-                                    Constants.CLIENT_ROLE_BROADCASTER)
-                            RteEngineImpl.publish(eduRoom.getCurRoomUuid())
+//                            RteEngineImpl.updateLocalAudioStream(streamInfo.hasAudio)
+//                            RteEngineImpl.updateLocalVideoStream(streamInfo.hasVideo)
+//                            RteEngineImpl.setClientRole(eduRoom.getCurRoomUuid(),
+//                                    Constants.CLIENT_ROLE_BROADCASTER)
+//                            RteEngineImpl.publish(eduRoom.getCurRoomUuid())
+
+                            val options = LocalStreamInitOptions(streamInfo.streamUuid,
+                                streamInfo.hasVideo, streamInfo.hasAudio)
+                            eduRoom.getCurLocalUser().initOrUpdateLocalStream(options,
+                                object : EduCallback<EduStreamInfo> {
+                                    override fun onSuccess(res: EduStreamInfo?) {
+                                        RteEngineImpl.muteLocalStream(streamInfo.hasAudio, streamInfo.hasVideo)
+                                        RteEngineImpl.setClientRole(eduRoom.getCurRoomUuid(),
+                                            Constants.CLIENT_ROLE_BROADCASTER)
+                                        RteEngineImpl.publish(eduRoom.getCurRoomUuid())
+                                    }
+
+                                    override fun onFailure(error: EduError) {
+                                    }
+                                })
+
                             val event = EduStreamEvent(streamInfo, operator)
                             validAddedLocalStreams.add(event)
                             iterable.remove()
@@ -364,7 +383,19 @@ internal class CMDDispatch(private val eduRoom: EduRoom) {
                         if (streamInfo.publisher == eduRoom.getCurLocalUserInfo()) {
                             if (operator != streamInfo.publisher) {
                                 if (oldStreams.size == 0) {
-                                    RteEngineImpl.updateLocalStream(streamInfo.hasAudio, streamInfo.hasVideo)
+                                    // RteEngineImpl.updateLocalStream(streamInfo.hasAudio, streamInfo.hasVideo)
+
+                                    val options = LocalStreamInitOptions(streamInfo.streamUuid,
+                                        streamInfo.hasVideo, streamInfo.hasAudio)
+                                    eduRoom.getCurLocalUser().initOrUpdateLocalStream(options,
+                                        object : EduCallback<EduStreamInfo> {
+                                            override fun onSuccess(res: EduStreamInfo?) {
+                                                RteEngineImpl.muteLocalStream(!streamInfo.hasAudio, !streamInfo.hasVideo)
+                                            }
+
+                                            override fun onFailure(error: EduError) {
+                                            }
+                                        })
                                 } else {
                                     //compare the uuid with the old stream list
                                     //if one of the uuid of the old list is equal to the current stream ,compare the hasXXX
@@ -395,9 +426,24 @@ internal class CMDDispatch(private val eduRoom: EduRoom) {
                         val element = iterable.next()
                         val streamInfo = element.modifiedStream
                         if (streamInfo.publisher == eduRoom.getCurLocalUserInfo()) {
-                            RteEngineImpl.updateLocalAudioStream(false)
-                            RteEngineImpl.updateLocalVideoStream(false)
-                            RteEngineImpl.unpublish(eduRoom.getCurRoomUuid())
+//                            RteEngineImpl.updateLocalAudioStream(false)
+//                            RteEngineImpl.updateLocalVideoStream(false)
+//                            RteEngineImpl.unpublish(eduRoom.getCurRoomUuid())
+
+                            val options = LocalStreamInitOptions(streamInfo.streamUuid,
+                                streamInfo.hasVideo, streamInfo.hasAudio)
+                            eduRoom.getCurLocalUser().initOrUpdateLocalStream(options,
+                                object : EduCallback<EduStreamInfo> {
+                                    override fun onSuccess(res: EduStreamInfo?) {
+                                        RteEngineImpl.muteLocalStream(false, false)
+                                        RteEngineImpl.setClientRole(eduRoom.getCurRoomUuid(),
+                                            Constants.CLIENT_ROLE_AUDIENCE)
+                                        RteEngineImpl.unpublish(eduRoom.getCurRoomUuid())
+                                    }
+
+                                    override fun onFailure(error: EduError) {
+                                    }
+                                })
                             val event = EduStreamEvent(streamInfo, operator)
                             validRemovedLocalStreams.add(event)
                             iterable.remove()

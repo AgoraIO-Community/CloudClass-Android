@@ -1385,6 +1385,8 @@ abstract class BaseClassActivity : BaseActivity(),
             VideoSourceType.SCREEN -> {
             }
         }
+
+        deviceManager?.checkDeviceConfig()
     }
 
     override fun onLocalStreamRemoved(streamEvent: EduStreamEvent) {
