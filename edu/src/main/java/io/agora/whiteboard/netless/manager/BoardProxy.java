@@ -32,7 +32,7 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     private String appliance;
     private int[] strokeColor;
     private double strokeWidth = -100f, textSize = -100f;
-    private Boolean disableDeviceInputs;
+    private Boolean disableDeviceInputs = true;
     private Boolean disableCameraTransform;
     private Boolean writable;
 
