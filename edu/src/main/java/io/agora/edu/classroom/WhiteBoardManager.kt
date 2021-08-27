@@ -187,7 +187,14 @@ class WhiteBoardManager(
                         collectorStyleMap["position"] = "fixed"
                         collectorStyleMap["left"] = "60px"
                         collectorStyleMap["bottom"] = "12px"
-                        params.collectionStyle = collectorStyleMap
+
+                        val ratio = whiteBoardViewContainer.height /
+                                whiteBoardViewContainer.width.toFloat()
+                        params.windowParams = WindowParams()
+                        params.windowParams
+                            .setCollectorStyles(collectorStyleMap)
+                            .setChessboard(false)
+                            .setContainerSizeRatio(ratio)
 
                         boardProxy.init(whiteSdk, params)
                         ReportManager.getAPaasReporter().reportWhiteBoardStart()
