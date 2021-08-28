@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.utils.EaseSmileUtils;
 import com.hyphenate.easeim.utils.RandomUtil;
 import com.hyphenate.easeim.utils.ScreenUtil;
 
@@ -129,7 +130,8 @@ public class DanmakuView extends RelativeLayout {
      */
     public void setDanmaku(Danmaku danmaku) {
         mDanmaku = danmaku;
-        content.setText(danmaku.text);
+
+        content.setText(EaseSmileUtils.getSmiledText(context, danmaku.text), TextView.BufferType.SPANNABLE);
         switch (danmaku.mode) {
             case top:
             case bottom:

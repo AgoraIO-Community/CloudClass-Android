@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.domain.EaseEmojicon;
 import com.hyphenate.easeim.interfaces.EmojiViewlistener;
 import com.hyphenate.easeim.interfaces.ChatInputMenuListener;
 import com.hyphenate.easeim.interfaces.ChatPrimaryMenuListener;
@@ -85,7 +86,7 @@ public class ChatInputMenu extends LinearLayout implements ChatPrimaryMenuListen
     }
 
     @Override
-    public void onEmojiItemClick(String emoji) {
+    public void onEmojiItemClick(EaseEmojicon emoji) {
         chatPrimaryMenu.onEmojiconInputEvent(emoji);
     }
 

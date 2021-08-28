@@ -2,6 +2,8 @@ package com.hyphenate.easeim.interfaces;
 
 import android.widget.EditText;
 
+import com.hyphenate.easeim.domain.EaseEmojicon;
+
 
 public interface IChatPrimaryMenu {
 
@@ -13,9 +15,9 @@ public interface IChatPrimaryMenu {
 
     /**
      * 输入表情
-     * @param emojiContent
+     * @param emoji
      */
-    void onEmojiconInputEvent(String emojiContent);
+    void onEmojiconInputEvent(EaseEmojicon emoji);
 
     /**
      * 删除表情

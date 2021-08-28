@@ -21,8 +21,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.domain.EaseEmojicon;
 import com.hyphenate.easeim.interfaces.ChatPrimaryMenuListener;
 import com.hyphenate.easeim.interfaces.IChatPrimaryMenu;
+import com.hyphenate.easeim.utils.EaseSmileUtils;
 import com.hyphenate.util.EMLog;
 
 
@@ -143,8 +145,8 @@ public class ChatPrimaryMenu extends LinearLayout implements IChatPrimaryMenu, V
     }
 
     @Override
-    public void onEmojiconInputEvent(String emojiContent) {
-        etContent.append(emojiContent);
+    public void onEmojiconInputEvent(EaseEmojicon emoji) {
+        etContent.append(EaseSmileUtils.getSmiledText(getContext(), emoji.getEmojiText()));
     }
 
     @Override
