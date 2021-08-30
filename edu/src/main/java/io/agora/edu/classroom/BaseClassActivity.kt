@@ -1082,7 +1082,7 @@ abstract class BaseClassActivity : BaseActivity(),
 
         super.onCreate(savedInstanceState)
         val view = onContentViewLayout()
-        view.fitsSystemWindows = true
+        view.fitsSystemWindows = false
         setContentView(view)
         initData()
     }
