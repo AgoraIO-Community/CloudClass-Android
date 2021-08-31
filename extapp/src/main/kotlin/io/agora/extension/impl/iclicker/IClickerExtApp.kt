@@ -28,7 +28,7 @@ class IClickerExtApp : AgoraExtAppBase() {
     private var mPendingProperties: Map<String, Any?>? = null
     private var mPendingCause: Map<String, Any?>? = null
 
-    private var mState = ""
+    private var mSubmitted = false
     private var mStartTime: Long = 0
     private var mTickCount: Long = 0
 
@@ -148,11 +148,11 @@ class IClickerExtApp : AgoraExtAppBase() {
     @Synchronized
     private fun parseProperties(properties: Map<String, Any?>) {
         val state = properties[PROPERTIES_KEY_STATE].toString()
-        if (state == STATE_START && mState == STATE_SUBMITTED) {
+        if (mSubmitted && state == STATE_START) {
             return
         }
-        mState = state
-        if (mState == STATE_START) {
+
+        if (state == STATE_START) {
             mStartTime = properties[PROPERTIES_KEY_START_TIME].toString().toLong()
             val answers = (properties[PROPERTIES_KEY_ITEMS] as ArrayList<*>).filterIsInstance<String>()
             Log.i(TAG, "IClicker started: start time:" + mStartTime +
@@ -173,7 +173,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             }
 
             showAnswers(answers.toTypedArray(), myAnswers)
-        } else if (mState == STATE_END) {
+        } else if (state == STATE_END) {
             val startTime = properties[PROPERTIES_KEY_START_TIME].toString().toLong()
             val endTime = properties[PROPERTIES_KEY_END_TIME].toString().toLong()
             val correctAnswers = (properties[PROPERTIES_KEY_ANSWER] as ArrayList<*>).filterIsInstance<String>()
@@ -259,33 +259,20 @@ class IClickerExtApp : AgoraExtAppBase() {
     }
 
     private fun onSubmitClick() {
-        if (mState == STATE_START) {
-            submitAnswers()
-        } else if (mState == STATE_SUBMITTED){
-            modifyAnswers()
-        }
+        submitOrModifyAnswers(!mSubmitBtn.isSelected)
+        submitProperties()
     }
 
-    private fun submitAnswers(doSubmit: Boolean = true) {
-        mState = STATE_SUBMITTED
-        mSubmitBtn.isSelected = true
-        mSubmitBtn.setText(R.string.modify_answer)
-        mAnswerAdapter.setEnabled(false)
-        for (view in mAnswersGridView.children) {
-            view.isEnabled = false
+    private fun submitOrModifyAnswers(submit: Boolean) {
+        if (submit) {
+            mSubmitted = true
         }
-        if (doSubmit) {
-            submitProperties()
-        }
-    }
 
-    private fun modifyAnswers() {
-        mState = STATE_START
-        mSubmitBtn.isSelected = false
-        mSubmitBtn.setText(R.string.submit_answer)
-        mAnswerAdapter.setEnabled(true)
+        mSubmitBtn.isSelected = submit
+        mSubmitBtn.setText(if (submit) R.string.modify_answer else R.string.submit_answer)
+        mAnswerAdapter.setEnabled(!submit)
         for (view in mAnswersGridView.children) {
-            view.isEnabled = true
+            view.isEnabled = !submit
         }
     }
 
@@ -312,7 +299,7 @@ class IClickerExtApp : AgoraExtAppBase() {
             my?.map { it.toCharArray()[0] }?.map { it - 'A' }?.let {
                 mAnswerAdapter.setChecked(it)
                 mSubmitBtn.isEnabled = true
-                submitAnswers(false)
+                submitOrModifyAnswers(true)
             }
             mAnswerAdapter.notifyDataSetChanged()
         }
@@ -360,7 +347,6 @@ class IClickerExtApp : AgoraExtAppBase() {
 //        private const val PROPERTIES_KEY_REPLY_TIME = "replyTime"
         private const val DELETED = "deleted"
         private const val STATE_START = "start"
-        private const val STATE_SUBMITTED = "submitted"
         private const val STATE_END = "end"
     }
 }
