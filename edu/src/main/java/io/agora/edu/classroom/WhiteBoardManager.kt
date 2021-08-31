@@ -42,6 +42,7 @@ import io.agora.whiteboard.netless.manager.BoardProxy
 import org.json.JSONObject
 import wendu.dsbridge.DWebView
 import java.io.File
+import java.util.*
 
 @SuppressLint("ClickableViewAccessibility")
 class WhiteBoardManager(
@@ -70,18 +71,18 @@ class WhiteBoardManager(
     var whiteBoardManagerEventListener: WhiteBoardManagerEventListener? = null
     var extAppTrackListener: ExtAppTrackListener? = null
 
-    // this's not a real-time value
+    // this is not a real-time value
     private var curSceneState: SceneState? = null
     private var boardPreloadManager: BoardPreloadManager? = null
     private var courseware: AgoraEduCourseware? = null
     private val defaultCoursewareName = "init"
     private var scenePpts: Array<Scene?>? = null
 
-    //        private var loadPreviewPpt: Boolean = true
     private var loadPreviewPpt: Boolean = false
     private var lastSceneDir: String? = null
     private var inputTips = false
     private var transform = false
+
     private val webViewClient = object : WebViewClient() {
         override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
             val host = request?.url?.host
@@ -96,6 +97,13 @@ class WhiteBoardManager(
                 }
             }
             return super.shouldInterceptRequest(view, request)
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            view?.let {
+                BoardStyleInjector.injectBoardStyles(it)
+            }
         }
     }
     private val curDrawingConfig = WhiteboardDrawingConfig()
@@ -170,6 +178,7 @@ class WhiteBoardManager(
         curLocalUuid = uuid
         curLocalToken = boardToken
         this.localUserUuid = localUserUuid
+
         whiteBoardViewContainer.post {
             boardProxy.getRoomPhase(object : Promise<RoomPhase> {
                 override fun then(phase: RoomPhase) {
@@ -186,7 +195,7 @@ class WhiteBoardManager(
                         val collectorStyleMap = HashMap<String, String>()
                         collectorStyleMap["position"] = "fixed"
                         collectorStyleMap["left"] = "60px"
-                        collectorStyleMap["bottom"] = "12px"
+                        collectorStyleMap["bottom"] = "$12px"
 
                         val ratio = whiteBoardViewContainer.height /
                                 whiteBoardViewContainer.width.toFloat()
@@ -813,4 +822,42 @@ interface WhiteBoardManagerEventListener {
     fun onSceneChanged(state: SceneState)
 
     fun onGrantedChanged()
+}
+
+data class BoardStyleParams(
+    val left: Int = 0,
+    val bottom: Int = 0,
+    val styles: List<String>
+)
+
+internal object BoardStyleInjector {
+    private var left: Int = 0
+    private var bottom: Int = 0
+    private var styles: MutableList<String> = mutableListOf()
+
+    fun setPosition(left: Int = 0, bottom: Int = 0) {
+        this.left = left
+        this.bottom = bottom
+    }
+
+    fun addStyle(style: String) {
+        styles.add(style)
+    }
+
+    private const val javascriptFormat =
+        "var style = document.createElement('style');\n" +
+                "style.innerHTML = %s\n" +
+                "document.head.appendChild(style);"
+
+    fun injectBoardStyles(view: WebView) {
+        val locale = Locale.getDefault()
+        styles.forEach { js ->
+            injectBoardStyle(locale, view, js)
+        }
+    }
+
+    private fun injectBoardStyle(locale: Locale, view: WebView, attr: String) {
+        val js = String.format(locale, javascriptFormat, attr)
+        view.loadUrl("javascript: $js")
+    }
 }

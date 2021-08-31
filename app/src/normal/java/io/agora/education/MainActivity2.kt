@@ -24,7 +24,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.agora.edu.BuildConfig.APAAS_VERSION
+import io.agora.edu.classroom.BoardStyleParams
 import io.agora.edu.launch.*
+import io.agora.education.api.stream.data.EduVideoEncoderConfig
 import io.agora.education.rtmtoken.RtmTokenBuilder
 import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
 import java.util.regex.Pattern
@@ -303,9 +305,30 @@ class MainActivity2 : AppCompatActivity(), View.OnClickListener {
             /**默认开始时间是当前时间点；默认持续310秒*/
             val startTime = System.currentTimeMillis()
             var duration = 1800L
-            val agoraEduLaunchConfig = AgoraEduLaunchConfig(userName, userUuid, roomName, roomUuid,
-                    roleType, roomType, rtmToken, startTime, duration, roomRegion, AgoraBoardFitMode.Retain,
-                    null, null)
+
+            val videoEncoderConfig = EduVideoEncoderConfig(
+                videoDimensionWidth = if (roomType == AgoraEduRoomType.AgoraEduRoomTypeSmall.value) 160 else 640,
+                videoDimensionHeight = if (roomType == AgoraEduRoomType.AgoraEduRoomTypeSmall.value) 120 else 480,
+                frameRate = 15,
+                bitrate = if (roomType == AgoraEduRoomType.AgoraEduRoomTypeSmall.value) 65 else 200)
+
+            val agoraEduLaunchConfig = AgoraEduLaunchConfig(
+                userName, userUuid, roomName, roomUuid,
+                roleType, roomType, rtmToken, startTime,
+                duration, roomRegion, AgoraBoardFitMode.Retain,
+                videoEncoderConfig, null, null)
+
+            // Example if change the whiteboard window styles
+            // agoraEduLaunchConfig.boardStyleParam = BoardStyleParams(60, 12,
+            //    mutableListOf(
+            //        "'.telebox-titlebar { background: #000; }';",
+            //        "'.telebox-title { color: #fff; }';",
+            //        "'.telebox-titlebar-btn-icon { filter: grayscale(100%); }';",
+            //        "'.netless-app-docs-viewer-page-number-input:active,.netless-app-docs-viewer-page-number-input:focus," +
+            //               " .netless-app-docs-viewer-page-number-input:hover { color: #222; }';",
+            //       "'.telebox-box-main { background: #212126; border-color: #43434d; }';"
+            //))
+
             runOnUiThread {
                 try {
                     val classRoom = AgoraEduSDK.launch(this,
