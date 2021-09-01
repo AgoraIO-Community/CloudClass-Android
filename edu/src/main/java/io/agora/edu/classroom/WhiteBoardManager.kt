@@ -195,7 +195,7 @@ class WhiteBoardManager(
                         val collectorStyleMap = HashMap<String, String>()
                         collectorStyleMap["position"] = "fixed"
                         collectorStyleMap["left"] = "60px"
-                        collectorStyleMap["bottom"] = "$12px"
+                        collectorStyleMap["bottom"] = "12px"
 
                         val ratio = whiteBoardViewContainer.height /
                                 whiteBoardViewContainer.width.toFloat()
