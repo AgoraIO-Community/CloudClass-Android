@@ -53,7 +53,8 @@ class DeviceManager(
                 res?.find { it.publisher.userUuid == launchConfig.userUuid }?.let { info ->
                     var camera = if (!deviceConfig.cameraEnabled) false else info.hasVideo
                     var mic = if (!deviceConfig.micEnabled) false else info.hasAudio
-                    val options = LocalStreamInitOptions(info.streamUuid, camera, mic)
+                    val options = LocalStreamInitOptions(info.streamUuid, camera, mic, info.hasVideo,
+                            info.hasAudio)
                     eduUser.initOrUpdateLocalStream(options, object : EduCallback<EduStreamInfo> {
                         override fun onSuccess(res: EduStreamInfo?) {
                         }
@@ -82,20 +83,39 @@ class DeviceManager(
     }
 
     private fun setMediaDeviceEnable(runnable: Runnable) {
-        getCurRoomFullUser(object : EduCallback<MutableList<EduUserInfo>> {
-            override fun onSuccess(res: MutableList<EduUserInfo>?) {
-                res?.find { it.userUuid == launchConfig.userUuid }?.let { info ->
-                    val options = LocalStreamInitOptions(info.streamUuid, deviceConfig.cameraEnabled,
-                            deviceConfig.micEnabled)
-                    eduUser.initOrUpdateLocalStream(options, object : EduCallback<EduStreamInfo> {
-                        override fun onSuccess(res: EduStreamInfo?) {
-                            runnable.run()
-                        }
-
-                        override fun onFailure(error: EduError) {
-                        }
-                    })
+        getCurRoomFullStream(object : EduCallback<MutableList<EduStreamInfo>> {
+            override fun onSuccess(res: MutableList<EduStreamInfo>?) {
+                res?.find { it.publisher.userUuid == launchConfig.userUuid }?.let { info ->
+                    refreshLocalDevice(info.streamUuid, info.hasVideo, info.hasAudio, runnable)
+                    return
                 }
+                // local stream is null, local user is not staging
+                getCurRoomFullUser(object : EduCallback<MutableList<EduUserInfo>> {
+                    override fun onSuccess(res: MutableList<EduUserInfo>?) {
+                        res?.find { it.userUuid == launchConfig.userUuid }?.let { info ->
+                            // local user is not Staging, default unMute
+                            refreshLocalDevice(info.streamUuid, hasVideo = true, hasAudio = true,
+                                    runnable = runnable)
+                        }
+                    }
+
+                    override fun onFailure(error: EduError) {
+                    }
+                })
+            }
+
+            override fun onFailure(error: EduError) {
+            }
+        })
+    }
+
+    private fun refreshLocalDevice(streamUuid: String, hasVideo: Boolean, hasAudio: Boolean,
+                                   runnable: Runnable) {
+        val options = LocalStreamInitOptions(streamUuid, deviceConfig.cameraEnabled,
+                deviceConfig.micEnabled, hasVideo, hasAudio)
+        eduUser.initOrUpdateLocalStream(options, object : EduCallback<EduStreamInfo> {
+            override fun onSuccess(res: EduStreamInfo?) {
+                runnable.run()
             }
 
             override fun onFailure(error: EduError) {

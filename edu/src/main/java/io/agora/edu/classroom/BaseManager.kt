@@ -320,17 +320,20 @@ open class BaseManager(
         localStream?.let {
             // Update local stream state and then sync the states to remote server
             eduUser.initOrUpdateLocalStream(LocalStreamInitOptions(it.streamUuid,
-                    openVideo, openAudio), object : EduCallback<EduStreamInfo> {
-                override fun onSuccess(res: EduStreamInfo?) {
-                    eduUser.muteStream(res!!, object : EduCallback<Boolean> {
-                        override fun onSuccess(res: Boolean?) {}
+                    openVideo, openAudio, it.hasVideo, it.hasAudio),
+                    object : EduCallback<EduStreamInfo> {
+                        override fun onSuccess(res: EduStreamInfo?) {
+                            res!!.hasVideo = openVideo
+                            res!!.hasAudio = openAudio
+                            eduUser.muteStream(res!!, object : EduCallback<Boolean> {
+                                override fun onSuccess(res: Boolean?) {}
+
+                                override fun onFailure(error: EduError) {}
+                            })
+                        }
 
                         override fun onFailure(error: EduError) {}
                     })
-                }
-
-                override fun onFailure(error: EduError) {}
-            })
         }
     }
 

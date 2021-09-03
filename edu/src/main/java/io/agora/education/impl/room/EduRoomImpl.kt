@@ -378,6 +378,7 @@ internal class EduRoomImpl(
     private fun initOrUpdateLocalStream(classRoomEntryRes: EduEntryRes, roomMediaOptions: RoomMediaOptions,
                                         callback: EduCallback<Unit>) {
         val localStreamInitOptions = LocalStreamInitOptions(classRoomEntryRes.user.streamUuid,
+                roomMediaOptions.autoPublish, roomMediaOptions.autoPublish,
                 roomMediaOptions.autoPublish, roomMediaOptions.autoPublish)
         AgoraLog.i("$TAG->initOrUpdateLocalStream for localUser:${Gson().toJson(localStreamInitOptions)}")
         syncSession.localUser.initOrUpdateLocalStream(localStreamInitOptions, object : EduCallback<EduStreamInfo> {
