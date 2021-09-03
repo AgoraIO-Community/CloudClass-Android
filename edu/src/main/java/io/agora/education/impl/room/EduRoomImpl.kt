@@ -419,6 +419,26 @@ internal class EduRoomImpl(
         })
     }
 
+    private fun handleLocalStream(stream: EduStreamInfo, callback: EduCallback<Unit>?) {
+        val localStreamInitOptions = LocalStreamInitOptions(stream.streamUuid, stream.hasVideo,
+                stream.hasAudio, stream.hasVideo, stream.hasAudio)
+        AgoraLog.i("$TAG->initOrUpdateLocalStream for localUser:${Gson().toJson(localStreamInitOptions)}")
+        syncSession.localUser.initOrUpdateLocalStream(localStreamInitOptions, object : EduCallback<EduStreamInfo> {
+            override fun onSuccess(res: EduStreamInfo?) {
+                AgoraLog.i("$TAG->initOrUpdateLocalStream success")
+                RteEngineImpl.setClientRole(getCurRoomUuid(), CLIENT_ROLE_BROADCASTER)
+                RteEngineImpl.muteLocalStream(!stream.hasAudio, !stream.hasVideo)
+                RteEngineImpl.publish(getCurRoomUuid())
+                callback?.onSuccess(Unit)
+            }
+
+            override fun onFailure(error: EduError) {
+                AgoraLog.e("$TAG->Failed to initOrUpdateLocalStream for localUser")
+                callback?.onFailure(error)
+            }
+        })
+    }
+
     fun onRemoteInitialized() {
         /**本地缓存的远端人流数据为空，则不走initialized回调*/
         if (getCurRemoteUserList().size > 0) {
@@ -459,8 +479,7 @@ internal class EduRoomImpl(
                         /**本地流维护在本地用户信息中和全局集合中*/
                         syncSession.localUser.userInfo.streams.add(element)
                         /**根据流信息，更新本地媒体状态*/
-                        RteEngineImpl.updateLocalStream(streamInfo.hasAudio, streamInfo.hasVideo)
-                        RteEngineImpl.publish(getCurRoomUuid())
+                        handleLocalStream(streamInfo, null)
                         AgoraLog.i("$TAG->Join success，callback the added localStream to upper layer")
                         AgoraLog.i("$TAG->onLocalStreamAdded:${Gson().toJson(element)}")
                         syncSession.localUser.eventListener?.onLocalStreamAdded(element)
