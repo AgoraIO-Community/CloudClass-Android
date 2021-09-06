@@ -93,6 +93,11 @@ class RoomStateManager(
                 minutes1 = 1
                 tips = R.string.toast_classtime_until_class_close_1
             }
+            // checkUploadLog
+            if(isLogTime(startedTime)) {
+                roomContext?.uploadLog(true)
+            }
+            // check and tip
             if (tips != -1) {
                 val countdownTips = buildCountdownTips(tips, minutes1, seconds1)
                 roomContext?.getHandlers()?.forEach { handler ->
@@ -116,6 +121,11 @@ class RoomStateManager(
 
     init {
         flexProps = FlexPropsImpl(launchConfig.appId, launchConfig.roomUuid)
+    }
+
+    private fun isLogTime(startedTime: Long): Boolean {
+        // uploadLog every ten minutes
+        return startedTime % (60 * 10) == 0L
     }
 
     fun dispose() {

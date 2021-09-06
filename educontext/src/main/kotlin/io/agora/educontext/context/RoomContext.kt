@@ -9,7 +9,7 @@ abstract class RoomContext : AbsHandlerPool<IRoomHandler>() {
 
     abstract fun leave()
 
-    abstract fun uploadLog()
+    abstract fun uploadLog(quiet: Boolean = false)
 
     abstract fun updateFlexRoomProps(properties: MutableMap<String, String>, cause: MutableMap<String, String>?)
 

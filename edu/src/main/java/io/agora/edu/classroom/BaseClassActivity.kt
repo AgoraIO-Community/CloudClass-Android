@@ -257,11 +257,11 @@ abstract class BaseClassActivity : BaseActivity(),
             forceLeave(true)
         }
 
-        override fun uploadLog() {
+        override fun uploadLog(quiet: Boolean) {
             eduManager?.uploadDebugItem(DebugItem.LOG, object : EduCallback<String> {
                 override fun onSuccess(res: String?) {
                     AgoraLog.d(tag, "log updated ->$res");
-                    if (res != null) {
+                    if (res != null && !quiet) {
                         roomStateManager?.setUploadedLogMsg(res)
                     }
                 }
