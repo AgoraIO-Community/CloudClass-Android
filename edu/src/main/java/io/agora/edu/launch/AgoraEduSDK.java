@@ -122,6 +122,8 @@ public class AgoraEduSDK {
 
     private static BoardPreload boardPreload;
 
+    private static AgoraEduLog agoraEduLog = new AgoraEduLog();
+
     public static String version() {
         return EduManager.Companion.version();
     }
@@ -276,6 +278,10 @@ public class AgoraEduSDK {
         ((Application) context.getApplicationContext()).registerActivityLifecycleCallbacks(classRoomListener);
 
         agoraEduLaunchCallback = state -> {
+            // write sign, next check
+            if (state.equals(AgoraEduEvent.AgoraEduEventFailed)) {
+                agoraEduLog.writeLogSign(true);
+            }
             callback.onCallback(state);
             classRoom.updateState(state);
         };
@@ -332,6 +338,8 @@ public class AgoraEduSDK {
                     public void onSuccess(@Nullable EduManager res) {
                         if (res != null) {
                             Log.e(TAG, ":init EduManager success");
+                            // check uploadLog
+                            agoraEduLog.checkUploadLog(res);
                             BaseClassActivity.EduManagerDelegate.setEduManager(res);
                             Intent intent = createIntent(context, config, preCheckRes);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
