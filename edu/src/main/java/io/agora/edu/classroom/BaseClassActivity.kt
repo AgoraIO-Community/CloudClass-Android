@@ -42,6 +42,7 @@ import io.agora.educontext.context.*
 import io.agora.extapp.AgoraExtAppManager
 import io.agora.extapp.ExtAppTrackListener
 import io.agora.extension.*
+import io.agora.log.UploadManager
 import io.agora.privatechat.PrivateChatManager
 import io.agora.report.ReportManager.getAPaasReporter
 import io.agora.report.reporters.APaasReporter
@@ -258,7 +259,13 @@ abstract class BaseClassActivity : BaseActivity(),
         }
 
         override fun uploadLog(quiet: Boolean) {
-            eduManager?.uploadDebugItem(DebugItem.LOG, object : EduCallback<String> {
+            eduManager?.uploadDebugItem(DebugItem.LOG, UploadManager.UploadParamTag(
+                    launchConfig?.roomUuid,
+                    launchConfig?.roomName,
+                    launchConfig?.roomType ?: -1,
+                    launchConfig?.userUuid,
+                    launchConfig?.userName,
+                    launchConfig?.roleType ?: -1), object : EduCallback<String> {
                 override fun onSuccess(res: String?) {
                     AgoraLog.d(tag, "log updated ->$res");
                     if (res != null && !quiet) {

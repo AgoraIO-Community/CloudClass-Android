@@ -94,7 +94,7 @@ class RoomStateManager(
                 tips = R.string.toast_classtime_until_class_close_1
             }
             // checkUploadLog
-            if(isLogTime(startedTime)) {
+            if (isLogTime(startedTime)) {
                 roomContext?.uploadLog(true)
             }
             // check and tip
@@ -118,14 +118,22 @@ class RoomStateManager(
     private var curConnectionState = EduContextConnectionState.Disconnected
 
     private val flexProps: FlexProps
+    private var lastLogTime = TimeUtil.currentTimeMillis()
 
     init {
         flexProps = FlexPropsImpl(launchConfig.appId, launchConfig.roomUuid)
     }
 
     private fun isLogTime(startedTime: Long): Boolean {
+        val item = 60 * 10
         // uploadLog every ten minutes
-        return startedTime % (60 * 10) == 0L
+        val a = startedTime % item == 0L || startedTime % item == 1L
+        val surplus = TimeUtil.currentTimeMillis() - lastLogTime
+        if (a && surplus > 10 * 1000) {
+            lastLogTime = TimeUtil.currentTimeMillis()
+            return true
+        }
+        return false
     }
 
     fun dispose() {

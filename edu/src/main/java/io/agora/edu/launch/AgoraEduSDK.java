@@ -48,6 +48,7 @@ import io.agora.education.api.manager.EduManagerOptions;
 import io.agora.education.api.room.data.RoomType;
 import io.agora.extension.AgoraExtAppConfiguration;
 import io.agora.extension.AgoraExtAppEngine;
+import io.agora.log.UploadManager;
 import io.agora.report.ReportManager;
 import io.agora.report.reporters.APaasReporter;
 import io.agora.uicomponent.UiWidgetConfig;
@@ -339,7 +340,13 @@ public class AgoraEduSDK {
                         if (res != null) {
                             Log.e(TAG, ":init EduManager success");
                             // check uploadLog
-                            agoraEduLog.checkUploadLog(res);
+                            agoraEduLog.checkUploadLog(res, new UploadManager.UploadParamTag(
+                                    config.getRoomUuid(),
+                                    config.getRoomName(),
+                                    config.getRoomType(),
+                                    config.getUserUuid(),
+                                    config.getUserName(),
+                                    config.getRoleType()));
                             BaseClassActivity.EduManagerDelegate.setEduManager(res);
                             Intent intent = createIntent(context, config, preCheckRes);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

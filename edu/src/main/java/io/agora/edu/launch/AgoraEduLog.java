@@ -30,7 +30,7 @@ public class AgoraEduLog {
         return need;
     }
 
-    public void checkUploadLog(EduManager manager) {
+    public void checkUploadLog(EduManager manager, Object payload) {
         if (!needUploadLog()) {
             return;
         }
@@ -38,7 +38,7 @@ public class AgoraEduLog {
         task = new TimerTask() {
             @Override
             public void run() {
-                manager.uploadDebugItem(DebugItem.LOG, new EduCallback<String>() {
+                manager.uploadDebugItem(DebugItem.LOG, payload, new EduCallback<String>() {
                     @Override
                     public void onSuccess(@Nullable String res) {
                         writeLogSign(false);
