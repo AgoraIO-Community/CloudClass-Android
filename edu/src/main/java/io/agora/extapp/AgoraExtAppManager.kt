@@ -128,8 +128,8 @@ abstract class AgoraExtAppManager(
                 .enqueue(object : Callback<ResponseBody<String>> {
                     override fun onResponse(call: Call<ResponseBody<String>>,
                                             response: Response<ResponseBody<String>>) {
-                        response.body()?.data?.let {
-                            callback?.onSuccess(it)
+                        response.body()?.let {
+                            callback?.onSuccess(it.msg)
                         }
                     }
 
