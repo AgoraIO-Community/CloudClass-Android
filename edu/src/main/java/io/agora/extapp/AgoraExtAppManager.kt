@@ -150,8 +150,8 @@ abstract class AgoraExtAppManager(
             AgoraExtAppService::class.java).deleteProperties(appId, roomUuid, identifier,
                 AgoraExtAppDeleteRequest(propertyKeys, cause)).enqueue(object : Callback<ResponseBody<String>> {
             override fun onResponse(call: Call<ResponseBody<String>>, response: Response<ResponseBody<String>>) {
-                response.body()?.data?.let {
-                    callback?.onSuccess(it)
+                response.body()?.let {
+                    callback?.onSuccess(it.msg)
                 }
             }
 
