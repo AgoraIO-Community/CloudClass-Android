@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.utils.EaseSmileUtils;
 import com.hyphenate.easeim.utils.RandomUtil;
@@ -145,7 +144,7 @@ public class DanmakuView extends RelativeLayout {
         if(!danmaku.giftUrl.isEmpty()){
             mDanmaku.color = "#ffffffff";
             layout_root.setBackground(context.getResources().getDrawable(randomBackground()));
-            avatar.setImageDrawable(content.getResources().getDrawable(R.mipmap.ease_chatting_biaoqing_btn_normal));
+            avatar.setImageDrawable(context.getResources().getDrawable(R.mipmap.ease_chatting_biaoqing_btn_normal));
             Glide.with(context.getApplicationContext()).load(danmaku.avatarUrl)
                     .apply(RequestOptions.placeholderOf(R.mipmap.ease_chatting_biaoqing_btn_normal))
                     .into(avatar);

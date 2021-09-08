@@ -184,8 +184,9 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
         DanmakuManager.Config config = mManager.getConfig(); // 弹幕相关设置
         config.setLineHeight(ScreenUtil.dip2px(30)); // 设置行高
         config.setMarginTop(ScreenUtil.dip2px(5));// 设置间距
-        config.setMaxScrollLine(mContainer.getHeight()/(config.getLineHeight()+config.getMarginTop()));
-
+        config.setDurationScroll(8000);
+//        config.setMaxScrollLine(mContainer.getHeight()/(config.getLineHeight()+config.getMarginTop()));
+        config.setMaxScrollLine(3);
         mDanmakuCreator = new DanmakuCreator();
     }
 
@@ -396,6 +397,7 @@ public class ChatTotalLayout extends RelativeLayout implements View.OnClickListe
 
     public void cancelHandler() {
         handler.removeCallbacksAndMessages(null);
+        mManager.reset();
     }
 
     public void setChatRoomId(String chatRoomId) {

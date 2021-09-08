@@ -101,7 +101,7 @@ class DanmakuPositionCalculator {
      * 这条弹幕是否已经全部出来了。如果没有的话，
      * 后面的弹幕不能出来，否则就重叠了。
      */
-    private boolean isFullyShown(DanmakuView view) {
+    public boolean isFullyShown(DanmakuView view) {
         if (view == null) {
             return true;
         }
@@ -113,7 +113,7 @@ class DanmakuPositionCalculator {
     /**
      * 这条弹幕还有多少毫秒彻底消失。
      */
-    private int calTimeDisappear(DanmakuView view) {
+    public int calTimeDisappear(DanmakuView view) {
         if (view == null) {
             return 0;
         }
@@ -128,7 +128,7 @@ class DanmakuPositionCalculator {
     /**
      * 这条弹幕还要多少毫秒抵达屏幕边缘。
      */
-    private int calTimeArrive(DanmakuView view) {
+    public int calTimeArrive(DanmakuView view) {
         float speed = calSpeed(view);
         int wayToGo = getParentWidth();
         return (int) (wayToGo / speed);
@@ -137,7 +137,7 @@ class DanmakuPositionCalculator {
     /**
      * 这条弹幕的速度。单位：px/ms
      */
-    private float calSpeed(DanmakuView view) {
+    public float calSpeed(DanmakuView view) {
         int viewLength = view.getViewLength();
         int width = getParentWidth();
         float s = viewLength + width + 0.0f;
@@ -160,6 +160,10 @@ class DanmakuPositionCalculator {
             return 1920;
         }
         return parent.getWidth();
+    }
+
+    List<DanmakuView> getLastDanmakus(){
+        return mLastDanmakus;
     }
 
 }

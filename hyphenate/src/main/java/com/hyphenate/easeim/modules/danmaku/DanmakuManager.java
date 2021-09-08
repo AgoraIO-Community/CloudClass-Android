@@ -4,18 +4,28 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+
 import com.hyphenate.easeim.interfaces.Pool;
-import com.hyphenate.easeim.utils.RandomUtil;
 import com.hyphenate.easeim.utils.ScreenUtil;
+import com.hyphenate.util.EMLog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -28,10 +38,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class DanmakuManager {
     private static final String TAG = DanmakuManager.class.getSimpleName();
-    private static final int RESULT_OK = 0;
-    private static final int RESULT_NULL_ROOT_VIEW = 1;
-    private static final int RESULT_FULL_POOL = 2;
-    private static final int TOO_MANY_DANMAKU = 2;
 
     private static DanmakuManager sInstance;
 
@@ -48,11 +54,19 @@ public class DanmakuManager {
 
     private DanmakuPositionCalculator mPositionCal;
 
-    private int max = 100;
+    private final Handler handler;
 
     private final List<DanmakuView> viewList = Collections.synchronizedList(new ArrayList<>());
 
+    private final ScheduledExecutorService mChecker = Executors.newSingleThreadScheduledExecutor();
+
+    private final List<Danmaku> danmakuList = Collections.synchronizedList(new LinkedList<>());
+
     private DanmakuManager() {
+        handler = new Handler(Looper.getMainLooper());
+        mConfig = new Config();
+        mPositionCal = new DanmakuPositionCalculator(this);
+        scheduleCheck();
     }
 
     public static DanmakuManager getInstance() {
@@ -68,15 +82,17 @@ public class DanmakuManager {
     public void init(Context context, FrameLayout container) {
         if (mDanmakuViewPool == null) {
             mDanmakuViewPool = new CachedDanmakuViewPool(
-                    60000, // 缓存存活时间：60秒
-                    100, // 最大弹幕数：100
+                    10000, // 缓存存活时间：10秒
                     () -> DanmakuViewFactory.createDanmakuView(context, container));
         }
         setDanmakuContainer(container);
         ScreenUtil.init(context);
+    }
 
-        mConfig = new Config();
-        mPositionCal = new DanmakuPositionCalculator(this);
+    public void reset() {
+        viewList.clear();
+        danmakuList.clear();
+        getPositionCalculator().getLastDanmakus().clear();
     }
 
     public Config getConfig() {
@@ -101,20 +117,6 @@ public class DanmakuManager {
     }
 
     /**
-     * 设置允许同时出现最多的弹幕数，如果屏幕上显示的弹幕数超过该数量，那么新出现的弹幕将被丢弃，
-     * 直到有旧的弹幕消失。
-     *
-     * @param max 同时出现的最多弹幕数
-     */
-    public void setMaxDanmakuSize(int max) {
-        if (mDanmakuViewPool == null) {
-            return;
-        }
-        this.max = max;
-        mDanmakuViewPool.setMaxSize(max);
-    }
-
-    /**
      * 设置弹幕的容器，所有的弹幕都在这里面显示
      */
     public void setDanmakuContainer(final FrameLayout root) {
@@ -125,23 +127,31 @@ public class DanmakuManager {
     }
 
     /**
-     * 发送一条弹幕
+     * 弹幕加入缓存
      */
-    public int send(Danmaku danmaku) {
+    public void send(Danmaku danmaku) {
         if (mDanmakuViewPool == null) {
             throw new NullPointerException("Danmaku view pool is null. Did you call init() first?");
         }
 
-        DanmakuView view = mDanmakuViewPool.get();
-        if (view == null) {
-            return RESULT_FULL_POOL;
+        danmakuList.add(danmaku);
+    }
+
+    /**
+     * 发送一条弹幕
+     */
+    private synchronized void sendDanmamu(Danmaku danmaku) {
+        DanmakuView view = getView(danmaku);
+
+        // 计算弹幕距离顶部的位置
+        DanmakuPositionCalculator dpc = getPositionCalculator();
+        int marginTop = dpc.getMarginTop(view);
+
+        if (marginTop == -1) {
+            danmakuList.add(danmaku);
+            // 屏幕放不下了
+            return;
         }
-        if (mDanmakuContainer == null || mDanmakuContainer.get() == null) {
-            return RESULT_NULL_ROOT_VIEW;
-        }
-        view.setMessage(danmaku.message);
-        view.hideGift();
-        view.setDanmaku(danmaku);
 
         // 字体大小
         int textSize = danmaku.size;
@@ -156,21 +166,10 @@ public class DanmakuManager {
             view.getContent().setTextColor(Color.WHITE);
         }
 
-        // 计算弹幕距离顶部的位置
-        DanmakuPositionCalculator dpc = getPositionCalculator();
-        int marginTop = dpc.getMarginTop(view);
-
-        if (marginTop == -1) {
-            // 屏幕放不下了
-            return TOO_MANY_DANMAKU;
-        }
         view.getContent().setTextSize(getConfig().textSize);
 
-        Rect rect = new Rect();
-        Paint paint = view.getContent().getPaint();
-        paint.getTextBounds(danmaku.text, 0, danmaku.text.length(), rect);
-        int viewWidth = rect.width()+ScreenUtil.dip2px(34)+rect.height()*2;
-        if(viewWidth < ScreenUtil.getScreenWidth()){
+        int viewWidth = view.getViewLength();
+        if (viewWidth < ScreenUtil.getScreenWidth()) {
             viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
         }
 
@@ -182,7 +181,21 @@ public class DanmakuManager {
 
         view.show(mDanmakuContainer.get(), getDisplayDuration(danmaku));
         addViewToList(view);
-        return RESULT_OK;
+    }
+
+    // 弹幕上屏，从缓存中移除
+    private void sendCacheDanmaku() {
+        if (danmakuList.size() > 0) {
+            Log.e(TAG, "size:" + danmakuList.size());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    sendDanmamu(danmakuList.get(0));
+                    danmakuList.remove(0);
+                    checkDanmaku();
+                }
+            });
+        }
     }
 
     /**
@@ -217,10 +230,77 @@ public class DanmakuManager {
     }
 
     private void addViewToList(DanmakuView view) {
+        int max = 100;
         if (viewList.size() > max) {
             viewList.remove(0);
         }
         viewList.add(view);
+    }
+
+    /**
+     * 定时检查弹幕是否可以上屏
+     */
+    private void scheduleCheck() {
+        mChecker.scheduleWithFixedDelay(() -> {
+            try {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkDanmaku();
+                    }});
+            }catch (Throwable t){
+                Log.e(TAG, "error: " + t);
+            }
+        }, 1000, 200, TimeUnit.MILLISECONDS);
+    }
+
+    private boolean enableSend = false;
+
+    // 判断弹幕是否可以上屏
+    private synchronized void checkDanmaku() {
+        if (danmakuList.size() > 0) {
+            List<DanmakuView> list = getPositionCalculator().getLastDanmakus();
+            if (list.size() == 0) {
+                sendCacheDanmaku();
+                return;
+            }
+            int i;
+            DanmakuView cacheView = getView(danmakuList.get(0));
+            int timeArrive = mPositionCal.calTimeArrive(cacheView);// 这条弹幕需要多久到达屏幕边缘
+            for (i = 0; i < list.size(); i++) {
+                    DanmakuView lastView = list.get(i);
+                    int timeDisappear = mPositionCal.calTimeDisappear(lastView); // 最后一条弹幕还需多久消失
+                    boolean isFullyShown = mPositionCal.isFullyShown(lastView);
+                    if (timeDisappear <= timeArrive && isFullyShown) {
+                        enableSend = true;
+                        break;
+                    }
+            }
+            if (enableSend) {
+                enableSend = false;
+                sendCacheDanmaku();
+            } else {
+                if (i < getConfig().maxScrollLine) {
+                    sendCacheDanmaku();
+                }
+            }
+        }
+    }
+
+    private DanmakuView getView(Danmaku danmaku) {
+        DanmakuView view = mDanmakuViewPool.get();
+        if (view == null) {
+            EMLog.e(TAG, "DanmakuView is null");
+            return null;
+        }
+
+        if (mDanmakuContainer == null || mDanmakuContainer.get() == null) {
+            return null;
+        }
+        view.setMessage(danmaku.message);
+        view.hideGift();
+        view.setDanmaku(danmaku);
+        return view;
     }
 
     /**
@@ -236,7 +316,7 @@ public class DanmakuManager {
         /**
          * 滚动弹幕显示时长
          */
-        private int durationScroll;
+        private int durationScroll = 0;
         /**
          * 顶部弹幕显示时长
          */
@@ -273,8 +353,15 @@ public class DanmakuManager {
             return maxScrollLine;
         }
 
+        public void setDurationScroll(int durationScroll) {
+            this.durationScroll = durationScroll;
+        }
+
         public int getDurationScroll() {
-            return RandomUtil.nextInt(5, 10) * 1000;
+            if (durationScroll == 0) {
+                durationScroll = 5000;
+            }
+            return durationScroll;
         }
 
         public int getDurationTop() {

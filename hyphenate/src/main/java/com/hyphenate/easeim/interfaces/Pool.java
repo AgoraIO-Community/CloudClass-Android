@@ -1,8 +1,5 @@
 package com.hyphenate.easeim.interfaces;
 
-
-import com.hyphenate.chat.EMMessage;
-
 public interface Pool<T> {
     /**
      * 从缓存中获取一个T的实例
@@ -18,8 +15,6 @@ public interface Pool<T> {
      * @return 缓存中T实例的数量
      */
     int count();
-
-    void setMaxSize(int max);
 
     void removeView(String msgId);
 }

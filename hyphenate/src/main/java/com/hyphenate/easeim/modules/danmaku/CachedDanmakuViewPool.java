@@ -33,11 +33,6 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
      */
     private ViewCreator<DanmakuView> mCreator;
     /**
-     * 最大DanmakuView数量。
-     * 这个数量包含了正在显示的DanmakuView和已经显示完毕进入缓存等待复用的DanmakuView之和。
-     */
-    private int mMaxSize = 100;
-    /**
      * 正在显示的弹幕数量。
      */
     private int mInUseSize;
@@ -45,9 +40,8 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
     /**
      * @param creator 生成一个DanmakuView
      */
-    CachedDanmakuViewPool(long keepAliveTime, int maxSize, ViewCreator<DanmakuView> creator) {
+    CachedDanmakuViewPool(long keepAliveTime, ViewCreator<DanmakuView> creator) {
         mKeepAliveTime = keepAliveTime;
-        mMaxSize = maxSize;
         mCreator = creator;
         mInUseSize = 0;
 
@@ -76,9 +70,6 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
         DanmakuView view;
 
         if (mCache.isEmpty()) { // 缓存中没有View
-            if (mInUseSize >= mMaxSize) {
-                return null;
-            }
             view = mCreator.create();
         } else { // 有可用的缓存，从缓存中取
             view = mCache.poll().danmakuView;
@@ -108,11 +99,6 @@ public class CachedDanmakuViewPool implements Pool<DanmakuView> {
     @Override
     public int count() {
         return mCache.size() + mInUseSize;
-    }
-
-    @Override
-    public void setMaxSize(int max) {
-        mMaxSize = max;
     }
 
     @Override
