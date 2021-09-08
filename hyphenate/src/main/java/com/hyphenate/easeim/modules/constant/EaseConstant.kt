@@ -8,6 +8,7 @@ object EaseConstant {
     const val ROLE = "role"
     const val ROLE_TEACHER = 1
     const val ROLE_STUDENT = 2
+    const val ROLE_ASSISTANT = 3
 
     const val ROOM_UUID = "roomUuid"
     const val AVATAR_URL = "avatarUrl"
