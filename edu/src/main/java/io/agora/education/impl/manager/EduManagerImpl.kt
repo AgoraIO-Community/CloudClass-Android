@@ -3,6 +3,7 @@ package io.agora.education.impl.manager
 import android.os.Build
 import android.text.TextUtils
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.agora.education.impl.Constants.Companion.APPID
 import io.agora.education.impl.Constants.Companion.AgoraLog
 import io.agora.education.impl.Constants.Companion.LOGS_DIR_NAME
@@ -174,10 +175,18 @@ internal class EduManagerImpl(
         return EduError(AgoraError.NONE.value, "")
     }
 
-    override fun uploadDebugItem(item: DebugItem, callback: EduCallback<String>): EduError {
+    override fun uploadDebugItem(item: DebugItem, payload: Any?, callback: EduCallback<String>): EduError {
         val uploadParam = UploadManager.UploadParam(BuildConfig.SDK_VERSION, Build.DEVICE,
-                Build.VERSION.SDK, ZIP, "Android", AndroidLog)
+                Build.VERSION.SDK, ZIP, "Android", payload)
         logMessage("${TAG}: Call the uploadDebugItem function to upload logs，parameter->${Gson().toJson(uploadParam)}", LogLevel.INFO)
+        val payloadJson = Gson().toJson(payload)
+        val payloadMap: MutableMap<String, Any> = Gson().fromJson(payloadJson, object : TypeToken<MutableMap<String, Any>>() {}.type)
+        if (!payloadMap.isNullOrEmpty()) {
+            AndroidLog.forEach {
+                payloadMap[it.key] = it.value
+            }
+            uploadParam.tag = payloadMap
+        }
         UploadManager.upload(options.context!!, APPID, LOG_OSS_CALLBACK_HOST, options.logFileDir!!, uploadParam,
                 object : ThrowableCallback<String> {
                     override fun onSuccess(res: String?) {

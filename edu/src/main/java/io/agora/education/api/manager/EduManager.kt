@@ -108,7 +108,7 @@ abstract class EduManager(
      * 1:parameter XXX is invalid
      * 2:internal error：可以内部订阅具体什么错误
      * 301:network error，透传后台错误msg字段*/
-    abstract fun uploadDebugItem(item: DebugItem, callback: EduCallback<String>): EduError
+    abstract fun uploadDebugItem(item: DebugItem, payload: Any?, callback: EduCallback<String>): EduError
 
     abstract fun getEduMediaControl(): EduMediaControl
 }

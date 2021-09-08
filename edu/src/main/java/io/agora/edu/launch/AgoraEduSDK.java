@@ -28,6 +28,8 @@ import io.agora.base.network.RetrofitManager;
 import io.agora.edu.BuildConfig;
 import io.agora.edu.R;
 import io.agora.edu.classroom.BaseClassActivity;
+import io.agora.edu.classroom.BoardStyleInjector;
+import io.agora.edu.classroom.BoardStyleParams;
 import io.agora.edu.classroom.LargeClassActivity;
 import io.agora.edu.classroom.OneToOneClassActivity;
 import io.agora.edu.classroom.SmallClassActivity;
@@ -46,6 +48,7 @@ import io.agora.education.api.manager.EduManagerOptions;
 import io.agora.education.api.room.data.RoomType;
 import io.agora.extension.AgoraExtAppConfiguration;
 import io.agora.extension.AgoraExtAppEngine;
+import io.agora.log.UploadManager;
 import io.agora.report.ReportManager;
 import io.agora.report.reporters.APaasReporter;
 import io.agora.uicomponent.UiWidgetConfig;
@@ -119,6 +122,8 @@ public class AgoraEduSDK {
     };
 
     private static BoardPreload boardPreload;
+
+    private static AgoraEduLog agoraEduLog = new AgoraEduLog();
 
     public static String version() {
         return EduManager.Companion.version();
@@ -238,6 +243,15 @@ public class AgoraEduSDK {
                 config.getUserUuid(), UUID.randomUUID().toString());
         getReporter().reportRoomEntryStart(null);
 
+        // Board style settings
+        if (config.getBoardStyleParam() != null) {
+            BoardStyleParams param = config.getBoardStyleParam();
+            BoardStyleInjector.INSTANCE.setPosition(param.getLeft(), param.getBottom());
+            for (String style: param.getStyles()) {
+                BoardStyleInjector.INSTANCE.addStyle(style);
+            }
+        }
+
         if (!classRoom.isIdle()) {
             String msg = "curState is not AgoraEduEventDestroyed, launch() cannot be called";
             callbackError(context, msg);
@@ -265,6 +279,10 @@ public class AgoraEduSDK {
         ((Application) context.getApplicationContext()).registerActivityLifecycleCallbacks(classRoomListener);
 
         agoraEduLaunchCallback = state -> {
+            // write sign, next check
+            if (state.equals(AgoraEduEvent.AgoraEduEventFailed)) {
+                agoraEduLog.writeLogSign(true);
+            }
             callback.onCallback(state);
             classRoom.updateState(state);
         };
@@ -321,6 +339,14 @@ public class AgoraEduSDK {
                     public void onSuccess(@Nullable EduManager res) {
                         if (res != null) {
                             Log.e(TAG, ":init EduManager success");
+                            // check uploadLog
+                            agoraEduLog.checkUploadLog(res, new UploadManager.UploadParamTag(
+                                    config.getRoomUuid(),
+                                    config.getRoomName(),
+                                    config.getRoomType(),
+                                    config.getUserUuid(),
+                                    config.getUserName(),
+                                    config.getRoleType()));
                             BaseClassActivity.EduManagerDelegate.setEduManager(res);
                             Intent intent = createIntent(context, config, preCheckRes);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

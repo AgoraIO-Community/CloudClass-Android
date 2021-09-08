@@ -64,10 +64,10 @@ internal open class EduUserImpl(
     lateinit var eduRoom: EduRoomImpl
 
     @Volatile
-    var lastMicState: Boolean = true
+    var lastMicState: Boolean? = null
 
     @Volatile
-    var lastVideoState: Boolean = true
+    var lastVideoState: Boolean? = null
 
     private val surfaceViewList = Collections.synchronizedList(mutableListOf<SurfaceView>())
 
@@ -85,15 +85,10 @@ internal open class EduUserImpl(
             return
         }
         AgoraLog.i("$tag->Start initOrUpdateLocalStream:${Gson().toJson(options)}")
-//        val a = RteEngineImpl.setVideoEncoderConfiguration(
-//                Convert.convertVideoEncoderConfig(videoEncoderConfig))
-//        if (a != OK()) {
-//            callback.onFailure(mediaError(a, getError(a)))
-//            return
-//        }
         /**enableCamera和enableMicrophone控制是否打开摄像头和麦克风的采集*/
-        if (options.enableMicrophone != lastMicState) {
+        if (options.enableMicrophone != lastMicState || lastMicState == null) {
             val c1 = RteEngineImpl.enableLocalAudio(options.enableMicrophone)
+            RteEngineImpl.muteLocalAudioStream(!options.hasAudio)
 
             if (c1 != OK()) {
                 callback.onFailure(mediaError(c1, getError(c1)))
@@ -103,8 +98,9 @@ internal open class EduUserImpl(
 
         lastMicState = options.enableMicrophone
 
-        if (options.enableCamera != lastVideoState) {
+        if (options.enableCamera != lastVideoState || lastVideoState == null) {
             val c2 = RteEngineImpl.enableLocalVideo(options.enableCamera)
+            RteEngineImpl.muteLocalVideoStream(!options.hasVideo)
             if (c2 != OK()) {
                 callback.onFailure(mediaError(c2, getError(c2)))
                 return
@@ -114,7 +110,7 @@ internal open class EduUserImpl(
 
         /**根据当前配置生成一个流信息*/
         val streamInfo = EduStreamInfoImpl(options.streamUuid, options.streamName, VideoSourceType.CAMERA,
-                options.enableCamera, options.enableMicrophone, this.userInfo, System.currentTimeMillis())
+                options.hasVideo, options.hasAudio, this.userInfo, System.currentTimeMillis())
         callback.onSuccess(streamInfo)
     }
 

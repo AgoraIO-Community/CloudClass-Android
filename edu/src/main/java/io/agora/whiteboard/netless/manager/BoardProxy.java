@@ -32,7 +32,7 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     private String appliance;
     private int[] strokeColor;
     private double strokeWidth = -100f, textSize = -100f;
-    private Boolean disableDeviceInputs;
+    private Boolean disableDeviceInputs = true;
     private Boolean disableCameraTransform;
     private Boolean writable;
 
@@ -261,27 +261,27 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
     }
 
     public void putScenes(String dir, Scene[] scenes, int index) {
-        if (t != null) {
-            t.putScenes(dir, scenes, index);
-        }
+//        if (t != null) {
+//            t.putScenes(dir, scenes, index);
+//        }
     }
 
     public void setScenePath(String path, final Promise<Boolean> promise) {
-        if (t != null) {
-            t.setScenePath(path, promise);
-        }
+//        if (t != null) {
+//            t.setScenePath(path, promise);
+//        }
     }
 
     public void setScenePath(String path) {
-        if (t != null) {
-            t.setScenePath(path);
-        }
+//        if (t != null) {
+//            t.setScenePath(path);
+//        }
     }
 
     public void getSceneState(Promise<SceneState> mise) {
-        if(t != null) {
-            t.getSceneState(mise);
-        }
+//        if (t != null) {
+//            t.getSceneState(mise);
+//        }
     }
 
     public void disableDeviceInputs(boolean disabled) {

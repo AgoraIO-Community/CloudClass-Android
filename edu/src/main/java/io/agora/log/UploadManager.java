@@ -84,6 +84,25 @@ public class UploadManager {
         }
     }
 
+    public static class UploadParamTag {
+        public String roomUuid;
+        public String roomName;
+        public int roomType;
+        public String userUuid;
+        public String userName;
+        public int role;
+
+        public UploadParamTag(String roomUuid, String roomName,
+                              int roomType, String userUuid, String userName, int role) {
+            this.roomUuid = roomUuid;
+            this.roomName = roomName;
+            this.roomType = roomType;
+            this.userUuid = userUuid;
+            this.userName = userName;
+            this.role = role;
+        }
+    }
+
     public static void upload(@NonNull Context context, @NonNull String appId,
                               @NonNull String host, @NonNull String uploadPath,
                               @NonNull UploadParam param, @Nullable ThrowableCallback<String> callback) {

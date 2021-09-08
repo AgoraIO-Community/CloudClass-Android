@@ -8,7 +8,9 @@ open class StreamInitOptions(
 class LocalStreamInitOptions(
         streamUuid: String,
         var enableCamera: Boolean = true,
-        var enableMicrophone: Boolean = true
+        var enableMicrophone: Boolean = true,
+        var hasVideo: Boolean = true,
+        var hasAudio: Boolean = true
 ) : StreamInitOptions(streamUuid) {
     constructor(streamUuid: String, streamName: String?, enableCamera: Boolean,
                 enableMicrophone: Boolean) : this(streamUuid, enableCamera, enableMicrophone) {

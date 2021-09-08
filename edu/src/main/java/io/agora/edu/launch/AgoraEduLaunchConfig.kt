@@ -2,6 +2,7 @@ package io.agora.edu.launch
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.agora.edu.classroom.BoardStyleParams
 import io.agora.education.api.stream.data.EduVideoEncoderConfig
 import io.agora.uicomponent.UiWidgetConfig
 import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
@@ -24,7 +25,8 @@ class AgoraEduLaunchConfig(val userName: String,
                            val boardFitMode: AgoraBoardFitMode,
                            var videoEncoderConfig: EduVideoEncoderConfig? = null,
                            val userProperties: MutableMap<String, String>? = null,
-                           val widgetConfigs: MutableList<UiWidgetConfig>? = null) : Parcelable {
+                           val widgetConfigs: MutableList<UiWidgetConfig>? = null,
+                           var boardStyleParam: BoardStyleParams? = null) : Parcelable {
 
     private constructor(userName: String,
                         userUuid: String,
@@ -43,9 +45,10 @@ class AgoraEduLaunchConfig(val userName: String,
                         whiteBoardAppId: String,
                         videoEncoderConfig: EduVideoEncoderConfig? = null,
                         userProperties: MutableMap<String, String>? = null,
-                        widgetConfigs: MutableList<UiWidgetConfig>? = null)
+                        widgetConfigs: MutableList<UiWidgetConfig>? = null,
+                        boardStyleParam: BoardStyleParams? = null)
             : this(userName, userUuid, roomName, roomUuid, roleType, roomType, rtmToken, startTime,
-            duration, boardRegion, boardFitMode, videoEncoderConfig, userProperties, widgetConfigs) {
+            duration, boardRegion, boardFitMode, videoEncoderConfig, userProperties, widgetConfigs, boardStyleParam) {
 
         this.appId = appId
         this.eyeCare = eyeCare
