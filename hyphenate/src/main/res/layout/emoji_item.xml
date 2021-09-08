@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     >
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <TextView
         android:id="@+id/emoji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:scaleType="centerInside"
+        android:textSize="18sp"
+        android:textColor="#ff000000"
         />
 
 

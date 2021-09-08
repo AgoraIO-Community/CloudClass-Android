@@ -19,13 +19,9 @@ import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.utils.CommonUtil
-import com.hyphenate.easeim.modules.utils.EaseSmileUtils
 import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.adapter.EmojiGridAdapter
-import com.hyphenate.easeim.modules.view.ui.emoji.EaseDefaultEmojiconDatas
-import com.hyphenate.easeim.modules.view.ui.emoji.EaseEmojicon
 import com.hyphenate.util.EMLog
-import java.util.*
 
 /**
  * 输入框控件
@@ -43,6 +39,7 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
     lateinit var btnSend: TextView
     lateinit var emojiView: GridView
     lateinit var emojiAdapter: EmojiGridAdapter
+    private val emojiList = arrayOf("\uD83D\uDE0A", "\uD83D\uDE03", "\uD83D\uDE09", "\uD83D\uDE2E", "\uD83D\uDE0B", "\uD83D\uDE0E", "\uD83D\uDE21", "\uD83D\uDE16", "\uD83D\uDE33", "\uD83D\uDE1E", "\uD83D\uDE2D", "\uD83D\uDE10", "\uD83D\uDE07", "\uD83D\uDE2C", "\uD83D\uDE06", "\uD83D\uDE31", "\uD83C\uDF85", "\uD83D\uDE34", "\uD83D\uDE15", "\uD83D\uDE37", "\uD83D\uDE2F", "\uD83D\uDE0F", "\uD83D\uDE11", "\uD83D\uDC96", "\uD83D\uDC94", "\uD83C\uDF19", "\uD83C\uDF1F", "\uD83C\uDF1E", "\uD83C\uDF08", "\uD83D\uDE1A", "\uD83D\uDE0D", "\uD83D\uDC8B", "\uD83C\uDF39", "\uD83C\uDF42", "\uD83D\uDC4D")
     var inputMsgListener: InputMsgListener? = null
     var chatRoomId = ""
     var roomUuid = ""
@@ -68,14 +65,14 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         btnSend = findViewById(R.id.btn_send)
         emojiView = findViewById(R.id.emoji_grid)
         emojiView.numColumns = 8
-        emojiAdapter = EmojiGridAdapter(context, 1, EaseDefaultEmojiconDatas.getData())
+        emojiAdapter = EmojiGridAdapter(context, 1, emojiList)
         emojiView.adapter = emojiAdapter
         initListener()
     }
 
     private fun initListener() {
         emojiView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            emojiAdapter.getItem(position)?.let { clickEmojiItem(it) }
+            clickEmojiItem(emojiList[position])
         }
         inputRoot.setOnClickListener(this)
         editContent.setOnClickListener(this)
@@ -146,8 +143,8 @@ class InputView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int
         CommonUtil.hideSoftKeyboard(editContent)
     }
 
-    private fun clickEmojiItem(emoji: EaseEmojicon) {
-        editContent.text.append(EaseSmileUtils.getSmiledText(context, emoji.emojiText))
+    private fun clickEmojiItem(emoji: String) {
+        editContent.text.append(emoji)
     }
 
     private fun setExtBeforeSend(message: EMMessage) {
