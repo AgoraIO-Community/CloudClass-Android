@@ -5,24 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import com.hyphenate.easeim.R
-import com.hyphenate.easeim.modules.view.ui.emoji.EaseEmojicon
 
 /**
  * 表情adapter
  */
-class EmojiGridAdapter(context: Context, resource: Int, emojiList: Array<EaseEmojicon>) : ArrayAdapter<EaseEmojicon>(context, resource, emojiList) {
+class EmojiGridAdapter(context: Context, resource: Int, emojiList: Array<String>) : ArrayAdapter<String?>(context, resource, emojiList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.emoji_item, null)
         }
-        val imageView = convertView!!.findViewById<AppCompatImageView>(R.id.emoji)
-        val emojicon = getItem(position)
-        if(emojicon?.icon != 0){
-            emojicon?.icon?.let { imageView.setImageResource(it) }
-        }
+        val textView = convertView!!.findViewById<TextView>(R.id.emoji)
+        textView.text = getItem(position)
         return convertView
     }
 }
