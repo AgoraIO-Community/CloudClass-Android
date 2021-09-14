@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_item_more_icon"
+        android:layout_width="@dimen/agora_tool_item_more_size"
+        android:layout_height="@dimen/agora_tool_item_more_size"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/agora_tool_icon_more"/>
+</RelativeLayout>
