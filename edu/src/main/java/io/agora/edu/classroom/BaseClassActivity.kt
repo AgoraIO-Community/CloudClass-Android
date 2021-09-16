@@ -42,7 +42,7 @@ import io.agora.educontext.context.*
 import io.agora.extapp.AgoraExtAppManager
 import io.agora.extapp.ExtAppTrackListener
 import io.agora.extension.*
-import io.agora.log.UploadManager
+import io.agora.log.UploadManager.UploadParamTag
 import io.agora.privatechat.PrivateChatManager
 import io.agora.report.ReportManager.getAPaasReporter
 import io.agora.report.reporters.APaasReporter
@@ -259,7 +259,7 @@ abstract class BaseClassActivity : BaseActivity(),
         }
 
         override fun uploadLog(quiet: Boolean) {
-            eduManager?.uploadDebugItem(DebugItem.LOG, UploadManager.UploadParamTag(
+            eduManager?.uploadDebugItem(DebugItem.LOG, UploadParamTag(
                     launchConfig?.roomUuid,
                     launchConfig?.roomName,
                     launchConfig?.roomType ?: -1,
@@ -717,9 +717,9 @@ abstract class BaseClassActivity : BaseActivity(),
             val result = mutableListOf<EduContextExtAppInfo>()
             extAppManager?.getRegisteredApps()?.forEach {
                 result.add(EduContextExtAppInfo(
-                    it.appIdentifier,
-                    it.language,
-                    it.imageResource
+                        it.appIdentifier,
+                        it.language,
+                        it.imageResource
                 ))
             }
             return result
@@ -1045,7 +1045,7 @@ abstract class BaseClassActivity : BaseActivity(),
 
     private fun initExtAppManager(layout: RelativeLayout, config: AgoraEduLaunchConfig) {
         extAppManager = object : AgoraExtAppManager(config.appId, this,
-            layout, config.roomUuid, eduContext) {
+                layout, config.roomUuid, eduContext) {
             override fun getRoomInfo(): AgoraExtAppRoomInfo {
                 return AgoraExtAppRoomInfo(
                         config.roomUuid,
@@ -1083,8 +1083,8 @@ abstract class BaseClassActivity : BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
 
         super.onCreate(savedInstanceState)

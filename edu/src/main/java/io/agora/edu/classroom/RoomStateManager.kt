@@ -84,7 +84,6 @@ class RoomStateManager(
                 minutes1 = closeDelay / 60
                 seconds1 = closeDelay % 60
                 tips = R.string.toast_classtime_until_class_close_0
-//            } else if (a > -closeDelay - 1 && a <= -closeDelay) {
             } else if (a <= -closeDelay) {
                 roomContext?.getHandlers()?.forEach { handler ->
                     handler.onClassState(EduContextClassState.Destroyed)
@@ -118,19 +117,22 @@ class RoomStateManager(
     private var curConnectionState = EduContextConnectionState.Disconnected
 
     private val flexProps: FlexProps
-    private var lastLogTime = TimeUtil.currentTimeMillis()
+    private var lastLogTime = 0L
 
     init {
         flexProps = FlexPropsImpl(launchConfig.appId, launchConfig.roomUuid)
     }
 
     private fun isLogTime(startedTime: Long): Boolean {
-        val item = 60 * 10
         // uploadLog every ten minutes
-        val a = startedTime % item == 0L || startedTime % item == 1L
-        val surplus = TimeUtil.currentTimeMillis() - lastLogTime
-        if (a && surplus > 10 * 1000) {
-            lastLogTime = TimeUtil.currentTimeMillis()
+        if (startTime == 0L) {
+            return false
+        }
+        val item = 60L * 10
+        lastLogTime = if(lastLogTime == 0L) item else lastLogTime
+        val b = (startedTime - lastLogTime) > item
+        if (b) {
+            lastLogTime = startedTime
             return true
         }
         return false

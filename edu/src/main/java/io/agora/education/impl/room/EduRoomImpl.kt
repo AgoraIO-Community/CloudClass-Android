@@ -576,13 +576,15 @@ internal class EduRoomImpl(
             AgoraLog.e("$TAG->EduRoom[${getCurRoomUuid()}] getStudentList error:${error.msg}")
             callback.onFailure(error)
         } else {
-            val studentList = mutableListOf<EduUserInfo>()
-            for (element in getCurUserList()) {
-                if (element.role == EduUserRole.STUDENT) {
-                    studentList.add(element)
+            synchronized(this) {
+                val studentList = mutableListOf<EduUserInfo>()
+                for (element in getCurUserList()) {
+                    if (element.role == EduUserRole.STUDENT) {
+                        studentList.add(element.copy())
+                    }
                 }
+                callback.onSuccess(studentList)
             }
-            callback.onSuccess(studentList)
         }
     }
 
@@ -592,13 +594,15 @@ internal class EduRoomImpl(
             AgoraLog.e("$TAG->EduRoom[${getCurRoomUuid()}] getTeacherList error:${error.msg}")
             callback.onFailure(error)
         } else {
-            val teacherList = mutableListOf<EduUserInfo>()
-            for (element in getCurUserList()) {
-                if (element.role == EduUserRole.TEACHER) {
-                    teacherList.add(element)
+            synchronized(this) {
+                val teacherList = mutableListOf<EduUserInfo>()
+                for (element in getCurUserList()) {
+                    if (element.role == EduUserRole.TEACHER) {
+                        teacherList.add(element.copy())
+                    }
                 }
+                callback.onSuccess(teacherList)
             }
-            callback.onSuccess(teacherList)
         }
     }
 
@@ -608,7 +612,13 @@ internal class EduRoomImpl(
             AgoraLog.e("$TAG->EduRoom[${getCurRoomUuid()}] getFullStreamList error:${error.msg}")
             callback.onFailure(error)
         } else {
-            callback.onSuccess(syncSession.getFullStreamInfoList())
+            synchronized(this) {
+                val list = mutableListOf<EduStreamInfo>()
+                getCurRemoteStreamList().forEach {
+                    list.add(it.copy())
+                }
+                callback.onSuccess(list)
+            }
         }
     }
 
@@ -619,7 +629,14 @@ internal class EduRoomImpl(
             AgoraLog.e("$TAG->EduRoom[${getCurRoomUuid()}] getFullUserList error:${error.msg}")
             callback.onFailure(error)
         } else {
-            callback.onSuccess(syncSession.getFullUserInfoList())
+            synchronized(this) {
+                val cur = getCurUserList()
+                val list = mutableListOf<EduUserInfo>()
+                cur.forEach {
+                    list.add(it.copy())
+                }
+                callback.onSuccess(list)
+            }
         }
     }
 

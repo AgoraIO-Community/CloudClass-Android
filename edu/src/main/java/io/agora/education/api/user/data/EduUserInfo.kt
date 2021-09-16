@@ -25,7 +25,7 @@ open class EduBaseUserInfo(
         return super.hashCode()
     }
 
-    fun copy(): EduBaseUserInfo {
+    open fun copy(): EduBaseUserInfo {
         return EduBaseUserInfo(this.userUuid, this.userName, this.role)
     }
 }
@@ -39,6 +39,15 @@ open class EduUserInfo(
     /**用户主流的uuid(无主流则为null)*/
     lateinit var streamUuid: String
     var userProperties: MutableMap<String, Any> = mutableMapOf()
+
+    override fun copy(): EduUserInfo {
+        val streamUuid = this.streamUuid
+        val property = this.userProperties
+        return EduUserInfo(userUuid, userName, role, isChatAllowed).apply {
+            this.streamUuid = streamUuid
+            this.userProperties = property
+        }
+    }
 }
 
 open class EduLocalUserInfo(

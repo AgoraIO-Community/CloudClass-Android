@@ -2,16 +2,28 @@ package io.agora.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class PreferenceManager {
-    private static SharedPreferences sharedPreferences;
+    private static final Object sLock = new Object();
+    private volatile static SharedPreferences sharedPreferences;
+    private volatile static int sInitCallCnt = 0;
+    private volatile static int sNullFoundCnt = 0;
+    private volatile static int sNullAfterCreateCnt = 0;
 
     public static void init(@NonNull Context context) {
-        if(sharedPreferences == null) {
-            sharedPreferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        synchronized (sLock) {
+            sInitCallCnt++;
+            if (sharedPreferences == null) {
+                sNullFoundCnt++;
+                sharedPreferences = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+                if (sharedPreferences == null) {
+                    sNullAfterCreateCnt++;
+                }
+            }
         }
     }
 
@@ -50,8 +62,19 @@ public class PreferenceManager {
     }
 
     private static SharedPreferences getSharedPreferences() throws IllegalStateException {
-        if (sharedPreferences == null)
-            throw new IllegalStateException("PreferenceManager is not initialized. Please call init() before use!");
+        if (sharedPreferences == null) {
+            throw new IllegalStateException("PreferenceManager is not initialized. " +
+                    "Please call init() before use! " +
+                    "init call " + sInitCallCnt +
+                    ", null found " + sNullFoundCnt +
+                    ", null after create " + sNullAfterCreateCnt +
+                    ", main thread " + isMainThread());
+        }
+
         return sharedPreferences;
+    }
+
+    private static boolean isMainThread() {
+        return Thread.currentThread() == Looper.getMainLooper().getThread();
     }
 }
