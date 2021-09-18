@@ -614,7 +614,7 @@ internal class EduRoomImpl(
         } else {
             synchronized(this) {
                 val list = mutableListOf<EduStreamInfo>()
-                getCurRemoteStreamList().forEach {
+                getCurStreamList().forEach {
                     list.add(it.copy())
                 }
                 callback.onSuccess(list)
@@ -630,9 +630,8 @@ internal class EduRoomImpl(
             callback.onFailure(error)
         } else {
             synchronized(this) {
-                val cur = getCurUserList()
                 val list = mutableListOf<EduUserInfo>()
-                cur.forEach {
+                getCurUserList().forEach {
                     list.add(it.copy())
                 }
                 callback.onSuccess(list)
