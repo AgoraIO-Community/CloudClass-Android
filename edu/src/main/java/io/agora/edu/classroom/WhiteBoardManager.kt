@@ -39,6 +39,7 @@ import io.agora.whiteboard.netless.bean.AgoraBoardFitMode
 import io.agora.whiteboard.netless.listener.BoardEventListener
 import io.agora.whiteboard.netless.listener.GlobalStateChangeListener
 import io.agora.whiteboard.netless.manager.BoardProxy
+import io.agora.edu.launch.AgoraEduRoleType.AgoraEduRoleTypeTeacher
 import org.json.JSONObject
 import wendu.dsbridge.DWebView
 import java.io.File
@@ -190,6 +191,8 @@ class WhiteBoardManager(
                         val params = RoomParams(uuid, boardToken)
                         params.cameraBound = CameraBound(miniScale, maxScale)
                         params.isDisableNewPencil = false
+                        // if userRole is not teacher, default not permission to write.
+                        params.isWritable = launchConfig.roleType == AgoraEduRoleTypeTeacher.value
                         params.useMultiViews = true
 
                         val collectorStyleMap = HashMap<String, String>()
@@ -644,12 +647,16 @@ class WhiteBoardManager(
             }
             if (curBoardState != null) {
                 val granted = curBoardState!!.isGranted(localUserUuid)
+                // set local device input switch
                 disableDeviceInputs(!granted)
                 if (granted != curGranted) {
+                    // granted changed
                     curGranted = granted
                     whiteboardContext.getHandlers()?.forEach {
                         it.onPermissionGranted(granted)
                     }
+                    // set writeable follow granted
+                    boardProxy.setWritable(granted)
                 }
                 val follow = curBoardState!!.isFollow
                 if (followTips) {

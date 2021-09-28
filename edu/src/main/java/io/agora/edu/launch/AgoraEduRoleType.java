@@ -1,6 +1,7 @@
 package io.agora.edu.launch;
 
 public enum AgoraEduRoleType {
+   AgoraEduRoleTypeTeacher(1),
    AgoraEduRoleTypeStudent(2);
 
    private int value;

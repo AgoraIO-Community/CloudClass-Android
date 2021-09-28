@@ -63,9 +63,8 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
             MemberState state = new MemberState();
             state.setCurrentApplianceName(appliance);
             t.setMemberState(state);
-        } else {
-            this.appliance = appliance;
         }
+        this.appliance = appliance;
     }
 
     public String getAppliance() {
@@ -80,9 +79,8 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
             MemberState state = new MemberState();
             state.setStrokeColor(color);
             t.setMemberState(state);
-        } else {
-            this.strokeColor = color;
         }
+        this.strokeColor = color;
     }
 
     public int[] getStrokeColor() {
@@ -97,9 +95,8 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
             MemberState state = new MemberState();
             state.setStrokeWidth(width);
             t.setMemberState(state);
-        } else {
-            this.strokeWidth = width;
         }
+        this.strokeWidth = width;
     }
 
     public Double getStrokeWidth() {
@@ -114,9 +111,8 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
             MemberState state = new MemberState();
             state.setTextSize(size);
             t.setMemberState(state);
-        } else {
-            this.textSize = size;
         }
+        this.textSize = size;
     }
 
     public Double getTextSize() {
@@ -312,15 +308,30 @@ public class BoardProxy extends NetlessManager<Room> implements RoomCallbacks {
         return disableCameraTransform == null ? false : disableCameraTransform;
     }
 
+    /**
+     * setWritable(false) to setWritable(true), memberState will be reset to default.
+     * so, need restore.
+     * only be called when granted changed.
+     */
     public void setWritable(boolean writable) {
         if (t != null) {
+            MemberState memberState = new MemberState();
+            memberState.setCurrentApplianceName(appliance);
+            memberState.setStrokeColor(strokeColor);
+            memberState.setTextSize(textSize);
+            memberState.setStrokeWidth(strokeWidth);
             t.setWritable(writable, new Promise<Boolean>() {
                 @Override
                 public void then(Boolean aBoolean) {
+                    if (aBoolean) {
+                        // restore memberState
+                        t.setMemberState(memberState);
+                    }
                 }
 
                 @Override
                 public void catchEx(SDKError t) {
+                    onFail(t);
                 }
             });
         }
