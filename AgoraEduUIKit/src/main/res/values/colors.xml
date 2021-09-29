@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme colors -->
+    <color name="theme_blue_light">#357BF6</color>
+    <color name="theme_blue_gray">#639AFA</color>
+    <color name="theme_white_ivory">#F9F9F9</color>
+    <color name="theme_white">#FFFFFF</color>
+    <color name="theme_black">#000000</color>
+    <color name="theme_gray_light">#DEDEDE</color>
+    <color name="theme_gray_lighter">#F9F9FC</color>
+    <color name="theme_disable">#E2E2EE</color>
+    <color name="theme_gray_dialog_bg">#E1EBFC</color>
+    <color name="theme_gray_dark">#ECECF1</color>
+
+    <!-- Theme text colors -->
+    <color name="theme_text_bg_color_gray">#F4F4F8</color>
+    <color name="theme_text_color_black">#191919</color>
+    <color name="theme_text_color_dark_gray">#586376</color>
+    <color name="theme_text_color_gray">#7B88A0</color>
+    <color name="agora_setting_leave_text_color">#F04C36</color>
+    <color name="theme_text_color_text_content">#333333</color>
+    <color name="theme_text_color_class_time">#677386</color>
+
+    <!-- Border Colors -->
+    <color name="theme_border_color">#262F4129</color>
+    <color name="theme_border_dialog_icon">#868F9F</color>
+    <color name="theme_border_font_item">#D9D9E7</color>
+    <color name="theme_border_class_room">#ECECF1</color>
+    <color name="theme_border_class_room_container">#ECECF1</color>
+
+    <!-- UI Framework -->
+    <color name="theme_divider_color">#D0D0D0</color>
+
+    <!-- Messages -->
+    <color name="agora_chat_error_icon_color">#FF0D19</color>
+    <color name="theme_divider_color_dark">#D0D0D0</color>
+    <color name="theme_divider_color_gray">#EEEEF7</color>
+
+    <!-- Agora Board -->
+    <color name="agora_board_default_stroke">#0073FF</color>
+    <color name="agora_board_preload_progress_view_progressbar_bg">#FFFFFF</color>
+    <color name="agora_board_preload_progress_view_progressbar_secondaryprogress">#F0F2F4</color>
+    <color name="agora_board_preload_progress_view_progressbar_mainprogress_startcolor">#8DAAFF
+    </color>
+    <color name="agora_board_preload_progress_view_progressbar_mainprogress_endcolor">#5471FE
+    </color>
+    <color name="agora_board_preload_progress_timeout_cancel_btn_stroke">#D2D2E2</color>
+
+    <!-- Setting -->
+    <color name="setting_button_default_bg">#F4F4F8</color>
+    <color name="setting_button_text_color_default">#B5B5C9</color>
+
+
+    <color name="colorPrimary">#F5F7F8</color>
+    <color name="colorPrimaryDark">#F5F7F8</color>
+    <color name="colorAccent">#44A2FC</color>
+
+    <color name="gray_F5F7F8">#F5F7F8</color>
+
+    <color name="red_FF0D19">#FF0D19</color>
+
+    <color name="yellow_FF8F00">#FF8F00</color>
+    <color name="yellow_FFCA00">#FFCA00</color>
+
+    <color name="green_00DD52">#00DD52</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="black_66">#66000000</color>
+    <color name="black_79">#79000000</color>
+    <color name="black_7F">#7F000000</color>
+
+    <color name="gray_333333">#333333</color>
+    <color name="gray_666666">#666666</color>
+    <color name="gray_D8D8D8">#D8D8D8</color>
+    <color name="gray_CCCCCC">#CCCCCC</color>
+    <color name="gray_EEEEEE">#EEEEEE</color>
+    <color name="gray_565656">#565656</color>
+    <color name="gray_191919">#191919</color>
+    <color name="gray_141414">#141414</color>
+    <color name="gray_DBE2E5">#DBE2E5</color>
+
+    <color name="blue_44A2FC">#44A2FC</color>
+    <color name="blue_E7F6FF">#E7F6FF</color>
+    <color name="blue_007AFF">#007AFF</color>
+    <color name="blue_007CFF">#007CFF</color>
+    <color name="blue_1F3DE8">#1F3DE8</color>
+    <color name="blue_C0D6FF">#C0D6FF</color>
+
+    <color name="purple_C455DF">#C455DF</color>
+
+    <color name="eye_care_color">#1Aff9900</color>
+
+    <color name="C44A2FC">#44A2FC</color>
+
+    <!--  RoomStateManager  -->
+    <color name="toast_classtime_countdown_time">#FE313F</color>
+</resources>

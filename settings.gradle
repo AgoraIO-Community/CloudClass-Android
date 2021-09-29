@@ -1,0 +1,5 @@
+rootProject.name = 'CloudClass-Android'
+include ':AgoraClassSDK', ':AgoraEduContext', ':AgoraEduExtApp', ':AgoraEduUIKit', ':AgoraEduWidget', 'app', 'hyphenate'
+if(!remoteDependEduCore.toBoolean()) {
+    include ':AgoraEduCore'
+}

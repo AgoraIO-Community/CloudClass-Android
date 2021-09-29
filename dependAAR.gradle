@@ -1,0 +1,22 @@
+task preBuild {
+    updateEntry("dependAAR", true)
+}
+
+def updateEntry(key, value) {
+    logger.log(LogLevel.ERROR, "updateEntry->key:" + key + ", value:" + value.toString())
+    File propFile = file("gradle.properties")
+    if (propFile.exists()) {
+        def Properties props = new Properties()
+        props.load(new FileInputStream(propFile))
+        if (!props.containsKey(key)) {
+            logger.log(LogLevel.ERROR, "Property '" + key + "' does not exist in gradle.properties!")
+        }
+        props[key] = value.toString()
+        propFile.setWritable(true)
+        props.store(new FileOutputStream(propFile), "")
+    } else {
+        logger.log(LogLevel.ERROR, "gradle.properties not exists!")
+    }
+}
+
+

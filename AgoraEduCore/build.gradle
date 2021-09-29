@@ -1,0 +1,103 @@
+plugins {
+    id 'com.android.library'
+    id 'com.jakewharton.butterknife'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'com.github.dcendents.android-maven'
+}
+
+android {
+    androidExtensions {
+        experimental = true
+    }
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField 'Integer', 'SERVICE_APAAS', '0'
+        buildConfigField 'String', 'APAAS_VERSION', '"1.1.5"'
+        buildConfigField 'String', 'POLICY_URL', '"https://www.agora.io/privacy-policy/"'
+        buildConfigField 'String', 'REPLAY_BASE_URL', '"https://agora-adc-artifacts.oss-accelerate.aliyuncs.com/"'
+
+        //--------whiteboard-buildconfig-----------
+        buildConfigField 'String', 'NETLESS_API_BASE_URL', '"https://cloudcapiv4.herewhite.com/"'
+        //--------whiteboard-buildconfig-----------
+
+        //--------api-buildconfig---------------
+        buildConfigField 'String', 'SDK_VERSION', '"1.0.0"'
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io/"'
+        buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"https://api.agora.io/"'
+//        buildConfigField 'String', 'LOG_OSS_CALLBACK_HOST', '"https://api-solutions-dev.bj2.agoralab.co/"'
+
+        //--------api-buildconfig---------------
+
+        //--------report-buildconfig---------------
+        buildConfigField 'String', 'REPORT_BASE_URL', '"https://api.agora.io/"'
+        buildConfigField 'String', 'REPORT_BASE_URL_V2', '"https://rest-argus-ad.agoralab.co/"'
+        //--------report-buildconfig---------------
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions { jvmTarget = 1.8 }
+
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/uikitRes', 'src/main/countdownRes']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    implementation "com.google.android.material:material:${rootProject.ext.dependencies.material_material}"
+
+    implementation "com.github.bumptech.glide:glide:${rootProject.ext.dependencies.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.dependencies.glide_compiler}"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:${rootProject.ext.dependencies.core_ktx}"
+    api "androidx.preference:preference:${rootProject.ext.dependencies.preference}"
+    api "com.google.code.gson:gson:${rootProject.ext.dependencies.gson}"
+    api "com.squareup.retrofit2:retrofit:${rootProject.ext.dependencies.retrofit}"
+    api "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.dependencies.logging_interceptor}"
+    api "com.squareup.retrofit2:converter-gson:${rootProject.ext.dependencies.converter_gson}"
+    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.dependencies.constraintlayout}"
+
+    testImplementation "junit:junit:${rootProject.ext.dependencies.junit}"
+    androidTestImplementation "junit:junit:${rootProject.ext.dependencies.junit}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.ext.dependencies.espresso_core}"
+
+    implementation "com.google.protobuf:protobuf-java:${rootProject.ext.dependencies.protobuf_java}"
+    implementation "com.elvishew:xlog:${rootProject.ext.dependencies.xlog}"
+    implementation "com.aliyun.dpa:oss-android-sdk:${rootProject.ext.dependencies.ali_oss_android_sdk}"
+    api "com.github.agorabuilder:native-full-sdk:${rootProject.ext.dependencies.agora_native_full_sdk}"
+    api "com.github.agorabuilder:rtm-sdk:${rootProject.ext.dependencies.agora_rtm_sdk}"
+    implementation "com.github.duty-os:white-sdk-android:${rootProject.ext.dependencies.white_sdk_android}"
+
+    compileOnly project(path: ':AgoraEduContext')
+    compileOnly project(path: ':AgoraEduExtApp')
+    compileOnly project(path: ':AgoraEduUIKit')
+    compileOnly project(path: ':AgoraEduWidget')
+    compileOnly project(path: ':hyphenate')
+}

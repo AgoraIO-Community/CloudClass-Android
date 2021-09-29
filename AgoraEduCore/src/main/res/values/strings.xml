@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="handsuptimeout">Hands up timeout</string>
+    <string name="handsupsuccess">Hands up successfully</string>
+    <string name="handsupfailed">Hands up failed</string>
+    <string name="cancelhandsupsuccess">Hands down successfully</string>
+    <string name="cancelhandsupfailed">cancel hands up failed</string>
+    <string name="handsupenable">Teacher opened hands up mode</string>
+    <string name="handsupdisable">Teacher closed hands up mode</string>
+    <string name="parametererror">参数错误:%s</string>
+    <string name="remoteloginerror">账号在远端设备登录, 您已离开教室</string>
+    <string name="follow_tips">老师正在控制白板，请勿书写</string>
+
+    <string name="covideo_accept_interactive">The teacher has invited you to stage，you can interact with others now</string>
+    <string name="covideo_reject_interactive">Teacher rejected your application</string>
+    <string name="covideo_abort_interactive">You are not on stage now and you can not interact with others</string>
+
+    <string name="camera_turned_off">Your camera has been turned off</string>
+    <string name="camera_turned_on">Your camera has been turned on</string>
+    <string name="microphone_turned_off">Your mic has been turned off</string>
+    <string name="microphone_turned_on">Your mic has been turned on</string>
+
+    <string name="room_full">The classroom is full</string>
+
+    <!--  ClassToastManager  -->
+    <string name="toast_classtime_until_class_end">%s before the classroom closes</string>
+    <string name="toast_classtime_until_class_close_0">Class ends, the classroom is closed in %s</string>
+    <string name="toast_classtime_until_class_close_0_args">%sm%ss</string>
+    <string name="toast_classtime_until_class_close_0_arg">%s minutes</string>
+    <string name="toast_classtime_until_class_close_1">The classroom is closed in %s</string>
+    <string name="toast_classroom_board_permission_true">Paintbrush is enabled</string>
+    <string name="toast_classroom_board_permission_false">Paintbrush is disabled</string>
+    <string name="toast_classroom_network_bad">Network quality is poor,which may affect class</string>
+
+    <!-- Chat Window -->
+    <string name="chat_window_chat_enable">You are allowed to send messages in the chat box</string>
+    <string name="chat_window_chat_disable">You are not allowed to send messages in the chat box</string>
+
+    <!--  RewardWindow  -->
+    <string name="reward_window_classtime0">%02d:%02d</string>
+    <string name="reward_window_classtime1">%02d:%02d:%02d</string>
+
+    <!-- Screen Share -->
+    <string name="screen_share_start_message_format">The teacher starts the screenshare</string>
+    <string name="screen_share_end_message_format">The teacher stops the screenshare</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="agora_chat_tab_message">消息</string>
+    <string name="agora_chat_tab_private">提问</string>
+</resources>

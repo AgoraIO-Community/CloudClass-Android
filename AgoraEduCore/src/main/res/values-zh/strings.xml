@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="handsuptimeout">举手超时</string>
+    <string name="handsupsuccess">举手成功</string>
+    <string name="handsupfailed">举手失败</string>
+    <string name="cancelhandsupsuccess">取消举手成功</string>
+    <string name="cancelhandsupfailed">取消举手失败</string>
+    <string name="handsupenable">老师开启了举手功能</string>
+    <string name="handsupdisable">老师关闭了举手功能</string>
+    <string name="parametererror">参数错误:%s</string>
+    <string name="remoteloginerror">账号在远端设备登录, 您已离开教室</string>
+    <string name="follow_tips">老师正在控制白板，请勿书写</string>
+
+    <string name="covideo_accept_interactive">你已被老师邀请上台，请积极互动哦</string>
+    <string name="covideo_reject_interactive">老师拒绝了你的举手申请</string>
+    <string name="covideo_abort_interactive">你已下台，暂时不能进行互动了哦</string>
+
+    <string name="camera_turned_off">摄像头已关闭</string>
+    <string name="camera_turned_on">摄像头已打开</string>
+    <string name="microphone_turned_off">你暂时不能发言了</string>
+    <string name="microphone_turned_on">你可以发言了</string>
+
+    <string name="room_full">加入教室失败，教室人数已满</string>
+
+    <!--  ClassToastManager  -->
+    <string name="toast_classtime_until_class_end">课程还有%s结束</string>
+    <string name="toast_classtime_until_class_close_0">下课咯，教室还有%s关闭</string>
+    <string name="toast_classtime_until_class_close_0_args">%s分%s秒</string>
+    <string name="toast_classtime_until_class_close_0_arg">%s分钟</string>
+    <string name="toast_classtime_until_class_close_1">教室还有%s关闭</string>
+    <string name="toast_classroom_board_permission_true">画笔已启用</string>
+    <string name="toast_classroom_board_permission_false">画笔已禁用</string>
+    <string name="toast_classroom_network_bad">你的网络质量不佳，可能影响上课</string>
+
+    <!-- Chat Window -->
+    <string name="chat_window_chat_enable">全体禁言解除</string>
+    <string name="chat_window_chat_disable">全体禁言</string>
+
+    <!--  RewardWindow  -->
+    <string name="reward_window_classtime0">%02d:%02d</string>
+    <string name="reward_window_classtime1">%02d:%02d:%02d</string>
+
+    <!-- Screen Share -->
+    <string name="screen_share_start_message_format">老师开始了屏幕共享</string>
+    <string name="screen_share_end_message_format">老师结束了屏幕共享</string>
+</resources>
