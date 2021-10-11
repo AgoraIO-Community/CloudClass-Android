@@ -151,13 +151,14 @@ internal class RoomStateManager(
         eduRoom?.getRoomStatus(object : EduCallback<EduRoomStatus> {
             override fun onSuccess(res: EduRoomStatus?) {
                 res?.let {
-                    if (it.courseState == EduRoomState.INIT) {
-                        parseStartTime(scheduleKey)?.let { startTime ->
-                            config.startTime = startTime
-                        }
-                    } else {
-                        config.startTime = it.startTime
-                    }
+//                    if (it.courseState == EduRoomState.INIT) {
+//                        parseStartTime(scheduleKey)?.let { startTime ->
+//                            config.startTime = startTime
+//                        }
+//                    }
+//                    else {
+//                        config.startTime = it.startTime
+//                    }
                     setClassState(
                             it.courseState,
                             config.startTime,
@@ -214,7 +215,9 @@ internal class RoomStateManager(
                 override fun onSuccess(res: EduRoomStatus?) {
                     res?.let {
                         if (res.courseState == EduRoomState.START) {
-                            config.startTime = it.startTime
+                            parseStartTime(scheduleKey)?.let { startTime ->
+                                config.startTime = startTime
+                            }
                             setClassState(EduRoomState.START,
                                     config.startTime,
                                     config.duration,
