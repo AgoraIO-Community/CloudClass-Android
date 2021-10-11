@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_tool_unfold_layout"
+    android:layout_width="@dimen/agora_tool_layout_default_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_switch"
+        android:layout_width="@dimen/agora_tool_switch_btn_size"
+        android:layout_height="@dimen/agora_tool_switch_btn_size"
+        android:src="@drawable/agora_tool_fold_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agora_tool_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/agora_tool_switch"/>
+</RelativeLayout>

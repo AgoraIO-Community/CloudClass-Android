@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  设置背景色  -->
+    <item
+        android:id="@android:id/background"
+        android:drawable="@color/agora_board_preload_progress_view_progressbar_bg">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/agora_board_progress_view_progressbar_corner"/>
+        </shape>
+    </item>
+
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="@dimen/agora_board_progress_view_progressbar_corner"/>
+                <solid android:color="@color/agora_board_preload_progress_view_progressbar_secondaryprogress" />
+            </shape>
+        </clip>
+    </item>
+
+    <!--  设置进度条颜色  -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="@dimen/agora_board_progress_view_progressbar_corner"/>
+                <gradient
+                    android:startColor="@color/agora_board_preload_progress_view_progressbar_mainprogress_startcolor"
+                    android:endColor="@color/agora_board_preload_progress_view_progressbar_mainprogress_endcolor"
+                    android:angle="0"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

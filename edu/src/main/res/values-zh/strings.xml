@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="policy_tips">请您务必审慎阅读，充分理解《用户协议与隐私政策》条款。</string>
+    <string name="policy">用户协议与隐私政策</string>
+    <string name="policy_agree">同意</string>
+    <string name="policy_refuse">暂不使用</string>
+    <string name="title_teaching_material">教材区</string>
+    <string name="title_chat_room">聊天区</string>
+    <string name="confirm_leave_room_content">确定离开房间？</string>
+    <string name="confirm_removed_from_room_content">你已被踢出教室。</string>
+    <string name="confirm_invite_onstage">老师邀请你上台。</string>
+    <string name="cancel">取消</string>
+    <string name="hint_im_message">说点什么</string>
+    <string name="confirm">确定</string>
+    <string name="title_student_list">学生列表</string>
+    <string name="color_picker">颜色选择器</string>
+    <string name="there_is_no_teacher_disable_whiteboard">老师不在线，无法使用白板</string>
+    <string name="get_channel_attr_failed">获取房间信息失败，请稍后重试！</string>
+    <string name="the_room_is_full">此房间人数已达上限！</string>
+    <string name="chat_muting">禁言中！</string>
+    <string name="rtm_not_login">RTM未登录，请稍后重试</string>
+    <string name="configuration_load_failed">配置加载失败，请稍后重试</string>
+    <string name="accept_interactive">老师接受了你的连麦申请！</string>
+    <string name="reject_interactive">老师拒绝了你的连麦申请！</string>
+    <string name="abort_interactive">老师终止了你的连麦！</string>
+    <string name="authorize_board">老师已授权了你的白板权限</string>
+    <string name="revoke_board">老师已回收了你的白板权限</string>
+    <string name="open_follow_board">老师设置了白板跟随</string>
+    <string name="relieve_follow_board">老师解除了白板跟随</string>
+    <string name="request_error">服务器请求失败：%1$d</string>
+    <string name="wait_record">请等待录制完成</string>
+    <string name="follow_tips">老师正在控制白板，请勿书写</string>
+    <string name="function_error">功能出错（code：%d；原因：%s）</string>
+    <string name="there_is_no_teacher_disable_covideo">老师不在线，无法连麦</string>
+    <string name="replay_link">回放链接</string>
+    <string name="upload_log">日志上报</string>
+    <string name="teacher">老师</string>
+    <string name="student">学生</string>
+    <string name="assistant">助教</string>
+    <string name="uploadlog_success">日志上报成功\n</string>
+    <string name="title_msg">消息</string>
+    <string name="offline_state">(已离线)</string>
+    <string name="groupname">%s(%d人)</string>
+    <string name="teacherinviteaudio">老师申请打开麦克风!</string>
+    <string name="teacherinvitevideo">老师申请打开摄像头!</string>
+    <string name="copy1">复制</string>
+    <string name="handsuptimeout">举手超时</string>
+    <string name="handsupsuccess">举手成功</string>
+    <string name="handsupfailed">举手失败</string>
+    <string name="cancelhandsupsuccess">取消举手成功</string>
+    <string name="cancelhandsupfailed">取消举手失败</string>
+    <string name="handsupenable">老师开启了举手功能</string>
+    <string name="handsupdisable">老师关闭了举手功能</string>
+    <string name="onstage">正在台上</string>
+    <string name="courseend">课程已经结束</string>
+    <string name="noreplaydata">暂无回放数据</string>
+    <string name="parametererror">参数错误:%s</string>
+    <string name="remoteloginerror">账号在远端设备登录, 您已离开教室</string>
+
+    <string name="covideo_accept_interactive">你已被老师邀请上台，请积极互动哦</string>
+    <string name="covideo_reject_interactive">老师拒绝了你的举手申请</string>
+    <string name="covideo_abort_interactive">你已下台，暂时不能进行互动了哦</string>
+
+    <string name="camera_turned_off">摄像头已关闭</string>
+    <string name="camera_turned_on">摄像头已打开</string>
+    <string name="microphone_turned_off">你暂时不能发言了</string>
+    <string name="microphone_turned_on">你可以发言了</string>
+
+    <string name="room_full">加入教室失败，教室人数已满</string>
+
+    <!--  ClassToastManager  -->
+    <string name="toast_classtime_until_class_end">课程还有%s结束</string>
+    <string name="toast_classtime_until_class_close_0">下课咯，教室还有%s关闭</string>
+    <string name="toast_classtime_until_class_close_0_args">%s分%s秒</string>
+    <string name="toast_classtime_until_class_close_0_arg">%s分钟</string>
+    <string name="toast_classtime_until_class_close_1">教室还有%s关闭</string>
+    <string name="toast_classroom_board_permission_true">画笔已启用</string>
+    <string name="toast_classroom_board_permission_false">画笔已禁用</string>
+    <string name="toast_classroom_network_bad">你的网络质量不佳，可能影响上课</string>
+
+    <!--  NormalDialog  TitleSingleDialog  -->
+    <string name="dialog_class_end_title">提示信息</string>
+    <string name="dialog_class_is_end">课程已结束!</string>
+    <string name="dialog_sure">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_class_exit">是否确定退出教室？</string>
+    <string name="dialog_class_noend_exit">课程还未结束，是否确定退出教室？</string>
+    <string name="dialog_quit_class_sure">退出教室</string>
+    <string name="dialog_quit_class_cancel">再想一下</string>
+
+    <!--  VideoWindow  -->
+    <string name="video_window_camera_off">已关闭摄像头</string>
+    <string name="video_window_wait_teacher">等待外教进入教室…</string>
+    <string name="video_window_teacher_leave">外教已离开教室</string>
+    <string name="video_window_no_camera">没有检测到摄像头</string>
+    <string name="video_window_loading">加载中</string>
+
+    <!-- Class Window -->
+    <string name="class_window_class_id_format">课程ID: %s</string>
+    <string name="class_window_class_not_start_hint">距离上课还有:&#160;&#160;</string>
+    <string name="class_window_class_begins">已开始上课:&#160;&#160;</string>
+    <string name="class_window_leave_text">离开教室</string>
+    <string name="class_window_class_is_end1">课程已结束</string>
+
+    <string-array name="class_window_network_states">
+        <item>未知</item>
+        <item>优</item>
+        <item>良</item>
+        <item>差</item>
+    </string-array>
+
+    <!-- Chat Window -->
+    <string name="chat_window_title">聊天</string>
+    <string name="chat_window_input_hint_enable">请输入你想说的话</string>
+    <string name="chat_window_input_hint_disable">聊天已被老师关闭</string>
+    <string name="chat_window_chat_enable">全体禁言解除</string>
+    <string name="chat_window_chat_disable">全体禁言</string>
+    <string name="chat_window_chat_item_me">我</string>
+    <string name="chat_window_translate_fail">翻译失败</string>
+    <string name="chat_window_join_message_format">%s (%s) 加入教室</string>
+    <string name="chat_window_leave_message_format">%s (%s) 离开教室</string>
+    <string name="chat_window_role_student">学生</string>
+    <string name="chat_window_role_teacher">老师</string>
+
+    <!-- Tool Window -->
+    <string name="tool_window_title">工具</string>
+
+    <!--  RewardWindow  -->
+    <string name="reward_window_classtime0">%02d:%02d</string>
+    <string name="reward_window_classtime1">%02d:%02d:%02d</string>
+
+    <!--  WhiteBoardWindow  -->
+    <string name="whiteboard_window_boardload_progress_dialog_content">课件加载中，请稍后...</string>
+    <string name="whiteboard_window_boardload_progress_dialog_timeout_jumpover">跳过</string>
+    <string name="whiteboard_window_boardload_failed_dialog_title">课件加载失败!</string>
+    <string name="whiteboard_window_boardload_failed_dialog_content">课件未能加载成功，您可以点击重新\t\n加载重试，或者从云盘中播放课件</string>
+    <string name="whiteboard_window_boardload_failed_dialog_close">关闭</string>
+    <string name="whiteboard_window_boardload_failed_dialog_retry">重新加载</string>
+    <string name="whiteboard_window_progress_loading_content">加载中...</string>
+
+    <!-- Screen Share -->
+    <string name="screen_share_start_message_format">老师开始了屏幕共享</string>
+    <string name="screen_share_end_message_format">老师结束了屏幕共享</string>
+</resources>

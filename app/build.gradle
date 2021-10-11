@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId "io.agora.education"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 10
+        versionName "6.2.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        buildConfigField 'String', 'RELEASE_TIME', String.format("\"%s\"", releaseTime())
+        buildConfigField 'String', 'RTC_VERSION', String.format("\"%s\"", rootProject.ext.android.rtcSDKVersion)
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+        normal {
+            dimension "app"
+            applicationId "io.agora.education"
+            buildConfigField 'String', 'CODE', '"edu-demo"'
+            buildConfigField 'String', 'EXTRA', '"AgoraEducation"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/edu_release.kotlin_module'
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy.MM.dd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation project(path: ':edu')
+
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+
+    implementation "com.jakewharton:butterknife:${rootProject.ext.dependencies.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.dependencies.butterknife_compiler}"
+
+    // RtmTokenBuilder need
+    implementation "commons-codec:commons-codec:${rootProject.ext.dependencies.commons_codec}"
+}

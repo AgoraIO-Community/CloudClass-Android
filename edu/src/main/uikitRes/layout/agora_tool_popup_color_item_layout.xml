@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.agora.edu.uikit.component.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_popup_color_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</io.agora.edu.uikit.component.SquareRelativeLayout>

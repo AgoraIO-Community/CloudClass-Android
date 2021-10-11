@@ -1,0 +1,2 @@
+include ':edu', 'app', 'hyphenate'
+rootProject.name = 'CloudClass-Android'
