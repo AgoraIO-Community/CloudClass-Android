@@ -18,5 +18,7 @@ class TextViewHolder(view: View,
     override fun onSetUpView() {
         val body = message.body as EMTextMessageBody
         content.text = body.message
+        content.requestLayout()
+        content.invalidate()
     }
 }

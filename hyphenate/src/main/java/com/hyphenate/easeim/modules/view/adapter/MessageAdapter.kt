@@ -91,4 +91,8 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
         this.data = data
         notifyDataSetChanged()
     }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }

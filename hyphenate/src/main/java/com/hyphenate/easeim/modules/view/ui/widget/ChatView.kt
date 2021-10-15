@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hyphenate.EMError
@@ -42,8 +44,12 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     private lateinit var tvContent: TextView
     private lateinit var faceView: FrameLayout
     private lateinit var faceIcon: ImageView
+    private lateinit var messageFloat: LinearLayout
+    private lateinit var prompt: AppCompatTextView
     private var inputContent = ""
     var chatRoomId = ""
+    var messageCount = 0
+    var newMsgCount = 0
 
     var viewClickListener: ViewClickListener? = null
 
@@ -64,9 +70,12 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         tvContent = findViewById(R.id.tv_content)
         faceView = findViewById(R.id.face_view)
         faceIcon = findViewById(R.id.iv_face)
+        messageFloat = findViewById(R.id.message_float)
+        prompt = findViewById(R.id.message_prompt)
         recyclerView = findViewById(R.id.rv_list)
         val layoutManager = LinearLayoutManager(context.applicationContext)
         recyclerView.layoutManager = layoutManager
+        adapter.setHasStableIds(true)
         recyclerView.adapter = adapter
         initListener()
     }
@@ -98,8 +107,21 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         announcementView.setOnClickListener {
             viewClickListener?.onAnnouncementClick()
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    messageFloat.visibility = GONE
+                    messageCount += newMsgCount
+                    newMsgCount = 0
+                }
+            }
+        })
+
         tvContent.setOnClickListener(this)
         faceView.setOnClickListener(this)
+        messageFloat.setOnClickListener(this)
     }
 
     /**
@@ -121,7 +143,7 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     fun announcementChange(announcement: String) {
         if (announcement.isNotEmpty()) {
             announcementView.visibility = VISIBLE
-            if("\n" in announcement)
+            if ("\n" in announcement)
                 announcementContent.text = announcement.split("\n")[0]
             else
                 announcementContent.text = announcement
@@ -132,11 +154,24 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
 
     override fun loadMessageFinish(messages: List<EMMessage>) {
         if (messages.isNotEmpty()) {
+            newMsgCount = messages.size - messageCount
             defaultLayout.visibility = GONE
-            adapter.setData(messages)
-            recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+            if (recyclerView.canScrollVertically(1) && messages[messages.size - 1].from != EMClient.getInstance().currentUser) {
+                adapter.setData(messages)
+                messageFloat.visibility = VISIBLE
+                prompt.text = String.format(context.getString(R.string.new_message), newMsgCount.toString())
+            } else {
+                messageFloat.visibility = GONE
+                messageCount = messages.size
+                newMsgCount = 0
+                adapter.setData(messages)
+                recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+            }
         } else {
             defaultLayout.visibility = VISIBLE
+            messageFloat.visibility = GONE
+            messageCount = 0
+            newMsgCount = 0
         }
     }
 
@@ -163,6 +198,12 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
             R.id.face_view -> {
                 viewClickListener?.onFaceIconClick()
             }
+            R.id.message_float -> {
+                messageFloat.visibility = GONE
+                recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                messageCount += newMsgCount
+                newMsgCount = 0
+            }
         }
     }
 
@@ -170,9 +211,9 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
      * 显示禁言UI
      */
     fun showMutedView() {
-        if(EaseRepository.instance.allMuted){
+        if (EaseRepository.instance.allMuted) {
             tvContent.hint = context.getString(R.string.all_muted)
-        }else if(EaseRepository.instance.singleMuted){
+        } else if (EaseRepository.instance.singleMuted) {
             tvContent.hint = context.getString(R.string.single_muted)
         }
         tvContent.isClickable = false
@@ -185,7 +226,7 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
      */
     fun hideMutedView() {
         tvContent.hint = context.getString(R.string.enter_contents)
-        if(inputContent.isNotEmpty()){
+        if (inputContent.isNotEmpty()) {
             tvContent.hint = inputContent
         }
         tvContent.isClickable = true
@@ -207,9 +248,9 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         easeRepository.removeOperationListener(this)
     }
 
-    fun setInputContent(content: String){
+    fun setInputContent(content: String) {
         inputContent = content
-        if(!EaseRepository.instance.singleMuted || EaseRepository.instance.allMuted){
+        if (!EaseRepository.instance.singleMuted || EaseRepository.instance.allMuted) {
             hideMutedView()
         }
     }

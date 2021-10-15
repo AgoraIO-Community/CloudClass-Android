@@ -12,16 +12,11 @@
         android:layout_alignParentEnd="true">
 
         <TextView
-            android:id="@+id/tv_recall"
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_normal"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:text="@string/recall"
-            android:textSize="@dimen/minSp"
-            android:theme="@style/mute_bg_style"
-            android:visibility="gone" />
+            android:textSize="@dimen/time_size" />
 
         <TextView
             android:id="@+id/tv_role"

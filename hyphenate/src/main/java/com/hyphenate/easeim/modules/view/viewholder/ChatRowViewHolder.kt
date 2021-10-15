@@ -15,8 +15,10 @@ import com.hyphenate.EMCallBack
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
+import com.hyphenate.easeim.modules.utils.EaseDateUtils
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 import com.hyphenate.util.EMLog
+import java.util.*
 
 abstract class ChatRowViewHolder(
         view: View,
@@ -32,8 +34,7 @@ abstract class ChatRowViewHolder(
     val role: TextView? = itemView.findViewById(R.id.tv_role)
     private val proBar: ProgressBar? = itemView.findViewById(R.id.progress_bar)
     private val reSend: ImageView? = itemView.findViewById(R.id.resend)
-    private val recall: TextView? = itemView.findViewById(R.id.tv_recall)
-    private val mute: TextView? = itemView.findViewById(R.id.tv_mute)
+    private val time: TextView? = itemView.findViewById(R.id.tv_time)
     lateinit var message: EMMessage
     val mainThreadHandler = Handler(Looper.getMainLooper())
     private val callback = ChatCallback()
@@ -57,7 +58,7 @@ abstract class ChatRowViewHolder(
         }else {
             role?.visibility = View.GONE
         }
-
+        time?.text = EaseDateUtils.getTimestampString(context, Date(message.msgTime))
         onSetUpView()
         setListener()
         handleMessage()

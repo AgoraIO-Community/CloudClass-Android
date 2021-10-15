@@ -25,4 +25,5 @@
     <string name="say_something">说点什么</string>
     <string name="appKey_is_empty">AppKey为空</string>
     <string name="create_failed">注册聊天失败</string>
+    <string name="new_message">%s条新消息</string>
 </resources>

@@ -45,16 +45,11 @@
             />
 
         <TextView
-            android:id="@+id/tv_mute"
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_normal"
-            android:textSize="@dimen/minSp"
-            android:text="@string/mute"
-            android:theme="@style/mute_bg_style"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:visibility="gone"
+            android:textSize="@dimen/time_size"
             />
     </LinearLayout>
     <TextView
