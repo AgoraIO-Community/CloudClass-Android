@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:id="@+id/whiteboard_container_outline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/agora_class_room_round_rect_stroke_bg">
+
+        <RelativeLayout
+            android:id="@+id/large_window_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_smaller" />
+    </RelativeLayout>
+</RelativeLayout>

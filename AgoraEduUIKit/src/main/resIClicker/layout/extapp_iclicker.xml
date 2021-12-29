@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="256dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_radius"
+    android:elevation="6dp">
+
+    <LinearLayout
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/dialog_bg_top">
+
+            <TextView
+                android:id="@+id/iclicker_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/iclicker"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/iclicker_timer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iclicker_title_text"
+                android:paddingLeft="5dp"
+                android:gravity="center"
+                android:text="@string/start_time"
+                android:textAlignment="gravity"
+                android:textColor="@color/iclicker_timer_text_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close_Image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:visibility="gone"
+                android:scaleType="center"
+                android:src="@drawable/ext_app_icon_countdown_close" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEF7" />
+
+        <FrameLayout
+            android:id="@+id/iclicker_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_bottom">
+
+            <include layout="@layout/view_iclicker_student_answer" />
+
+            <include layout="@layout/view_iclicker_result" />
+
+            <include layout="@layout/view_iclicker_teacher" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

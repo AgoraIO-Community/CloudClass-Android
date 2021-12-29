@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:countdownClock="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_radius"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/countdown_title"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@drawable/dialog_bg_top">
+
+            <TextView
+                android:id="@+id/countdown_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="9dp"
+                android:layout_marginLeft="9dp"
+                android:gravity="center_vertical"
+                android:text="@string/count_down_str"
+                android:textAlignment="gravity"
+                android:textColor="#191919" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close_Image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:scaleType="center"
+                android:src="@drawable/ext_app_icon_countdown_close" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:background="#EEEEF7" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_bottom"
+            android:padding="10dp">
+
+            <io.agora.agoraeduuikit.impl.extapps.countdown.CountDownClock
+                android:id="@+id/countdown_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                countdownClock:almostFinishedCallbackTimeInSeconds="3"
+                countdownClock:animationDuration="320"
+                countdownClock:countdownTickInterval="250"
+                countdownClock:digitBottomDrawable="@drawable/background_bottom"
+                countdownClock:digitDividerColor="@color/white2"
+                countdownClock:digitPadding="4dp"
+                countdownClock:digitSplitterColor="@color/deep_blue"
+                countdownClock:digitTextColor="@color/deep_blue"
+                countdownClock:digitTextSize="40dp"
+                countdownClock:digitTopDrawable="@drawable/background_top"
+                countdownClock:digitWidth="34dp"
+                countdownClock:halfDigitHeight="25dp"
+                countdownClock:resetSymbol="0"
+                countdownClock:splitterPadding="4dp" />
+
+            <RelativeLayout
+                android:id="@+id/duration_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countdown_clock"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ext_app_countdown_duration_bg"
+                android:padding="4dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:digits="@string/unit_second"
+                    android:text="@string/unit_second"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/duration_EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/second"
+                    android:layout_toLeftOf="@id/second"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:focusable="true"
+                    android:enabled="true"
+                    android:digits="@string/duration_digits"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@drawable/ext_app_countdown_duration_edittext_cursor_bg"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/action_Btn"
+                android:layout_width="80dp"
+                android:layout_height="28dp"
+                android:layout_below="@id/duration_Layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ext_app_countdown_action_bg"
+                android:gravity="center"
+                android:text="@string/start"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

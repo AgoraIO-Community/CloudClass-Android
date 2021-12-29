@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F5F7F8</color>
+    <color name="colorPrimaryDark">#F5F7F8</color>
+    <color name="colorAccent">#44A2FC</color>
+
+    <color name="gray_F5F7F8">#F5F7F8</color>
+
+    <color name="red_FF0D19">#FF0D19</color>
+
+    <color name="yellow_FF8F00">#FF8F00</color>
+    <color name="yellow_FFCA00">#FFCA00</color>
+
+    <color name="green_00DD52">#00DD52</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="black_66">#66000000</color>
+    <color name="black_79">#79000000</color>
+    <color name="black_7F">#7F000000</color>
+
+    <color name="gray_333333">#333333</color>
+    <color name="gray_666666">#666666</color>
+    <color name="gray_D8D8D8">#D8D8D8</color>
+    <color name="gray_CCCCCC">#CCCCCC</color>
+    <color name="gray_EEEEEE">#EEEEEE</color>
+    <color name="gray_565656">#565656</color>
+    <color name="gray_191919">#191919</color>
+    <color name="gray_141414">#141414</color>
+    <color name="gray_DBE2E5">#DBE2E5</color>
+    <color name="gray_F9F9FC">#F9F9FC</color>
+
+    <color name="blue_357BF6">#357BF6</color>
+    <color name="blue_E7F6FF">#E7F6FF</color>
+    <color name="blue_007AFF">#007AFF</color>
+    <color name="blue_007CFF">#007CFF</color>
+    <color name="blue_1F3DE8">#1F3DE8</color>
+    <color name="blue_C0D6FF">#C0D6FF</color>
+
+    <color name="purple_C455DF">#C455DF</color>
+
+    <color name="eye_care_color">#1Aff9900</color>
+
+    <color name="C44A2FC">#44A2FC</color>
+
+    <!-- Classroom Window -->
+    <color name="classroom_title_bar_bg">#1D35AD</color>
+    <color name="classroom_leave_btn_bg">#D9B74F</color>
+
+    <!--  ClassToastManager  -->
+    <color name="toast_classtime_countdown_time">#FE313F</color>
+    <color name="toast_classtime_countdown_bg">#000000</color>
+    <color name="toast_normal_bg">#000000</color>
+    <color name="toast_normal_content_text">#FFFFFFFF</color>
+    <color name="toast_classroom_board_permission_bg">#000000</color>
+    <color name="toast_classroom_board_permission_content">#FFFFFFFF</color>
+
+    <!--  NormalDialog  TitleSingleDialog  -->
+    <color name="dialog_bg_stroke">#75C0FF</color>
+    <color name="dialog_bg_solid">#75C0FF</color>
+    <color name="dialog_content_bg">#FFFFFFFF</color>
+    <color name="dialog_title_text">#FFFFFFFF</color>
+    <color name="dialog_content_text">#002591</color>
+    <color name="dialog_btn_sure_text">#FFFFFF</color>
+    <color name="dialog_btn_sure_bg">#DFB635</color>
+    <color name="dialog_btn_cancel_text">#FFFFFF</color>
+    <color name="dialog_btn_cancel_bg">#A7A7A7</color>
+
+    <!--  VideoWindow  -->
+    <color name="video_window_unfold_layout_bg_stroke">#75C0FF</color>
+    <color name="video_window_unfold_layout_bg_solid">#FFFFFFFF</color>
+    <color name="video_window_username_bg">#4E4E4E</color>
+    <color name="video_window_username_text">#FEFEFE</color>
+    <color name="video_window_trophy_bg">#4E4E4E</color>
+    <color name="video_window_trophy_text">#FFD919</color>
+    <color name="video_window_hold_on_bg_solid">#DEF4FF</color>
+    <color name="video_window_video_off_text">#002591</color>
+    <color name="video_window_wait_teacher_text">#002591</color>
+    <color name="video_window_teacher_leave_text">#002591</color>
+    <color name="video_window_no_camera_text">#002591</color>
+    <color name="video_window_loading_text">#002591</color>
+    <color name="video_window_fold_layout_bg_stroke">#4992CF</color>
+    <color name="video_window_fold_layout_bg_solid">#75C0FF</color>
+    <color name="video_window_fold_username_text">#FEFEFE</color>
+
+    <!-- Chat Window -->
+    <color name="chat_window_bg">#B313196F</color>
+    <color name="chat_window_item_bg">#13196F</color>
+    <color name="chat_window_text_white">#FEFEFE</color>
+    <color name="chat_window_input_hint_color">#C2D5E5</color>
+    <color name="chat_window_new_message_bg">#F04C36</color>
+    <color name="chat_window_message_item_divider">#9B9CD2</color>
+    <color name="chat_window_message_system_text">#9B9CD2</color>
+    <color name="cha_window_message_time_text_color">#80FFFFFF</color>
+
+    <!-- PageControlWindow -->
+    <color name="pagecontrol_window_bg_solid">#B313196F</color>
+    <color name="pagecontrol_window_page_no_bg_solid">#707DBC</color>
+    <color name="pagecontrol_window_page_no_text">#FFFFFFFF</color>
+
+    <!-- WhiteBoardWindow -->
+    <color name="whiteboard_window_bg_stroke">#75C0FF</color>
+    <color name="whiteboard_window_bg_solid">#FFFFFF</color>
+    <color name="whiteboard_window_boardload_progress_dialog_bg">#FFFFFF</color>
+    <color name="whiteboard_window_boardload_progress_bg">#FFFFFF</color>
+    <color name="whiteboard_window_boardload_progress_secondaryprogress">#F0F2F4</color>
+    <color name="whiteboard_window_boardload_progress_mainprogress_startcolor">#8DAAFF</color>
+    <color name="whiteboard_window_boardload_progress_mainprogress_endcolor">#5471FE</color>
+    <color name="whiteboard_window_boardload_progress_dialog_content">#273D75</color>
+    <color name="whiteboard_window_boardload_progress_dialog_progress_text">#5471FE</color>
+    <color name="whiteboard_window_boardload_failed_dialog_title">#273D75</color>
+    <color name="whiteboard_window_boardload_failed_dialog_content">#586376</color>
+    <color name="whiteboard_window_boardload_failed_dialog_line_horizontal">#EDEDED</color>
+    <color name="whiteboard_window_boardload_failed_dialog_line_vertical">#EDEDED</color>
+    <color name="whiteboard_window_boardload_failed_dialog_close_text">#273D75</color>
+    <color name="whiteboard_window_boardload_failed_dialog_retry_text">#007AFF</color>
+    <color name="whiteboard_window_boardload_progress_dialog_timeout_line">#EDEDED</color>
+    <color name="whiteboard_window_boardload_progress_dialog_timeout_jumpover_text">#273D75</color>
+    <color name="whiteboard_window_progress_loading_bg">#FFFFFF</color>
+    <color name="whiteboard_window_progress_loading_content">#273D75</color>
+
+    <!-- Tool Window -->
+    <color name="tool_window_bg">#B313196F</color>
+    <color name="tool_window_bg_border">#B3090E51</color>
+    <color name="tool_window_popup_image_item_bg">#80FFFFFF</color>
+    <color name="tool_window_popup_font_bg">#FFFFFF</color>
+    <color name="tool_window_popup_font_color">#002591</color>
+
+</resources>

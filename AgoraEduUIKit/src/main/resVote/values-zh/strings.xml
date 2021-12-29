@@ -1,0 +1,5 @@
+<resources>
+    <string name="vote">投票</string>
+    <string name="single">单选</string>
+    <string name="multi">多选</string>
+</resources>
