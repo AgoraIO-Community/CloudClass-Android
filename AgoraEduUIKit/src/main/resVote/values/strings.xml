@@ -1,0 +1,5 @@
+<resources>
+    <string name="vote">Vote</string>
+    <string name="single">Single</string>
+    <string name="multi">Multi</string>
+</resources>

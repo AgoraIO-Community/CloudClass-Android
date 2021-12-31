@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="powered_by_agora_io" translatable="false">Powered by agora.io</string>
+    <string name="your_name_should_not_be_empty">Your name should not be empty.</string>
+    <string name="your_uuid_should_not_be_empty">Your uuid should not be empty.</string>
+    <string name="room_name_should_not_be_empty">Room name should not be empty.</string>
+    <string name="room_uuid_should_not_be_empty">Room uuid should not be empty.</string>
+    <string name="room_type_should_not_be_empty">Room type should not be empty.</string>
+    <string name="one2one_class">One to One Classroom</string>
+    <string name="small_class">Interactive Small Classroom</string>
+    <string name="small_class_art">Art Small Classroom</string>
+    <string name="large_class">Lecture Hall</string>
+    <string name="role_student">Student</string>
+    <string name="role_teacher">Teacher</string>
+    <string name="breakout">Breakout Classroom</string>
+    <string name="intermediate">Medium Classroom</string>
+    <string name="debug">Debug Page</string>
+    <string name="eye_care_mode">Eye protection</string>
+    <string name="join">Join</string>
+    <string name="setting">Setting</string>
+    <string name="no_enough_permissions">No enough permissions</string>
+    <string name="version" translatable="false">App:v%s   AgoraEduSDK:v%s</string>
+
+    <string name="join_forbidden_title">Join Forbidden</string>
+    <string name="join_forbidden_message">You are not allowed to join the classroom!</string>
+    <string name="join_forbidden_button_confirm">Confirm</string>
+</resources>

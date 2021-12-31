@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_option_whiteboard_dialog_shadow_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/agora_shadowed_round_rect_bg">
+    <RelativeLayout
+        android:id="@+id/agora_option_whiteboard_dialog_border_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/agora_option_whiteboard_dialog_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/agora_option_whiteboard_appliance_item_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:clipToPadding="false" />
+            <View
+                android:id="@+id/agora_option_whiteboard_divider1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_thin"
+                android:layout_below="@id/agora_option_whiteboard_appliance_item_recycler"
+                android:background="@color/theme_border_class_room"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/agora_option_whiteboard_color_plate_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
+            <View
+                android:id="@+id/agora_option_whiteboard_divider2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_thin"
+                android:layout_above="@id/agora_option_whiteboard_color_plate_recycler"
+                android:background="@color/theme_border_class_room"/>
+            <RelativeLayout
+                android:id="@+id/agora_option_whiteboard_sub_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/agora_option_whiteboard_divider1"
+                android:layout_above="@id/agora_option_whiteboard_divider2"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

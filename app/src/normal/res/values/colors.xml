@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teams_color_error">#fd3e3f</color>
+    <color name="text_selected">#357bf6</color>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/agora_toolbox_item_bg"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/toolIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/agora_toolbox_icon_countdown" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_smaller"
+            android:text="@string/agora_toolbox_countdown"
+            android:textColor="@color/agora_toolbox_item_text_color"
+            android:textSize="@dimen/text_small" />
+
+    </LinearLayout>
+
+</LinearLayout>

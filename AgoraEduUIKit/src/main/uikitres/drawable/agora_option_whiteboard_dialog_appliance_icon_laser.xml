@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true"
+        android:drawable="@drawable/agora_option_whiteboard_dialog_appliance_icon_laser_active"/>
+    <item android:drawable="@drawable/agora_option_whiteboard_dialog_appliance_icon_laser_default"/>
+</selector>

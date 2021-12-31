@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/timeout_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/agora_board_progress_view_timeout_margin_top"
+    android:background="@android:color/transparent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/jumpOver_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/agora_board_progress_timeout_cancel_btn_bg"
+        android:paddingStart="@dimen/agora_board_progress_timeout_jumpover_btn_padding_start"
+        android:paddingLeft="@dimen/agora_board_progress_timeout_jumpover_btn_padding_start"
+        android:paddingTop="@dimen/agora_board_progress_timeout_jumpover_btn_padding_top"
+        android:paddingEnd="@dimen/agora_board_progress_timeout_jumpover_btn_padding_end"
+        android:paddingRight="@dimen/agora_board_progress_timeout_jumpover_btn_padding_end"
+        android:paddingBottom="@dimen/agora_board_progress_timeout_jumpover_btn_padding_bottom"
+        android:text="@string/agora_board_preload_progress_view_timeout_jumpover"
+        android:textColor="@color/theme_blue_light"
+        android:textSize="@dimen/agora_board_progress_view_timeout_jumpover_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
