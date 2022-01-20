@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="agora_full_screen_dialog" parent="agora_dialog">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">#33000000</item>
+    </style>
+
+    <style name="agora_dialog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="tool_progress_bar_style">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/tool_window_dialog_seek_bar_progress</item>
+        <item name="android:minHeight">@dimen/agora_tool_popup_seek_bar_progress_height</item>
+        <item name="android:maxHeight">@dimen/agora_tool_popup_seek_bar_progress_height</item>
+        <item name="android:thumb">@drawable/tool_window_dialog_seek_bar_thumb</item>
+    </style>
+
+    <style name="LoadingDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>

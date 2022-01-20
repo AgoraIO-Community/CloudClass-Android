@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_tool_bg_layout"
+    android:layout_width="@dimen/agora_tool_popup_bg_width"
+    android:layout_height="@dimen/agora_tool_popup_font_bg_height"
+    android:clipChildren="false">
+    <RelativeLayout
+        android:id="@+id/agora_tool_popup_layout"
+        android:layout_width="@dimen/agora_tool_popup_layout_width"
+        android:layout_height="@dimen/agora_tool_popup_font_layout_height"
+        android:background="@drawable/agora_tool_popup_bg"
+        android:layout_centerInParent="true">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/agora_tool_font_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/agora_tool_popup_layout_margin"
+            android:layout_marginLeft="@dimen/agora_tool_popup_layout_margin"
+            android:layout_marginEnd="@dimen/agora_tool_popup_layout_margin"
+            android:layout_marginRight="@dimen/agora_tool_popup_layout_margin"
+            android:layout_centerInParent="true"
+            android:overScrollMode="never"/>
+    </RelativeLayout>
+</RelativeLayout>

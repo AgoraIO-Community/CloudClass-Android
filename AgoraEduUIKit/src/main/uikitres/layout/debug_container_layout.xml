@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/openCamera"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="open camera"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/closeCamera"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/openCamera"
+            android:layout_toRightOf="@id/openCamera"
+            android:text="close camera"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/startPreview"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/openCamera"
+            android:text="start preview"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/stopPreview"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/closeCamera"
+            android:layout_toEndOf="@id/startPreview"
+            android:layout_toRightOf="@id/startPreview"
+            android:text="stop preview"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/openMic"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPreview"
+            android:text="open Mic"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/closeMic"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stopPreview"
+            android:layout_toEndOf="@id/openMic"
+            android:layout_toRightOf="@id/openMic"
+            android:text="close Mic"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/joinRoom"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/openMic"
+            android:text="join Room"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/exitRoom"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/openMic"
+            android:layout_toEndOf="@id/joinRoom"
+            android:layout_toRightOf="@id/joinRoom"
+            android:text="exit Room"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/publishVideo"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/joinRoom"
+            android:text="publish Video"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/unPublishVideo"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exitRoom"
+            android:layout_toEndOf="@id/publishVideo"
+            android:layout_toRightOf="@id/publishVideo"
+            android:text="unPublish Video"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/publishAudio"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/publishVideo"
+            android:text="publish Audio"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/unPublishAudio"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unPublishVideo"
+            android:layout_toEndOf="@id/publishAudio"
+            android:layout_toRightOf="@id/publishAudio"
+            android:text="unPublish Audio"
+            android:textAllCaps="false" />
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_toEndOf="@id/closeCamera"
+            android:layout_toRightOf="@id/closeCamera" />
+
+        <TextView
+            android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/unPublishAudio" />
+
+        <FrameLayout
+            android:id="@+id/whiteboard_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/container" />
+    </RelativeLayout>
+
+</ScrollView>

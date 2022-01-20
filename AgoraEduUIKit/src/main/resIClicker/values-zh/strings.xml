@@ -1,0 +1,15 @@
+<resources>
+    <string name="iclicker">答题器</string>
+    <string name="submit_answer">提交答案</string>
+    <string name="modify_answer">修改答案</string>
+    <string name="number_of_respondents">已答题人数：</string>
+    <string name="accuracy">正确率：</string>
+    <string name="my_answers">我的答案：</string>
+    <string name="correct_answers">正确答案：</string>
+    <string name="start_answer">开始答题</string>
+    <string name="end_answer">结束答题</string>
+    <string name="start_again">重新开始</string>
+    <string name="studentname">学生姓名</string>
+    <string name="answertime">答题用时</string>
+    <string name="studentanswer">所选答案</string>
+</resources>

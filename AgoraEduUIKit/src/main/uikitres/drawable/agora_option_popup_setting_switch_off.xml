@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/theme_gray_light"/>
+            <corners android:radius="@dimen/agora_setting_popup_switch_corner"/>
+            <size android:width="@dimen/agora_setting_popup_switch_width"
+                android:height="@dimen/agora_setting_popup_switch_height"/>
+        </shape>
+    </item>
+    <item android:top="@dimen/agora_setting_popup_switch_thumb_padding"
+        android:left="@dimen/agora_setting_popup_switch_thumb_padding"
+        android:bottom="@dimen/agora_setting_popup_switch_thumb_padding"
+        android:right="@dimen/agora_setting_popup_switch_thumb_side_padding">
+        <shape android:shape="oval">
+            <size android:width="@dimen/agora_setting_popup_switch_thumb_size"
+                android:height="@dimen/agora_setting_popup_switch_thumb_size"/>
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+</layer-list>
+

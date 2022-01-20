@@ -1,0 +1,28 @@
+<resources>
+    <string name="iclicker">iClicker</string>
+    <string name="submit_answer">Submit</string>
+    <string name="modify_answer">Modify</string>
+    <string name="number_of_respondents">Respondents:</string>
+    <string name="accuracy">Accuracy:</string>
+    <string name="my_answers">My answers:</string>
+    <string name="correct_answers">Correct answers:</string>
+    <string name="start_time" translatable="false">00:00:00</string>
+    <string name="start_answer">Begin Answering</string>
+    <string name="end_answer">End Of Answer</string>
+    <string name="start_again">Start Again</string>
+    <array name="answer_item">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+    </array>
+    <string name="respondentsnum" translatable="false">%d/%d</string>
+    <string name="accuracynum" translatable="false">%d%%</string>
+    <string name="studentname">Name</string>
+    <string name="answertime">Time</string>
+    <string name="studentanswer">Answer</string>
+</resources>

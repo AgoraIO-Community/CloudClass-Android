@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <string name="cancel">取消</string>-->
+<!--    <string name="confirm">确定</string>-->
+
+    <!--  WhiteBoard  -->
+    <string name="agora_board_preload_progress_view_content">课件加载中，请稍后...</string>
+    <string name="agora_board_preload_progress_view_timeout_jumpover">跳过</string>
+    <string name="agora_board_preload_failed_view_title">课件加载失败!</string>
+    <string name="agora_board_preload_failed_view_content">课件未能加载成功，您可以点击重新\t\n加载重试，或者从云盘中播放课件</string>
+    <string name="agora_board_preload_failed_view_close">关闭</string>
+    <string name="agora_board_preload_failed_view_retry">重新加载</string>
+    <string name="agora_board_loading">加载中...</string>
+    <string name="agora_board_reconnect">重连中...</string>
+
+    <!--  Toast  -->
+    <string name="agora_toast_board_permission_true">你可以使用白板了</string>
+    <string name="agora_toast_board_permission_false">你现在无权使用白板了</string>
+    <string name="agora_handsup_toast">举手请长按</string>
+
+    <!--  Dialog  -->
+    <string name="agora_dialog_end_class_confirm_title">下课确认</string>
+    <string name="agora_dialog_sent_log_success">日志发送成功！</string>
+    <string name="agora_dialog_end_class_confirm_message">你确定要下课吗？</string>
+    <string name="agora_dialog_kicked_title">移出通知</string>
+    <string name="agora_dialog_kicked_message">你已被移出教室!</string>
+    <string name="agora_dialog_kick_student_title">移出学生</string>
+    <string name="agora_dialog_kick_student_option_once">仅移出教室一次</string>
+    <string name="agora_dialog_kick_student_option_forever">禁止再次进入教室</string>
+    <string name="agora_dialog_class_destroy_title">提示信息</string>
+    <string name="agora_dialog_class_destroy">课程已结束!</string>
+
+    <!-- Setting -->
+    <string name="agora_setting_title">设置</string>
+    <string name="agora_setting_camera">摄像头</string>
+    <string name="agora_setting_facing">方向</string>
+    <string name="agora_setting_facing_front">前</string>
+    <string name="agora_setting_facing_back">后</string>
+    <string name="agora_setting_mic">麦克风</string>
+    <string name="agora_setting_speaker">扬声器</string>
+    <string name="agora_setting_upload_log">上传日志</string>
+    <string name="agora_setting_leave">退出教室</string>
+
+    <!-- Message -->
+    <string name="agora_message_none_text">还没有消息</string>
+    <string name="agora_message_send">发送</string>
+    <string name="agora_message_input_hint">请输入消息</string>
+    <string name="agora_message_input_hint_mute">禁言中</string>
+    <string name="agora_message_student_chat_mute_tips">已开启学生禁言</string>
+    <string name="agora_message_student_chat_mute_hint">禁言中</string>
+    <string name="agora_message_item_role_assistant">助教</string>
+
+    <string name="agora_message_chat_student_ban_local">你被%s禁言了</string>
+    <string name="agora_message_chat_student_ban_remote">%s被%s禁言了</string>
+    <string name="agora_message_chat_student_allow_local">你被%s解除了禁言</string>
+    <string name="agora_message_chat_student_allow_remote">%s被%s解除了禁言</string>
+
+    <!-- UserList -->
+    <string name="agora_userlist_dialog_title">花名册</string>
+    <string name="agora_userlist_teacher_name">教师姓名:</string>
+    <string name="agora_userlist_table_title_student_name">学生姓名</string>
+    <string name="agora_userlist_table_title_get_on_off">上下台</string>
+    <string name="agora_userlist_table_title_access">授权</string>
+    <string name="agora_userlist_table_title_camera">摄像头</string>
+    <string name="agora_userlist_table_title_mic">麦克风</string>
+    <string name="agora_userlist_table_title_silence">禁言</string>
+    <string name="agora_userlist_table_title_reward">奖励</string>
+    <string name="agora_userlist_table_title_kickout">踢人</string>
+
+    <!-- Room Status -->
+    <string name="agora_room_state_not_started">距离上课还有:&#160;&#160;</string>
+    <string name="agora_room_state_started">已上课 &#160;&#160;</string>
+    <string name="agora_room_state_end">课程已结束</string>
+
+    <!-- ToolBox -->
+    <string name="agora_toolbox_cloud">云盘</string>
+    <string name="agora_toolbox_vote">投票器</string>
+    <string name="agora_toolbox_countdown">倒计时</string>
+    <string name="agora_toolbox_iclicker">答题器</string>
+
+    <string name="tab_video">视频</string>
+    <string name="tab_chat">聊天</string>
+</resources>
