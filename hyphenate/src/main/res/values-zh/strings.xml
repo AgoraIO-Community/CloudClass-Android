@@ -26,4 +26,5 @@
     <string name="appKey_is_empty">AppKey为空</string>
     <string name="create_failed">注册聊天失败</string>
     <string name="assistant">助教</string>
+    <string name="download_picture">下载图片</string>
 </resources>

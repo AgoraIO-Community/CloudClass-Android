@@ -1,8 +1,14 @@
 package com.hyphenate.easeim.modules.view.ui.widget
 
+import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +23,17 @@ import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
+import com.hyphenate.easeim.modules.utils.CommonUtil
+import com.hyphenate.easeim.modules.utils.ScreenUtil
 import com.hyphenate.easeim.modules.view.`interface`.ChatPagerListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.adapter.ChatViewPagerAdapter
 import com.hyphenate.exceptions.HyphenateException
+import com.hyphenate.util.EMFileHelper
 import com.hyphenate.util.EMLog
+import com.hyphenate.util.VersionUtils
 import org.json.JSONObject
+import java.io.File
 
 
 class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EMMessageListener, EMChatRoomChangeListener, ViewClickListener, EMConnectionListener {
@@ -51,13 +62,16 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     private var userName = ""
     private var userUuid = ""
     private var pagerList = mutableListOf<View>()
-    var viewClickListener: ViewClickListener? = null
     var chatPagerListener: ChatPagerListener? = null
+
+    private lateinit var receiver:BroadcastReceiver
+    private val selectImageResultCode = 78
 
     init {
         LayoutInflater.from(context).inflate(R.layout.chat_total_layout, this)
         container = findViewById(R.id.total_layout)
         initView()
+        initReceiver()
     }
 
     /**
@@ -92,6 +106,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         recoverItem()
         chooseFirstTab()
         initListener()
+        container.post {
+            ScreenUtil.instance.init(context!!)
+            ScreenUtil.instance.screenWidth = container.width
+            ScreenUtil.instance.screenHeight = container.height
+        }
     }
 
     /**
@@ -176,7 +195,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onMessageReceived(messages: MutableList<EMMessage>?) {
         messages?.let {
             for (message in messages) {
-                if (message.type == EMMessage.Type.TXT) {
+                if (message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG) == EaseConstant.NORMAL_MSG) {
                     ThreadManager.instance.runOnMainThread {
                         if (chooseTab != 0) {
                             showUnread(0)
@@ -346,8 +365,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
+    fun logout(){
         handler.removeCallbacksAndMessages(null)
         if(EaseRepository.instance.isLogin){
             EMClient.getInstance().chatManager().removeMessageListener(this)
@@ -358,8 +376,8 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             EMClient.getInstance().logout(false)
         }
         EaseRepository.instance.reset()
+        context.unregisterReceiver(receiver)
     }
-
 
     fun setRoomUuid(roomUuid: String) {
         this.roomUuid = roomUuid
@@ -485,11 +503,19 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     override fun onMsgContentClick() {
-        viewClickListener?.onMsgContentClick()
+        chatPagerListener?.onMsgContentClick()
     }
 
     override fun onFaceIconClick() {
-        viewClickListener?.onFaceIconClick()
+        chatPagerListener?.onFaceIconClick()
+    }
+
+    override fun onPicIconClick() {
+        selectPicFromLocal()
+    }
+
+    override fun onImageClick(message: EMMessage) {
+        chatPagerListener?.onImageClick(message)
     }
 
     /**
@@ -503,7 +529,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     /**
      * 刷新聊天页
      */
-    fun refreshUI() {
+    private fun refreshUI() {
         ThreadManager.instance.runOnMainThread {
             chatView.refresh()
         }
@@ -536,7 +562,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         chatView.setInputContent(content)
     }
 
-    fun showOuterLayerUnread() {
+    private fun showOuterLayerUnread() {
         val chatUnread = tabLayout?.getTabAt(0)?.view?.findViewById<ImageView>(R.id.iv_tips)
         val noticeUnread = tabLayout?.getTabAt(1)?.view?.findViewById<ImageView>(R.id.iv_tips)
         chatPagerListener?.onShowUnread(chatUnread?.visibility == VISIBLE || noticeUnread?.visibility == VISIBLE)
@@ -556,5 +582,90 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         pagerList.removeLast()
         val viewPagerAdapter = ChatViewPagerAdapter(pagerList)
         viewPager.adapter = viewPagerAdapter
+    }
+
+    fun sendTextMessage(content: String) {
+        val message = EMMessage.createTxtSendMessage(content, chatRoomId)
+        sendMessage(message)
+    }
+
+    fun sendImageMessage(uri: Uri) {
+        val message = EMMessage.createImageSendMessage(uri, false, chatRoomId)
+        sendMessage(message)
+    }
+
+    private fun sendMessage(message: EMMessage) {
+        if (!(EaseRepository.instance.isInit && EaseRepository.instance.isLogin)) {
+            Toast.makeText(context, context.getString(R.string.send_message_failed) + ":" + context.getString(R.string.login_chat_failed), Toast.LENGTH_SHORT).show()
+            return
+        }
+        setExtBeforeSend(message)
+        message.chatType = EMMessage.ChatType.ChatRoom
+        message.setMessageStatusCallback(object : EMCallBack {
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(code: Int, error: String?) {
+                if (code == EMError.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+                    ThreadManager.instance.runOnMainThread {
+                        Toast.makeText(context, context.getString(R.string.message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                EMLog.e(TAG, "onMessageError:$code = $error")
+            }
+
+            override fun onProgress(progress: Int, status: String?) {
+
+            }
+        })
+        EMClient.getInstance().chatManager().sendMessage(message)
+        refreshUI()
+    }
+
+    private fun setExtBeforeSend(message: EMMessage) {
+        message.setAttribute(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT)
+        message.setAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
+        message.setAttribute(EaseConstant.ROOM_UUID, roomUuid)
+        message.setAttribute(EaseConstant.NICK_NAME, nickName)
+        message.setAttribute(EaseConstant.AVATAR_URL, avatarUrl)
+    }
+
+    /**
+     * 选择本地相册
+     */
+    fun selectPicFromLocal() {
+        val intent: Intent?
+        if (VersionUtils.isTargetQ(context)) {
+            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+        } else {
+            intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        }
+        intent.type = "image/*"
+        val activity = context as Activity
+        activity.startActivityForResult(intent, selectImageResultCode)
+    }
+
+    private fun initReceiver() {
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(con: Context?, intent: Intent?) {
+                val data = intent?.getParcelableExtra<Uri>(context.resources
+                        .getString(R.string.chat_window_select_image_key))
+                data?.let {
+                    val filePath = EMFileHelper.getInstance().getFilePath(data)
+                    if (filePath.isNotEmpty() && File(filePath).exists()) {
+                        sendImageMessage(Uri.parse(filePath))
+                    } else {
+                        CommonUtil.takePersistableUriPermission(context, it)
+                        sendImageMessage(it)
+                    }
+                }
+            }
+        }
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(context.packageName.plus(
+                context.resources.getString(R.string.chat_window_select_image_action)))
+        context.registerReceiver(receiver, intentFilter)
     }
 }

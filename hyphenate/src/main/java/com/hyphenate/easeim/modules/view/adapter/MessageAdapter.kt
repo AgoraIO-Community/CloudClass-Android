@@ -8,6 +8,7 @@ import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 import com.hyphenate.easeim.modules.view.viewholder.ChatRowViewHolder
+import com.hyphenate.easeim.modules.view.viewholder.ImageViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.NotifyViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.TextViewHolder
 
@@ -20,6 +21,8 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
         const val DIRECT_TXT_SEND: Int = 1
         const val DIRECT_TXT_REC: Int = 2
         const val DIRECT_CUSTOM: Int = 3
+        const val DIRECT_IMG_SEND: Int = 4
+        const val DIRECT_IMG_REC: Int = 5
     }
 
     lateinit var context: Context
@@ -46,12 +49,14 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
             when (getItem(position).type) {
                 EMMessage.Type.TXT -> DIRECT_TXT_SEND
                 EMMessage.Type.CUSTOM -> DIRECT_CUSTOM
+                EMMessage.Type.IMAGE -> DIRECT_IMG_SEND
                 else -> DIRECT_TXT_SEND
             }
         } else {
             when (getItem(position).type) {
                 EMMessage.Type.TXT -> DIRECT_TXT_REC
                 EMMessage.Type.CUSTOM -> DIRECT_CUSTOM
+                EMMessage.Type.IMAGE -> DIRECT_IMG_REC
                 else -> DIRECT_TXT_REC
             }
         }
@@ -75,6 +80,14 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
                     LayoutInflater.from(parent.context)
                             .inflate(R.layout.notify_message_item, parent, false), itemClickListener, parent.context
             )
+            DIRECT_IMG_SEND -> ImageViewHolder(
+                    LayoutInflater.from(parent.context)
+                            .inflate(R.layout.send_img_message_item, parent, false), itemClickListener, parent.context,
+            )
+            DIRECT_IMG_REC -> ImageViewHolder(
+                    LayoutInflater.from(parent.context)
+                            .inflate(R.layout.recv_img_message_item, parent, false), itemClickListener, parent.context
+            )
             else -> TextViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.send_message_item, parent, false), itemClickListener, parent.context
@@ -90,5 +103,9 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
     fun setData(data: List<EMMessage>) {
         this.data = data
         notifyDataSetChanged()
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 }

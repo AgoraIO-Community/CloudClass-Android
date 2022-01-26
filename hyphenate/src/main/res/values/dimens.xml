@@ -2,7 +2,9 @@
 <resources>
     <dimen name="avatar_size">20dp</dimen>
     <dimen name="margin_normal">5dp</dimen>
+    <dimen name="margin_middle">10dp</dimen>
     <dimen name="padding_normal">5dp</dimen>
+    <dimen name="padding_middle">10dp</dimen>
 
     <dimen name="text_size_smallest">8sp</dimen>
     <dimen name="minSp">12sp</dimen>
@@ -14,4 +16,7 @@
     <dimen name="unread_count_size">12dp</dimen>
     <dimen name="margin_small">3dp</dimen>
     <dimen name="nickName_max_width">100dp</dimen>
+    <dimen name="chat_view_icon_size">24dp</dimen>
+
+    <dimen name="input_height">32dp</dimen>
 </resources>

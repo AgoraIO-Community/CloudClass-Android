@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.google.gson.Gson
 import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.modules.EaseIM
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
@@ -23,12 +24,13 @@ import com.hyphenate.easeim.modules.view.`interface`.InputMsgListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.ui.widget.ChatViewPager
 import com.hyphenate.easeim.modules.view.ui.widget.InputView
+import com.hyphenate.easeim.modules.view.ui.widget.ShowImageView
 import io.agora.agoraeduuikit.R
 import io.agora.agoraeduuikit.component.toast.AgoraUIToast
 import io.agora.agoraeduuikit.impl.chat.AgoraChatInteractionSignal.UnreadTips
 import io.agora.agoraeduuikit.util.AppUtil
 
-class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListener, ChatPagerListener {
+class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ChatPagerListener {
     override val tag = "EaseChatWidgetPopup"
 
     private var layout: View? = null
@@ -47,6 +49,7 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
     private var inputView: InputView? = null
     // specified input`s parentView
     private var specialInputViewParent: ViewGroup? = null
+    private var showImageView: ShowImageView? = null
     private val softInputUtil = SoftInputUtil()
     private lateinit var parent: ViewGroup
     private var width: Int = 0
@@ -86,7 +89,6 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
             }
 
             contentLayout?.addView(chatViewPager)
-            chatViewPager?.viewClickListener = this
             chatViewPager?.chatPagerListener = this
 
             if (appKey.isNotEmpty() &&
@@ -108,17 +110,13 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
                     ViewGroup.LayoutParams.WRAP_CONTENT)
                 params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
 
+                val inputParent = getInputViewParent() ?: container?.parent
                 inputView?.let { input ->
                     input.layoutParams = params
-                    val inputParent = getInputViewParent() ?: container?.parent
                     if (inputParent != null && inputParent is ViewGroup) {
                         inputParent.addView(input)
                         input.visibility = View.GONE
                         input.inputMsgListener = this
-                        input.chatRoomId = mChatRoomId
-                        input.roomUuid = roomUuid
-                        input.nickName = nickName
-                        input.avatarUrl = avatarUrl
                         softInputUtil.attachSoftInput(input) { isSoftInputShow, softInputHeight, viewOffset ->
                             if (isSoftInputShow)
                                 input.translationY = input.translationY - viewOffset
@@ -126,6 +124,22 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
                                 input.translationY = 0F
                                 if (input.isNormalFace()) input.visibility = View.GONE
                             }
+                        }
+                    }
+                }
+
+                showImageView = ShowImageView(it)
+                showImageView?.let { image ->
+                    val params = RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT)
+                    image.layoutParams = params
+                    if (inputParent != null && inputParent is ViewGroup) {
+                        inputParent.addView(image)
+                        image.chatPagerListener = this
+                        image.visibility = View.GONE
+                        image.setOnClickListener {
+                            image.visibility = View.GONE
                         }
                     }
                 }
@@ -187,7 +201,7 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
 
     override fun release() {
         super.release()
-        EMClient.getInstance().logout(true)
+        chatViewPager?.logout()
     }
 
     override fun setRect(rect: Rect) {
@@ -217,8 +231,8 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
         }
     }
 
-    override fun onSendMsg() {
-        chatViewPager?.refreshUI()
+    override fun onSendMsg(content: String) {
+        chatViewPager?.sendTextMessage(content)
         inputView?.visibility = View.GONE
     }
 
@@ -230,8 +244,18 @@ class EaseChatWidgetPopup : ChatPopupWidget(), InputMsgListener, ViewClickListen
         chatViewPager?.setInputContent(content)
     }
 
-    override fun onAnnouncementClick() {
+    override fun onSelectImage() {
+        chatViewPager?.selectPicFromLocal()
+        inputView?.visibility = View.GONE
+    }
 
+    override fun onImageClick(message: EMMessage) {
+        showImageView?.loadImage(message)
+        showImageView?.visibility = View.VISIBLE
+    }
+
+    override fun onCloseImage() {
+        showImageView?.visibility = View.GONE
     }
 
     override fun onMsgContentClick() {

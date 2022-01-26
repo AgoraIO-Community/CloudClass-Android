@@ -34,7 +34,8 @@ class EaseRepository {
             val msgList = conversation?.allMessages
             val norMsgList = mutableListOf<EMMessage>()
             msgList?.forEach { message ->
-                if (message.type == EMMessage.Type.TXT || message.type == EMMessage.Type.CUSTOM)
+                val msgType = message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
+                if (msgType == EaseConstant.NORMAL_MSG)
                     norMsgList.add(message)
             }
             for (listener in listeners) {

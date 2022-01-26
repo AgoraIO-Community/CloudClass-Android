@@ -20,7 +20,7 @@ import com.hyphenate.util.EMLog
 
 abstract class ChatRowViewHolder(
         view: View,
-        private val itemClickListener: MessageListItemClickListener,
+        val itemClickListener: MessageListItemClickListener,
         val context: Context
 ) : RecyclerView.ViewHolder(view) {
     companion object {
@@ -68,7 +68,7 @@ abstract class ChatRowViewHolder(
 
     abstract fun onSetUpView()
 
-    private fun setListener() {
+    open fun setListener() {
         reSend?.setOnClickListener {
             itemClickListener.onResendClick(message)
         }
