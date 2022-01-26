@@ -34,14 +34,14 @@ class ThreadManager {
     /**
      * 在异步线程执行
      */
-    fun runOnIOThread(runnable: Runnable?) {
+    fun runOnIOThread(runnable: () -> Unit) {
         mIOThreadExecutor!!.execute(runnable)
     }
 
     /**
      * 在UI线程执行
      */
-    fun runOnMainThread(runnable: Runnable?) {
+    fun runOnMainThread(runnable: () -> Unit) {
         mMainThreadHandler!!.post(runnable!!)
     }
 

@@ -34,15 +34,14 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     private lateinit var recyclerView: RecyclerView
     private val easeRepository = EaseRepository.instance
 
-    private lateinit var inputMsgView: LinearLayout
     private val adapter = MessageAdapter()
     private lateinit var announcementView: LinearLayout
     private lateinit var announcementContent: TextView
     private lateinit var fragmentView: RelativeLayout
     private lateinit var defaultLayout: RelativeLayout
     private lateinit var tvContent: TextView
-    private lateinit var faceView: FrameLayout
     private lateinit var faceIcon: ImageView
+    private lateinit var picIcon: ImageView
     private var inputContent = ""
     var chatRoomId = ""
 
@@ -58,13 +57,12 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
      */
     private fun initView() {
         fragmentView = findViewById(R.id.fragment_view)
-        inputMsgView = findViewById(R.id.input_view)
         announcementView = findViewById(R.id.announcement_view)
         announcementContent = findViewById(R.id.tv_announcement)
         defaultLayout = findViewById(R.id.default_layout)
         tvContent = findViewById(R.id.tv_content)
-        faceView = findViewById(R.id.face_view)
         faceIcon = findViewById(R.id.iv_face)
+        picIcon = findViewById(R.id.iv_picture)
         recyclerView = findViewById(R.id.rv_list)
         val layoutManager = LinearLayoutManager(context.applicationContext)
         recyclerView.layoutManager = layoutManager
@@ -95,12 +93,18 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
                 EMLog.e(TAG, "onMessageError:$code = $error")
             }
 
+            override fun onItemClick(v: View, message: EMMessage) {
+                if(message.type == EMMessage.Type.IMAGE){
+                    viewClickListener?.onImageClick(message)
+                }
+            }
         })
         announcementView.setOnClickListener {
             viewClickListener?.onAnnouncementClick()
         }
         tvContent.setOnClickListener(this)
-        faceView.setOnClickListener(this)
+        faceIcon.setOnClickListener(this)
+        picIcon.setOnClickListener(this)
     }
 
     /**
@@ -161,8 +165,11 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
             R.id.tv_content -> {
                 viewClickListener?.onMsgContentClick()
             }
-            R.id.face_view -> {
+            R.id.iv_face -> {
                 viewClickListener?.onFaceIconClick()
+            }
+            R.id.iv_picture -> {
+                viewClickListener?.onPicIconClick()
             }
         }
     }
@@ -177,8 +184,8 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
             tvContent.hint = context.getString(R.string.single_muted)
         }
         tvContent.isClickable = false
-        faceView.isClickable = false
-        faceIcon.visibility = INVISIBLE
+        faceIcon.isClickable = false
+        picIcon.isClickable = false
     }
 
     /**
@@ -190,8 +197,8 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
             tvContent.hint = inputContent
         }
         tvContent.isClickable = true
-        faceView.isClickable = true
-        faceIcon.visibility = VISIBLE
+        faceIcon.isClickable = true
+        picIcon.isClickable = true
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {

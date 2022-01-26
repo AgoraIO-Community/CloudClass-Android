@@ -26,4 +26,8 @@
     <string name="appKey_is_empty">AppKey is empty</string>
     <string name="create_failed">Create failed</string>
     <string name="assistant">Assistant</string>
+    <string name="download_picture">Download picture</string>
+
+    <string name="chat_window_select_image_action" translatable="false">.Select_Image</string>
+    <string name="chat_window_select_image_key" translatable="false">data</string>
 </resources>
