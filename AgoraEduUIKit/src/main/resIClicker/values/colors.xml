@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="iclicker_answer_list_header">#F8F8FC</color>
+    <color name="iclicker_answer_list_stroke">#EBEBF6</color>
+    <color name="iclicker_answer_list_header_text">#7B88A0</color>
+    <color name="iclicker_answer_list_item_text">#191919</color>
+    <color name="iclicker_answer_list_item_error">#F04C36</color>
+    <color name="iclicker_answer_list_item_correct">#3AB449</color>
+    <color name="red">#ffff0000</color>
+    <color name="blue">#357BF6</color>
+    <color name="gray">#BDBDBD</color>
+</resources>

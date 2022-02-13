@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Setting Popup -->
+    <dimen name="agora_setting_popup_margin_horizontal">12dp</dimen>
+    <dimen name="agora_setting_popup_margin_vertical">14dp</dimen>
+    <dimen name="agora_setting_popup_text_size">14dp</dimen>
+    <dimen name="agora_setting_popup_switch_width">34dp</dimen>
+    <dimen name="agora_setting_popup_switch_height">20dp</dimen>
+    <dimen name="agora_setting_popup_switch_corner">10dp</dimen>
+    <dimen name="agora_setting_popup_line_height">22dp</dimen>
+    <dimen name="agora_setting_popup_facing_button_width">40dp</dimen>
+    <dimen name="agora_setting_popup_facing_button_height">22dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_size">16dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_side_padding">16dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_padding">2dp</dimen>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/agora_tool_popup_bg_width"
+    android:layout_height="@dimen/agora_tool_popup_color_bg_height">
+    <RelativeLayout
+        android:id="@+id/agora_tool_popup_layout"
+        android:layout_width="@dimen/agora_tool_popup_layout_width"
+        android:layout_height="@dimen/agora_tool_popup_color_layout_height"
+        android:layout_centerInParent="true"
+        android:background="@drawable/agora_tool_popup_bg"
+        android:padding="@dimen/margin_medium">
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/agora_tool_popup_color_progress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_tool_popup_progress_thumb_height"
+            style="@style/tool_progress_bar_style"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_large"
+            android:paddingStart="@dimen/agora_tool_popup_seek_bar_padding"
+            android:paddingLeft="@dimen/agora_tool_popup_seek_bar_padding"
+            android:paddingEnd="@dimen/agora_tool_popup_seek_bar_padding"
+            android:paddingRight="@dimen/agora_tool_popup_seek_bar_padding"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/agora_tool_popup_color_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/agora_tool_popup_color_progress"
+            android:layout_marginTop="@dimen/agora_tool_popup_color_plate_margin_top"
+            android:layout_marginBottom="@dimen/agora_tool_popup_color_plate_margin_bottom"
+            android:overScrollMode="never"/>
+    </RelativeLayout>
+</RelativeLayout>

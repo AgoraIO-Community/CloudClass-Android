@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="agora_board_font_sizes">
+        <item>20</item>
+        <item>28</item>
+        <item>36</item>
+        <item>48</item>
+    </integer-array>
+    <integer name="agora_board_default_font_size">18</integer>
+    <integer-array name="agora_board_tool_thickness">
+        <item>8</item>
+        <item>16</item>
+        <item>24</item>
+        <item>30</item>
+        <item>38</item>
+    </integer-array>
+    <integer name="agora_board_default_thickness">16</integer>
+    <integer-array name="agora_board_tool_thickness_icon_sizes">
+        <item>6</item>
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
+        <item>20</item>
+    </integer-array>
+</resources>

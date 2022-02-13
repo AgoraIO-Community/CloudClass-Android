@@ -1,0 +1,7 @@
+<resources>
+    <string name="count_down_str">Countdown</string>
+    <string name="unit_second">(second)</string>
+    <string name="start">Start</string>
+    <string name="restart">Restart</string>
+    <string name="duration_digits" translatable="false">1234567890</string>
+</resources>
