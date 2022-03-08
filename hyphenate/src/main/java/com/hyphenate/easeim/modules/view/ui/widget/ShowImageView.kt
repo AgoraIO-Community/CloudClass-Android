@@ -25,7 +25,6 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     lateinit var progressDialog: ProgressDialog
     lateinit var imageView: EasePhotoView
     lateinit var message: EMMessage
-    lateinit var back: AppCompatImageView
     var chatPagerListener: ChatPagerListener? = null
 
     //伴生对象
@@ -40,8 +39,7 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     private fun initView(){
         imageView = findViewById(R.id.imageView)
-        back = findViewById(R.id.close)
-        back.setOnClickListener{
+        imageView.setOnViewTapListener { view, x, y ->
             chatPagerListener?.onCloseImage()
         }
         progressDialog = ProgressDialog(context)
