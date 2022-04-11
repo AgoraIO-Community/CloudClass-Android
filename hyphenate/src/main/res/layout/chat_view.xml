@@ -81,6 +81,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/margin_normal"
+            android:layout_toStartOf="@+id/mute_view"
             >
 
             <TextView
@@ -110,6 +111,30 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:src="@mipmap/icon_pic" />
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/mute_view"
+            android:layout_width="@dimen/input_height"
+            android:layout_height="@dimen/input_height"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/chatview_input_bg">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_mute"
+                android:layout_width="@dimen/chat_view_icon_size"
+                android:layout_height="@dimen/chat_view_icon_size"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_mute"
+                android:visibility="gone"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_unmute"
+                android:layout_width="@dimen/chat_view_icon_size"
+                android:layout_height="@dimen/chat_view_icon_size"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_unmute" />
+        </FrameLayout>
     </RelativeLayout>
 
 </RelativeLayout>

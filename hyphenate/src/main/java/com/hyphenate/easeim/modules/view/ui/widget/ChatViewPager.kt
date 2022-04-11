@@ -74,7 +74,6 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         initReceiver()
     }
 
-    var isNeedRoomMutedStatus = true //是否需要判断禁言状态
     /**
      * 初始化view
      */
@@ -82,7 +81,6 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         iconHidden = findViewById(R.id.hidden)
         viewPager = findViewById(R.id.viewPager)
         chatView = ChatView(context)
-        chatView.isNeedRoomMutedStatus = isNeedRoomMutedStatus
         announcementView = AnnouncementView(context)
         pagerList = mutableListOf(chatView, announcementView)
         val titleList = listOf<String>(
@@ -383,27 +381,32 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     fun setRoomUuid(roomUuid: String) {
         this.roomUuid = roomUuid
+        EaseRepository.instance.roomUuid = roomUuid
     }
 
     fun setChatRoomId(chatRoomId: String) {
         this.chatRoomId = chatRoomId
-        chatView.chatRoomId = chatRoomId
+        EaseRepository.instance.chatRoomId = chatRoomId
     }
 
     fun setNickName(nickName: String) {
         this.nickName = nickName
+        EaseRepository.instance.nickName = nickName
     }
 
     fun setAvatarUrl(avatarUrl: String) {
         this.avatarUrl = avatarUrl
+        EaseRepository.instance.avatarUrl = avatarUrl
     }
 
     fun setUserName(userName: String) {
         this.userName = userName.toLowerCase()
+        EaseRepository.instance.userName = userName
     }
 
     fun setUserUuid(userUuid: String) {
         this.userUuid = userUuid
+        EaseRepository.instance.userUuid = userUuid
     }
 
     /**
@@ -539,25 +542,29 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     override fun onConnected() {
         EMLog.e(TAG, "onConnected")
-        EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom> {
-            override fun onSuccess(value: EMChatRoom?) {
-                EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
-                EaseRepository.instance.fetchChatRoomMutedStatus(chatRoomId)
-            }
-
-            override fun onError(error: Int, errorMsg: String?) {
-                if (error == EMError.CHATROOM_ALREADY_JOINED) {
-                    EaseRepository.instance.reconnectionLoadMessages(chatRoomId)
-                    EaseRepository.instance.fetchChatRoomMutedStatus(chatRoomId)
+        if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin){
+            EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom> {
+                override fun onSuccess(value: EMChatRoom?) {
+                    EaseRepository.instance.reconnectionLoadMessages()
+                    EaseRepository.instance.fetchChatRoomMutedStatus()
                 }
-            }
-        })
+
+                override fun onError(error: Int, errorMsg: String?) {
+                    if (error == EMError.CHATROOM_ALREADY_JOINED) {
+                        EaseRepository.instance.reconnectionLoadMessages()
+                        EaseRepository.instance.fetchChatRoomMutedStatus()
+                    }
+                }
+            })
+        }
 
     }
 
     override fun onDisconnected(errorCode: Int) {
         EMLog.e(TAG, "onDisconnected:$errorCode")
-        EaseRepository.instance.refreshLastMessageId(chatRoomId)
+        if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin) {
+            EaseRepository.instance.refreshLastMessageId()
+        }
     }
 
     fun setInputContent(content: String) {

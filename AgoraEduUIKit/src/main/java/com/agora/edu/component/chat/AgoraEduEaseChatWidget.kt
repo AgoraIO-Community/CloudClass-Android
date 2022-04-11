@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import com.google.gson.Gson
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.modules.EaseIM
+import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.utils.CommonUtil
@@ -41,6 +42,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     private var orgName = ""
     private var appName = ""
     private var appKey = ""
+    private var role = EaseConstant.ROLE_STUDENT
     private var userName = ""
     private var userUuid = ""
     private var mChatRoomId = ""
@@ -99,7 +101,6 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
         if (parseEaseConfigProperties()) {
             chatViewPager = mContext?.let { ChatViewPager(it) }
             chatViewPager?.let {
-                it.isNeedRoomMutedStatus = isNeedRoomMutedStatus
                 it.setCloseable(false)
                 it.setAvatarUrl(avatarUrl)
                 it.setChatRoomId(mChatRoomId)
@@ -181,6 +182,8 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
             appName = it["appName"] as? String ?: ""
             mChatRoomId = it["chatRoomId"] as? String ?: mChatRoomId
             appKey = it["appKey"] as? String ?: ""
+            role = this.widgetInfo?.localUserInfo?.userRole?: EaseConstant.ROLE_STUDENT
+            EaseRepository.instance.role = role
         }
 
         this.widgetInfo?.localUserProperties?.let {

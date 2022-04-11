@@ -27,4 +27,6 @@
     <string name="create_failed">注册聊天失败</string>
     <string name="assistant">助教</string>
     <string name="download_picture">下载图片</string>
+    <string name="global_mute_failed">全局禁言失败</string>
+    <string name="global_remove_mute_failed">解除全局禁言失败</string>
 </resources>

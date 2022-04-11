@@ -1,5 +1,6 @@
 package com.hyphenate.easeim.modules.repositories
 
+import com.hyphenate.EMCallBack
 import com.hyphenate.EMValueCallBack
 import com.hyphenate.chat.*
 import com.hyphenate.easeim.modules.constant.EaseConstant
@@ -23,15 +24,22 @@ class EaseRepository {
     var allMuted = false
     var isInit = false
     var isLogin = false
-    var isNeedRoomMutedStatus = true//是否需要判断禁言状态
+
+    var role = EaseConstant.ROLE_STUDENT
+    var nickName = ""
+    var avatarUrl = ""
+    var chatRoomId = ""
+    var roomUuid = ""
+    var userName = ""
+    var userUuid = ""
 
     /**
      * 加载本地消息
      */
-    fun loadMessages(conversationId: String) {
+    fun loadMessages() {
         if (isInit) {
             val conversation = EMClient.getInstance().chatManager()
-                    .getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+                    .getConversation(chatRoomId, EMConversation.EMConversationType.ChatRoom, true)
             val msgList = conversation?.allMessages
             val norMsgList = mutableListOf<EMMessage>()
             msgList?.forEach { message ->
@@ -48,9 +56,9 @@ class EaseRepository {
     /**
      * 漫游50条历史消息
      */
-    fun loadHistoryMessages(conversationId: String) {
+    fun loadHistoryMessages() {
         EMLog.e(TAG, "loadHistoryMessages")
-        EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, "", object : EMValueCallBack<EMCursorResult<EMMessage>> {
+        EMClient.getInstance().chatManager().asyncFetchHistoryMessage(chatRoomId, EMConversation.EMConversationType.ChatRoom, 50, "", object : EMValueCallBack<EMCursorResult<EMMessage>> {
             override fun onSuccess(value: EMCursorResult<EMMessage>?) {
                 value?.data?.forEach { message ->
                     if (message.type == EMMessage.Type.CMD) {
@@ -64,7 +72,7 @@ class EaseRepository {
                             }
                             EaseConstant.DEL -> {
                                 val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
-                                deleteMessage(conversationId, msgId)
+                                deleteMessage(chatRoomId, msgId)
                                 notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                             }
                             EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
@@ -75,7 +83,7 @@ class EaseRepository {
                             }
                         }
                         notifyMessage.body = notifyBody
-                        notifyMessage.to = conversationId
+                        notifyMessage.to = chatRoomId
                         notifyMessage.chatType = EMMessage.ChatType.ChatRoom
                         notifyMessage.setStatus(EMMessage.Status.SUCCESS)
                         notifyMessage.msgTime = message.msgTime
@@ -85,7 +93,7 @@ class EaseRepository {
                     }
                 }
                 ThreadManager.instance.runOnMainThread {
-                    val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+                    val conversation = EMClient.getInstance().chatManager().getConversation(chatRoomId, EMConversation.EMConversationType.ChatRoom, true)
                     conversation.loadMoreMsgFromDB("", 50)
                     for (listener in listeners) {
                         listener.loadHistoryMessageFinish()
@@ -100,8 +108,8 @@ class EaseRepository {
         })
     }
 
-    fun refreshLastMessageId(conversationId: String) {
-        val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+    fun refreshLastMessageId() {
+        val conversation = EMClient.getInstance().chatManager().getConversation(chatRoomId, EMConversation.EMConversationType.ChatRoom, true)
         if (conversation.allMessages.size != 0)
             brokenMsgId = conversation.lastMessage?.msgId.toString()
         EMLog.e(TAG, "brokenMsgId=$brokenMsgId")
@@ -111,10 +119,10 @@ class EaseRepository {
      * 重连之后拉取消息
      */
     @Synchronized
-    fun reconnectionLoadMessages(conversationId: String) {
+    fun reconnectionLoadMessages() {
         EMLog.e(TAG, "reconnectionLoadMessages:lastMsgId=$lastMsgId")
         if (brokenMsgId.isNotEmpty()) {
-            EMClient.getInstance().chatManager().asyncFetchHistoryMessage(conversationId, EMConversation.EMConversationType.ChatRoom, 50, lastMsgId, object : EMValueCallBack<EMCursorResult<EMMessage>> {
+            EMClient.getInstance().chatManager().asyncFetchHistoryMessage(chatRoomId, EMConversation.EMConversationType.ChatRoom, 50, lastMsgId, object : EMValueCallBack<EMCursorResult<EMMessage>> {
                 override fun onSuccess(value: EMCursorResult<EMMessage>?) {
                     value?.data?.forEach { message ->
                         if (message.type == EMMessage.Type.CMD) {
@@ -128,7 +136,7 @@ class EaseRepository {
                                 }
                                 EaseConstant.DEL -> {
                                     val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
-                                    deleteMessage(conversationId, msgId)
+                                    deleteMessage(chatRoomId, msgId)
                                     notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                                 }
                                 EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
@@ -139,7 +147,7 @@ class EaseRepository {
                                 }
                             }
                             notifyMessage.body = notifyBody
-                            notifyMessage.to = conversationId
+                            notifyMessage.to = chatRoomId
                             notifyMessage.chatType = EMMessage.ChatType.ChatRoom
                             notifyMessage.setStatus(EMMessage.Status.SUCCESS)
                             notifyMessage.msgTime = message.msgTime
@@ -152,11 +160,11 @@ class EaseRepository {
                     }
                     value?.data?.forEach { message ->
                         if (message.msgId == brokenMsgId) {
-                            loadMoreMsgFromDB(conversationId)
+                            loadMoreMsgFromDB()
                             return@onSuccess
                         }
                     }
-                    reconnectionLoadMessages(conversationId)
+                    reconnectionLoadMessages()
                 }
 
                 override fun onError(error: Int, errorMsg: String?) {
@@ -164,13 +172,13 @@ class EaseRepository {
                 }
             })
         } else {
-            loadHistoryMessages(conversationId)
+            loadHistoryMessages()
         }
     }
 
-    fun loadMoreMsgFromDB(conversationId: String) {
+    fun loadMoreMsgFromDB() {
         ThreadManager.instance.runOnMainThread {
-            val conversation = EMClient.getInstance().chatManager().getConversation(conversationId, EMConversation.EMConversationType.ChatRoom, true)
+            val conversation = EMClient.getInstance().chatManager().getConversation(chatRoomId, EMConversation.EMConversationType.ChatRoom, true)
             conversation.loadMoreMsgFromDB("", fetchMsgNum)
             brokenMsgId = ""
             lastMsgId = ""
@@ -184,7 +192,7 @@ class EaseRepository {
     /**
      * 获取聊天室公告
      */
-    fun fetchAnnouncement(chatRoomId: String) {
+    fun fetchAnnouncement() {
         EMClient.getInstance().chatroomManager()
                 .asyncFetchChatRoomAnnouncement(chatRoomId, object : EMValueCallBack<String> {
                     override fun onSuccess(value: String?) {
@@ -208,7 +216,7 @@ class EaseRepository {
      * 获取聊天室自己是否被禁言
      */
     @Synchronized
-    fun fetchChatRoomSingleMutedStatus(chatRoomId: String) {
+    fun fetchChatRoomSingleMutedStatus() {
         EMClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
                 chatRoomId, object : EMValueCallBack<Boolean> {
             override fun onSuccess(value: Boolean?) {
@@ -235,21 +243,12 @@ class EaseRepository {
      * 获取聊天室禁言状态
      */
     @Synchronized
-    fun fetchChatRoomMutedStatus(chatRoomId: String) {
-        if (!isNeedRoomMutedStatus) return //不需要判断禁言状态
+    fun fetchChatRoomMutedStatus() {
         EMClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : EMValueCallBack<EMChatRoom> {
             override fun onSuccess(value: EMChatRoom?) {
                 value?.isAllMemberMuted?.let {
                     allMuted = it
-//                    if (it) {
-//                        ThreadManager.instance.runOnMainThread {
-//                            for (listener in listeners) {
-//                                listener.fetchChatRoomMutedStatus(it)
-//                            }
-//                        }
-//                    } else {
-                    fetchChatRoomSingleMutedStatus(chatRoomId)
-//                    }
+                    fetchChatRoomSingleMutedStatus()
                 }
             }
 
@@ -303,6 +302,69 @@ class EaseRepository {
 
     fun removeOperationListener(operationListener: EaseOperationListener) {
         listeners.remove(operationListener)
+    }
+
+    fun isStudentRole(): Boolean {
+        return role == EaseConstant.ROLE_STUDENT
+    }
+
+    fun sendOperationMessage(action: String, userId: String, messageId: String, callback: EMCallBack?) {
+        val message = EMMessage.createSendMessage(EMMessage.Type.CMD)
+        message.addBody(EMCmdMessageBody(action))
+        message.setAttribute(EaseConstant.ROLE, role)
+        message.setAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
+        message.setAttribute(EaseConstant.ROOM_UUID, roomUuid)
+        message.setAttribute(EaseConstant.NICK_NAME, nickName)
+        message.setAttribute(EaseConstant.AVATAR_URL, avatarUrl)
+        message.chatType = EMMessage.ChatType.ChatRoom
+        message.to = chatRoomId
+        message.setMessageStatusCallback(object : EMCallBack {
+            override fun onSuccess() {
+
+            }
+
+            override fun onError(code: Int, error: String?) {
+
+            }
+
+            override fun onProgress(progress: Int, status: String?) {
+                callback?.onError(progress, status)
+            }
+
+        })
+        when(action){
+            EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE ->{
+
+            }
+            EaseConstant.DEL -> {
+                message.setAttribute(EaseConstant.MSG_ID, messageId)
+            }
+            EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
+                message.setAttribute(EaseConstant.MUTE_MEMEBER, userId)
+            }
+        }
+
+        EMClient.getInstance().chatManager().sendMessage(message)
+        saveOperationMessage(action, message, callback)
+    }
+
+    private fun saveOperationMessage(operation: String, message: EMMessage, callback: EMCallBack?) {
+        val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
+        val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
+        notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, operation))
+        notifyMessage.body = notifyBody
+        notifyMessage.to = chatRoomId
+        notifyMessage.chatType = EMMessage.ChatType.ChatRoom
+        notifyMessage.setStatus(EMMessage.Status.SUCCESS)
+        notifyMessage.msgTime = message.msgTime
+        notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
+        EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+        callback?.onSuccess()
+        ThreadManager.instance.runOnMainThread {
+            for (listener in listeners) {
+                listener.loadHistoryMessageFinish()
+            }
+        }
     }
 
 }

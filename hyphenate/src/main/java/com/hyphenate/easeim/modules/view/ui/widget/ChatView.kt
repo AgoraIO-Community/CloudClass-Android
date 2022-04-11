@@ -5,12 +5,16 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hyphenate.EMError
+import com.hyphenate.EMValueCallBack
+import com.hyphenate.chat.EMChatRoom
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
+import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.view.`interface`.EaseOperationListener
@@ -42,8 +46,10 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     private lateinit var tvContent: TextView
     private lateinit var faceIcon: ImageView
     private lateinit var picIcon: ImageView
+    private lateinit var muteView: FrameLayout
+    private lateinit var muteIcon: AppCompatImageView
+    private lateinit var unMuteIcon: AppCompatImageView
     private var inputContent = ""
-    var chatRoomId = ""
 
     var viewClickListener: ViewClickListener? = null
 
@@ -63,10 +69,18 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         tvContent = findViewById(R.id.tv_content)
         faceIcon = findViewById(R.id.iv_face)
         picIcon = findViewById(R.id.iv_picture)
+        muteView = findViewById(R.id.mute_view)
+        muteIcon = findViewById(R.id.iv_mute)
+        unMuteIcon = findViewById(R.id.iv_unmute)
         recyclerView = findViewById(R.id.rv_list)
         val layoutManager = LinearLayoutManager(context.applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+
+        if(EaseRepository.instance.isStudentRole()){
+            muteView.visibility = View.GONE
+        }
+
         initListener()
     }
 
@@ -74,7 +88,7 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
      * 注册监听
      */
     private fun initListener() {
-        //easeRepository.addOperationListener(this)
+        easeRepository.addOperationListener(this)
         adapter.setMessageListItemClickListener(object : MessageListItemClickListener {
             override fun onResendClick(message: EMMessage): Boolean {
                 EMLog.e(TAG, "onResendClick")
@@ -105,28 +119,23 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         tvContent.setOnClickListener(this)
         faceIcon.setOnClickListener(this)
         picIcon.setOnClickListener(this)
+        muteView.setOnClickListener(this)
     }
-
-    var isNeedRoomMutedStatus = true //是否需要判断禁言状态
-        set(value) {
-            easeRepository.isNeedRoomMutedStatus = value
-            field = value
-        }
 
     /**
      * 初始化数据
      */
     fun initData() {
-        easeRepository.loadHistoryMessages(chatRoomId)
-        easeRepository.fetchAnnouncement(chatRoomId)
-        easeRepository.fetchChatRoomMutedStatus(chatRoomId)
+        easeRepository.loadHistoryMessages()
+        easeRepository.fetchAnnouncement()
+        easeRepository.fetchChatRoomMutedStatus()
     }
 
     /**
      * 刷新聊天列表
      */
     fun refresh() {
-        easeRepository.loadMessages(chatRoomId)
+        easeRepository.loadMessages()
     }
 
     fun announcementChange(announcement: String) {
@@ -160,10 +169,14 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
     }
 
     override fun fetchChatRoomMutedStatus(isMuted: Boolean) {
-        if (isMuted)
-            showMutedView()
-        else
-            hideMutedView()
+        if(EaseRepository.instance.isStudentRole()) {
+            if (isMuted)
+                showMutedView()
+            else
+                hideMutedView()
+        } else {
+            changeMuteView()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -176,6 +189,46 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
             }
             R.id.iv_picture -> {
                 viewClickListener?.onPicIconClick()
+            }
+            R.id.mute_view -> {
+                if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin){
+                    muteView.isClickable = false
+                    if (unMuteIcon.visibility == View.VISIBLE) {
+                        EMClient.getInstance().chatroomManager().muteAllMembers(EaseRepository.instance.chatRoomId, object : EMValueCallBack<EMChatRoom> {
+                            override fun onSuccess(value: EMChatRoom?) {
+                                ThreadManager.instance.runOnMainThread {
+                                    changeMuteIcon()
+                                    muteView.isClickable = true
+                                    EaseRepository.instance.sendOperationMessage(EaseConstant.SET_ALL_MUTE, "", "", null)
+                                }
+                            }
+
+                            override fun onError(error: Int, errorMsg: String?) {
+                                ThreadManager.instance.runOnMainThread {
+                                    muteView.isClickable = true
+                                    Toast.makeText(context, context.getString(R.string.global_mute_failed), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
+                    } else {
+                        EMClient.getInstance().chatroomManager().unmuteAllMembers(EaseRepository.instance.chatRoomId, object : EMValueCallBack<EMChatRoom> {
+                            override fun onSuccess(value: EMChatRoom?) {
+                                ThreadManager.instance.runOnMainThread {
+                                    changeMuteIcon()
+                                    muteView.isClickable = true
+                                    EaseRepository.instance.sendOperationMessage(EaseConstant.REMOVE_ALL_MUTE, "", "", null)
+                                }
+                            }
+
+                            override fun onError(error: Int, errorMsg: String?) {
+                                ThreadManager.instance.runOnMainThread {
+                                    muteView.isClickable = true
+                                    Toast.makeText(context, context.getString(R.string.global_remove_mute_failed), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
+                    }
+                }
             }
         }
     }
@@ -230,6 +283,26 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         inputContent = content
         if(!EaseRepository.instance.singleMuted || EaseRepository.instance.allMuted){
             hideMutedView()
+        }
+    }
+
+    private fun changeMuteIcon(){
+        if(unMuteIcon.visibility == View.VISIBLE){
+            unMuteIcon.visibility = View.GONE
+            muteIcon.visibility = View.VISIBLE
+        } else {
+            unMuteIcon.visibility = View.VISIBLE
+            muteIcon.visibility = View.GONE
+        }
+    }
+
+    private fun changeMuteView(){
+        if(EaseRepository.instance.allMuted){
+            unMuteIcon.visibility = View.GONE
+            muteIcon.visibility = View.VISIBLE
+        } else {
+            unMuteIcon.visibility = View.VISIBLE
+            muteIcon.visibility = View.GONE
         }
     }
 }
