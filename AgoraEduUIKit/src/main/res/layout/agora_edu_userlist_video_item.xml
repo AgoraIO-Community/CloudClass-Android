@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.agora.edu.component.AgoraEduVideoComponent xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_edu_video"
+    android:layout_marginTop="@dimen/dp_1"
+    android:layout_marginBottom="@dimen/dp_1"
+    android:layout_width="@dimen/agora_small_video_w"
+    android:layout_height="@dimen/agora_small_video_h" />
