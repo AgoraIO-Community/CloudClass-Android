@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/padding_smaller">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_tool_popup_style_item_icon"
+        android:layout_width="@dimen/agora_floating_window_option_ic_size"
+        android:layout_height="@dimen/agora_floating_window_option_ic_size"
+        android:scaleType="fitXY"
+        android:src="@drawable/agora_floating_window_ic_video"/>
+
+</FrameLayout>

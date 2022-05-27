@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">声网灵动课堂</string>
+    <string name="room_name">房间</string>
+    <string name="room_name_Id">房间Id</string>
+    <string name="user_name">昵称</string>
+    <string name="user_id">用户Id</string>
+    <string name="room_type">类型</string>
+    <string name="role_type">角色</string>
+    <string name="hint_room_name">请输入房间名</string>
+    <string name="hint_room_uuid">请输入房间Id</string>
+    <string name="hint_your_name">请输入昵称</string>
+    <string name="hint_your_uuid">请输入用户Id</string>
+    <string name="hint_room_type">请选择课堂类型</string>
+    <string name="tips_input_type">只能输入6-50位字母、数字</string>
+    <string name="tips_input_type_username">只能输入6-50位中文、字母、数字、空格</string>
+    <string name="join_room">进入教室</string>
+    <string name="disclaimers0">免责声明</string>
+    <string name="disclaimers1">&#160;&#160;灵动课堂（“本产品”）是由上海兆言网络科技有限公司（“上海兆言”）提供的一款测试产品，上海兆言享有本产品的著作权和所有权。特此免费授予获得本产品和相关文档文件（以下简称“软件”）副本的任何人无限制地使用软件的权利，包括但不限于使用，复制，修改，合并，发布，分发，但本产品不得用于任何商业用途，不得再许可和/或出售该软件的副本。\n\n&#160;&#160;本产品按“现状”提供，没有任何形式的明示担保，包括但不限于对适配性、特定目的的适用性和非侵权性的担保。无论是由于与本产品或本产品的使用或其他方式有关的任何合同、侵权或其他形式的行为，上海兆言均不对任何索赔、损害或其他责任负责。\n\n &#160;&#160;您可以自由选择是否使用本产品提供的服务，如果您下载、安装、使用本产品中所提供的服务，即表明您信任该产品所有人，上海兆言对任何原因在使用本产品中提供的服务时可能对您自身或他人造成的任何形式的损失和伤害不承担任何责任。</string>
+    <string name="close">关闭</string>
+    <string name="about">关于</string>
+    <string name="privacy_policy">隐私条例</string>
+    <string name="terms_of_service">用户协议</string>
+    <string name="terms_of_service_url">https://www.agora.io/cn/terms-of-service/</string>
+    <string name="register_account">注册声网账号</string>
+    <string name="version_time">发版时间</string>
+    <string name="sdk_version">SDK版本</string>
+    <string name="flexible_version">灵动课堂版本</string>
+    <string name="region">区域</string>
+    <string name="privacy_url">https://www.agora.io/cn/privacy-policy/</string>
+    <string name="signup_url">https://sso.agora.io/cn/signup</string>
+    <string name="room_duration">时长</string>
+    <string name="room_duration1">30分钟</string>
+    <string name="video_stream_key">请输入密钥</string>
+    <string name="video_key">密钥</string>
+    <string name="video_stream_mode">请选择加密模式</string>
+    <string name="video_mode">模式</string>
+    <string name="video_key_pattern">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"!#$%()+-:;=.?@[]^_{}|~,</string>
+
+</resources>
