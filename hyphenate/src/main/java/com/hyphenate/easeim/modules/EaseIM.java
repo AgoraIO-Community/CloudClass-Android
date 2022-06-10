@@ -4,10 +4,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
 
-import com.hyphenate.EMValueCallBack;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
-import com.hyphenate.chat.EMUserInfo;
+import io.agora.chat.ChatClient;
+import io.agora.chat.ChatOptions;
+
 
 public class EaseIM {
     private static final String TAG = EaseIM.class.getSimpleName();
@@ -41,12 +40,12 @@ public class EaseIM {
             return false;
         }
 
-        EMOptions options = new EMOptions();
+        ChatOptions options = new ChatOptions();
         options.setAutoLogin(false);
         options.setAppKey(appkey);
         options.setDeleteMessagesAsExitChatRoom(false);
-        EMClient.getInstance().init(context, options);
-        EMClient.getInstance().setDebugMode(true);
+        ChatClient.getInstance().init(context, options);
+        ChatClient.getInstance().setDebugMode(true);
         sdkInited = true;
         return true;
     }

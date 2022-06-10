@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.view.`interface`.EaseOperationListener
+import io.agora.chat.ChatMessage
 
 /**
  * 公告页
@@ -44,7 +44,7 @@ class AnnouncementView(context: Context, attributeSet: AttributeSet?, defStyleAt
         }
     }
 
-    override fun loadMessageFinish(messages: List<EMMessage>) {
+    override fun loadMessageFinish(messages: List<ChatMessage>) {
         // 不需要处理
     }
 

@@ -1,13 +1,14 @@
 package com.hyphenate.easeim.modules.view.`interface`
 
-import com.hyphenate.chat.EMMessage
+import io.agora.chat.ChatMessage
+
 
 interface EaseOperationListener {
 
     /**
      * 加载本地消息完成
      */
-    fun loadMessageFinish(messages: List<EMMessage>)
+    fun loadMessageFinish(messages: List<ChatMessage>)
 
     /**
      * 漫游消息完成

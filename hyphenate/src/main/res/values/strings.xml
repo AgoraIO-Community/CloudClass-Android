@@ -17,6 +17,7 @@
     <string name="fcr_cancel_muted_all">The teacher unmute all</string>
     <string name="fcr_join_chat_room_failed">Join chatroom failed</string>
     <string name="fcr_login_chat_failed">Login chat failed</string>
+    <string name="fcr_fetch_token_failed">Fetch IM token failed</string>
     <string name="fcr_send_message_failed">Send message failed</string>
     <string name="fcr_remove_message_notify">%s remove a message</string>
     <string name="fcr_message_incloud_illegal_content">Send faild,message contain sensitive word</string>

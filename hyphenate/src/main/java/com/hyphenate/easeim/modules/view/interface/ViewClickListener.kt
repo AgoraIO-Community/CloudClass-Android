@@ -1,6 +1,7 @@
 package com.hyphenate.easeim.modules.view.`interface`
 
-import com.hyphenate.chat.EMMessage
+import io.agora.chat.ChatMessage
+
 
 interface ViewClickListener {
 
@@ -27,5 +28,5 @@ interface ViewClickListener {
     /**
      * 图片消息点击事件
      */
-    fun onImageClick(message: EMMessage)
+    fun onImageClick(message: ChatMessage)
 }

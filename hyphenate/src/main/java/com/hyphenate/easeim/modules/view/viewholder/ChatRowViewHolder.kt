@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.hyphenate.EMCallBack
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
-import com.hyphenate.util.EMLog
+import io.agora.CallBack
+import io.agora.chat.ChatMessage
+import io.agora.util.EMLog
 
 abstract class ChatRowViewHolder(
         view: View,
@@ -34,12 +34,12 @@ abstract class ChatRowViewHolder(
     private val reSend: ImageView? = itemView.findViewById(R.id.resend)
     private val recall: TextView? = itemView.findViewById(R.id.tv_recall)
     private val mute: TextView? = itemView.findViewById(R.id.tv_mute)
-    lateinit var message: EMMessage
+    lateinit var message: ChatMessage
     val mainThreadHandler = Handler(Looper.getMainLooper())
     private val callback = ChatCallback()
 
 
-    open fun setUpView(message: EMMessage) {
+    open fun setUpView(message: ChatMessage) {
         this.message = message
         avatar?.let {
             Glide.with(context).load(
@@ -78,16 +78,16 @@ abstract class ChatRowViewHolder(
         message.setMessageStatusCallback(callback)
         mainThreadHandler.post {
             when (message.status()) {
-                EMMessage.Status.CREATE -> onMessageCreate()
-                EMMessage.Status.SUCCESS -> onMessageSuccess()
-                EMMessage.Status.INPROGRESS -> onMessageInProgress()
-                EMMessage.Status.FAIL -> onMessageError()
+                ChatMessage.Status.CREATE -> onMessageCreate()
+                ChatMessage.Status.SUCCESS -> onMessageSuccess()
+                ChatMessage.Status.INPROGRESS -> onMessageInProgress()
+                ChatMessage.Status.FAIL -> onMessageError()
                 else -> EMLog.e(TAG, "default status")
             }
         }
     }
 
-    inner class ChatCallback : EMCallBack {
+    inner class ChatCallback : CallBack {
         override fun onSuccess() {
             mainThreadHandler.post {
                 onMessageSuccess()

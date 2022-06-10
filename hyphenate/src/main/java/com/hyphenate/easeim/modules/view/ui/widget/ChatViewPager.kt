@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.hyphenate.*
-import com.hyphenate.chat.*
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
@@ -28,16 +27,21 @@ import com.hyphenate.easeim.modules.utils.ScreenUtil
 import com.hyphenate.easeim.modules.view.`interface`.ChatPagerListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.adapter.ChatViewPagerAdapter
-import com.hyphenate.exceptions.HyphenateException
-import com.hyphenate.util.EMFileHelper
-import com.hyphenate.util.EMLog
-import com.hyphenate.util.VersionUtils
+import io.agora.*
+import io.agora.chat.*
+import io.agora.util.EMLog
+import io.agora.util.FileHelper
+import io.agora.util.VersionUtils
+import io.agora.Error
+import okhttp3.*
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
+import java.io.IOException
 import java.util.concurrent.Executors
 
 
-class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), EMMessageListener, EMChatRoomChangeListener, ViewClickListener, EMConnectionListener {
+class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), MessageListener, ChatRoomChangeListener, ViewClickListener, ConnectionListener {
 
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
@@ -62,6 +66,10 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     private var avatarUrl = ""
     private var userName = ""
     private var userUuid = ""
+    private var userToken = ""
+    private var appId = ""
+    private var baseUrl = ""
+    private var imToken = ""
     private var pagerList = mutableListOf<View>()
     var chatPagerListener: ChatPagerListener? = null
 
@@ -145,9 +153,9 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     private fun initIMListener(){
-        EMClient.getInstance().chatManager().addMessageListener(this)
-        EMClient.getInstance().chatroomManager().addChatRoomChangeListener(this)
-        EMClient.getInstance().addConnectionListener(this)
+        ChatClient.getInstance().chatManager().addMessageListener(this)
+        ChatClient.getInstance().chatroomManager().addChatRoomChangeListener(this)
+        ChatClient.getInstance().addConnectionListener(this)
     }
 
     private fun getTabView(context: Context, title: String): View {
@@ -193,7 +201,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         showOuterLayerUnread()
     }
 
-    override fun onMessageReceived(messages: MutableList<EMMessage>?) {
+    override fun onMessageReceived(messages: MutableList<ChatMessage>?) {
         messages?.let {
             for (message in messages) {
                 if (message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG) == EaseConstant.NORMAL_MSG) {
@@ -211,12 +219,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     }
 
-    override fun onCmdMessageReceived(messages: MutableList<EMMessage>?) {
+    override fun onCmdMessageReceived(messages: MutableList<ChatMessage>?) {
         messages?.forEach { message ->
-            if (message.chatType == EMMessage.ChatType.ChatRoom && message.to == chatRoomId) {
-                val body = message.body as EMCmdMessageBody
-                val notifyMessage = EMMessage.createSendMessage(EMMessage.Type.CUSTOM)
-                val notifyBody = EMCustomMessageBody(EaseConstant.NOTIFY)
+            if (message.chatType == ChatMessage.ChatType.ChatRoom && message.to == chatRoomId) {
+                val body = message.body as CmdMessageBody
+                val notifyMessage = ChatMessage.createSendMessage(ChatMessage.Type.CUSTOM)
+                val notifyBody = CustomMessageBody(EaseConstant.NOTIFY)
                 when (body.action()) {
                     EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
                         notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
@@ -235,12 +243,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 }
                 notifyMessage.body = notifyBody
                 notifyMessage.to = chatRoomId
-                notifyMessage.chatType = EMMessage.ChatType.ChatRoom
-                notifyMessage.setStatus(EMMessage.Status.SUCCESS)
+                notifyMessage.chatType = ChatMessage.ChatType.ChatRoom
+                notifyMessage.setStatus(ChatMessage.Status.SUCCESS)
                 notifyMessage.msgTime = message.msgTime
                 notifyMessage.msgId = message.msgId
                 notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
-                EMClient.getInstance().chatManager().saveMessage(notifyMessage)
+                ChatClient.getInstance().chatManager().saveMessage(notifyMessage)
                 ThreadManager.instance.runOnMainThread {
                     if (chooseTab != 0) {
                         showUnread(0)
@@ -252,16 +260,16 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         refreshUI()
     }
 
-    override fun onMessageRead(messages: MutableList<EMMessage>?) {
+    override fun onMessageRead(messages: MutableList<ChatMessage>?) {
     }
 
-    override fun onMessageDelivered(messages: MutableList<EMMessage>?) {
+    override fun onMessageDelivered(messages: MutableList<ChatMessage>?) {
     }
 
-    override fun onMessageRecalled(messages: MutableList<EMMessage>?) {
+    override fun onMessageRecalled(messages: MutableList<ChatMessage>?) {
     }
 
-    override fun onMessageChanged(message: EMMessage?, change: Any?) {
+    override fun onMessageChanged(message: ChatMessage?, change: Any?) {
     }
 
     override fun onChatRoomDestroyed(roomId: String?, roomName: String?) {
@@ -369,12 +377,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     fun logout(){
         handler?.removeCallbacksAndMessages(null)
         if(EaseRepository.instance.isLogin){
-            EMClient.getInstance().chatManager().removeMessageListener(this)
-            EMClient.getInstance().chatroomManager().removeChatRoomListener(this)
-            EMClient.getInstance().removeConnectionListener(this)
-            EMClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
-            EMClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
-            EMClient.getInstance().logout(false, object : EMCallBack {
+            ChatClient.getInstance().chatManager().removeMessageListener(this)
+            ChatClient.getInstance().chatroomManager().removeChatRoomListener(this)
+            ChatClient.getInstance().removeConnectionListener(this)
+            ChatClient.getInstance().chatroomManager().leaveChatRoom(chatRoomId)
+            ChatClient.getInstance().chatManager().deleteConversation(chatRoomId, true)
+            ChatClient.getInstance().logout(false, object : CallBack {
                 override fun onSuccess() {
                     EMLog.e(TAG, "onSuccess")
 
@@ -426,15 +434,66 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         EaseRepository.instance.userUuid = userUuid
     }
 
+    fun setUserToken(userToken: String) {
+        this.userToken = userToken
+    }
+
+    fun setBaseUrl(baseUrl: String) {
+        this.baseUrl = baseUrl
+    }
+
+    fun setAppId(appId: String){
+        this.appId = appId
+    }
+
+     fun fetchIMToken(){
+         val urlPath = "edu/apps/$appId/v2/rooms/$roomUuid/widgets/easemobIM/users/$userUuid/token"
+         val client = OkHttpClient.Builder().build()
+         val request = Request.Builder()
+                 .url(baseUrl + urlPath)
+                 .header("Authorization", "agora token = $userToken")
+                 .get()
+                 .build()
+         val call = client.newCall(request)
+         call.enqueue(object : Callback {
+             override fun onFailure(call: Call, e: IOException) {
+                 EMLog.e(TAG, "fetchIMToken failed: ${e.message}")
+                 ThreadManager.instance.runOnMainThread {
+                     Toast.makeText(context, context.getString(R.string.fcr_fetch_token_failed)+":${e.message}", Toast.LENGTH_SHORT).show()
+                 }
+             }
+
+             override fun onResponse(call: Call, response: Response) {
+                 val repBody = response.body?.string()
+                 val code = response.code
+                 EMLog.e(TAG, "fetchIMToken: $repBody")
+                 ThreadManager.instance.runOnMainThread {
+                     if (code == 200 && !repBody.isNullOrEmpty()) {
+                         try {
+                             val json = JSONObject(repBody)
+                             val data = json.optJSONObject("data")
+                             imToken = data?.optString("token").toString()
+                             loginIM()
+                         } catch (e: JSONException) {
+                             Toast.makeText(context, context.getString(R.string.fcr_fetch_token_failed)+": $code : ${e.message}", Toast.LENGTH_SHORT).show()
+                         }
+                     } else {
+                         Toast.makeText(context, context.getString(R.string.fcr_fetch_token_failed)+": $code : $repBody", Toast.LENGTH_SHORT).show()
+                     }
+                 }
+             }
+         })
+    }
+
     /**
      * 登录环信
      */
-    fun loginIM() {
+    private fun loginIM() {
         loginLimit++
-        EMClient.getInstance().login(userName, userUuid, object : EMCallBack {
+        ChatClient.getInstance().loginWithToken(userName, imToken, object : CallBack {
             override fun onSuccess() {
-                val info = EMUserInfo()
-                info.nickName = nickName
+                val info = UserInfo()
+                info.nickname = nickName
                 info.avatarUrl = avatarUrl
                 val extJson = JSONObject()
                 extJson.put(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT)
@@ -451,20 +510,12 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                     }
                     return
                 }
-                if (code == EMError.USER_ALREADY_LOGIN) {
+                if (code == Error.USER_ALREADY_LOGIN) {
                     joinChatRoom()
                     return
                 }
-                // 判断不存在去注册再登录
-                if (code == EMError.USER_NOT_FOUND) {
-                    loginLimit = 0
-                    createIM()
-                } else {
-                    loginIM()
-                }
+                loginIM()
             }
-
-            override fun onProgress(progress: Int, status: String) {}
         })
     }
 
@@ -473,8 +524,8 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
      */
     private fun joinChatRoom() {
         joinLimit++
-        EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom?> {
-            override fun onSuccess(value: EMChatRoom?) {
+        ChatClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : ValueCallBack<ChatRoom?> {
+            override fun onSuccess(value: ChatRoom?) {
                 EMLog.e("Login:", "join success")
                 ThreadManager.instance.runOnMainThread {
                     EaseRepository.instance.isLogin = true
@@ -485,7 +536,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
             override fun onError(error: Int, errorMsg: String) {
                 EMLog.e(TAG, "join failed: $error:$errorMsg")
-                if (error == EMError.CHATROOM_ALREADY_JOINED) {
+                if (error == Error.CHATROOM_ALREADY_JOINED) {
                     ThreadManager.instance.runOnMainThread {
                         EaseRepository.instance.isLogin = true
                         initIMListener()
@@ -502,24 +553,6 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 joinChatRoom()
             }
         })
-    }
-
-    /**
-     * 创建环信账号
-     */
-    private fun createIM() {
-        ThreadManager.instance.runOnIOThread {
-            try {
-                EMClient.getInstance().createAccount(userName, userUuid)
-                loginIM()
-            } catch (e: HyphenateException) {
-                e.printStackTrace()
-                EMLog.e(TAG, "create failed:" + e.errorCode + ":" + e.description)
-                ThreadManager.instance.runOnMainThread {
-                    Toast.makeText(context, context.getString(R.string.fcr_login_chat_failed)+"--"+context.getString(R.string.fcr_create_failed)+":" + e.errorCode + ":" + e.description, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
     override fun onAnnouncementClick() {
@@ -540,7 +573,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         selectPicFromLocal()
     }
 
-    override fun onImageClick(message: EMMessage) {
+    override fun onImageClick(message: ChatMessage) {
         chatPagerListener?.onImageClick(message)
     }
 
@@ -564,14 +597,14 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onConnected() {
         EMLog.e(TAG, "onConnected")
         if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin){
-            EMClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : EMValueCallBack<EMChatRoom> {
-                override fun onSuccess(value: EMChatRoom?) {
+            ChatClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : ValueCallBack<ChatRoom> {
+                override fun onSuccess(value: ChatRoom?) {
                     EaseRepository.instance.reconnectionLoadMessages()
                     EaseRepository.instance.fetchChatRoomMutedStatus()
                 }
 
                 override fun onError(error: Int, errorMsg: String?) {
-                    if (error == EMError.CHATROOM_ALREADY_JOINED) {
+                    if (error == Error.CHATROOM_ALREADY_JOINED) {
                         EaseRepository.instance.reconnectionLoadMessages()
                         EaseRepository.instance.fetchChatRoomMutedStatus()
                     }
@@ -624,29 +657,29 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     fun sendTextMessage(content: String) {
-        val message = EMMessage.createTxtSendMessage(content, chatRoomId)
+        val message = ChatMessage.createTxtSendMessage(content, chatRoomId)
         sendMessage(message)
     }
 
     fun sendImageMessage(uri: Uri) {
-        val message = EMMessage.createImageSendMessage(uri, false, chatRoomId)
+        val message = ChatMessage.createImageSendMessage(uri, false, chatRoomId)
         sendMessage(message)
     }
 
-    private fun sendMessage(message: EMMessage) {
+    private fun sendMessage(message: ChatMessage) {
         if (!(EaseRepository.instance.isInit && EaseRepository.instance.isLogin)) {
             Toast.makeText(context, context.getString(R.string.fcr_send_message_failed) + ":" + context.getString(R.string.fcr_login_chat_failed), Toast.LENGTH_SHORT).show()
             return
         }
         setExtBeforeSend(message)
-        message.chatType = EMMessage.ChatType.ChatRoom
-        message.setMessageStatusCallback(object : EMCallBack {
+        message.chatType = ChatMessage.ChatType.ChatRoom
+        message.setMessageStatusCallback(object : CallBack {
             override fun onSuccess() {
 
             }
 
             override fun onError(code: Int, error: String?) {
-                if (code == EMError.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+                if (code == Error.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
                     ThreadManager.instance.runOnMainThread {
                         Toast.makeText(context, context.getString(R.string.fcr_message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
                     }
@@ -658,11 +691,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
             }
         })
-        EMClient.getInstance().chatManager().sendMessage(message)
+        ChatClient.getInstance().chatManager().sendMessage(message)
         refreshUI()
     }
 
-    private fun setExtBeforeSend(message: EMMessage) {
+    private fun setExtBeforeSend(message: ChatMessage) {
         message.setAttribute(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT)
         message.setAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
         message.setAttribute(EaseConstant.ROOM_UUID, roomUuid)
@@ -692,7 +725,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 val data = intent?.getParcelableExtra<Uri>(context.resources
                         .getString(R.string.fcr_chat_window_select_image_key))
                 data?.let {
-                    val filePath = EMFileHelper.getInstance().getFilePath(data)
+                    val filePath = FileHelper.getInstance().getFilePath(data)
                     if (filePath.isNotEmpty() && File(filePath).exists()) {
                         sendImageMessage(Uri.parse(filePath))
                     } else {

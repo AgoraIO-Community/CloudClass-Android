@@ -8,11 +8,7 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hyphenate.EMError
-import com.hyphenate.EMValueCallBack
-import com.hyphenate.chat.EMChatRoom
-import com.hyphenate.chat.EMClient
-import com.hyphenate.chat.EMMessage
+import io.agora.Error
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
@@ -21,7 +17,11 @@ import com.hyphenate.easeim.modules.view.`interface`.EaseOperationListener
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewClickListener
 import com.hyphenate.easeim.modules.view.adapter.MessageAdapter
-import com.hyphenate.util.EMLog
+import io.agora.ValueCallBack
+import io.agora.chat.ChatClient
+import io.agora.chat.ChatMessage
+import io.agora.chat.ChatRoom
+import io.agora.util.EMLog
 
 /**
  * 聊天页
@@ -93,16 +93,16 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         // memory leak
 //        easeRepository.addOperationListener(this)
         adapter.setMessageListItemClickListener(object : MessageListItemClickListener {
-            override fun onResendClick(message: EMMessage): Boolean {
+            override fun onResendClick(message: ChatMessage): Boolean {
                 EMLog.e(TAG, "onResendClick")
-                message.setStatus(EMMessage.Status.CREATE)
-                EMClient.getInstance().chatManager().sendMessage(message)
+                message.setStatus(ChatMessage.Status.CREATE)
+                ChatClient.getInstance().chatManager().sendMessage(message)
                 refresh()
                 return true
             }
 
-            override fun onMessageError(message: EMMessage, code: Int, error: String?) {
-                if (code == EMError.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+            override fun onMessageError(message: ChatMessage, code: Int, error: String?) {
+                if (code == Error.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
                     ThreadManager.instance.runOnMainThread {
                         Toast.makeText(context, context.getString(R.string.fcr_message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
                     }
@@ -110,8 +110,8 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
                 EMLog.e(TAG, "onMessageError:$code = $error")
             }
 
-            override fun onItemClick(v: View, message: EMMessage) {
-                if(message.type == EMMessage.Type.IMAGE){
+            override fun onItemClick(v: View, message: ChatMessage) {
+                if(message.type == ChatMessage.Type.IMAGE){
                     viewClickListener?.onImageClick(message)
                 }
             }
@@ -153,7 +153,7 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
         }
     }
 
-    override fun loadMessageFinish(messages: List<EMMessage>) {
+    override fun loadMessageFinish(messages: List<ChatMessage>) {
         if (messages.isNotEmpty()) {
             defaultLayout.visibility = GONE
             adapter.setData(messages)
@@ -197,8 +197,8 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
                 if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin){
                     muteView.isClickable = false
                     if (unMuteIcon.visibility == View.VISIBLE) {
-                        EMClient.getInstance().chatroomManager().muteAllMembers(EaseRepository.instance.chatRoomId, object : EMValueCallBack<EMChatRoom> {
-                            override fun onSuccess(value: EMChatRoom?) {
+                        ChatClient.getInstance().chatroomManager().muteAllMembers(EaseRepository.instance.chatRoomId, object : ValueCallBack<ChatRoom> {
+                            override fun onSuccess(value: ChatRoom?) {
                                 ThreadManager.instance.runOnMainThread {
                                     changeMuteIcon()
                                     muteView.isClickable = true
@@ -214,8 +214,8 @@ class ChatView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int)
                             }
                         })
                     } else {
-                        EMClient.getInstance().chatroomManager().unmuteAllMembers(EaseRepository.instance.chatRoomId, object : EMValueCallBack<EMChatRoom> {
-                            override fun onSuccess(value: EMChatRoom?) {
+                        ChatClient.getInstance().chatroomManager().unmuteAllMembers(EaseRepository.instance.chatRoomId, object : ValueCallBack<ChatRoom> {
+                            override fun onSuccess(value: ChatRoom?) {
                                 ThreadManager.instance.runOnMainThread {
                                     changeMuteIcon()
                                     muteView.isClickable = true

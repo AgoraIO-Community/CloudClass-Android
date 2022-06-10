@@ -17,6 +17,7 @@
     <string name="fcr_cancel_muted_all">已取消全体学生禁言</string>
     <string name="fcr_join_chat_room_failed">加入聊天室失败</string>
     <string name="fcr_login_chat_failed">登录聊天失败</string>
+    <string name="fcr_fetch_token_failed">获取IM token失败</string>
     <string name="fcr_send_message_failed">发送消息失败</string>
     <string name="fcr_remove_message_notify">%s删除了一条消息</string>
     <string name="fcr_message_incloud_illegal_content">发送失败，消息包含非法字符</string>

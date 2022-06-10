@@ -19,12 +19,12 @@ import androidx.documentfile.provider.DocumentFile
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.hyphenate.chat.EMImageMessageBody
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
-import com.hyphenate.util.EMLog
-import com.hyphenate.util.ImageUtils
-import com.hyphenate.util.UriUtils
+import io.agora.chat.ChatMessage
+import io.agora.chat.ImageMessageBody
+import io.agora.util.EMLog
+import io.agora.util.ImageUtils
+import io.agora.util.UriUtils
 import java.io.File
 
 const val TAG = "CommonUtil"
@@ -106,9 +106,9 @@ object CommonUtil {
     fun showImage(
             context: Context,
             imageView: ImageView,
-            message: EMMessage
+            message: ChatMessage
     ): ViewGroup.LayoutParams {
-        val body = message.body as? EMImageMessageBody ?: return imageView.layoutParams
+        val body = message.body as? ImageMessageBody ?: return imageView.layoutParams
         //获取图片的长和宽
         var width = body.width
         var height = body.height

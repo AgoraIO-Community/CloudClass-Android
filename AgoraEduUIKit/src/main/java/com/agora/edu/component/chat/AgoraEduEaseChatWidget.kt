@@ -10,9 +10,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.view.isVisible
 import com.google.gson.Gson
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.modules.EaseIM
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
@@ -25,11 +23,13 @@ import com.hyphenate.easeim.modules.view.ui.widget.ChatViewPager
 import com.hyphenate.easeim.modules.view.ui.widget.InputView
 import com.hyphenate.easeim.modules.view.ui.widget.ShowImageView
 import io.agora.agoraeducore.core.internal.education.impl.Constants
+import io.agora.agoraeducore.core.internal.launch.AgoraEduSDK
 import io.agora.agoraeduuikit.R
 import io.agora.agoraeduuikit.component.toast.AgoraUIToast
 import io.agora.agoraeduuikit.impl.chat.AgoraChatInteractionPacket
 import io.agora.agoraeduuikit.impl.chat.AgoraChatInteractionSignal.UnreadTips
 import io.agora.agoraeduuikit.impl.chat.ChatPopupWidget
+import io.agora.chat.ChatMessage
 
 /**
  * 环信聊天组件
@@ -98,6 +98,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
 
     private fun addEaseIM() {
         nickName = widgetInfo?.localUserInfo?.userName ?: ""
+        userUuid = widgetInfo?.localUserInfo?.userUuid ?: ""
         roomUuid = widgetInfo?.roomInfo?.roomUuid ?: ""
 
         if (parseEaseConfigProperties()) {
@@ -110,6 +111,9 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
                 it.setRoomUuid(roomUuid)
                 it.setUserName(userName)
                 it.setUserUuid(userUuid)
+                token?.let { it1 -> it.setUserToken(it1) }
+                it.setBaseUrl(AgoraEduSDK.baseUrl())
+                it.setAppId(Constants.APPID)
             }
 
 //            chatViewPager?.isNeedRoomMutedStatus = eduC
@@ -120,7 +124,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
 
             if (appKey.isNotEmpty() && EaseIM.getInstance().init(mContext, appKey)) {
                 EaseRepository.instance.isInit = true
-                chatViewPager?.loginIM()
+                chatViewPager?.fetchIMToken()
             } else {
                 mContext?.let {
                     AgoraUIToast.error(
@@ -144,7 +148,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
                     input.layoutParams = params
                     if (inputParent != null && inputParent is ViewGroup) {
                         inputParent.addView(input)
-                        input.visibility = View.GONE
+                        input.visibility = View.INVISIBLE
                         input.inputMsgListener = this
                         softInputUtil.attachSoftInput(input) { isSoftInputShow, softInputHeight, viewOffset ->
                             if (isSoftInputShow)
@@ -190,10 +194,8 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
 
         this.widgetInfo?.localUserProperties?.let {
             userName = it[userIdKey].toString()
-            userUuid = it[userIdKey].toString()
         }
         return !TextUtils.isEmpty(userName)
-                && !TextUtils.isEmpty(userUuid)
                 && !TextUtils.isEmpty(orgName)
                 && !TextUtils.isEmpty(appName)
                 && !TextUtils.isEmpty(mChatRoomId)
@@ -201,8 +203,8 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     }
 
     override fun onWidgetRoomPropertiesUpdated(
-        properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?,
-        keys: MutableList<String>
+            properties: MutableMap<String, Any>, cause: MutableMap<String, Any>?,
+            keys: MutableList<String>
     ) {
         super.onWidgetRoomPropertiesUpdated(properties, cause, keys)
         if (properties.keys.contains(appNameKey) && properties.keys.contains(chatRoomIdKey) && !initLoginEaseIM) {
@@ -233,7 +235,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
         inputView?.visibility = View.GONE
     }
 
-    override fun onImageClick(message: EMMessage) {
+    override fun onImageClick(message: ChatMessage) {
         showImageView?.loadImage(message)
         showImageView?.visibility = View.VISIBLE
     }
@@ -253,7 +255,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     }
 
     override fun onMuted(isMuted: Boolean) {
-        if (isMuted && inputView?.isVisible == true) {
+        if (isMuted && inputView?.visibility == View.VISIBLE) {
             inputView?.editContent?.let { CommonUtil.hideSoftKeyboard(it) }
             inputView?.visibility = View.GONE
         }
@@ -265,7 +267,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
 
     override fun onShowUnread(show: Boolean) {
         ThreadManager.instance.runOnMainThread {
-            if (hideLayout.isVisible)
+            if (hideLayout.visibility == View.VISIBLE)
                 unreadText.visibility = View.VISIBLE
             else
                 unreadText.visibility = if (show) View.VISIBLE else View.GONE

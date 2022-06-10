@@ -1,6 +1,7 @@
 package com.hyphenate.easeim.modules.view.`interface`
 
-import com.hyphenate.chat.EMMessage
+import io.agora.chat.ChatMessage
+
 
 interface ChatPagerListener {
 
@@ -32,7 +33,7 @@ interface ChatPagerListener {
     /**
      * 图片消息点击事件
      */
-    fun onImageClick(message: EMMessage)
+    fun onImageClick(message: ChatMessage)
 
     /**
      * 大图关闭事件

@@ -2,7 +2,7 @@ package com.hyphenate.easeim.modules.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.hyphenate.util.TimeInfo
+import io.agora.util.TimeInfo
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat

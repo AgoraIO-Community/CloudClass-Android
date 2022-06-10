@@ -4,13 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.view.`interface`.MessageListItemClickListener
 import com.hyphenate.easeim.modules.view.viewholder.ChatRowViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.ImageViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.NotifyViewHolder
 import com.hyphenate.easeim.modules.view.viewholder.TextViewHolder
+import io.agora.chat.ChatMessage
 
 /**
  * 聊天列表adapter
@@ -26,7 +26,7 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
     }
 
     lateinit var context: Context
-    private var data: List<EMMessage> = mutableListOf()
+    private var data: List<ChatMessage> = mutableListOf()
     private lateinit var itemClickListener: MessageListItemClickListener
 
 
@@ -45,24 +45,24 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
     override fun getItemCount(): Int = data.size
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).direct() == EMMessage.Direct.SEND) {
+        return if (getItem(position).direct() == ChatMessage.Direct.SEND) {
             when (getItem(position).type) {
-                EMMessage.Type.TXT -> DIRECT_TXT_SEND
-                EMMessage.Type.CUSTOM -> DIRECT_CUSTOM
-                EMMessage.Type.IMAGE -> DIRECT_IMG_SEND
+                ChatMessage.Type.TXT -> DIRECT_TXT_SEND
+                ChatMessage.Type.CUSTOM -> DIRECT_CUSTOM
+                ChatMessage.Type.IMAGE -> DIRECT_IMG_SEND
                 else -> DIRECT_TXT_SEND
             }
         } else {
             when (getItem(position).type) {
-                EMMessage.Type.TXT -> DIRECT_TXT_REC
-                EMMessage.Type.CUSTOM -> DIRECT_CUSTOM
-                EMMessage.Type.IMAGE -> DIRECT_IMG_REC
+                ChatMessage.Type.TXT -> DIRECT_TXT_REC
+                ChatMessage.Type.CUSTOM -> DIRECT_CUSTOM
+                ChatMessage.Type.IMAGE -> DIRECT_IMG_REC
                 else -> DIRECT_TXT_REC
             }
         }
     }
 
-    private fun getItem(position: Int): EMMessage {
+    private fun getItem(position: Int): ChatMessage {
         return data[position]
     }
 
@@ -100,7 +100,7 @@ class MessageAdapter : RecyclerView.Adapter<ChatRowViewHolder>() {
     }
 
 
-    fun setData(data: List<EMMessage>) {
+    fun setData(data: List<ChatMessage>) {
         this.data = data
         notifyDataSetChanged()
     }

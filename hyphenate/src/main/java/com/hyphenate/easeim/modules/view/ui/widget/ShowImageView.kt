@@ -6,16 +6,16 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
-import com.hyphenate.EMCallBack
-import com.hyphenate.chat.EMClient
-import com.hyphenate.chat.EMImageMessageBody
-import com.hyphenate.chat.EMMessage
 import com.hyphenate.easeim.R
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.view.`interface`.ChatPagerListener
 import com.hyphenate.easeim.modules.view.ui.widget.photoview.EasePhotoView
-import com.hyphenate.util.EMLog
+import io.agora.CallBack
+import io.agora.chat.ChatClient
+import io.agora.chat.ChatMessage
+import io.agora.chat.ImageMessageBody
+import io.agora.util.EMLog
 
 class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : RelativeLayout(context, attributeSet, defStyleAttr){
     constructor(context: Context) : this(context, null, 0)
@@ -23,7 +23,7 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     lateinit var progressDialog: ProgressDialog
     lateinit var imageView: EasePhotoView
-    lateinit var message: EMMessage
+    lateinit var message: ChatMessage
     var chatPagerListener: ChatPagerListener? = null
 
     //伴生对象
@@ -48,7 +48,7 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     private fun setUpView(){
         Glide.with(context).load("").into(imageView)
-        val body = message.body as EMImageMessageBody
+        val body = message.body as ImageMessageBody
         val imgUri = body.localUri
         CommonUtil.takePersistableUriPermission(context, imgUri)
         if(CommonUtil.isFileExistByUri(context, imgUri)){
@@ -62,12 +62,12 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         val msg = context.getString(R.string.fcr_download_picture)
         progressDialog.setMessage(msg)
         progressDialog.show()
-        message.setMessageStatusCallback(object: EMCallBack {
+        message.setMessageStatusCallback(object: CallBack {
             override fun onSuccess() {
                 EMLog.e(TAG, "onSuccess")
                 progressDialog.dismiss()
                 ThreadManager.instance.runOnMainThread{
-                    val body = message.body as EMImageMessageBody
+                    val body = message.body as ImageMessageBody
                     val imgUri = body.localUri
                     Glide.with(context).load(imgUri).into(imageView)
                 }
@@ -89,10 +89,10 @@ class ShowImageView(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             }
         })
 
-        EMClient.getInstance().chatManager().downloadAttachment(message)
+        ChatClient.getInstance().chatManager().downloadAttachment(message)
     }
 
-    fun loadImage(message: EMMessage){
+    fun loadImage(message: ChatMessage){
         this.message = message
         setUpView()
     }
