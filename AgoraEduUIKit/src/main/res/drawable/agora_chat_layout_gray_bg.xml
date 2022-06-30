@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/theme_gray_lighter"/>
+    <stroke android:color="@color/theme_border_class_room"
+        android:width="@dimen/divider_thin"/>
+    <corners android:topLeftRadius="@dimen/agora_message_input_layout_corner"
+        android:topRightRadius="@dimen/agora_message_input_layout_corner"/>
+</shape>

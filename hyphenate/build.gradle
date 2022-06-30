@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
+}
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.hyphenate.versionCode
+        versionName rootProject.ext.hyphenate.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+//    compileOnly project(path: ':edu')
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'org.jetbrains:annotations:15.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    api 'io.agora.rtc:chat-sdk:1.0.5'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+
+    //androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.20"
+}
+repositories {
+    mavenCentral()
+}
+
+//
+if (readyPublishMaven.toBoolean()) {
+    def current_gradle_path = buildscript.sourceFile.parentFile.parent
+    def maven_gradle_path = "$current_gradle_path/module_Maven.gradle"
+    if (new File(maven_gradle_path).exists()) {
+        apply from: maven_gradle_path
+    } else {
+        def errMsg = "$maven_gradle_path is not exists, please check."
+        logger.log(LogLevel.ERROR, errMsg)
+        throw new StopExecutionException(errMsg)
+    }
+}

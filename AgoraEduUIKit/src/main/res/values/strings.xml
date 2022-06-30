@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fcr_user_kick_out_cancel">Cancel</string>
+    <string name="fcr_user_kick_out_submit">Confirm</string>
+    <string name="fcr_rtm_im_teacher">Teacher</string>
+    <string name="fcr_rtm_im_student">Student</string>
+    <string name="fcr_monitor_login_remote_device">Account was logged in from remote device, you have left the classroom</string>
+
+    <!--  ClassToastManager  -->
+    <string name="fcr_room_class_end_warning">%s before the classroom closes</string>
+    <string name="fcr_room_close_warning">Class ends, the classroom is closed in %s</string>
+    <string name="fcr_toast_classtime_default" translatable="false">--:--</string>
+    <string name="fcr_toast_classtime_until_class_close_0_args">%sm%ss</string>
+    <string name="fcr_toast_classtime_until_class_close_0_arg">%s minutes</string>
+    <string name="fcr_monitor_network_poor">Poor local network connection，Please check the network connection</string>
+
+    <!-- Chat Window -->
+    <string name="fcr_rtm_im_message">Message</string>
+    <string name="fcr_chat_window_select_image_action" translatable="false">.Select_Image</string>
+    <string name="fcr_chat_window_select_image_key" translatable="false">data</string>
+
+    <!--  RewardWindow  -->
+    <string name="fcr_reward_window_classtime0">%02d:%02d</string>
+    <string name="fcr_reward_window_classtime1">%02d:%02d:%02d</string>
+
+    <string name="fcr_waving_hands" translatable="false">wavinghands</string>
+    <string name="fcr_tool_box_count_down">Countdown</string>
+    <string name="fcr_tool_box_unit_second">(second)</string>
+    <string name="fcr_tool_box_start">Start</string>
+    <string name="fcr_duration_digits" translatable="false">1234567890</string>
+    <string name="fcr_tool_box_popup_quiz">iClicker</string>
+    <string name="fcr_popup_quiz_post">Submit</string>
+    <string name="fcr_popup_quiz_change">Modify</string>
+    <string name="fcr_popup_quiz_submission">Respondents:</string>
+    <string name="fcr_popup_quiz_accuracy">Accuracy:</string>
+    <string name="fcr_popup_quiz_my_answer">My answers:</string>
+    <string name="fcr_popup_quiz_correct">Correct answers:</string>
+    <string name="fcr_start_time" translatable="false">00:00:00</string>
+    <string name="fcr_popup_quiz_start_answer">Begin Answering</string>
+    <string name="fcr_popup_quiz_end_answer">End Answering</string>
+    <string name="fcr_popup_quiz_start_again">Start Again</string>
+    <string name="fcr_respondentsnum" translatable="false">%d/%d</string>
+    <string name="fcr_accuracynum" translatable="false">%d%%</string>
+    <string name="fcr_popup_quiz_student_name">Name</string>
+    <string name="fcr_popup_quiz_answer_time">Time</string>
+    <string name="fcr_popup_quiz_student_answer">Answer</string>
+    <string name="fcr_poll_title">Vote</string>
+    <string name="fcr_poll_single">Single</string>
+    <string name="fcr_poll_multi">Multi</string>
+    <string name="fcr_votetitle" translatable="false">%d. %s</string>
+    <string name="fcr_poll_vote_title">What is your poll question?</string>
+    <string name="fcr_votechoiceid" translatable="false">%d. </string>
+    <string name="fcr_poll_input_placeholder">Option</string>
+    <string name="fcr_agora_wb_page_count" translatable="false">%d / %d</string>
+
+    <!--  WhiteBoard  -->
+    <string name="fcr_room_loading">Loading...</string>
+    <string name="fcr_monitor_network_reconnecting">Reconnecting...</string>
+
+    <!--  Toast  -->
+    <string name="fcr_netless_board_granted">You have been authorized by the teacher. Please use the whiteboard tool to interact</string>
+    <string name="fcr_netless_board_ungranted">Your authorization has been cancelled by the teacher. You can not interact with whiteboard tools</string>
+    <string name="fcr_user_hands">Press and hold down</string>
+
+    <!--  Dialog  -->
+    <string name="fcr_room_class_leave_class_title">Leave Class</string>
+    <string name="fcr_room_exit_warning">Are you sure you want to end get out of class?</string>
+    <string name="fcr_user_local_kick_out_notice">Removed</string>
+    <string name="fcr_user_local_kick_out">You have been removed from the classroom!</string>
+    <string name="fcr_user_kick_out">Remove Student</string>
+    <string name="fcr_user_kick_out_once">Only this time</string>
+    <string name="fcr_user_kick_out_forever">Banned for this classroom</string>
+    <string name="fcr_user_dialog_class_destroy_title">Tips</string>
+    <string name="fcr_room_class_over">The class has ended!</string>
+
+    <!-- Setting -->
+    <string name="fcr_media_camera">Camera</string>
+    <string name="fcr_media_camera_direction">Facing</string>
+    <string name="fcr_media_camera_direction_front">Front</string>
+    <string name="fcr_media_camera_direction_back">Back</string>
+    <string name="fcr_media_mic">Mic</string>
+    <string name="fcr_media_speaker">Speaker</string>
+    <string name="fcr_room_leave_room">Leave</string>
+
+    <!-- Chat -->
+    <string name="fcr_rtm_im_send">Send</string>
+    <string name="fcr_rtm_im_input_placeholder">Input</string>
+    <string name="fcr_rtm_im_silenced_placeholder">Muted</string>
+    <string name="fcr_agora_message_item_error_text" translatable="false">!</string>
+    <string name="fcr_rtm_im_mute_mode">Turn on mute mode</string>
+    <string name="fcr_agora_message_item_role_tip" translatable="false">[%s]</string>
+    <string name="fcr_rtm_im_role_assistant">Assistant</string>
+
+    <!-- Video -->
+    <string name="fcr_agora_video_reward" translatable="false">&#215;%d</string>
+
+    <!-- UserList -->
+    <string name="fcr_user_list">Roster</string>
+    <string name="fcr_user_list_teacher_name">Teacher:</string>
+    <string name="fcr_user_list_carousel_setting">Carousel</string>
+    <string name="fcr_user_list_student_name">Student</string>
+    <string name="fcr_user_list_stage">Stage</string>
+    <string name="fcr_user_list_auth">Auth</string>
+    <string name="fcr_user_list_video">Camera</string>
+    <string name="fcr_user_list_audio">Mute</string>
+    <string name="fcr_rtm_im_mute_chat">Silence</string>
+    <string name="fcr_user_list_reward">Rewards</string>
+    <string name="fcr_user_congratulation">Congratulations to %s for the award</string>
+    <string name="fcr_user_list_ban">Kickout</string>
+
+    <!-- Room Status -->
+    <string name="fcr_room_class_time_away">Class will begin after:&#160;&#160;</string>
+    <string name="fcr_room_class_started">Class begins:&#160;&#160;</string>
+    <string name="fcr_room_class_not_start">Class will begin</string>
+    <string name="fcr_room_start_class">StartClass</string>
+    <string name="fcr_room_one_to_one_tab_video">Video</string>
+    <string name="fcr_room_one_to_one_tab_chat">Chat</string>
+
+    <!-- CloudDisk -->
+    <string name="fcr_cloud_public_resource">Public coursewares</string>
+    <string name="fcr_cloud_private_resource">Private coursewares</string>
+    <string name="fcr_cloud_file_name">File Name</string>
+    <string name="fcr_cloud_search">Search</string>
+    <string name="fcr_cloud_total_item">%d items</string>
+
+    <!-- grouping -->
+    <string name="fcr_grouping_invite">Invite</string>
+    <string name="fcr_group_help_title">Ask for help</string>
+    <string name="fcr_group_help_content">You can invite the host to this Breakout Room for assistance.</string>
+    <string name="fcr_group_help_teacher_busy_msg">The host is currently helping others. Please try again later.</string>
+    <string name="fcr_group_teacher_is_helping_others_msg">The teacher is helping other group, Please wait for minutes.</string>
+    <string name="fcr_group_joining">Joining room %s</string>
+    <string name="fcr_group_join">Join discussion group</string>
+    <string name="fcr_group_invitation">Teacher invites you to join %s</string>
+    <string name="fcr_group_button_later">Later</string>
+    <string name="fcr_group_button_join">Join</string>
+    <string name="fcr_group_back_main_room">Returning to main session&#8230;</string>
+    <string name="fcr_group_back_to_main_room">Return to main session</string>
+    <string name="fcr_group_exit_room">Leave Room</string>
+    <string name="fcr_group_enter_welcome">welcome to join %s and discuss with everyone</string>
+    <string name="fcr_group_close_group">The host closed breakout rooms</string>
+    <string name="fcr_group_exit_group">%s %s leaved breakout rooms</string>
+    <string name="fcr_group_enter_group">%s %s Joined breakout rooms</string>
+    <string name="fcr_group_invite_back_main_room">The host is inviting you to return to main session</string>
+    <string name="fcr_group_teacher_exist_hint">The host is already in the group</string>
+    <string name="fcr_group_join_error">Joining room fail</string>
+
+    <string name="fcr_record_recording">Recording...</string>
+    <string name="fcr_online_courseware_label_online_courseware">Online courseware</string>
+
+    <string name="fcr_savecanvas_tips_save_successfully">Save successfully</string>
+    <string name="fcr_savecanvas_tips_save_failed">Save failed</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/allWidgetsContainer_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_webview"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="open" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_close_webview"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_toRightOf="@+id/btn_webview"-->
+<!--        android:gravity="center"-->
+<!--        android:text="close" />-->
+</RelativeLayout>
