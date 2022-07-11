@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_33"
+        android:background="@drawable/agora_class_white_bg"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_33"
+            app:layout_constraintStart_toStartOf="@+id/ll_tab_layout"
+            app:layout_constraintTop_toTopOf="@+id/ll_tab_layout"
+            app:tabBackground="@null">
+
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- android:background="@color/theme_gray_lighter" -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_1"
+        android:background="#ECECF1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_tab_layout" />
+
+    <com.agora.edu.component.AgoraEduVideoGroupComponent
+        android:id="@+id/teacherVideoWindow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:videoMode="Pair" />
+
+    <com.agora.edu.component.AgoraEduChatComponent
+        android:id="@+id/chat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcrcolorPrimary">#F5F7F8</color>
+    <color name="fcrcolorPrimaryDark">#F5F7F8</color>
+    <color name="fcrcolorAccent">#44A2FC</color>
+    <color name="agora_edu_class_color_bg">#F9F9FC</color>
+    <color name="agora_board_line_color">#ECECF1</color>
+    <color name="fcr_white">#FFFFFF</color>
+    <color name="acadsoc_theme_color_fourth">#2D3F7B</color>
+    <color name="fcr_gray_191919">#191919</color>
+    <color name="acadsoc_theme_color_first">#263487</color>
+    <color name="acadsoc_theme_color_second">#75C0FE</color>
+</resources>

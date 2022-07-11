@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="agora_app_id" translatable="false">Your AppId</string>
+   <!-- <string name="agora_app_cert" translatable="false">Your AppCertificate</string>-->
+    <string name="agora_api_host" translatable="false">Agora API Host</string>
+    <string name="agora_report_host" translatable="false">Report API Host</string>
+</resources>
