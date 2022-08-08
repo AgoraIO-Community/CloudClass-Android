@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId "io.agora.education"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 10
+        versionName "6.2.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        buildConfigField 'String', 'RELEASE_TIME', String.format("\"%s\"", releaseTime())
+        buildConfigField 'String', 'RTC_VERSION', String.format("\"%s\"", rootProject.ext.android.rtcSDKVersion)
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/edu_release.kotlin_module'
+    }
+
+//    sourceSets{
+//        debug {
+//            java.srcDirs = ['src/main/java', 'build/generated/data_binding_base_class_source_out/debug']
+//        }
+//    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy.MM.dd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation project(path: ':AgoraClassSDK')
+    if (readyPublishGithub.toBoolean()) {
+        implementation "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+    } else {
+        implementation project(path: ':AgoraEduCore')
+    }
+    implementation project(path: ':AgoraEduUIKit')
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+
+    implementation "com.jakewharton:butterknife:${rootProject.ext.dependencies.butterknife}"
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.dependencies.butterknife_compiler}"
+
+    // RtmTokenBuilder need
+    implementation "commons-codec:commons-codec:${rootProject.ext.dependencies.commons_codec}"
+
+    implementation 'com.tencent.bugly:crashreport:4.0.4'
+
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+}

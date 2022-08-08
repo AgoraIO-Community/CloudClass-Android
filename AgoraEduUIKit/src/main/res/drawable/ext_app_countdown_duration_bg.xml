@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="false">
+        <shape android:shape="rectangle">
+
+            <solid android:color="#F1F4F6" />
+
+            <corners android:radius="3dp" />
+
+            <stroke android:color="@color/fcr_system_component_color" />
+
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+
+            <solid android:color="@color/fcr_white" />
+
+            <corners android:radius="3dp" />
+
+            <stroke android:color="@color/fcr_icon_fill_color" />
+
+        </shape>
+    </item>
+
+</selector>
