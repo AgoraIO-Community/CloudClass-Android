@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_appliance_item"
+    android:layout_width="@dimen/agora_appliance_item_size_large"
+    android:layout_height="@dimen/agora_appliance_item_size_large">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_appliance_imageview"
+        android:layout_width="@dimen/agora_edu_pen_color_size"
+        android:layout_height="@dimen/agora_edu_pen_color_size"
+        android:layout_gravity="center"
+        android:src="@drawable/agora_icon_color_base" />
+</FrameLayout>
