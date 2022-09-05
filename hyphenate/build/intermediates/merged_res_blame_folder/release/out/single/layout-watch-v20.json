@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "/Users/wf/.gradle/caches/transforms-2/files-2.1/fea7cb549a2a3bf359a4c69f82dc17aa/appcompat-1.2.0/res/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/build/intermediates/res/merged/release/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "/Users/wf/.gradle/caches/transforms-2/files-2.1/fea7cb549a2a3bf359a4c69f82dc17aa/appcompat-1.2.0/res/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]

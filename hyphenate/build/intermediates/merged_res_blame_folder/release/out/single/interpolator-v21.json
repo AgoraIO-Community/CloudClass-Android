@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/build/intermediates/res/merged/release/interpolator-v21/mtrl_fast_out_linear_in.xml",
+        "source": "/Users/wf/.gradle/caches/transforms-2/files-2.1/a3c95284797bc55e2401b214e6c45620/material-1.2.1/res/interpolator-v21/mtrl_fast_out_linear_in.xml"
+    },
+    {
+        "merged": "/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/build/intermediates/res/merged/release/interpolator-v21/mtrl_fast_out_slow_in.xml",
+        "source": "/Users/wf/.gradle/caches/transforms-2/files-2.1/a3c95284797bc55e2401b214e6c45620/material-1.2.1/res/interpolator-v21/mtrl_fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/build/intermediates/res/merged/release/interpolator-v21/mtrl_linear_out_slow_in.xml",
+        "source": "/Users/wf/.gradle/caches/transforms-2/files-2.1/a3c95284797bc55e2401b214e6c45620/material-1.2.1/res/interpolator-v21/mtrl_linear_out_slow_in.xml"
+    }
+]

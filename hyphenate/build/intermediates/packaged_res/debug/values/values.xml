@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcr_announcement_bg">#F5ECCE</color>
+    <color name="fcr_black">#FF000000</color>
+    <color name="fcr_blue">#357BF6</color>
+    <color name="fcr_gray">#BDBDBD</color>
+    <color name="fcr_gray_light">#F2F2F2</color>
+    <color name="fcr_gray_normal">#666667</color>
+    <color name="fcr_message_et_bg">#fff2f2f2</color>
+    <color name="fcr_normal_bg">#CEE3F6</color>
+    <color name="fcr_purple_200">#FFBB86FC</color>
+    <color name="fcr_purple_500">#FF6200EE</color>
+    <color name="fcr_purple_700">#FF3700B3</color>
+    <color name="fcr_red">#ffff0000</color>
+    <color name="fcr_teal_200">#FF03DAC5</color>
+    <color name="fcr_teal_700">#FF018786</color>
+    <color name="fcr_white">#FFFFFFFF</color>
+    <dimen name="avatar_size">20dp</dimen>
+    <dimen name="chat_view_icon_size">24dp</dimen>
+    <dimen name="ease_chat_layout_h">287dp</dimen>
+    <dimen name="ease_chat_layout_w">200dp</dimen>
+    <dimen name="fcr_minSp">12sp</dimen>
+    <dimen name="fcr_textSize">13sp</dimen>
+    <dimen name="fcr_text_size_smallest">8sp</dimen>
+    <dimen name="hide_icon_size">50dp</dimen>
+    <dimen name="input_height">32dp</dimen>
+    <dimen name="input_icon_size">34dp</dimen>
+    <dimen name="input_margin_right">16dp</dimen>
+    <dimen name="margin_middle">10dp</dimen>
+    <dimen name="margin_normal">5dp</dimen>
+    <dimen name="margin_small">3dp</dimen>
+    <dimen name="nickName_max_width">100dp</dimen>
+    <dimen name="padding_middle">10dp</dimen>
+    <dimen name="padding_normal">5dp</dimen>
+    <dimen name="tab_textSize">16sp</dimen>
+    <dimen name="unread_count_size">12dp</dimen>
+    <string name="fcr_all_muted">All Muted</string>
+    <string name="fcr_announcement">Notice</string>
+    <string name="fcr_appKey_is_empty">AppKey is empty</string>
+    <string name="fcr_assistant">Assistant</string>
+    <string name="fcr_cancel_muted_all">The teacher unmute all</string>
+    <string name="fcr_chat">Chat</string>
+    <string name="fcr_chat_window_select_image_action" translatable="false">.Select_Image</string>
+    <string name="fcr_chat_window_select_image_key" translatable="false">data</string>
+    <string name="fcr_create_failed">Create failed</string>
+    <string name="fcr_default_announcement">No Announcement</string>
+    <string name="fcr_download_picture">Download picture</string>
+    <string name="fcr_enter_contents">Please enter message</string>
+    <string name="fcr_fetch_token_failed">Fetch IM token failed</string>
+    <string name="fcr_global_mute_failed">Global mute failed</string>
+    <string name="fcr_global_remove_mute_failed">Global remove mute failed</string>
+    <string name="fcr_join_chat_room_failed">Join chatroom failed</string>
+    <string name="fcr_login_chat_failed">Login chat failed</string>
+    <string name="fcr_message">Message</string>
+    <string name="fcr_message_incloud_illegal_content">Send faild,message contain sensitive word</string>
+    <string name="fcr_mute">Mute</string>
+    <string name="fcr_muted_all">The teacher mute all</string>
+    <string name="fcr_nickname">Nickname</string>
+    <string name="fcr_no_message">No Message</string>
+    <string name="fcr_recall">Recall</string>
+    <string name="fcr_remove_message_notify">%s remove a message</string>
+    <string name="fcr_say_something">Say something</string>
+    <string name="fcr_send">Send</string>
+    <string name="fcr_send_message_failed">Send message failed</string>
+    <string name="fcr_single_muted">You are muted by teacher</string>
+    <string name="fcr_student">Student</string>
+    <string name="fcr_teacher">Teacher</string>
+    <string name="fcr_you_have_been_muted_by_teacher">muted by %s teacher</string>
+    <string name="fcr_you_have_been_unmuted_by_teacher">unmuted by %s teacher</string>
+    <style name="Dialog.Light" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/fcr_blue</item>
+    </style>
+    <style name="animate_dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_in_out_bottom</item>
+    </style>
+    <style name="blue_bg_white_style">
+        <item name="android:background">@drawable/blue_round_bg</item>
+        <item name="android:textColor">@color/fcr_white</item>
+    </style>
+    <style name="dialog_recall" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="lecturer_role_bg_style">
+        <item name="android:background">@drawable/lecturer_role_bg</item>
+        <item name="android:textColor">@color/fcr_blue</item>
+    </style>
+    <style name="mute_bg_style">
+        <item name="android:background">@drawable/blue_round_bg</item>
+        <item name="android:textColor">@color/fcr_white</item>
+    </style>
+    <style name="normal_role_bg_style">
+        <item name="android:background">@drawable/normal_role_bg</item>
+        <item name="android:textColor">@color/fcr_gray</item>
+    </style>
+    <style name="white_bg">
+        <item name="android:background">@color/fcr_white</item>
+    </style>
+    <style name="white_bg_gray_style">
+        <item name="android:background">@drawable/white_round_bg</item>
+        <item name="android:textColor">@color/fcr_gray</item>
+    </style>
+</resources>

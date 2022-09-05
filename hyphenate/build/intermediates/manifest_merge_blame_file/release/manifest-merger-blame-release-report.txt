@@ -1,0 +1,17 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.hyphenate.easeim"
+4    android:versionCode="51"
+5    android:versionName="2.6.3" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/src/main/AndroidManifest.xml
+10    <!-- 保证不休眠，进而可以正常发送心跳包 -->
+11    <uses-permission android:name="android.permission.WAKE_LOCK" />
+11-->/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/src/main/AndroidManifest.xml:5:5-68
+11-->/Users/wf/AgoraIO/2.7/cloudclass-android/hyphenate/src/main/AndroidManifest.xml:5:22-65
+12
+13</manifest>

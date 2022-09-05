@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fcr_all_muted">全体禁言中</string>
+    <string name="fcr_announcement">公告</string>
+    <string name="fcr_appKey_is_empty">AppKey为空</string>
+    <string name="fcr_assistant">助教</string>
+    <string name="fcr_cancel_muted_all">已取消全体学生禁言</string>
+    <string name="fcr_chat">聊天</string>
+    <string name="fcr_create_failed">注册聊天失败</string>
+    <string name="fcr_default_announcement">暂无公告</string>
+    <string name="fcr_download_picture">下载图片</string>
+    <string name="fcr_enter_contents">请输入消息</string>
+    <string name="fcr_fetch_token_failed">获取IM token失败</string>
+    <string name="fcr_global_mute_failed">全局禁言失败</string>
+    <string name="fcr_global_remove_mute_failed">解除全局禁言失败</string>
+    <string name="fcr_join_chat_room_failed">加入聊天室失败</string>
+    <string name="fcr_login_chat_failed">登录聊天失败</string>
+    <string name="fcr_message">消息</string>
+    <string name="fcr_message_incloud_illegal_content">发送失败，消息包含非法字符</string>
+    <string name="fcr_mute">禁言</string>
+    <string name="fcr_muted_all">已开启全体学生禁言</string>
+    <string name="fcr_nickname">昵称</string>
+    <string name="fcr_no_message">还没有消息</string>
+    <string name="fcr_recall">撤回</string>
+    <string name="fcr_remove_message_notify">%s删除了一条消息</string>
+    <string name="fcr_say_something">说点什么</string>
+    <string name="fcr_send">发送</string>
+    <string name="fcr_send_message_failed">发送消息失败</string>
+    <string name="fcr_single_muted">您已被老师禁言，请谨慎发言</string>
+    <string name="fcr_student">学生</string>
+    <string name="fcr_teacher">老师</string>
+    <string name="fcr_you_have_been_muted_by_teacher">您被%s老师禁止发言了</string>
+    <string name="fcr_you_have_been_unmuted_by_teacher">您被%s老师允许发言了</string>
+</resources>
