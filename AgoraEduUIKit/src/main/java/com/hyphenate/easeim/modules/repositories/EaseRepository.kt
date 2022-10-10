@@ -1,12 +1,23 @@
 package com.hyphenate.easeim.modules.repositories
 
+import android.text.TextUtils
+import android.widget.Toast
 import com.hyphenate.easeim.modules.constant.EaseConstant
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.view.`interface`.EaseOperationListener
+import com.hyphenate.easeim.modules.view.ui.widget.ChatViewPager
 import io.agora.CallBack
 import io.agora.ValueCallBack
+import io.agora.agoraeduuikit.R
 import io.agora.chat.*
 import io.agora.util.EMLog
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
 
 class EaseRepository {
     companion object {
@@ -32,6 +43,8 @@ class EaseRepository {
     var roomUuid = ""
     var userName = ""
     var userUuid = ""
+    var appId = ""
+    var baseUrl = ""
 
     /**
      * 加载本地消息
@@ -216,25 +229,51 @@ class EaseRepository {
      * 获取聊天室自己是否被禁言
      */
     @Synchronized
-    fun fetchChatRoomSingleMutedStatus() {
-        ChatClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
-                chatRoomId, object : ValueCallBack<Boolean> {
-            override fun onSuccess(value: Boolean?) {
-                value?.let {
-                    singleMuted = it
-                    ThreadManager.instance.runOnMainThread {
-                        for (listener in listeners) {
-                            if (allMuted || singleMuted)
-                                listener.fetchChatRoomMutedStatus(true)
-                            else
-                                listener.fetchChatRoomMutedStatus(false)
-                        }
-                    }
-                }
+    private fun fetchChatRoomSingleMutedStatus() {
+        val urlPath = "edu/apps/$appId/v2/rooms/$roomUuid/users/$userUuid"
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder()
+            .url(baseUrl + urlPath)
+            .header("Content-Type", "application/json")
+            .get()
+            .build()
+        val call = client.newCall(request)
+        call.enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                EMLog.e(TAG, "fetchUserMuteState failed: ${e.message}")
             }
 
-            override fun onError(error: Int, errorMsg: String?) {
-                EMLog.e(TAG, "fetchChatRoomSingleMutedStatus failed: $error = $errorMsg")
+            override fun onResponse(call: Call, response: Response) {
+                val repBody = response.body?.string()
+                val code = response.code
+                EMLog.e(TAG, "fetchUserMuteState: $repBody")
+                if (code == 200 && !repBody.isNullOrEmpty()) {
+                    try {
+                        val json = JSONObject(repBody)
+                        val state = json.optString("msg")
+                        if(TextUtils.equals("Success", state)){
+                            val data = json.optJSONObject("data")
+                            val userProperties = data?.optJSONObject("userProperties")
+                            val flexProps = userProperties?.optJSONObject("flexProps")
+                            val mute = flexProps?.optInt("mute")
+                            singleMuted = mute == 1
+                            ThreadManager.instance.runOnMainThread {
+                                for (listener in listeners) {
+                                    if (allMuted || singleMuted)
+                                        listener.fetchChatRoomMutedStatus(true)
+                                    else
+                                        listener.fetchChatRoomMutedStatus(false)
+                                }
+                            }
+                        } else {
+                            EMLog.e(TAG, "fetchUserMuteState failed: $repBody")
+                        }
+                    } catch (e: JSONException) {
+                        EMLog.e(TAG, "fetchUserMuteState parse failed: $repBody")
+                    }
+                } else {
+                    EMLog.e(TAG, "fetchUserMuteState failed: ${response.message}")
+                }
             }
         })
     }
@@ -244,19 +283,21 @@ class EaseRepository {
      */
     @Synchronized
     fun fetchChatRoomMutedStatus() {
-        ChatClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : ValueCallBack<ChatRoom> {
-            override fun onSuccess(value: ChatRoom?) {
-                value?.isAllMemberMuted?.let {
-                    allMuted = it
-                    fetchChatRoomSingleMutedStatus()
+        if(role == EaseConstant.ROLE_STUDENT){
+            ChatClient.getInstance().chatroomManager().asyncFetchChatRoomFromServer(chatRoomId, object : ValueCallBack<ChatRoom> {
+                override fun onSuccess(value: ChatRoom?) {
+                    value?.isAllMemberMuted?.let {
+                        allMuted = it
+                        fetchChatRoomSingleMutedStatus()
+                    }
                 }
-            }
 
-            override fun onError(error: Int, errorMsg: String?) {
-                EMLog.e(TAG, "fetchChatRoomAllMutedStatus failed: $error = $errorMsg")
-            }
+                override fun onError(error: Int, errorMsg: String?) {
+                    EMLog.e(TAG, "fetchChatRoomAllMutedStatus failed: $error = $errorMsg")
+                }
 
-        })
+            })
+        }
     }
 
     /**
@@ -365,6 +406,49 @@ class EaseRepository {
                 listener.loadHistoryMessageFinish()
             }
         }
+    }
+
+    /**
+     * 设置用户属性用于保存禁言状态
+     */
+    fun setUserProperties(mute:Boolean){
+        val urlPath = "edu/apps/$appId/v2/rooms/$roomUuid/users/properties/batch"
+        val json = JSONObject()
+        val array = JSONArray()
+        val user = JSONObject()
+        val properties = JSONObject()
+        val cause = JSONObject()
+        cause.put("mute", "mute")
+        if(mute){
+            properties.put("mute", 1)
+        } else {
+            properties.put("mute", 0)
+        }
+        user.put("userUuid", userUuid)
+        user.put("properties", properties)
+        user.put("cause", cause)
+        array.put(user)
+        json.put("users", array)
+        val body =
+            json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder()
+            .url(baseUrl + urlPath)
+            .header("Content-Type", "application/json")
+            .put(body)
+            .build()
+        val call = client.newCall(request)
+        call.enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                EMLog.e(TAG, "setUserProperties failed: ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val repBody = response.body?.string()
+                val code = response.code
+                EMLog.e(TAG, "setUserProperties: $repBody")
+            }
+        })
     }
 
 }
