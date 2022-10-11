@@ -230,50 +230,20 @@ class EaseRepository {
      */
     @Synchronized
     private fun fetchChatRoomSingleMutedStatus() {
-        val urlPath = "edu/apps/$appId/v2/rooms/$roomUuid/users/$userUuid"
-        val client = OkHttpClient.Builder().build()
-        val request = Request.Builder()
-            .url(baseUrl + urlPath)
-            .header("Content-Type", "application/json")
-            .get()
-            .build()
-        val call = client.newCall(request)
-        call.enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
-                EMLog.e(TAG, "fetchUserMuteState failed: ${e.message}")
+        fetchUserMuteState(object : CallBack{
+            override fun onSuccess() {
+                ThreadManager.instance.runOnMainThread {
+                    for (listener in listeners) {
+                        if (allMuted || singleMuted)
+                            listener.fetchChatRoomMutedStatus(true)
+                        else
+                            listener.fetchChatRoomMutedStatus(false)
+                    }
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                val repBody = response.body?.string()
-                val code = response.code
-                EMLog.e(TAG, "fetchUserMuteState: $repBody")
-                if (code == 200 && !repBody.isNullOrEmpty()) {
-                    try {
-                        val json = JSONObject(repBody)
-                        val state = json.optString("msg")
-                        if(TextUtils.equals("Success", state)){
-                            val data = json.optJSONObject("data")
-                            val userProperties = data?.optJSONObject("userProperties")
-                            val flexProps = userProperties?.optJSONObject("flexProps")
-                            val mute = flexProps?.optInt("mute")
-                            singleMuted = mute == 1
-                            ThreadManager.instance.runOnMainThread {
-                                for (listener in listeners) {
-                                    if (allMuted || singleMuted)
-                                        listener.fetchChatRoomMutedStatus(true)
-                                    else
-                                        listener.fetchChatRoomMutedStatus(false)
-                                }
-                            }
-                        } else {
-                            EMLog.e(TAG, "fetchUserMuteState failed: $repBody")
-                        }
-                    } catch (e: JSONException) {
-                        EMLog.e(TAG, "fetchUserMuteState parse failed: $repBody")
-                    }
-                } else {
-                    EMLog.e(TAG, "fetchUserMuteState failed: ${response.message}")
-                }
+            override fun onError(code: Int, error: String?) {
+
             }
         })
     }
@@ -447,6 +417,53 @@ class EaseRepository {
                 val repBody = response.body?.string()
                 val code = response.code
                 EMLog.e(TAG, "setUserProperties: $repBody")
+            }
+        })
+    }
+
+    private fun fetchUserMuteState(callBack: CallBack?){
+        val urlPath = "edu/apps/$appId/v2/rooms/$roomUuid/users/$userUuid"
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder()
+            .url(baseUrl + urlPath)
+            .header("Content-Type", "application/json")
+            .get()
+            .build()
+        val call = client.newCall(request)
+        call.enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                EMLog.e(TAG, "fetchUserMuteState failed: ${e.message}")
+                callBack?.onError(0, e.message)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val repBody = response.body?.string()
+                val code = response.code
+                EMLog.e(TAG, "fetchUserMuteState: $repBody")
+                if (code == 200 && !repBody.isNullOrEmpty()) {
+                    try {
+                        val json = JSONObject(repBody)
+                        val state = json.optString("msg")
+                        if(TextUtils.equals("Success", state)){
+                            val data = json.optJSONObject("data")
+                            val userProperties = data?.optJSONObject("userProperties")
+                            val flexProps = userProperties?.optJSONObject("flexProps")
+                            val mute = flexProps?.optInt("mute")
+                            singleMuted = mute == 1
+                            callBack?.onSuccess()
+                        } else {
+                            EMLog.e(TAG, "fetchUserMuteState failed: $repBody")
+                            callBack?.onError(0, repBody)
+                        }
+                    } catch (e: JSONException) {
+                        EMLog.e(TAG, "fetchUserMuteState parse failed: $repBody")
+                        callBack?.onError(0, repBody)
+                    }
+                } else {
+                    val repMessage = response.message;
+                    EMLog.e(TAG, "fetchUserMuteState failed: $repMessage")
+                    callBack?.onError(0, repMessage)
+                }
             }
         })
     }
