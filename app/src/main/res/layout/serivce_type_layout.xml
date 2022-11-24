@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/class_type_normal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_live_premium"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_live_premium"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_live_standard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_live_standard"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_cdn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_cdn"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_fusion"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_fusion"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_screen_share"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_screen_share"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_service_hosting_scene"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/service_hosting_scene"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/fcr_gray_EEEEEE" />
+</LinearLayout>
