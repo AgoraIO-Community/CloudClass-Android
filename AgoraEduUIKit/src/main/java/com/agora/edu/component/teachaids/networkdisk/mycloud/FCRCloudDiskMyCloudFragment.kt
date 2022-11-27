@@ -1,19 +1,38 @@
 package com.agora.edu.component.teachaids.networkdisk.mycloud
 
+import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.agora.edu.component.teachaids.networkdisk.FCRCloudDiskResourceFragment
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.Conversion
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudPresignedUrlsReq
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudUserAndResourceReq
+import com.agora.edu.component.teachaids.networkdisk.mycloud.res.MyCloudCoursewareRes
+import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadCallback
+import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadTask
+import com.hyphenate.easeim.modules.utils.CommonUtil
 import io.agora.agoraeducore.core.context.EduContextCallback
 import io.agora.agoraeducore.core.context.EduContextError
+import io.agora.agoraeducore.core.internal.edu.common.bean.ResponseBody
 import io.agora.agoraeducore.core.internal.framework.utils.GsonUtil
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
 import io.agora.agoraeducore.core.internal.launch.courseware.CoursewareUtil
 import io.agora.agoraeducore.core.internal.log.LogX
+import io.agora.agoraeduuikit.R
+import io.agora.util.FileHelper
+import io.agora.util.VersionUtils
+import java.io.File
 
 /**
  * author : cjw
@@ -49,6 +68,31 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private var searchKeyword: String = ""
     private var searchCoursewareList = mutableSetOf<AgoraEduCourseware>()
 
+
+    private lateinit var receiver:BroadcastReceiver
+
+    private val selectFileResultCode = 9998 //获取文件reqeustCode
+    private val selectImageResultCode = 9999 //获取图片requestCode
+
+    private val PPT = "application/vnd.ms-powerpoint"
+    private val PPTX = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    private val DOC = "application/msword"
+    private val DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    private val PDF = "application/pdf"
+    private val MP4 = "video/mp4"
+    private val GIF = "image/gif"
+    private val MP3 = "audio/x-mpeg"
+    private val PNG = "image/png"
+    private val JPG = "image/jpeg"
+    private val AIF =""
+
+    var resourceUuid:String? =null
+    var resourceName:String? =null
+    var ext:String="jpeg"
+    var url:String?=null
+    var fileSize:Long =0L
+    var conversion:Conversion? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         config = arguments?.getSerializable(data) as? Pair<String, String>
@@ -59,6 +103,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initReceiver()
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -79,6 +124,16 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         if (nextPageNo == 1 && coursewareList.size == 0) {
             // first fetch courseware list
             fetchLoadCourseware(pageNo = nextPageNo)
+        }
+
+        binding.clouldBottomLayout.visibility = View.VISIBLE
+
+        binding.myClouldUploadFileLayout.setOnClickListener {
+            selectFileFromLocal()
+        }
+
+        binding.myClouldUploadImgLayout.setOnClickListener {
+            selectPicFromLocal()
         }
     }
 
@@ -143,5 +198,205 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         searchKeyword = keyword
         searchCoursewareList.clear()
         fetchLoadCourseware(resourceName = keyword, pageNo = searchNextPageNo)
+    }
+
+    /**
+     * 选择本地相册
+     */
+    private fun selectPicFromLocal() {
+        val intent: Intent?
+        if (VersionUtils.isTargetQ(context)) {
+            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+        } else {
+            intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        }
+        intent.type = "image/*"
+        val activity = context as Activity
+        activity.startActivityForResult(intent, selectImageResultCode)
+    }
+
+    /**
+     * 选择本地文件
+     */
+    private fun selectFileFromLocal() {
+        val intent: Intent?
+        if (VersionUtils.isTargetQ(context)) {
+            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+        } else {
+            intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        }
+        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG))
+        val activity = context as Activity
+        activity.startActivityForResult(intent, selectFileResultCode)
+    }
+
+    private fun initReceiver() {
+        receiver = object : BroadcastReceiver() {
+            override fun onReceive(con: Context?, intent: Intent?) {
+                val data = intent?.getParcelableExtra<Uri>(
+                    context?.resources
+                        ?.getString(R.string.my_clould_select_image_key)
+                )
+                when(intent?.action){
+                    context?.packageName.plus(
+                        context?.resources?.getString(R.string.my_clould_select_file_action)) -> {
+                        data?.let {
+                            val filePath = FileHelper.getInstance().getFilePath(data)
+                            if (filePath.isNotEmpty() && File(filePath).exists()) {
+                                sendFileMessage(Uri.parse(filePath))
+                            } else {
+                                CommonUtil.takePersistableUriPermission(context, it)
+                                sendFileMessage(it)
+                            }
+                        }
+                    }
+                    context?.packageName.plus(
+                        context?.resources?.getString(R.string.my_clould_select_image_action)) -> {
+                            data?.let {
+                                val filePath = FileHelper.getInstance().getFilePath(data)
+                                if (filePath.isNotEmpty() && File(filePath).exists()) {
+                                    sendImageMessage(Uri.parse(filePath))
+                                } else {
+                                    CommonUtil.takePersistableUriPermission(context, it)
+                                    sendImageMessage(it)
+                                }
+                            }
+                        }
+                }
+            }
+        }
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(context?.packageName.plus(
+            context?.resources?.getString(R.string.my_clould_select_file_action)))
+        intentFilter.addAction(context?.packageName.plus(
+            context?.resources?.getString(R.string.my_clould_select_image_action)))
+        context?.registerReceiver(receiver, intentFilter)
+    }
+
+    fun sendImageMessage(uri: Uri){
+        LogX.d("选择图片名称>>>"+FileHelper.getInstance().getFilename(uri))
+        LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
+        LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
+
+        resourceName=FileHelper.getInstance().getFilename(uri)
+        fileSize = MyCloudUriUtils.getFileSize(context,uri)
+
+        var tempType = FileHelper.getInstance().getFileMimeType(uri)
+
+        if(PDF == tempType || PPT == tempType || PPTX == tempType || DOC == tempType || DOCX ==tempType){
+            conversion = Conversion().apply {
+                if(PPTX == tempType) {
+                    type="dynamic"
+                }else{
+                    type="static"
+                }
+            }
+        }
+
+        MyCloudUriUtils.getFileAbsolutePath(context,uri)?.let {
+            presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
+                it
+            )
+        }
+    }
+
+    fun sendFileMessage(uri: Uri){
+        LogX.d("选择图片名称>>>"+FileHelper.getInstance().getFilename(uri))
+        LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
+        LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
+    }
+
+
+    private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
+        myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType)),
+            callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
+                override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
+                    result?.get(0)?.resourceUuid?.let {
+                        Log.d(tagStr,"resourceUuid==$it")
+                        resourceUuid=it
+                    }
+
+                    result?.get(0)?.url?.let {
+                        Log.d(tagStr,"url==$it")
+                        url=it
+                    }
+
+                    result?.get(0)?.preSignedUrl?.let {
+                        Log.d(tagStr,"url==$it")
+                        uploadFile(it,filePath,fileType)
+                    }
+
+                }
+
+                override fun onFailure(error: EduContextError?) {
+                    Log.e(tagStr, "生成预签名失败:${error?.let { GsonUtil.toJson(it) }}")
+                }
+            })
+    }
+
+    private fun uploadFile(url: String,filePath: String,mimeType: String){
+        val uploadTask =
+            UploadTask(url, filePath,mimeType, object : UploadCallback {
+                override fun onProgressUpdate(path: String?, percentage: Int) {
+                    LogX.d("进度"+(1 - percentage / 100f))
+                }
+
+                override fun onError(code: Int, error: String?) {
+                    Log.e(tagStr, "上传图片失败:${error?.let { GsonUtil.toJson(it) }}")
+                }
+
+                override fun onSuccess(code: Int) {
+                    LogX.d("上传成功")
+                    buildUserAndResource()
+
+                }
+            })
+
+        uploadTask.start()
+    }
+
+    private fun buildUserAndResource(){
+        if (resourceUuid != null) {
+            resourceName?.let {
+                ext?.let { it1 ->
+                    url?.let { it2 ->
+                        MyCloudUserAndResourceReq(
+                            resourceName = it,size = fileSize,ext = it1,url = it2,
+                            conversion
+                        ).also {
+                            myCloudManager?.buildUserAndResource(resourceUuid = resourceUuid!!,
+                                params = it,
+                                callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
+                                    override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
+
+                                    }
+
+                                    override fun onFailure(error: EduContextError?) {
+                                        Log.e(tagStr, "添加用户资源失败:${error?.let { GsonUtil.toJson(it) }}")
+                                    }
+                                })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun unregisterReceiver(){
+        try {
+            context?.unregisterReceiver(receiver)
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            context?.unregisterReceiver(receiver)
+        } catch (e: Exception) {
+        }
     }
 }

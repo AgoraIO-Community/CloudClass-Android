@@ -82,6 +82,11 @@ class FCRCloudDiskWidget : AgoraBaseWidget() {
             initTab()
             binding.closeImg.setOnClickListener {
                 hideSelf()
+                try {
+                    if(fragments!=null && fragments.size>1) {
+                        (fragments[FCRCloudDiskMyCloudFragment.tagStr] as FCRCloudDiskMyCloudFragment).unregisterReceiver()
+                    }
+                }catch (e:Exception){}
             }
         }
 

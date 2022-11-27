@@ -27,8 +27,11 @@ import io.agora.agoraeduuikit.R
  */
 class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickListener?) :
     ListAdapter<AgoraEduCourseware, ViewHolder>(UserListDiff()) {
+
+    var currentPosition = -1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FcrCloudDiskListItemLayoutBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = FcrCloudDiskListItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
 
@@ -37,6 +40,22 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
         holder.bind(item)
         holder.binding.root.setOnClickListener {
             itemClickListener?.onClick(item)
+        }
+
+        holder.binding.checkbox.setOnClickListener {
+            if(currentPosition == position){
+                currentPosition=-1
+            }else{
+                currentPosition=position
+            }
+            notifyDataSetChanged()
+            itemClickListener?.onSelectClick(item,currentPosition)
+        }
+
+        if(position == currentPosition){
+            holder.binding.checkbox.setImageResource(R.mipmap.my_clould_checkbox_selected)
+        }else{
+            holder.binding.checkbox.setImageResource(R.mipmap.my_clould_checkbox_unselected)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.agora.edu.component.teachaids.networkdisk.mycloud
+package com.agora.edu.component.teachaids.networkdisk.mycloud.res
 
 import io.agora.agoraeducore.core.internal.edu.common.bean.board.sceneppt.BoardCoursewareRes
 

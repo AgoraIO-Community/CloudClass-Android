@@ -2,7 +2,9 @@ package com.agora.edu.component.teachaids.networkdisk
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
 
@@ -29,6 +31,11 @@ internal class FCRCloudDiskPublicResourceFragment : FCRCloudDiskResourceFragment
     override fun onAttach(context: Context) {
         super.onAttach(context)
         publicCoursewares = arguments?.getParcelableArrayList(data)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.clouldBottomLayout.visibility = View.GONE
     }
 
     override fun getInitCoursewareList(): List<AgoraEduCourseware> {

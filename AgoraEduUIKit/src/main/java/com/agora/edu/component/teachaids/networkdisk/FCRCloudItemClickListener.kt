@@ -12,4 +12,6 @@ import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
  */
 interface FCRCloudItemClickListener {
     fun onClick(courseware: AgoraEduCourseware)
+
+    fun onSelectClick(courseware: AgoraEduCourseware,position: Int)
 }

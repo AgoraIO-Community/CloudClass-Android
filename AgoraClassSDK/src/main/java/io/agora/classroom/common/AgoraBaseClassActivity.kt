@@ -39,6 +39,8 @@ abstract class AgoraBaseClassActivity : AppCompatActivity() {
     private companion object {
         const val launchConfig = "LAUNCHCONFIG"
         const val preCheckData = "PRECHECKDATA"
+        const val selectFileResultCode = 9998 //云盘选择文件定义code
+        const val selectImageResultCode = 9999 //云盘选择图片定义code
     }
 
     open var TAG = "BaseClassActivity"
@@ -94,7 +96,20 @@ abstract class AgoraBaseClassActivity : AppCompatActivity() {
             intent.action = packageName.plus(resources.getString(R.string.fcr_chat_window_select_image_action))
             intent.putExtra(resources.getString(R.string.fcr_chat_window_select_image_key), data?.data)
             sendBroadcast(intent)
+        }else if (requestCode == selectFileResultCode && resultCode == RESULT_OK) {
+            // result of select image
+            val intent = Intent()
+            intent.action = packageName.plus(resources.getString(R.string.my_clould_select_file_action))
+            intent.putExtra(resources.getString(R.string.my_clould_select_image_key), data?.data)
+            sendBroadcast(intent)
+        }else if (requestCode == selectImageResultCode && resultCode == RESULT_OK) {
+            // result of select image
+            val intent = Intent()
+            intent.action = packageName.plus(resources.getString(R.string.my_clould_select_image_action))
+            intent.putExtra(resources.getString(R.string.my_clould_select_image_key), data?.data)
+            sendBroadcast(intent)
         }
+
     }
 
     protected fun createEduCore(callback: EduContextCallback<Unit>) {
