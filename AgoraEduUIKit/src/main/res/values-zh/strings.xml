@@ -565,4 +565,12 @@
     <string name="fcr_inshare_button_sharelink">分享课堂</string>
     <string name="fcr_join_copy_success">复制成功</string>
 
+    <!-- 删除云盘文件 -->
+    <string name="fcr_my_cloud_title">确认删除该文件吗？</string>
+    <string name="fcr_my_cloud_content">删除后，在云盘里将清除该文件信息。</string>
+    <string name="fcr_my_cloud_submit">删除</string>
+    <string name="fcr_my_cloud_cancel">取消</string>
+    <string name="fcr_my_cloud_upload_fail">上传失败</string>
+    <string name="fcr_my_cloud_delete_fail">删除失败</string>
+
 </resources>

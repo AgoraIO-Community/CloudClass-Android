@@ -164,19 +164,61 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/my_clould_uploadfile_icon"
-                        />
-                    <TextView
-                        android:layout_marginLeft="7dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="上传文件"
-                        android:textSize="@dimen/sp_12"
-                        android:textColor="#191919"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/centerLayout"
+                            android:gravity="center_vertical"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@mipmap/my_clould_uploadfile_icon"
+                                />
+                            <TextView
+                                android:layout_marginLeft="7dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="上传文件"
+                                android:textSize="@dimen/sp_12"
+                                android:textColor="#191919"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_toRightOf="@+id/centerLayout"
+                            android:id="@+id/progress_file_bar_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="("
+                                android:textColor="#7D8798"
+                                android:textSize="12dp"
+                                />
+                            <ImageView
+                                android:id="@+id/progress_file_bar"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginTop="1dp"
+                                android:src="@mipmap/my_cloud_progress_icon"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="上传中)"
+                                android:textSize="12dp"
+                                android:textColor="#7D8798"
+                                />
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
                 <ImageView
                     android:layout_width="18dp"
@@ -193,27 +235,63 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 />
-            <LinearLayout
-                android:id="@+id/my_clould_upload_img_layout"
+            <RelativeLayout
+                android:layout_toRightOf="@+id/centerLayout"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@mipmap/my_clould_uploadimg_icon"
-                    />
-                <TextView
-                    android:layout_marginLeft="7dp"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/my_clould_upload_img_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="上传图片"
-                    android:textSize="@dimen/sp_12"
-                    android:textColor="#191919"
-                    />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/my_clould_uploadimg_icon"
+                        />
+                    <TextView
+                        android:layout_marginLeft="7dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上传图片"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="#191919"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/progress_img_bar_layout"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@+id/my_clould_upload_img_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="("
+                        android:textColor="#7D8798"
+                        android:textSize="12dp"
+                        />
+                    <ImageView
+                        android:id="@+id/progress_img_bar"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@mipmap/my_cloud_progress_icon"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上传中)"
+                        android:textSize="12dp"
+                        android:textColor="#7D8798"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/my_clould_delete_layout"

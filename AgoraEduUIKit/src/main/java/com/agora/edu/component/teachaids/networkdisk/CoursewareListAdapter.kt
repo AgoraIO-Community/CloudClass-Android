@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.agora.edu.component.teachaids.networkdisk.mycloud.MyCloudItemClickListener
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
 import io.agora.agoraeduuikit.databinding.FcrCloudDiskListItemLayoutBinding
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCoursewareExt.mp3
@@ -19,6 +20,7 @@ import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCoursewareE
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCoursewareExt.xls
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCoursewareExt.pdf
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCoursewareExt.alf
+import io.agora.agoraeducore.core.internal.log.LogX
 import io.agora.agoraeduuikit.R
 
 /**
@@ -29,6 +31,16 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
     ListAdapter<AgoraEduCourseware, ViewHolder>(UserListDiff()) {
 
     var currentPosition = -1
+    var myCloudItemClickListener:MyCloudItemClickListener?=null
+
+    fun addMyCloudItemClickListener(myCloudItemClickListener:MyCloudItemClickListener){
+        this.myCloudItemClickListener=myCloudItemClickListener
+    }
+
+    fun resetCurrentPosition(){
+        currentPosition=-1;
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FcrCloudDiskListItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -49,7 +61,7 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
                 currentPosition=position
             }
             notifyDataSetChanged()
-            itemClickListener?.onSelectClick(item,currentPosition)
+            myCloudItemClickListener?.onSelectClick(item,currentPosition)
         }
 
         if(position == currentPosition){

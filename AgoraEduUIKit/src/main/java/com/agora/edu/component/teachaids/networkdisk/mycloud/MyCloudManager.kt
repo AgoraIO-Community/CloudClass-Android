@@ -1,5 +1,6 @@
 package com.agora.edu.component.teachaids.networkdisk.mycloud
 
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudDelFileReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudPresignedUrlsReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudUserAndResourceReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.res.MyCloudCoursewareRes
@@ -87,13 +88,40 @@ internal class MyCloudManager(val appId: String, val userUuid: String) {
     fun buildUserAndResource(
         resourceUuid: String,
         params: MyCloudUserAndResourceReq,
-        callback: EduContextCallback<List<MyCloudPresignedUrlsRes>>
+        callback: EduContextCallback<Any>
     ) {
         service.buildUserAndResource(
             appId = appId, userUuid = userUuid, resourceUuid = resourceUuid,params = params
         )
-            .enqueue(RetrofitManager.Callback(0, object : ThrowableCallback<ResponseBody<List<MyCloudPresignedUrlsRes>>> {
-                override fun onSuccess(res: ResponseBody<List<MyCloudPresignedUrlsRes>>?) {
+            .enqueue(RetrofitManager.Callback(0, object : ThrowableCallback<ResponseBody<Any>> {
+                override fun onSuccess(res: ResponseBody<Any>?) {
+                    if (res != null) {
+                        callback.onSuccess(res.data)
+                    } else {
+                        callback.onFailure(ResponseIsEmpty)
+                    }
+                }
+
+                override fun onFailure(throwable: Throwable?) {
+                    LogX.e(TAG,"fetchCoursewareWithPage-failed:${throwable?.let { GsonUtil.toJson(throwable) }}")
+                    if (throwable is BusinessException) {
+                        callback.onFailure(EduContextError(throwable.code, throwable.message!!))
+                    } else {
+                        callback.onFailure(DefaultError)
+                    }
+                }
+            }))
+    }
+
+    fun delFileRequest(
+        params: List<MyCloudDelFileReq>,
+        callback: EduContextCallback<Any>
+    ) {
+        service.deleteFileRequest(
+            appId = appId, userUuid = userUuid, params = params
+        )
+            .enqueue(RetrofitManager.Callback(0, object : ThrowableCallback<ResponseBody<Any>> {
+                override fun onSuccess(res: ResponseBody<Any>?) {
                     if (res != null) {
                         callback.onSuccess(res.data)
                     } else {

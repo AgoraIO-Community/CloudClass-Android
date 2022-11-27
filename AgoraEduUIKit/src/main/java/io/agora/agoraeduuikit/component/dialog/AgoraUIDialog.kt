@@ -71,6 +71,10 @@ class AgoraUIDialog(context: Context) : Dialog(context, R.style.agora_full_scree
         this.positiveBtn.text = text
     }
 
+    fun setPositiveButtonTextColor(color: Int) {
+        this.positiveBtn.setTextColor(color)
+    }
+
     fun setPositiveClick(listener: View.OnClickListener) {
         positiveClickListener = listener
     }

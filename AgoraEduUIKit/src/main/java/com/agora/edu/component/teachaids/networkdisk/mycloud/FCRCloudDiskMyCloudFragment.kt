@@ -1,5 +1,6 @@
 package com.agora.edu.component.teachaids.networkdisk.mycloud
 
+import android.Manifest
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,26 +11,33 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.agora.edu.component.teachaids.networkdisk.FCRCloudDiskResourceFragment
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.Conversion
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudDelFileReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudPresignedUrlsReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudUserAndResourceReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.res.MyCloudCoursewareRes
 import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadCallback
 import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadTask
 import com.hyphenate.easeim.modules.utils.CommonUtil
+import com.permissionx.guolindev.PermissionX
 import io.agora.agoraeducore.core.context.EduContextCallback
 import io.agora.agoraeducore.core.context.EduContextError
-import io.agora.agoraeducore.core.internal.edu.common.bean.ResponseBody
+import io.agora.agoraeducore.core.internal.base.ToastManager
 import io.agora.agoraeducore.core.internal.framework.utils.GsonUtil
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
 import io.agora.agoraeducore.core.internal.launch.courseware.CoursewareUtil
 import io.agora.agoraeducore.core.internal.log.LogX
 import io.agora.agoraeduuikit.R
+import io.agora.agoraeduuikit.component.dialog.AgoraUIDialogBuilder
 import io.agora.util.FileHelper
 import io.agora.util.VersionUtils
 import java.io.File
@@ -84,19 +92,40 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private val MP3 = "audio/x-mpeg"
     private val PNG = "image/png"
     private val JPG = "image/jpeg"
-    private val AIF =""
+    private val ALF =""
+
+    var userUuid:String?=null
 
     var resourceUuid:String? =null
     var resourceName:String? =null
-    var ext:String="jpeg"
+    var ext:String=""
     var url:String?=null
     var fileSize:Long =0L
     var conversion:Conversion? = null
+
+    var mCourseware: AgoraEduCourseware?=null
+
+    var delPosition:Int=0
+
+    var myClouldItemClickListener= object :MyCloudItemClickListener{
+        override fun onSelectClick(courseware: AgoraEduCourseware, position: Int) {
+            if(position!=-1){
+                delPosition=position
+                mCourseware=courseware
+                binding.myClouldBottomeLayout.isVisible=false
+                binding.myClouldDeleteLayout.isVisible=true
+            }else{
+                binding.myClouldBottomeLayout.isVisible=true
+                binding.myClouldDeleteLayout.isVisible=false
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         config = arguments?.getSerializable(data) as? Pair<String, String>
         config?.let {
+            userUuid=it.second
             myCloudManager = MyCloudManager(it.first, it.second)
         }
     }
@@ -104,6 +133,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initReceiver()
+        coursewaresAdapter.addMyCloudItemClickListener(myClouldItemClickListener)
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -129,11 +159,47 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         binding.clouldBottomLayout.visibility = View.VISIBLE
 
         binding.myClouldUploadFileLayout.setOnClickListener {
-            selectFileFromLocal()
+            PermissionX.init(context as FragmentActivity)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        selectFileFromLocal()
+                    } else {
+                        ToastManager.showShort(R.string.fcr_savecanvas_tips_save_failed_tips)
+                        LogX.e(tagStr, "没有权限")
+                    }
+                }
         }
 
         binding.myClouldUploadImgLayout.setOnClickListener {
-            selectPicFromLocal()
+            PermissionX.init(context as FragmentActivity)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+                        selectPicFromLocal()
+                    } else {
+                        ToastManager.showShort(R.string.fcr_savecanvas_tips_save_failed_tips)
+                        LogX.e(tagStr, "没有权限")
+                    }
+                }
+        }
+
+        binding.myClouldDeleteLayout.setOnClickListener {
+            context?.let {
+                context?.resources?.let { it1 ->
+                    AgoraUIDialogBuilder(it)
+                        .title(it1.getString(R.string.fcr_my_cloud_title))
+                        .message(it1.getString(R.string.fcr_my_cloud_content))
+                        .negativeText(it1.getString(R.string.fcr_my_cloud_cancel))
+                        .positiveText(it1.getString(R.string.fcr_my_cloud_submit))
+                        .positiveTextColor(it1.getColor(R.color.fcr_text_commit_color))
+                        .positiveClick {
+                            delFileReqest()
+                        }
+                        .build()
+                        .show()
+                }
+            }
         }
     }
 
@@ -162,7 +228,11 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                     searchCoursewareList.addAll(it)
                                     searchCoursewareList
                                 }
-                                coursewaresAdapter.submitList(tmp.toList())
+                                coursewaresAdapter.submitList(tmp.toList(), Runnable {
+                                    if(pageNo==1 && coursewareList.size>0){
+                                        binding.recyclerView.layoutManager?.scrollToPosition(0)
+                                    }
+                                })
                             }
                         }
                     }
@@ -281,6 +351,10 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
         LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
 
+        binding.progressImgBarLayout.isVisible=true
+        binding.progressImgBar.animation =laodingAnimation()
+
+        ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
         resourceName=FileHelper.getInstance().getFilename(uri)
         fileSize = MyCloudUriUtils.getFileSize(context,uri)
 
@@ -307,31 +381,84 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         LogX.d("选择图片名称>>>"+FileHelper.getInstance().getFilename(uri))
         LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
         LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
+
+        ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
+        binding.progressFileBarLayout.isVisible=true
+        binding.progressFileBar.animation =laodingAnimation()
+
+        ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
+        resourceName=FileHelper.getInstance().getFilename(uri)
+        fileSize = MyCloudUriUtils.getFileSize(context,uri)
+
+        var tempType = FileHelper.getInstance().getFileMimeType(uri)
+
+        if(PDF == tempType || PPT == tempType || PPTX == tempType || DOC == tempType || DOCX ==tempType){
+            conversion = Conversion().apply {
+                if(PPTX == tempType) {
+                    type="dynamic"
+                }else{
+                    type="static"
+                }
+            }
+        }
+
+        MyCloudUriUtils.getFileAbsolutePath(context,uri)?.let {
+            presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
+                it
+            )
+        }
     }
 
+    fun getExt(mimeType: String):String{
+        var res=""
+        when(mimeType){
+            PPT -> res="ppt"
+            PPTX -> res="pptx"
+            DOC -> res="doc"
+            DOCX -> res="docx"
+            PDF -> res="pdf"
+            MP4 -> res="mp4"
+            GIF -> res="gif"
+            MP3 -> res="mp3"
+            GIF -> res="gif"
+            PNG -> res="png"
+            JPG -> res="jpeg"
+            ALF -> res="ALF"
+        }
+        return res
+    }
+
+    fun laodingAnimation():Animation{
+        var rotate =  RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotate.interpolator = LinearInterpolator()
+        rotate.duration=500//设置动画持续周期
+        rotate.repeatCount =Animation.INFINITE
+        rotate.fillAfter=true//动画执行完后是否停留在执行完的状态
+        return rotate
+    }
 
     private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
         myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType)),
             callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
                 override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
                     result?.get(0)?.resourceUuid?.let {
-                        Log.d(tagStr,"resourceUuid==$it")
                         resourceUuid=it
                     }
 
                     result?.get(0)?.url?.let {
-                        Log.d(tagStr,"url==$it")
                         url=it
                     }
 
                     result?.get(0)?.preSignedUrl?.let {
-                        Log.d(tagStr,"url==$it")
                         uploadFile(it,filePath,fileType)
                     }
 
                 }
 
                 override fun onFailure(error: EduContextError?) {
+                    context?.let {
+                        ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
+                    }
                     Log.e(tagStr, "生成预签名失败:${error?.let { GsonUtil.toJson(it) }}")
                 }
             })
@@ -345,11 +472,13 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
 
                 override fun onError(code: Int, error: String?) {
+                    context?.let {
+                        ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
+                    }
                     Log.e(tagStr, "上传图片失败:${error?.let { GsonUtil.toJson(it) }}")
                 }
 
                 override fun onSuccess(code: Int) {
-                    LogX.d("上传成功")
                     buildUserAndResource()
 
                 }
@@ -369,12 +498,24 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                         ).also {
                             myCloudManager?.buildUserAndResource(resourceUuid = resourceUuid!!,
                                 params = it,
-                                callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
-                                    override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
+                                callback = object : EduContextCallback<Any> {
+                                    override fun onSuccess(result: Any?) {
+                                        onRefreshClick()
+                                        binding.progressImgBarLayout.isVisible=false
+                                        binding.progressImgBar.animation?.let { it1 ->
+                                            it1.cancel()
+                                        }
 
+                                        binding.progressFileBarLayout.isVisible=false
+                                        binding.progressFileBar.animation?.let { it1 ->
+                                            it1.cancel()
+                                        }
                                     }
 
                                     override fun onFailure(error: EduContextError?) {
+                                        context?.let {
+                                            ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
+                                        }
                                         Log.e(tagStr, "添加用户资源失败:${error?.let { GsonUtil.toJson(it) }}")
                                     }
                                 })
@@ -383,6 +524,36 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
             }
         }
+    }
+
+    private fun delFileReqest() {
+        var myCloudDelFileReq= mCourseware?.resourceUuid?.let { userUuid?.let { it1 ->
+            MyCloudDelFileReq(it,
+                it1
+            )
+        } }
+        myCloudDelFileReq?.let {
+            myCloudManager?.delFileRequest(
+                arrayListOf(myCloudDelFileReq),
+                callback = object : EduContextCallback<Any> {
+                    override fun onSuccess(result: Any?) {
+                        coursewareList.remove(mCourseware)
+                        coursewaresAdapter.submitList(coursewareList.toList(), Runnable {
+                            coursewaresAdapter.resetCurrentPosition()
+                        })
+                        binding.myClouldDeleteLayout.isVisible = false
+                        binding.myClouldBottomeLayout.isVisible =true
+                    }
+
+                    override fun onFailure(error: EduContextError?) {
+                        context?.let {
+                            ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_delete_fail))
+                        }
+                        Log.e(tagStr, "删除文件失败:${error?.let { GsonUtil.toJson(it) }}")
+                    }
+                })
+        }
+
     }
 
     fun unregisterReceiver(){

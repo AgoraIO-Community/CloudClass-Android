@@ -559,4 +559,12 @@ Delete your account will result in ….\n
     <string name="fcr_inshare_button_sharelink">Share Classroom</string>
 
     <string name="fcr_join_copy_success">Copy Success</string>
+
+    <!-- 删除云盘文件 -->
+    <string name="fcr_my_cloud_title">Are you sure to delete this file?</string>
+    <string name="fcr_my_cloud_content">After deletion, the file information will be cleared in the cloud disk。</string>
+    <string name="fcr_my_cloud_submit">commit</string>
+    <string name="fcr_my_cloud_cancel">cancel</string>
+    <string name="fcr_my_cloud_upload_fail">Upload Fail</string>
+    <string name="fcr_my_cloud_delete_fail">Delete Fail</string>
 </resources>

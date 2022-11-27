@@ -38,7 +38,7 @@ class UploadTask(
     }
 
     fun start() {
-        val file = File(filePath)
+//        val file = File(filePath)
 //        //实现上传进度监听
 //        val requestFile = ProgressRequestBody(file, mimeType, object : ProgressCallBack {
 //            override fun onProgressUpdate(percentage: Int) {
@@ -72,7 +72,6 @@ class UploadTask(
 //            }
 //
 //        })
-
 
         ThreadManager.instance.runOnIOThread {
             var code=putImg(url,filePath,mimeType)

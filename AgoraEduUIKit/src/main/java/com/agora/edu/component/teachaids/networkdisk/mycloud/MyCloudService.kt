@@ -1,5 +1,6 @@
 package com.agora.edu.component.teachaids.networkdisk.mycloud
 
+import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudDelFileReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudPresignedUrlsReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudUserAndResourceReq
 import com.agora.edu.component.teachaids.networkdisk.mycloud.res.MyCloudCoursewareRes
@@ -42,13 +43,20 @@ internal interface MyCloudService {
         @Body body: RequestBody
     ): Call<ResponseBody<String>>
 
-    @POST(" /edu/apps/{appId}/v4/users/{userUuid}/resources/{resourceUuid}")
+    @POST("/edu/apps/{appId}/v4/users/{userUuid}/resources/{resourceUuid}")
     fun buildUserAndResource(
         @Path("appId") appId: String,
         @Path("userUuid") userUuid: String,
         @Path("resourceUuid") resourceUuid: String,
         @Body params:MyCloudUserAndResourceReq
-    ): Call<ResponseBody<List<MyCloudPresignedUrlsRes>>>
+    ): Call<ResponseBody<Any>>
+
+    @HTTP(method = "DELETE",path = "/cn/edu/apps/{appId}/v3/users/{userUuid}/resources",hasBody = true)
+    fun deleteFileRequest(
+        @Path("appId") appId: String,
+        @Path("userUuid") userUuid: String,
+        @Body params: List<MyCloudDelFileReq>
+    ): Call<ResponseBody<Any>>
 
 
 }

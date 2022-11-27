@@ -12,6 +12,7 @@ class AgoraUIDialogBuilder(private val context: Context) {
     private var positiveListener: View.OnClickListener? = null
     private var negativeListener: View.OnClickListener? = null
     private var mCancelable: Boolean? = null
+    private var positiveTextColor: Int? = null
 
     fun setCanceledOnTouchOutside(cancel: Boolean): AgoraUIDialogBuilder {
         this.mCancelable = cancel
@@ -30,6 +31,11 @@ class AgoraUIDialogBuilder(private val context: Context) {
 
     fun positiveText(text: String): AgoraUIDialogBuilder {
         this.positiveText = text
+        return this
+    }
+
+    fun positiveTextColor(color: Int): AgoraUIDialogBuilder {
+        this.positiveTextColor = color
         return this
     }
 
@@ -58,6 +64,7 @@ class AgoraUIDialogBuilder(private val context: Context) {
         title?.let { dialog.setTitle(it) }
         message?.let { dialog.setMessage(it) }
         positiveText?.let { dialog.setPositiveButtonText(it) }
+        positiveTextColor?.let { dialog.setPositiveButtonTextColor(it) }
         positiveListener?.let { dialog.setPositiveClick(it) }
         negativeText?.let { dialog.setNegativeButtonText(it) }
         negativeListener?.let { dialog.setNegativeClick(it) }

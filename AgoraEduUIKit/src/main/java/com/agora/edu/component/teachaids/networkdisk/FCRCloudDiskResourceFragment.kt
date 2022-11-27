@@ -35,19 +35,10 @@ abstract class FCRCloudDiskResourceFragment :
 
     lateinit var binding: FcrCloudDiskResourceFragmentLayoutBinding
     var coursewareLoadListener: FCRCloudCoursewareLoadListener? = null
+
     private var itemClickListener = object : FCRCloudItemClickListener {
         override fun onClick(courseware: AgoraEduCourseware) {
             coursewareLoadListener?.onLoad(courseware)
-        }
-
-        override fun onSelectClick(courseware: AgoraEduCourseware, position: Int) {
-            if(position!=-1){
-                binding.myClouldBottomeLayout.visibility=GONE
-                binding.myClouldDeleteLayout.visibility= VISIBLE
-            }else{
-                binding.myClouldBottomeLayout.visibility= VISIBLE
-                binding.myClouldDeleteLayout.visibility= GONE
-            }
         }
     }
     protected val coursewaresAdapter = CoursewareListAdapter(itemClickListener)
