@@ -95,9 +95,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private val XLS = "application/vnd.ms-excel"
     private val XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     private val TXT = "text/plain"
-
-
-    private val ALF =""
+    private val ALF ="application/alf"
 
     var userUuid:String?=null
 
@@ -302,8 +300,8 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         } else {
             intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         }
-        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLSX|$XLS|$TXT"
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT))
+        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLSX|$XLS|$TXT|$ALF"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT,ALF))
         val activity = context as Activity
         activity.startActivityForResult(intent, selectFileResultCode)
     }
