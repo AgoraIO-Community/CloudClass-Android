@@ -137,6 +137,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         super.onViewCreated(view, savedInstanceState)
         initReceiver()
         coursewaresAdapter.addMyCloudItemClickListener(myClouldItemClickListener)
+        coursewaresAdapter.setMyCloudType()
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)

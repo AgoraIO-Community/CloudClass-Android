@@ -72,6 +72,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/checkbox"
+        android:visibility="gone"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:scaleType="centerInside"

@@ -34,6 +34,7 @@ import io.agora.agoraeduuikit.R
 class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickListener?) :
     ListAdapter<AgoraEduCourseware, ViewHolder>(UserListDiff()) {
 
+    var isMyCloudType=false
     var currentPosition = -1
     var myCloudItemClickListener:MyCloudItemClickListener?=null
 
@@ -44,6 +45,10 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
     fun resetCurrentPosition(){
         currentPosition=-1;
         notifyDataSetChanged()
+    }
+
+    fun setMyCloudType(){
+        isMyCloudType=true
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -72,6 +77,12 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
             holder.binding.checkbox.setImageResource(R.mipmap.my_clould_checkbox_selected)
         }else{
             holder.binding.checkbox.setImageResource(R.mipmap.my_clould_checkbox_unselected)
+        }
+
+        if(isMyCloudType){
+            holder.binding.checkbox.visibility=View.VISIBLE
+        }else{
+            holder.binding.checkbox.visibility=View.GONE
         }
     }
 }
