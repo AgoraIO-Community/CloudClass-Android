@@ -47,7 +47,7 @@
             />
         <TextView
             android:id="@+id/percent_text"
-            android:text="23%"
+            android:text="0%"
             android:textSize="10dp"
             android:textColor="#7D8798"
             android:layout_marginLeft="3dp"

@@ -92,6 +92,11 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private val MP3 = "audio/x-mpeg"
     private val PNG = "image/png"
     private val JPG = "image/jpeg"
+    private val XLS = "application/vnd.ms-excel"
+    private val XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    private val TXT = "text/plain"
+
+
     private val ALF =""
 
     var userUuid:String?=null
@@ -297,8 +302,8 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         } else {
             intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         }
-        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG"
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG))
+        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLSX|$XLS|$TXT"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT))
         val activity = context as Activity
         activity.startActivityForResult(intent, selectFileResultCode)
     }
@@ -382,7 +387,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
         LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
 
-        ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
+
         binding.progressFileBarLayout.isVisible=true
         binding.progressFileBar.animation =laodingAnimation()
 
@@ -424,6 +429,9 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
             PNG -> res="png"
             JPG -> res="jpeg"
             ALF -> res="ALF"
+            XLS -> res="xls"
+            XLSX -> res="xlsx"
+            TXT -> res="txt"
         }
         return res
     }
@@ -437,7 +445,23 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         return rotate
     }
 
+    fun resetUploadBtn(){
+        binding.myClouldUploadFileLayout.isClickable=true
+        binding.myClouldUploadImgLayout.isClickable=true
+        binding.progressImgBarLayout.isVisible=false
+        binding.progressImgBar.animation?.let { it1 ->
+            it1.cancel()
+        }
+
+        binding.progressFileBarLayout.isVisible=false
+        binding.progressFileBar.animation?.let { it1 ->
+            it1.cancel()
+        }
+    }
+
     private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
+        binding.myClouldUploadFileLayout.isClickable=false
+        binding.myClouldUploadImgLayout.isClickable=false
         myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType)),
             callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
                 override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
@@ -456,6 +480,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
 
                 override fun onFailure(error: EduContextError?) {
+                    resetUploadBtn()
                     context?.let {
                         ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
                     }
@@ -472,6 +497,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
 
                 override fun onError(code: Int, error: String?) {
+                    resetUploadBtn()
                     context?.let {
                         ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
                     }
@@ -480,7 +506,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
 
                 override fun onSuccess(code: Int) {
                     buildUserAndResource()
-
                 }
             })
 
@@ -501,15 +526,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                 callback = object : EduContextCallback<Any> {
                                     override fun onSuccess(result: Any?) {
                                         onRefreshClick()
-                                        binding.progressImgBarLayout.isVisible=false
-                                        binding.progressImgBar.animation?.let { it1 ->
-                                            it1.cancel()
-                                        }
-
-                                        binding.progressFileBarLayout.isVisible=false
-                                        binding.progressFileBar.animation?.let { it1 ->
-                                            it1.cancel()
-                                        }
+                                        resetUploadBtn()
                                     }
 
                                     override fun onFailure(error: EduContextError?) {

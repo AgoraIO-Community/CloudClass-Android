@@ -1,7 +1,11 @@
 package com.agora.edu.component.teachaids.networkdisk
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -110,5 +114,32 @@ class ViewHolder(val binding: FcrCloudDiskListItemLayoutBinding) :
             binding.icon.setImageResource(it)
         }
         binding.name.text = courseware.resourceName
+        binding.stateText.visibility = View.GONE
+        binding.checkbox.visibility = View.VISIBLE
+        binding.percentLayout.visibility=View.GONE
+        when(courseware.taskProgress?.status){
+            "Fail" -> {
+                binding.stateText.visibility = View.VISIBLE
+                binding.stateText.text =courseware.taskProgress?.status
+            }
+            "Converting" -> {
+                binding.percentLayout.visibility=View.VISIBLE
+                binding.progressFileBar.animation=laodingAnimation()
+                binding.percentText.text = "${courseware.taskProgress?.convertedPercentage}%"
+                binding.checkbox.visibility = View.GONE
+
+            }
+            "Finished" -> ""
+            "Waiting" -> ""
+        }
+    }
+
+    fun laodingAnimation(): Animation {
+        var rotate =  RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotate.interpolator = LinearInterpolator()
+        rotate.duration=500//设置动画持续周期
+        rotate.repeatCount = Animation.INFINITE
+        rotate.fillAfter=true//动画执行完后是否停留在执行完的状态
+        return rotate
     }
 }

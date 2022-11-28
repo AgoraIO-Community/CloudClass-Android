@@ -14,7 +14,8 @@ ext {
     ]
     EduCore = [
             'versionCode': 51,
-            'versionName': sdkVersion.appVersion
+//            'versionName': sdkVersion.appVersion
+            'versionName': '2.8.2-SNAPSHOT'
     ]
     EduUIKit = [
             'versionCode': 51,
@@ -49,7 +50,8 @@ ext {
             'glide'                          : '4.11.0',
             'glide_compiler'                 : '4.11.0',
             'core_ktx'                       : '1.3.2',
-            'EduCore'                        : sdkVersion.appVersion,
+//            'EduCore'                        : sdkVersion.appVersion,
+            'EduCore'                        : '2.8.2-SNAPSHOT',
             'lifecycle_extensions'           : '2.2.0'
     ]
 }
