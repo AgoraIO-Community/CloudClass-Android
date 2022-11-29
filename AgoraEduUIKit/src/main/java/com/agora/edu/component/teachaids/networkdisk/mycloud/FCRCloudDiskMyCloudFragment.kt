@@ -310,7 +310,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private fun initReceiver() {
         receiver = object : BroadcastReceiver() {
             override fun onReceive(con: Context?, intent: Intent?) {
-                LogX.d("action_HT"+intent?.action)
                 val data = intent?.getParcelableExtra<Uri>(
                     context?.resources
                         ?.getString(R.string.my_clould_select_image_key)
