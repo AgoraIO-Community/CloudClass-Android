@@ -361,7 +361,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         fileSize = MyCloudUriUtils.getFileSize(context,uri)
 
         var tempType = FileHelper.getInstance().getFileMimeType(uri)
-
+        conversion=null
         if(PDF == tempType || PPT == tempType || PPTX == tempType || DOC == tempType || DOCX ==tempType){
             conversion = Conversion().apply {
                 if(PPTX == tempType) {
@@ -388,7 +388,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         fileSize = MyCloudUriUtils.getFileSize(context,uri)
 
         var tempType = FileHelper.getInstance().getFileMimeType(uri)
-
+        conversion=null
         if(PDF == tempType || PPT == tempType || PPTX == tempType || DOC == tempType || DOCX ==tempType){
             conversion = Conversion().apply {
                 if(PPTX == tempType) {
