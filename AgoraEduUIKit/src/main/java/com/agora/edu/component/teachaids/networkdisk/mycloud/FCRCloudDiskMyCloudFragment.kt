@@ -427,7 +427,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
             GIF -> res="gif"
             PNG -> res="png"
             JPG -> res="jpeg"
-            ALF -> res="ALF"
+            ALF -> res="alf"
             XLS -> res="xls"
             XLSX -> res="xlsx"
             TXT -> res="txt"
