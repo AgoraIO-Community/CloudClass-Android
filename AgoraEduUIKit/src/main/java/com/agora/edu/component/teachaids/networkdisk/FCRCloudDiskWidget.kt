@@ -130,6 +130,11 @@ class FCRCloudDiskWidget : AgoraBaseWidget() {
                         1 -> {
                             replaceTab(1)
                             updateTabTextStyle(tabBindings[1], true)
+                            try {
+                                if(fragments!=null && fragments.size>1) {
+                                    (fragments[FCRCloudDiskMyCloudFragment.tagStr] as FCRCloudDiskMyCloudFragment).registerReceiver()
+                                }
+                            }catch (e:Exception){}
                         }
                     }
                 }

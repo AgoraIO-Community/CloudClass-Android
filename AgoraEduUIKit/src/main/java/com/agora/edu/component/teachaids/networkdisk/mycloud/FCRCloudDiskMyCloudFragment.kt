@@ -310,6 +310,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private fun initReceiver() {
         receiver = object : BroadcastReceiver() {
             override fun onReceive(con: Context?, intent: Intent?) {
+                LogX.d("action_HT"+intent?.action)
                 val data = intent?.getParcelableExtra<Uri>(
                     context?.resources
                         ?.getString(R.string.my_clould_select_image_key)
@@ -529,8 +530,10 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                     }
 
                                     override fun onFailure(error: EduContextError?) {
-                                        context?.let {
-                                            ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
+                                        if(error?.code!=30409450) {
+                                            context?.let {
+                                                ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
+                                            }
                                         }
                                         Log.e(tagStr, "添加用户资源失败:${error?.let { GsonUtil.toJson(it) }}")
                                     }
@@ -570,6 +573,10 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 })
         }
 
+    }
+
+    fun registerReceiver(){
+        initReceiver()
     }
 
     fun unregisterReceiver(){
