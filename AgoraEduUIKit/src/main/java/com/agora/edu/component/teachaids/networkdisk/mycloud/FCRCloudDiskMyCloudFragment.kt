@@ -110,6 +110,8 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
 
     var delPosition:Int=0
 
+    var moreReqest=false
+
     var myClouldItemClickListener= object :MyCloudItemClickListener{
         override fun onSelectClick(courseware: AgoraEduCourseware, position: Int) {
             if(position!=-1){
@@ -351,10 +353,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     fun sendImageMessage(uri: Uri){
-        LogX.d("选择图片名称>>>"+FileHelper.getInstance().getFilename(uri))
-        LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
-        LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
-
         binding.progressImgBarLayout.isVisible=true
         binding.progressImgBar.animation =laodingAnimation()
 
@@ -382,11 +380,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     fun sendFileMessage(uri: Uri){
-        LogX.d("选择图片名称>>>"+FileHelper.getInstance().getFilename(uri))
-        LogX.d("选择图片路径>>>"+FileHelper.getInstance().getFileMimeType(uri))
-        LogX.d("选择图片路径>>>"+MyCloudUriUtils.getFileAbsolutePath(context,uri))
-
-
         binding.progressFileBarLayout.isVisible=true
         binding.progressFileBar.animation =laodingAnimation()
 
@@ -459,11 +452,16 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
+        if(moreReqest){
+           return
+        }
+        moreReqest=true
         binding.myClouldUploadFileLayout.isClickable=false
         binding.myClouldUploadImgLayout.isClickable=false
         myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType)),
             callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
                 override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
+                    moreReqest=false
                     result?.get(0)?.resourceUuid?.let {
                         resourceUuid=it
                     }
@@ -479,6 +477,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
 
                 override fun onFailure(error: EduContextError?) {
+                    moreReqest=false
                     resetUploadBtn()
                     context?.let {
                         ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))

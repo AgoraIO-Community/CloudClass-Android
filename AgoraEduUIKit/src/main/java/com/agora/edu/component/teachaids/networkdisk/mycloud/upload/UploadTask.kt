@@ -38,41 +38,6 @@ class UploadTask(
     }
 
     fun start() {
-//        val file = File(filePath)
-//        //实现上传进度监听
-//        val requestFile = ProgressRequestBody(file, mimeType, object : ProgressCallBack {
-//            override fun onProgressUpdate(percentage: Int) {
-//                callback?.onProgressUpdate(filePath, percentage)
-//            }
-//
-//            override fun onError() {}
-//            override fun onFinish() {}
-//        })
-////        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-//
-//        val body: RequestBody = file.asRequestBody(mimeType.toMediaTypeOrNull())
-//
-//        call = uploadFile(url,body)
-//        call?.enqueue(object : Callback<ResponseBody<String>?> {
-//            override fun onResponse(
-//                call: Call<ResponseBody<String>?>,
-//                response: Response<ResponseBody<String>?>
-//            ) {
-//                LogX.d("onProgressUpdate: ${response.body()}====${response.code()}")
-//                if (response.body() != null) {
-//                    callback?.onSuccess(filePath,response.body())
-//                }else{
-//                    callback?.onError(filePath,"")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseBody<String>?>, t: Throwable) {
-//                LogX.d("onProgressUpdate: ${t.message}")
-//                callback?.onError(filePath,"")
-//            }
-//
-//        })
-
         ThreadManager.instance.runOnIOThread {
             var code=putImg(url,filePath,mimeType)
             if(code==200){
