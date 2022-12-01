@@ -353,39 +353,30 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     fun sendImageMessage(uri: Uri){
+        if(moreReqest){
+            return
+        }
         binding.progressImgBarLayout.isVisible=true
         binding.progressImgBar.animation =laodingAnimation()
 
-        ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
-        resourceName=FileHelper.getInstance().getFilename(uri)
-        fileSize = MyCloudUriUtils.getFileSize(context,uri)
-
-        var tempType = FileHelper.getInstance().getFileMimeType(uri)
-        conversion=null
-        if(PDF == tempType || PPT == tempType || PPTX == tempType || DOC == tempType || DOCX ==tempType){
-            conversion = Conversion().apply {
-                if(PPTX == tempType) {
-                    type="dynamic"
-                }else{
-                    type="static"
-                }
-            }
-        }
-
-        MyCloudUriUtils.getFileAbsolutePath(context,uri)?.let {
-            presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
-                it
-            )
-        }
+       requestParams(uri)
     }
 
     fun sendFileMessage(uri: Uri){
+        if(moreReqest){
+            return
+        }
         binding.progressFileBarLayout.isVisible=true
         binding.progressFileBar.animation =laodingAnimation()
 
+        requestParams(uri)
+    }
+
+
+    private fun requestParams(uri: Uri){
         ext =getExt(FileHelper.getInstance().getFileMimeType(uri))
         resourceName=FileHelper.getInstance().getFilename(uri)
-        fileSize = MyCloudUriUtils.getFileSize(context,uri)
+        fileSize = FileHelper.getInstance().getFileLength(uri)
 
         var tempType = FileHelper.getInstance().getFileMimeType(uri)
         conversion=null
@@ -399,14 +390,24 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
             }
         }
 
-        MyCloudUriUtils.getFileAbsolutePath(context,uri)?.let {
-            presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
-                it
-            )
+
+        context?.let {
+            var relealFilePath= FileUtils.getPath(it,uri)
+            if(relealFilePath==null){
+                relealFilePath =MyCloudUriUtils.getFileAbsolutePath(context,uri)
+            }
+            if(relealFilePath==null){
+                ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_select_image_fail))
+            }else{
+                presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
+                    relealFilePath
+                )
+            }
         }
     }
 
-    fun getExt(mimeType: String):String{
+
+    private fun getExt(mimeType: String):String{
         var res=""
         when(mimeType){
             PPT -> res="ppt"
@@ -452,9 +453,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
-        if(moreReqest){
-           return
-        }
         moreReqest=true
         binding.myClouldUploadFileLayout.isClickable=false
         binding.myClouldUploadImgLayout.isClickable=false

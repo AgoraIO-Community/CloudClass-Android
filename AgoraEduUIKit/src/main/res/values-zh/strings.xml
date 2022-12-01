@@ -572,5 +572,6 @@
     <string name="fcr_my_cloud_cancel">取消</string>
     <string name="fcr_my_cloud_upload_fail">上传失败</string>
     <string name="fcr_my_cloud_delete_fail">删除失败</string>
+    <string name="fcr_my_cloud_select_image_fail">选择图片失败</string>
 
 </resources>

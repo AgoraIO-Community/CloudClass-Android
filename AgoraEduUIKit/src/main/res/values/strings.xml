@@ -567,4 +567,5 @@ Delete your account will result in ….\n
     <string name="fcr_my_cloud_cancel">cancel</string>
     <string name="fcr_my_cloud_upload_fail">Upload Fail</string>
     <string name="fcr_my_cloud_delete_fail">Delete Fail</string>
+    <string name="fcr_my_cloud_select_image_fail">Select Image Fial</string>
 </resources>
