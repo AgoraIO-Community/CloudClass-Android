@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -89,7 +90,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private val PDF = "application/pdf"
     private val MP4 = "video/mp4"
     private val GIF = "image/gif"
-    private val MP3 = "audio/x-mpeg"
+    private val MP3 = "audio/mpeg"
     private val PNG = "image/png"
     private val JPG = "image/jpeg"
     private val XLS = "application/vnd.ms-excel"
@@ -111,6 +112,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     var delPosition:Int=0
 
     var moreReqest=false
+    var isUploadImage=false
 
     var myClouldItemClickListener= object :MyCloudItemClickListener{
         override fun onSelectClick(courseware: AgoraEduCourseware, position: Int) {
@@ -234,6 +236,15 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                     searchCoursewareList.addAll(it)
                                     searchCoursewareList
                                 }
+
+                                tmp.forEach { it1 ->
+                                    if(it1.taskProgress?.status == "Converting"){
+                                        Handler().postDelayed(Runnable {
+                                            onRefreshClick()
+                                        },5000)
+                                    }
+                                }
+
                                 coursewaresAdapter.submitList(tmp.toList(), Runnable {
                                     if(pageNo==1 && coursewareList.size>0){
                                         binding.recyclerView.layoutManager?.scrollToPosition(0)
@@ -296,14 +307,9 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
      * 选择本地文件
      */
     private fun selectFileFromLocal() {
-        val intent: Intent?
-        if (VersionUtils.isTargetQ(context)) {
-            intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-        } else {
-            intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        }
-        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLSX|$XLS|$TXT|$ALF"
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLS|$XLSX|$TXT|$ALF"
         intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT,ALF))
         val activity = context as Activity
         activity.startActivityForResult(intent, selectFileResultCode)
@@ -356,9 +362,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         if(moreReqest){
             return
         }
-        binding.progressImgBarLayout.isVisible=true
-        binding.progressImgBar.animation =laodingAnimation()
-
+        isUploadImage=true
        requestParams(uri)
     }
 
@@ -366,9 +370,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         if(moreReqest){
             return
         }
-        binding.progressFileBarLayout.isVisible=true
-        binding.progressFileBar.animation =laodingAnimation()
-
+        isUploadImage=false
         requestParams(uri)
     }
 
@@ -392,11 +394,14 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
 
 
         context?.let {
-            var relealFilePath= FileUtils.getPath(it,uri)
-            if(relealFilePath==null){
-                relealFilePath =MyCloudUriUtils.getFileAbsolutePath(context,uri)
+            var relealFilePath= FileHelper.getInstance().getFilePath(uri)
+            if(relealFilePath ==null || relealFilePath == ""){
+                relealFilePath = MyCloudUriUtils.getFileAbsolutePath(context,uri)
             }
-            if(relealFilePath==null){
+            if(relealFilePath ==null || relealFilePath == ""){
+                relealFilePath= FileUtils.getPath(it,uri)
+            }
+            if(relealFilePath ==null || relealFilePath == ""){
                 ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_select_image_fail))
             }else{
                 presignedUrls(FileHelper.getInstance().getFilename(uri),FileHelper.getInstance().getFileMimeType(uri),
@@ -453,6 +458,15 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     }
 
     private fun presignedUrls(fileName:String,fileType:String,filePath:String) {
+
+        if(isUploadImage){
+            binding.progressImgBarLayout.isVisible=true
+            binding.progressImgBar.animation =laodingAnimation()
+        }else{
+            binding.progressFileBarLayout.isVisible=true
+            binding.progressFileBar.animation =laodingAnimation()
+        }
+
         moreReqest=true
         binding.myClouldUploadFileLayout.isClickable=false
         binding.myClouldUploadImgLayout.isClickable=false

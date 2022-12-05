@@ -38,7 +38,7 @@ internal interface MyCloudService {
     ): Call<ResponseBody<List<MyCloudPresignedUrlsRes>>>
 
     @PUT
-    fun uploadFile(
+    fun uploadFile(@Header("Authorization")  auth: String ="",@Header("x-agora-token") token:String="",@Header("x-agora-uid") uid:String="",
         @Url url:String ,
         @Body body: RequestBody
     ): Call<ResponseBody<String>>

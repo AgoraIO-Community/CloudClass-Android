@@ -17,6 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import java.util.concurrent.TimeoutException
 
 
 class UploadTask(
@@ -34,7 +35,7 @@ class UploadTask(
     var call: Call<ResponseBody<String>>? = null
 
     private fun uploadFile(url: String,requestBody: RequestBody): Call<ResponseBody<String>> {
-        return uploadService.uploadFile(url, requestBody)
+        return uploadService.uploadFile(url=url, body = requestBody)
     }
 
     fun start() {
@@ -48,23 +49,29 @@ class UploadTask(
         }
     }
 
-    @Throws(IOException::class)
     fun putImg(uploadUrl: String, localPath: String?,mimeType: String): Int {
         val imageType = mimeType.toMediaTypeOrNull()
         return put(imageType, uploadUrl, localPath)
     }
 
-    @Throws(IOException::class)
     fun put(mediaType: MediaType?, uploadUrl: String, localPath: String?): Int {
-        val file = File(localPath)
-        val body: RequestBody = file.asRequestBody(mediaType)
-        val request: Request = Request.Builder()
-            .url(uploadUrl)
-            .put(body)
-            .build()
-        val client: OkHttpClient = OkHttpClient.Builder().build()
-        val response: okhttp3.Response = client.newCall(request).execute()
-        return response.code
+        try {
+            val file = File(localPath)
+            val body: RequestBody = file.asRequestBody(mediaType)
+            val request: Request = Request.Builder()
+                .url(uploadUrl)
+                .put(body)
+                .build()
+            val client: OkHttpClient = OkHttpClient.Builder().build()
+            val response: okhttp3.Response = client.newCall(request).execute()
+            return response.code
+        }catch (e:Exception){
+            return -1
+        }catch (e1:IOException){
+            return -1
+        }catch (e2:TimeoutException){
+            return -1
+        }
     }
 
 
