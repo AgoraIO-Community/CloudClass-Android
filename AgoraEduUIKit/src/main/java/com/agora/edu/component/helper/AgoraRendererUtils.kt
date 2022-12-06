@@ -16,34 +16,29 @@ import io.agora.agoraeduuikit.provider.AgoraUIUserDetailInfo
  */
 object AgoraRendererUtils {
 
-    fun onRendererContainer(
-        eduCore: AgoraEduCore?,
-        viewGroup: ViewGroup?,
-        info: AgoraUIUserDetailInfo,
-        isLocalStream: Boolean
-    ) {
+    fun onRendererContainer(eduCore: AgoraEduCore?, viewGroup: ViewGroup?, info: AgoraUIUserDetailInfo, isLocalStream: Boolean) {
         val streamUuid = info.streamUuid
         val roomUuid = eduCore?.eduContextPool()?.roomContext()?.getRoomInfo()?.roomUuid ?: ""
 
-        LogX.i("AgoraRendererUtils","onRendererContainer>>>>> isLocal= $isLocalStream viewGroup=$viewGroup streamUuid=$streamUuid")
-        LogX.i("AgoraRendererUtils","onRendererContainer>>>>> audioSourceState= ${info.audioSourceState},videoSourceState=${info.videoSourceState}")
+        LogX.i("AgoraRendererUtils", "onRendererContainer>>>>> isLocal= $isLocalStream viewGroup=$viewGroup streamUuid=$streamUuid")
+        LogX.i("AgoraRendererUtils", "onRendererContainer>>>>> audioSourceState= ${info.audioSourceState},videoSourceState=${info.videoSourceState}")
 
-        if (viewGroup == null) {
-            eduCore?.eduContextPool()?.mediaContext()?.stopRenderVideo(streamUuid)
-            eduCore?.eduContextPool()?.mediaContext()?.stopPlayAudio(roomUuid, streamUuid)
-        } else {
-            if (info.videoSourceState == AgoraEduContextMediaSourceState.Open) {
-                eduCore?.eduContextPool()?.mediaContext()?.startRenderVideo(EduContextRenderConfig(mirrorMode = EduContextMirrorMode.DISABLED), viewGroup, streamUuid)
-                eduCore?.eduContextPool()?.streamContext()?.setRemoteVideoStreamSubscribeLevel(streamUuid, AgoraEduContextVideoSubscribeLevel.LOW)
-            } else {
+        if (info.videoSourceState == AgoraEduContextMediaSourceState.Open) {
+            if (viewGroup == null) {
                 eduCore?.eduContextPool()?.mediaContext()?.stopRenderVideo(streamUuid)
-            }
-
-            if (info.audioSourceState == AgoraEduContextMediaSourceState.Open) {
-                eduCore?.eduContextPool()?.mediaContext()?.startPlayAudio(roomUuid, streamUuid)
             } else {
-                eduCore?.eduContextPool()?.mediaContext()?.stopPlayAudio(roomUuid, streamUuid)
+                eduCore?.eduContextPool()?.mediaContext()?.startRenderVideo(
+                    EduContextRenderConfig(mirrorMode = EduContextMirrorMode.DISABLED), viewGroup, streamUuid)
             }
+            eduCore?.eduContextPool()?.streamContext()?.setRemoteVideoStreamSubscribeLevel(streamUuid, AgoraEduContextVideoSubscribeLevel.LOW)
+        } else {
+            eduCore?.eduContextPool()?.mediaContext()?.stopRenderVideo(streamUuid)
+        }
+
+        if (info.audioSourceState == AgoraEduContextMediaSourceState.Open) {
+            eduCore?.eduContextPool()?.mediaContext()?.startPlayAudio(roomUuid, streamUuid)
+        } else {
+            eduCore?.eduContextPool()?.mediaContext()?.stopPlayAudio(roomUuid, streamUuid)
         }
     }
 }
