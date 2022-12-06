@@ -3,6 +3,7 @@ package com.agora.edu.component.teachaids.networkdisk.mycloud.upload
 import com.agora.edu.component.teachaids.networkdisk.mycloud.MyCloudService
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import io.agora.agoraeducore.core.internal.base.network.RetrofitManager
+import io.agora.agoraeducore.core.internal.base.network.interceptor.HttpLoggingInterceptor
 import io.agora.agoraeducore.core.internal.edu.common.bean.ResponseBody
 import io.agora.agoraeducore.core.internal.launch.AgoraEduSDK
 import io.agora.agoraeducore.core.internal.log.LogX

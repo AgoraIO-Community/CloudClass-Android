@@ -133,6 +133,7 @@ class FCRCloudDiskWidget : AgoraBaseWidget() {
                             try {
                                 if(fragments!=null && fragments.size>1) {
                                     (fragments[FCRCloudDiskMyCloudFragment.tagStr] as FCRCloudDiskMyCloudFragment).registerReceiver()
+                                    (fragments[FCRCloudDiskMyCloudFragment.tagStr] as FCRCloudDiskMyCloudFragment).onRefreshClick()
                                 }
                             }catch (e:Exception){}
                         }

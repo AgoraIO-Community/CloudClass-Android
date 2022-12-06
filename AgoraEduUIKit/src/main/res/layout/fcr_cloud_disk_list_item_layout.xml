@@ -19,13 +19,20 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="2022PPT课件制作2022PPT课件制作2022PPT课件制作2022PPT课件制作2022PPT课件制作.pptx"
         android:textColor="@color/fcr_text_level1_color"
         android:textSize="12sp"
-        android:text="2022PPT课件制作.pptx"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="@id/icon"
-        app:layout_constraintBottom_toBottomOf="@id/icon"
-        android:layout_marginStart="10dp"/>
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constrainedWidth="true"
+        android:paddingRight="160dp"
+        />
 
     <LinearLayout
         android:id="@+id/percent_layout"
@@ -72,7 +79,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/checkbox"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:scaleType="centerInside"

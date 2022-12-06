@@ -123,4 +123,6 @@
     <color name="fcr_text_disabled_color">#BDBDCA</color>
     <color name="fcr_text_enabled_color">#357BF6</color>
     <color name="fcr_text_commit_color">#F04C36</color>
+
+    <color name="transparent">#00ffffff</color>
 </resources>

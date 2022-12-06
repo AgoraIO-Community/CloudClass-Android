@@ -221,7 +221,7 @@
                     </RelativeLayout>
                 </LinearLayout>
                 <ImageView
-                    android:visibility="gone"
+                    android:id="@+id/mycloud_help_img"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_centerVertical="true"

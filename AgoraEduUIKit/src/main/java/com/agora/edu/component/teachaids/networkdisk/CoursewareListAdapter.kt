@@ -60,7 +60,9 @@ class CoursewareListAdapter(private val itemClickListener: FCRCloudItemClickList
         val item = getItem(position)
         holder.bind(item)
         holder.binding.root.setOnClickListener {
-            itemClickListener?.onClick(item)
+            if("Finished" == item.taskProgress?.status || item.taskProgress?.status ==null) {
+                itemClickListener?.onClick(item)
+            }
         }
 
         holder.binding.checkbox.setOnClickListener {
@@ -128,6 +130,7 @@ class ViewHolder(val binding: FcrCloudDiskListItemLayoutBinding) :
         binding.stateText.visibility = View.GONE
         binding.checkbox.visibility = View.VISIBLE
         binding.percentLayout.visibility=View.GONE
+
         when(courseware.taskProgress?.status){
             "Fail" -> {
                 binding.stateText.visibility = View.VISIBLE

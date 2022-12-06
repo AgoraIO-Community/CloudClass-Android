@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.agora.edu.component.teachaids.RightToLeftDialog
 import com.agora.edu.component.teachaids.networkdisk.FCRCloudDiskResourceFragment
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.Conversion
 import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudDelFileReq
@@ -96,7 +97,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private val XLS = "application/vnd.ms-excel"
     private val XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     private val TXT = "text/plain"
-    private val ALF ="application/alf"
 
     var userUuid:String?=null
 
@@ -209,6 +209,10 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                 }
             }
         }
+
+        binding.mycloudHelpImg.setOnClickListener {
+            context?.let { it1 -> RightToLeftDialog(it1).show() }
+        }
     }
 
     override fun getInitCoursewareList(): List<AgoraEduCourseware> {
@@ -237,15 +241,20 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                     searchCoursewareList
                                 }
 
-                                tmp.forEach { it1 ->
-                                    if(it1.taskProgress?.status == "Converting"){
-                                        Handler().postDelayed(Runnable {
-                                            onRefreshClick()
-                                        },5000)
+
+                                run breaking@{
+                                    tmp.forEach continuing@{ it1 ->
+                                        LogX.d("=========${it1.taskProgress?.status}====${it1.taskProgress?.convertedPercentage}")
+                                        if(it1.taskProgress?.status == "Converting"){
+                                            Handler().postDelayed({
+                                                onRefreshClick()
+                                            },5000)
+                                            return@breaking
+                                        }
                                     }
                                 }
-
                                 coursewaresAdapter.submitList(tmp.toList(), Runnable {
+                                    coursewaresAdapter.notifyDataSetChanged()
                                     if(pageNo==1 && coursewareList.size>0){
                                         binding.recyclerView.layoutManager?.scrollToPosition(0)
                                     }
@@ -261,7 +270,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
             })
     }
 
-    override fun onRefreshClick() {
+    public override fun onRefreshClick() {
         if (!searchMode) {
             coursewareList.clear()
             nextPageNo = 1
@@ -309,8 +318,8 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
     private fun selectFileFromLocal() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLS|$XLSX|$TXT|$ALF"
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT,ALF))
+        intent.type = "$PPT|$PPTX|$DOC|$DOCX|$PDF|$MP4|$GIF|$MP3|$PNG|$JPG|$XLS|$XLSX|$TXT"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(PPT,PPTX,DOC,DOCX,PDF,MP4,GIF,MP3,PNG,JPG,XLS,XLSX,TXT))
         val activity = context as Activity
         activity.startActivityForResult(intent, selectFileResultCode)
     }
@@ -426,7 +435,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
             GIF -> res="gif"
             PNG -> res="png"
             JPG -> res="jpeg"
-            ALF -> res="alf"
             XLS -> res="xls"
             XLSX -> res="xlsx"
             TXT -> res="txt"
@@ -540,6 +548,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
                                     }
 
                                     override fun onFailure(error: EduContextError?) {
+                                        resetUploadBtn()
                                         if(error?.code!=30409450) {
                                             context?.let {
                                                 ToastManager.showShort(it.resources.getString(R.string.fcr_my_cloud_upload_fail))
