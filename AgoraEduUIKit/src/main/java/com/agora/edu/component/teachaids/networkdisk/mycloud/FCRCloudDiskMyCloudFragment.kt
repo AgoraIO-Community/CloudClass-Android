@@ -244,7 +244,6 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
 
                                 run breaking@{
                                     tmp.forEach continuing@{ it1 ->
-                                        LogX.d("=========${it1.taskProgress?.status}====${it1.taskProgress?.convertedPercentage}")
                                         if(it1.taskProgress?.status == "Converting"){
                                             Handler().postDelayed({
                                                 onRefreshClick()
