@@ -477,7 +477,7 @@ internal class FCRCloudDiskMyCloudFragment : FCRCloudDiskResourceFragment() {
         moreReqest=true
         binding.myClouldUploadFileLayout.isClickable=false
         binding.myClouldUploadImgLayout.isClickable=false
-        myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType)),
+        myCloudManager?.presignedUrls(params = arrayListOf(MyCloudPresignedUrlsReq(fileName,fileType,ext,fileSize,conversion)),
             callback = object : EduContextCallback<List<MyCloudPresignedUrlsRes>> {
                 override fun onSuccess(result: List<MyCloudPresignedUrlsRes>?) {
                     moreReqest=false
