@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_transparent"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="@dimen/agora_board_loading_view_corner_radius"
+        app:cardBackgroundColor="@color/fcr_system_component_color"
+        app:cardElevation="@dimen/agora_board_loading_view_elevation">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/agora_loading_Img"
+                android:layout_width="@dimen/agora_board_loading_img_w"
+                android:layout_height="@dimen/agora_board_loading_img_h"
+                android:src="@drawable/agora_ui_loading_img" />
+
+            <!-- <androidx.appcompat.widget.AppCompatImageView
+                 android:id="@+id/agora_loading_Img"
+                 android:layout_width="@dimen/agora_board_loading_img_w"
+                 android:layout_height="@dimen/agora_board_loading_img_h"
+                 android:src="@drawable/agora_ui_loading_img" />-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:gravity="center"
+                android:text="@string/fcr_room_loading"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+</androidx.appcompat.widget.LinearLayoutCompat>

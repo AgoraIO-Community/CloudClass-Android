@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.agora.agoraclasssdk">
+
+    <application>
+
+        <activity
+            android:name="io.agora.classroom.ui.AgoraClass1V1Activity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name="io.agora.classroom.ui.AgoraClassSmallActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        
+        <activity
+            android:name="io.agora.classroom.ui.AgoraClassLargeActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name="io.agora.classroom.ui.goup.AgoraClassSmallGroupingActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+	    <activity
+            android:name="io.agora.classroom.ui.large.AgoraClassLargeVocationalActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name="io.agora.classroom.ui.large.AgoraClassLargeMixStreamActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name="io.agora.classroom.ui.large.AgoraClassLargeHostingActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+    </application>
+
+</manifest>
