@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/fcr_margin_normal">
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/tv_recall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fcr_margin_normal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/fcr_hyphenate_im_recall"
+            android:textSize="@dimen/fcr_minSp"
+            android:theme="@style/mute_bg_style"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fcr_margin_normal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/fcr_hyphenate_im_student"
+            android:textSize="@dimen/fcr_minSp"
+            android:theme="@style/normal_role_bg_style"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/fcr_nickName_max_width"
+            android:layout_marginEnd="@dimen/fcr_margin_normal"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/fcr_hyphenate_im_nickname"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="@dimen/fcr_textSize"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/fcr_avatar_size"
+            android:layout_height="@dimen/fcr_avatar_size"
+            android:src="@mipmap/fcr_default_avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:layout_marginTop="@dimen/fcr_margin_normal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="@dimen/fcr_margin_normal" />
+
+            <ImageView
+                android:id="@+id/resend"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="@dimen/fcr_margin_normal"
+                android:src="@mipmap/fcr_icon_resend"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/fcr_send_msg_bg"
+            android:padding="@dimen/fcr_margin_normal"
+            android:text="@string/fcr_hyphenate_im_message"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="@dimen/fcr_textSize" />
+
+
+    </LinearLayout>
+</RelativeLayout>
