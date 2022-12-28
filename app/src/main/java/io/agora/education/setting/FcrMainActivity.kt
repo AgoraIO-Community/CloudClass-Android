@@ -276,8 +276,8 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
         setQATestPage()
 
         if (BuildConfig.DEBUG) {
-            edRoomName.setText("apaas1205")
-            edUserName.setText("student123")
+            //edRoomName.setText("apaas1205")
+            //edUserName.setText("student123")
         }
 
         intent?.let {
