@@ -23,6 +23,12 @@ public class SpUtil {
     private static String name = "sp_config.cfg";
     private static SharedPreferences sp;
 
+    public static void init(Context ctx) {
+        if (sp == null) {
+            sp = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
+        }
+    }
+
     public static void saveInt(Context ctx, String key, int value) {
         if (sp == null) {
             sp = ctx.getSharedPreferences(name, Context.MODE_PRIVATE);
