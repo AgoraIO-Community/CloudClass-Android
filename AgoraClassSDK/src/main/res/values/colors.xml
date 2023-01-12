@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcrcolorPrimary">#F5F7F8</color>
+    <color name="fcrcolorPrimaryDark">#F5F7F8</color>
+    <color name="fcrcolorAccent">#44A2FC</color>
+    <color name="fcr_class_room_bg">@color/fcr_system_background_color</color>
+    <color name="agora_board_line_color">#ECECF1</color>
+    <color name="fcr_white">#FFFFFF</color>
+</resources>

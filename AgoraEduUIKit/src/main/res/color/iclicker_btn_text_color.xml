@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/fcr_system_component_highlight_color" android:state_selected="true" />
+    <item android:color="@color/fcr_text_contrast_color" android:state_selected="false" />
+</selector>
