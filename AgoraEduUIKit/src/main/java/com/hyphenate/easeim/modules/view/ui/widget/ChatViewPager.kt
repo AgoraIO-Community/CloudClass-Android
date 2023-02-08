@@ -288,15 +288,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         mutes: MutableList<String>?,
         expireTime: Long
     ) {
-
-    }
-
-    override fun onMuteListRemoved(chatRoomId: String?, mutes: MutableList<String>?) {
-
-    }
-
-    override fun onWhiteListAdded(chatRoomId: String?, whitelist: MutableList<String>?) {
-        whitelist?.forEach {
+        mutes?.forEach {
             if (it == userName) {
                 EaseRepository.instance.singleMuted = true
                 ThreadManager.instance.runOnMainThread {
@@ -307,8 +299,8 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         }
     }
 
-    override fun onWhiteListRemoved(chatRoomId: String?, whitelist: MutableList<String>?) {
-        whitelist?.forEach {
+    override fun onMuteListRemoved(chatRoomId: String?, mutes: MutableList<String>?) {
+        mutes?.forEach {
             if (it == userName) {
                 EaseRepository.instance.singleMuted = false
                 ThreadManager.instance.runOnMainThread {
@@ -319,6 +311,14 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 }
             }
         }
+    }
+
+    override fun onWhiteListAdded(chatRoomId: String?, whitelist: MutableList<String>?) {
+
+    }
+
+    override fun onWhiteListRemoved(chatRoomId: String?, whitelist: MutableList<String>?) {
+
     }
 
     override fun onAllMemberMuteStateChanged(chatRoomId: String?, isMuted: Boolean) {
