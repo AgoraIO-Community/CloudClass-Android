@@ -205,7 +205,7 @@ object CommonUtil {
             Glide.with(context).load(
                     imageUri
                             ?: imageUrl
-            ).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
+            ).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView)
             return imageView.layoutParams
         }
         val params = imageView.layoutParams
@@ -243,8 +243,8 @@ object CommonUtil {
                         RequestOptions()
                                 .error(R.mipmap.fcr_default_img)
                 )
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .dontAnimate()
                 .override(params.width, params.height)
                 .into(imageView)
