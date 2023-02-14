@@ -217,8 +217,8 @@ class EaseRepository {
      */
     @Synchronized
     fun fetchChatRoomSingleMutedStatus() {
-        ChatClient.getInstance().chatroomManager().checkIfInChatRoomWhiteList(
-                chatRoomId, object : ValueCallBack<Boolean> {
+        ChatClient.getInstance().chatroomManager().asyncCheckIfInMuteList(
+            chatRoomId, object : ValueCallBack<Boolean> {
             override fun onSuccess(value: Boolean?) {
                 value?.let {
                     singleMuted = it
@@ -234,7 +234,7 @@ class EaseRepository {
             }
 
             override fun onError(error: Int, errorMsg: String?) {
-                EMLog.e(TAG, "fetchChatRoomSingleMutedStatus failed: $error = $errorMsg")
+                EMLog.e(TAG, "asyncCheckIfInMuteList failed: $error = $errorMsg")
             }
         })
     }
