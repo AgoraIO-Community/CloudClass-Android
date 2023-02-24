@@ -47,7 +47,7 @@ public class EaseIM {
         options.setAppKey(appkey);
         options.setDeleteMessagesAsExitChatRoom(false);
         ChatClient.getInstance().init(context, options);
-        ChatClient.getInstance().setDebugMode(true);
+        ChatClient.getInstance().setDebugMode(false);
         sdkInited = true;
         return true;
     }

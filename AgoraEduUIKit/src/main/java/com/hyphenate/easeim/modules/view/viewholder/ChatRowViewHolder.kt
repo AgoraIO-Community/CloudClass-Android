@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import io.agora.agoraeduuikit.R
@@ -45,7 +46,9 @@ abstract class ChatRowViewHolder(
             Glide.with(context).load(
                     message.getStringAttribute(EaseConstant.AVATAR_URL, "")
             ).apply(RequestOptions.bitmapTransform(CircleCrop())).error(R.mipmap.fcr_default_avatar)
-                    .into(
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(
                             avatar
                     )
         }
