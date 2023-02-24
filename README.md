@@ -1,6 +1,6 @@
 ﻿> *其他语言版本：[简体中文](README.zh.md)*
 
-This page introduces how to run the Android sample project.
+This page introduces how to run the Android sample project（source code）.
 
 ## Prerequisites 
 
@@ -10,7 +10,7 @@ This page introduces how to run the Android sample project.
   - Android Studio
 - Real Android devices, such as Nexus 5X. We recommend using real devices because some function may not work well on simulators or you may encounter performance issues.
 
-## Run the sample project （source code）
+## Run the sample project
 
 - https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android
 
