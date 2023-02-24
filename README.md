@@ -10,9 +10,12 @@ This page introduces how to run the Android sample project.
   - Android Studio
 - Real Android devices, such as Nexus 5X. We recommend using real devices because some function may not work well on simulators or you may encounter performance issues.
 
-## Run the sample project
+## Run the sample project （source code）
 
 - https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android
+
+## Run the sample project （Maven）
+- https://github.com/fenggit/CloudClass-Android-Maven
 
 ## Manually access the SDK
 - Reference [Quick Access](https://docs.agora.io/en/agora-class/agora_class_quickstart_android?platform=Android)
