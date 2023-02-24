@@ -1,6 +1,6 @@
 ﻿> *Read this in another language: [English](README.md)*
 
-本文指导你运行 Android 示例项目。
+本文指导你运行 Android 示例项目。本项目是以源码方式，运行项目
 
 ## 前提条件
 
@@ -10,8 +10,12 @@
   - Android Studio
 - Android 设备。部分模拟机可能存在功能缺失或者性能问题，所以推荐使用真机。
 
-## 运行示例项目
+## 运行示例项目教程
 - https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android
+
+
+## 以maven方式引用的Demo
+- https://github.com/fenggit/CloudClass-Android-Maven
 
 ## 手动接入SDK
 - 参考[快速接入](https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android)
