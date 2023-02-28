@@ -62,6 +62,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.dependencies.recyclerview}"
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
     implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    implementation "androidx.activity:activity-ktx:1.2.2" // for ide hint
 
     if (readyPublishGithub.toBoolean()) {
         compileOnly "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
