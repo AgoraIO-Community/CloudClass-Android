@@ -31,13 +31,15 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        val language: String = SpUtil.getString(this, AppHostUtil.LOCALE_LANGUAGE)
-        val country: String = SpUtil.getString(this, AppHostUtil.LOCALE_AREA)
-        if (!TextUtils.isEmpty(language) && !TextUtils.isEmpty(country)) {
-            val locale = Locale(language, country)
-            MultiLanguageUtil.changeAppLanguage(newBase, locale, false)
+        newBase?.let {
+            val language: String = SpUtil.getString(newBase, AppHostUtil.LOCALE_LANGUAGE)
+            val country: String = SpUtil.getString(newBase, AppHostUtil.LOCALE_AREA)
+            if (!TextUtils.isEmpty(language) && !TextUtils.isEmpty(country)) {
+                val locale = Locale(language, country)
+                MultiLanguageUtil.changeAppLanguage(newBase, locale, false)
+            }
         }
-        super.attachBaseContext(newBase);
+        super.attachBaseContext(newBase)
     }
 
     private fun setRefreshTokenListener() {

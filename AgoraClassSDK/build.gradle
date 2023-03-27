@@ -41,6 +41,7 @@ dependencies {
     implementation "com.google.android.material:material:${rootProject.ext.dependencies.material_material}"
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.dependencies.constraintlayout}"
     implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.dependencies.lifecycle_extensions}"
+    implementation "androidx.activity:activity-ktx:1.2.2" // for hint
 
     compileOnly project(path: ':AgoraEduUIKit')
     if (readyPublishGithub.toBoolean()) {
