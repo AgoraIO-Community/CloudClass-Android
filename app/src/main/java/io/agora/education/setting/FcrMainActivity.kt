@@ -276,10 +276,10 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
         debugLayoutDetect()
         setQATestPage()
 
-        if (BuildConfig.DEBUG) {
-            edRoomName.setText("apaas230309")
-            edUserName.setText("student123")
-        }
+//        if (BuildConfig.DEBUG) {
+//            edRoomName.setText("apaas230309")
+//            edUserName.setText("student123")
+//        }
     }
 
     fun setQATestPage() {
