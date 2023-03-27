@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#16151D">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginTop="110dp"
+            android:src="@drawable/fcr_splash_top_img"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_light"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fcr_splash_light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="410dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:src="@drawable/fcr_splash_desc" />
+
+            <Button
+                android:id="@+id/btn_join"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_join_circle_white"
+                android:drawableLeft="@drawable/fcr_splash_login"
+                android:padding="5dp"
+                android:text="@string/fcr_startup_button_startup"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/fcr_splash_name" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="30dp"
+            android:src="@drawable/fcr_splash_afc" />
+    </FrameLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_height="23dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_status_bar_network_state_icon"
+        android:layout_width="@dimen/agora_status_bar_icon_size"
+        android:layout_height="@dimen/agora_status_bar_icon_size"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginLeft="@dimen/margin_large" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/agora_status_bar_center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginRight="@dimen/margin_large"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_record_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:drawableLeft="@drawable/fcr_record_icon_red"
+            android:drawablePadding="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/fcr_record_recording"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="@dimen/text_size_head_smallest"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_status_bar_classroom_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right|end"
+            android:singleLine="true"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="@dimen/text_size_head_smallest"
+            tools:text="myclassroom" />
+
+        <View
+            android:id="@+id/agora_status_bar_center_divider"
+            android:layout_width="@dimen/divider_thin"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@color/fcr_system_divider_color" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_status_bar_class_started_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_toEndOf="@+id/agora_status_bar_center_divider"
+            android:layout_toRightOf="@+id/agora_status_bar_center_divider"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="@dimen/text_size_head_smallest" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_status_bar_class_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_toEndOf="@+id/agora_status_bar_class_started_text"
+            android:layout_toRightOf="@+id/agora_status_bar_class_started_text"
+            android:gravity="center_vertical"
+            android:text="@string/fcr_toast_classtime_default"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="@dimen/text_size_head_smallest" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_status_bar_setting_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="@dimen/margin_large"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/agora_room_icon_setting_src"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_status_bar_exit_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/fcr_header_room_back"
+        android:visibility="gone" />
+</RelativeLayout>

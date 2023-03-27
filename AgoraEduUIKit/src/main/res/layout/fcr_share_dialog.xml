@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fcr_share_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/fcr_share_room_link_w"
+        android:layout_height="match_parent"
+        android:background="@drawable/fcr_share_half_react_bg"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/fcr_inshare_label_share"
+                android:textColor="#191919"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/fcr_room_share_close"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="right"
+                android:padding="16dp"
+                android:src="@drawable/fcr_share_room_close" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="@string/fcr_inshare_label_room_id"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/fcr_room_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/fcr_join_copy_id"
+                android:gravity="center"
+                android:text="000 000 000"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/fcr_inshare_label_invitation"
+            android:textColor="@color/fcr_text_level2_color"
+            android:textSize="12sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="118dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/fcr_share_room_link_bg"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/fcr_room_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="35dp"
+                android:textColor="@color/fcr_text_disabled_color"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/fcr_room_share"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/fcr_brand_react_bg"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:src="@drawable/fcr_room_link_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="@string/fcr_inshare_button_share_friends"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/fcr_room_copy_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/fcr_room_copy_icon" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
