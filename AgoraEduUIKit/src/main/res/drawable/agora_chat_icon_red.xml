@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size android:height="@dimen/agora_message_unread_count_size"/>
+    <solid android:color="@color/agora_chat_error_icon_color"/>
+    <corners android:radius="@dimen/agora_message_unread_count_radius"/>
+</shape>
