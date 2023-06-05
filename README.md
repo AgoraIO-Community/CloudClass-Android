@@ -2,6 +2,8 @@
 
 This page introduces how to run the Android sample project.
 
+Only for Global Region.
+
 ## Prerequisites 
 
 - Make sure you have made the preparations mentioned in the [Agora e-Education Guide](https://github.com/AgoraIO-Usecase/eEducation).
