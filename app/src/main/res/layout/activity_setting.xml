@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_gray_EEEEEE">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_16"
+                android:src="@drawable/ic_back_gray" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="@string/about"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_17" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/iv_back"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/privacyOrdinance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text0"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/termsOfService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/terms_of_service"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/disclaimers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/disclaimers0"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text1"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/registerAgora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/register_account"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text2"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/version_time"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_releaseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:text="2023.05.04"
+                android:textColor="@color/fcr_gray_666666"
+                android:textSize="@dimen/sp_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text3"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:text="2.8.0"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:text="@string/powered_by_agora_io"
+        android:textColor="@color/fcr_gray_666666"
+        android:textSize="@dimen/sp_12" />
+
+</RelativeLayout>
