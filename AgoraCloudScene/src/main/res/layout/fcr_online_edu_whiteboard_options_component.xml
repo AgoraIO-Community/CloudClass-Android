@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/option_item_appliance_group"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:elevation="@dimen/dp_5"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/option_item_pen_text_g"
+        android:layout_width="@dimen/agora_option_item_w"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="1dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/option_item_pen_text"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/agora_wb_line"
+            android:gravity="center"
+            android:textColor="@color/fcr_text_level2_color"
+            android:visibility="visible"
+            tools:text="18"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/option_item_wb_pen_color"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/agora_def_color" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/option_item_wb_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/fcr_system_divider_color" />
+
+    <!-- 这里不能设置，否则代码设置失效 android:tint="@color/agora_def_color" -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/option_item_appliance"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/agora_option_item_appliance_bottom"
+        android:scaleType="centerInside"
+        android:src="@drawable/agora_wb_clicker" />
+</LinearLayout>

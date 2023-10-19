@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/agora_userlist_row_height"
+    android:clipChildren="false"
+    android:gravity="center_vertical">
+
+
+    <TextView
+        android:id="@+id/tv_waving_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.6"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding_large"
+        android:singleLine="true"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="@dimen/text_size_smaller"
+        tools:text="stuName" />
+
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_desktop_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <io.agora.online.component.SquareRelativeLayout
+            android:id="@+id/roster_item_desktop_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_desktop_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/agora_userlist_desktop_switch" />
+        </io.agora.online.component.SquareRelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
