@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fcr_join_head_bg" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layout_join_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="60dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:text="@string/app_name"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/btn_join_setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingBottom="8dp"
+                            android:paddingRight="26dp"
+                            android:src="@drawable/fcr_join_setting" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_join_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/btn_join"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/fcr_join_icon_bg"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="25dp">
+
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:layout_marginRight="16dp"
+                                android:background="@drawable/fcr_join_icon_blue_bg"
+                                android:src="@drawable/fcr_joinclass" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fcr_join_join_room"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/btn_create"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/fcr_join_icon_bg"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="25dp">
+
+                            <ImageView
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:layout_marginRight="16dp"
+                                android:background="@drawable/fcr_join_icon_blue_bg"
+                                android:src="@drawable/fcr_create_class" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fcr_join_create_room"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/fcr_join_content_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="27dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="@string/fcr_join_my_room_list"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_create_success_tips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/bg_join_circle_blue"
+                        android:gravity="center"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        android:text="@string/fcr_create_room_success_tips"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_join_class"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="21dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginRight="21dp"
+                            android:nestedScrollingEnabled="false"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/layout_join_empty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="80dp"
+                            android:drawableTop="@drawable/fcr_join_list_empty"
+                            android:drawablePadding="10dp"
+                            android:gravity="center"
+                            android:text="@string/fcr_home_label_no_records"
+                            android:textColor="#ACABB0"
+                            android:visibility="visible" />
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_join_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="18dp"
+        android:paddingTop="68dp"
+        android:paddingRight="26dp"
+        android:paddingBottom="12dp">
+
+        <ImageView
+            android:id="@+id/btn_join2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/fcr_join_icon_blue_bg"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@drawable/fcr_joinclass" />
+
+        <ImageView
+            android:id="@+id/btn_create2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fcr_join_icon_blue_bg"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@drawable/fcr_create_class" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1.0" />
+
+        <ImageView
+            android:id="@+id/btn_join_setting2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fcr_join_setting" />
+    </LinearLayout>
+
+</FrameLayout>
+
+

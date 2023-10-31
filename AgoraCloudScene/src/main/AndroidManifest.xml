@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.agora.online">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!--  保证不休眠，进而可以正常发送心跳包  环信-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application>
+        <activity
+            android:name=".sdk.AgoraOnlineClassActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name=".sdk.AgoraOnlineClassGroupActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@style/AgoraAppThemeFullScreen"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+    </application>
+
+</manifest>

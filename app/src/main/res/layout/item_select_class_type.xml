@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_half_rect_white"
+    android:orientation="vertical"
+    android:paddingBottom="15dp">
+
+    <LinearLayout
+        android:id="@+id/fcr_class_item"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_item_rect_2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fcr_text_class_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/fcr_login_free_class_mode_option_small_classroom"
+            android:textColor="@color/fcr_black"
+            android:textSize="15sp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/fcr_text_class_type_desc"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:text="1～300"-->
+<!--            android:textColor="@color/fcr_type_desc_color"-->
+<!--            android:textSize="10sp" />-->
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/fcr_class_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/fcr_checkbox_img2" />
+
+</FrameLayout>
+
+
+

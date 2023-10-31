@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ****************** 房间Room ****************** -->
+    <string name="fcr_room_class_time_away">距离上课还有：</string>
+    <string name="fcr_room_class_started">已上课：</string>
+    <string name="fcr_room_class_not_start">课程未开始</string>
+
+    <!-- xxx为课程结束时间-当前时间的分钟数，取整显示 -->
+    <string name="fcr_room_class_end_warning">课程还有%s分钟结束</string>
+    <string name="fcr_room_class_leave_class_title">下课确认</string>
+    <string name="fcr_room_class_leave_cancel">取消</string>
+    <string name="fcr_room_class_leave_sure">确认</string>
+    <string name="fcr_room_class_over_notice">结束通知</string>
+    <string name="fcr_room_class_over">课程已结束</string>
+
+    <!-- 快到下课时间了，关闭教室提示
+  xxx为教室关闭时间-当前时间的分钟数，取整显示 -->
+    <string name="fcr_room_close_warning">距离教室关闭还有%s分钟</string>
+    <string name="fcr_room_exit_warning">课程还没结束，是否确定要退出教室？</string>
+    <string name="fcr_vocational_teacher_absent">老师当前不在教室中</string>
+    <string name="fcr_vocational_video_start_early_alert">提前上课并立即播放课程录像，是否确认？</string>
+    <string name="fcr_room_exit">退出教室</string>
+    <string name="fcr_room_leave_room">退出教室</string>
+    <string name="fcr_room_loading">加载中...</string>
+
+    <!-- 一对一教室内，标题 -->
+    <string name="fcr_room_one_to_one_title">一对一课堂</string>
+
+    <!-- 一对一教室内，tab 页的视频标题 -->
+    <string name="fcr_room_one_to_one_tab_video">视频</string>
+
+    <!-- 一对一教室内，tab 页的聊天标题 -->
+    <string name="fcr_room_one_to_one_tab_chat">聊天</string>
+    <string name="fcr_room_start_class">开始上课</string>
+    <string name="fcr_room_small_title">小班课</string>
+    <string name="fcr_room_lecture_title">大班课</string>
+    <string name="fcr_room_room_name">房间名</string>
+    <string name="fcr_room_invite_link">邀请链接</string>
+    <string name="fcr_room_room_link_student">复制链接</string>
+
+    <!-- ****************** 工具箱Tool Box ****************** -->
+    <string name="fcr_tool_box_cloud_storage">云盘</string>
+    <string name="fcr_tool_box_record_class">录制</string>
+    <string name="fcr_tool_box_poll">投票</string>
+    <string name="fcr_tool_box_count_down">倒计时</string>
+    <string name="fcr_tool_box_popup_quiz">答题器</string>
+
+    <!-- ****************** 流Stream ****************** -->
+    <string name="fcr_stream_stop_video">你的视频被老师停止了</string>
+    <string name="fcr_stream_stop_audio">你暂时不能发言了</string>
+    <string name="fcr_stream_start_video">你的视频被老师启用了</string>
+    <string name="fcr_stream_start_audio">你可以发言了</string>
+
+    <!-- ****************** 媒体(Media) ****************** -->
+    <string name="fcr_media_camera">摄像头</string>
+    <string name="fcr_media_mic">麦克风</string>
+    <string name="fcr_media_speaker">扬声器</string>
+    <string name="fcr_media_camera_direction">方向</string>
+    <string name="fcr_media_camera_direction_front">前</string>
+    <string name="fcr_media_camera_direction_back">后</string>
+
+    <!-- ****************** 用户(user) ****************** -->
+    <string name="fcr_user_hands">举手请长按</string>
+    <string name="fcr_user_kick_out">移出学生</string>
+    <string name="fcr_user_kick_out_once">仅移出教室一次</string>
+    <string name="fcr_user_kick_out_forever">禁止再次进入教室</string>
+    <string name="fcr_user_kick_out_submit">确定</string>
+    <string name="fcr_user_kick_out_cancel">取消</string>
+    <string name="fcr_user_local_kick_out_notice">移出通知</string>
+    <string name="fcr_user_local_kick_out">你被移出教室</string>
+    <string name="fcr_user_local_start_co_hosting">老师邀请你上台了，与大家积极互动吧</string>
+    <string name="fcr_user_local_stop_co_hosting">你离开讲台了，暂时无法与大家互动</string>
+
+    <!-- xxx为获得奖励的学生名字 -->
+    <string name="fcr_user_congratulation">祝贺%s获得奖励</string>
+    <string name="fcr_user_list">花名册</string>
+    <string name="fcr_user_list_teacher_name">教师姓名:</string>
+    <string name="fcr_user_list_carousel_setting">轮播</string>
+    <string name="fcr_user_list_student_name">学生姓名</string>
+    <string name="fcr_user_list_stage">讲台</string>
+    <string name="fcr_user_list_auth">授权</string>
+    <string name="fcr_user_list_video">摄像头</string>
+    <string name="fcr_user_list_audio">麦克风</string>
+    <string name="fcr_user_list_reward">奖励</string>
+    <string name="fcr_user_list_ban">踢人</string>
+    <string name="fcr_user_dialog_class_destroy_title">提示信息</string>
+    <string name="fcr_user_loading">加载中</string>
+    <string name="fcr_user_waiting_student">等待学生进入教室</string>
+    <string name="fcr_user_waiting_tutor">等待外教进入教室</string>
+    <string name="fcr_user_student_left">学生已离开教室</string>
+    <string name="fcr_user_tutor_left">外教已离开教室</string>
+
+    <!-- ****************** 白板Netless Board ****************** -->
+    <string name="fcr_netless_board_granted">你已被老师授权，请使用白板工具互动</string>
+    <string name="fcr_netless_board_ungranted">你已被老师收回授权，无法使用白板工具互动</string>
+
+    <!-- ****************** 监视器Monitor ****************** -->
+    <string name="fcr_monitor_network_disconnected">当前网络已断开,请检查设备网络连接</string>
+    <string name="fcr_monitor_network_reconnecting">重连中...</string>
+    <string name="fcr_monitor_login_remote_device">账号在其他设备登录</string>
+    <string name="fcr_monitor_network_poor">当前网络质量不佳，请检查设备网络连接</string>
+
+    <!-- ****************** 答题器PopupQuiz ****************** -->
+
+    <!-- 答题器标题 -->
+    <string name="fcr_popup_quiz">答题器</string>
+
+    <!-- 提交答案 -->
+    <string name="fcr_popup_quiz_post">提交答案</string>
+
+    <!-- 修改答案 -->
+    <string name="fcr_popup_quiz_change">修改答案</string>
+
+    <!-- 结束答题时，已答题人数 -->
+    <string name="fcr_popup_quiz_submission">已答题人数</string>
+
+    <!-- 结束答题时，正确率 -->
+    <string name="fcr_popup_quiz_accuracy">正确率</string>
+
+    <!-- 结束答题时，正确答案 -->
+    <string name="fcr_popup_quiz_correct">正确答案</string>
+
+    <!-- 结束答题时，我的答案 -->
+    <string name="fcr_popup_quiz_my_answer">我的答案</string>
+    <string name="fcr_popup_quiz_start_again">重新开始</string>
+    <string name="fcr_popup_quiz_answer_time">答题用时</string>
+    <string name="fcr_popup_quiz_start_answer">开始答题</string>
+    <string name="fcr_popup_quiz_end_answer">结束答题</string>
+    <string name="fcr_popup_quiz_student_name">学生姓名</string>
+    <string name="fcr_popup_quiz_student_answer">所选答案</string>
+
+    <!-- ****************** 投票器Poll ****************** -->
+
+    <!-- 投票器标题 -->
+    <string name="fcr_poll_title">投票</string>
+
+    <!-- 提交投票按钮标题 -->
+    <string name="fcr_poll_submit">投票</string>
+
+    <!-- 投票选项方式-多选 -->
+    <string name="fcr_poll_multi">多选</string>
+
+    <!-- 投票选项方式-单选 -->
+    <string name="fcr_poll_single">单选</string>
+
+    <!-- 发起投票按钮标题 -->
+    <string name="fcr_poll_start">开始投票</string>
+
+    <!-- 提示输入投票内容 -->
+    <string name="fcr_poll_input_placeholder">请输入投票内容</string>
+
+    <!-- 提示输入选项 -->
+    <string name="fcr_poll_input_option">请输入选项</string>
+    <string name="fcr_poll_vote_title">请输入投票问题</string>
+
+    <!-- ****************** 倒计时CountdownTimer ****************** -->
+
+    <!-- 倒计时标题 -->
+    <string name="fcr_countdown_timer_title">倒计时</string>
+
+    <!-- 倒计时 开始 -->
+    <string name="fcr_tool_box_start">开始</string>
+
+    <!-- 倒计时单位 -->
+    <string name="fcr_tool_box_unit_second">(秒)</string>
+
+    <!-- ****************** 云盘Cloud ****************** -->
+    <string name="fcr_cloud_file_name">文件名</string>
+    <string name="fcr_cloud_search">搜索</string>
+    <string name="fcr_cloud_public_resource">公共资源</string>
+    <string name="fcr_cloud_private_resource">我的云盘</string>
+
+    <!-- xxx为文件个数 -->
+    <string name="fcr_cloud_total_item">共%s项</string>
+
+    <!-- ****************** 环信IM Hyphenate IM ****************** -->
+    <string name="fcr_hyphenate_im_chat">聊天</string>
+    <string name="fcr_hyphenate_im_announcement">公告</string>
+    <string name="fcr_hyphenate_im_teacher">老师</string>
+    <string name="fcr_hyphenate_im_assistant">助教</string>
+    <string name="fcr_hyphenate_im_no_message">还没有消息</string>
+    <string name="fcr_hyphenate_im_no_announcement">暂无公告</string>
+    <string name="fcr_hyphenate_im_all_mute">全员禁言中</string>
+    <string name="fcr_hyphenate_im_mute">您已被老师禁言，请谨慎发言</string>
+    <string name="fcr_hyphenate_im_login_faild">登录失败</string>
+    <string name="fcr_hyphenate_im_join_faild">登录失败</string>
+    <string name="fcr_hyphenate_im_send_faild_by_mute">禁言中，发送失败</string>
+    <string name="fcr_hyphenate_im_send_faild_by_sensitive">发送内容包含敏感词，发送失败</string>
+    <string name="fcr_hyphenate_im_login_on_other_device">账户在其他设备登录</string>
+    <string name="fcr_hyphenate_im_logout_forced">账户被强制退出</string>
+    <string name="fcr_hyphenate_im_teacher_remove_message">老师删除了一条消息</string>
+    <string name="fcr_hyphenate_im_teacher_mute_all">已开启全体学生禁言</string>
+    <string name="fcr_hyphenate_im_teacher_unmute_all">已关闭全体学生禁言</string>
+    <string name="fcr_hyphenate_im_recall">撤回</string>
+    <string name="fcr_hyphenate_im_recall_a_message">撤回一条消息</string>
+
+    <!-- xxx老师名字 -->
+    <string name="fcr_hyphenate_im_muted_by_teacher">您被%s老师禁止发言了</string>
+
+    <!-- xxx老师名字 -->
+    <string name="fcr_hyphenate_im_unmuted_by_teacher">您被%s老师允许发言了</string>
+    <string name="fcr_hyphenate_im_photo_permission_disabled">获取相册图片权限失败</string>
+    <string name="fcr_hyphenate_im_image_too_large">图片太大，请选择其他图片</string>
+    <string name="fcr_hyphenate_im_notice_cancel">取消</string>
+    <string name="fcr_hyphenate_im_notice_send">发布</string>
+    <string name="fcr_hyphenate_im_notice_up_to">最多500字符</string>
+    <string name="fcr_hyphenate_im_no_announcement_teacher">暂无公告，去发布</string>
+    <string name="fcr_hyphenate_im_login_chat_failed">登录聊天失败</string>
+    <string name="fcr_hyphenate_im_appKey_is_empty">AppKey为空</string>
+    <string name="fcr_hyphenate_im_words_out_of_limit">字数超出限制</string>
+    <string name="fcr_hyphenate_im_release_announcement_failed">发布公告失败</string>
+    <string name="fcr_hyphenate_im_mute_title">禁言</string>
+    <string name="fcr_hyphenate_im_nickname">昵称</string>
+    <string name="fcr_hyphenate_im_student">学生</string>
+    <string name="fcr_hyphenate_im_message">消息</string>
+    <string name="fcr_hyphenate_im_enter_contents">请输入消息</string>
+    <string name="fcr_hyphenate_im_send">发送</string>
+    <string name="fcr_hyphenate_im_join_chat_room_failed">加入聊天室失败</string>
+    <string name="fcr_hyphenate_im_fetch_token_failed">获取IM token失败</string>
+    <string name="fcr_hyphenate_im_send_message_failed">发送消息失败</string>
+    <string name="fcr_hyphenate_im_remove_message_notify">%s删除了一条消息</string>
+    <string name="fcr_hyphenate_im_message_incloud_illegal_content">发送失败，消息包含非法字符</string>
+    <string name="fcr_hyphenate_im_you_have_been_muted_by_teacher">您被%s老师禁止发言了</string>
+    <string name="fcr_hyphenate_im_you_have_been_unmuted_by_teacher">您被%s老师允许发言了</string>
+    <string name="fcr_hyphenate_im_say_something">说点什么</string>
+    <string name="fcr_hyphenate_im_create_failed">注册聊天失败</string>
+    <string name="fcr_hyphenate_im_download_picture">下载图片</string>
+    <string name="fcr_hyphenate_im_global_mute_failed">全局禁言失败</string>
+    <string name="fcr_hyphenate_im_global_remove_mute_failed">解除全局禁言失败</string>
+
+    <!-- ****************** RTM IM ****************** -->
+    <string name="fcr_rtm_im_title">聊天</string>
+    <string name="fcr_rtm_im_mute_tag_text">已禁言</string>
+    <string name="fcr_rtm_im_message">消息</string>
+    <string name="fcr_rtm_im_no_message">还没有消息</string>
+    <string name="fcr_rtm_im_quiz">提问</string>
+    <string name="fcr_rtm_im_send">发送</string>
+    <string name="fcr_rtm_im_input_placeholder">请输入消息</string>
+    <string name="fcr_rtm_im_silenced_placeholder">禁言中</string>
+    <string name="fcr_rtm_im_mute_mode">禁言模式开启</string>
+    <string name="fcr_rtm_im_unmute_mode">禁言模式关闭</string>
+    <string name="fcr_rtm_im_mute_chat">禁言</string>
+    <string name="fcr_rtm_im_student">学生</string>
+    <string name="fcr_rtm_im_teacher">老师</string>
+    <string name="fcr_rtm_im_role_assistant">助教</string>
+
+    <!-- ****************** 分组 Group ****************** -->
+    <string name="fcr_group_help_title">请求帮助</string>
+    <string name="fcr_group_help_content">你可以邀请老师进入小组帮助你</string>
+    <string name="fcr_group_help_teacher_busy_msg">老师正在忙，请稍后重试</string>
+    <string name="fcr_group_teacher_is_helping_others_msg">老师正在帮助其他讨论组，请稍后重试</string>
+    <string name="fcr_group_teacher_exist_hint">老师已在小组内</string>
+    <string name="fcr_group_invite">邀请</string>
+
+    <!-- xxx为分组名 -->
+    <string name="fcr_group_invitation">老师邀请您加入%s</string>
+    <string name="fcr_group_button_join">加入</string>
+    <string name="fcr_group_button_later">稍后</string>
+
+    <!-- xxx为分组名 -->
+    <string name="fcr_group_joining">正在加入%s</string>
+    <string name="fcr_group_join">加入讨论组</string>
+    <string name="fcr_group_enter_welcome">欢迎加入%s与大家互动讨论</string>
+
+    <!-- xxx为角色
+  yyy为名字 -->
+    <string name="fcr_group_enter_group">%s%s进入小组</string>
+
+    <!-- xxx为角色
+  yyy为名字 -->
+    <string name="fcr_group_exit_group">%s%s离开小组</string>
+    <string name="fcr_group_close_group">老师结束了小组讨论</string>
+    <string name="fcr_group_invite_back_main_room">老师邀请你回到大房间</string>
+    <string name="fcr_group_back_main_room">正在回到大房间...</string>
+
+    <!-- 结束分组讨论提示 -->
+    <string name="fcr_group_tips_title_close_group">确定要结束分组讨论？</string>
+
+    <!-- 结束分组讨论描述文案 -->
+    <string name="fcr_group_tips_content_close_group">结束后，所有学员将返回大教室</string>
+
+    <!-- 弹窗提示返回大房间，还是小房间时 -->
+    <string name="fcr_group_back_sure">确定</string>
+
+    <!-- 弹窗提示返回大房间，还是小房间时 -->
+    <string name="fcr_group_back_cancel">取消</string>
+
+    <!-- 弹窗提示返回大房间，还是小房间时 -->
+    <string name="fcr_group_back_exit">退出</string>
+
+    <!-- 弹窗提示返回大房间，还是小房间时 -->
+    <string name="fcr_group_back_to_main_room">回到大房间</string>
+
+    <!-- 弹窗提示返回大房间，还是小房间时 -->
+    <string name="fcr_group_exit_room">离开教室</string>
+
+    <!-- 笔迹、课件带入分组选项 -->
+    <string name="fcr_group_copy_content_to_group">将教室内容复制到讨论组</string>
+
+    <!-- 确认弹框，确认 -->
+    <string name="fcr_group_sure">确定</string>
+    <string name="fcr_group_join_error">加入讨论组失败</string>
+
+    <!-- ****************** 角色 Role ****************** -->
+
+    <!-- 老师 -->
+    <string name="fcr_role_teacher">老师</string>
+
+    <!-- 助教 -->
+    <string name="fcr_role_assistant">助教</string>
+
+    <!-- 学生 -->
+    <string name="fcr_role_student">学生</string>
+
+    <!-- 观众 -->
+    <string name="fcr_role_audience">观众</string>
+
+    <!-- ****************** 讲台开关stage
+  窗口拖拽 ****************** -->
+
+    <!-- 设置-讲台区域-标签文案 -->
+    <string name="fcr_stage_title">讲台区域</string>
+
+    <!-- 设置-讲台区域-显示 -->
+    <string name="fcr_stage_title_show">显示</string>
+
+    <!-- 设置-讲台区域-隐藏 -->
+    <string name="fcr_stage_title_hide">隐藏</string>
+
+    <!-- 视频窗口工具栏-视频头像复位 -->
+    <string name="fcr_stage_button_reset">视频头像复位</string>
+
+    <!-- 大窗堆叠达到上限
+  xxx为窗口堆叠上限 -->
+    <string name="fcr_stage_reached_limitation">视频窗口数量已达%s人上限</string>
+
+    <!-- ****************** 录制record ****************** -->
+
+    <!-- 开始录制提示 -->
+    <string name="fcr_record_start">你确定要开始录制吗？</string>
+
+    <!-- 录制准备提示 -->
+    <string name="fcr_record_waiting">录制正在准备，请稍后</string>
+
+    <!-- 准备中提示 -->
+    <string name="fcr_record_recording">录制中</string>
+
+    <!-- 结束录制提示 -->
+    <string name="fcr_record_stop">你确定要停止录制吗？</string>
+
+    <!-- ****************** 屏幕共享share ****************** -->
+
+    <!-- 教师屏幕共享入口描述 -->
+    <string name="fcr_share_title_teacher">教师屏幕共享</string>
+    <string name="fcr_share_title_singel_window">支持单个窗口共享</string>
+    <string name="fcr_share_title_full_screen">支持全屏共享</string>
+    <string name="fcr_share_title_sound">不支持声音</string>
+
+    <!-- 学生屏幕共享入口描述 -->
+    <string name="fcr_share_title_all_student">学生屏幕共享</string>
+    <string name="fcr_share_title_any_student">可指定任意学生屏幕</string>
+
+    <!-- 屏幕共享功能 -->
+    <string name="fcr_share_selected">已选择%s</string>
+    <string name="fcr_share_sharing">正在分享%s屏幕</string>
+    <string name="fcr_share_not_allow">不允许学生控制</string>
+    <string name="fcr_share_allow">允许%s控制</string>
+    <string name="fcr_share_switch">切换共享内容</string>
+
+    <!-- 屏幕共享提示 -->
+    <string name="fcr_share_authorized_control">老师已授权你控制屏幕</string>
+    <string name="fcr_share_forbidden_control">老师已回收你的屏幕控制权</string>
+    <string name="fcr_share_Remote_control_disconnected">%s 离开房间，已断开远程控制权</string>
+    <string name="fcr_share_reminded_student_agree">%s 尚未同意共享屏幕，提醒{用户名} 单击“同意”按钮共享自己的屏幕</string>
+    <string name="fcr_share_teacher_requesting_share">老师正在请求分享并操作你的屏幕，请选择同意或暂不处理</string>
+    <string name="fcr_share_stopped_student_share">老师已停止共享你的屏幕</string>
+    <string name="fcr_share_no_student">当前教室没有学生，无法开启学生屏幕共享</string>
+    <string name="fcr_share_device_not_support">学生设备不支持远程控制，无法开启学生屏幕共享</string>
+    <string name="fcr_share_title_controling">正在控制</string>
+    <string name="fcr_share_title_select_window_share">请选择一个要共享的窗口</string>
+    <string name="fcr_share_title_desktop">桌面</string>
+    <string name="fcr_share_title_application">应用</string>
+    <string name="fcr_share_title_share_window">开始共享</string>
+    <string name="fcr_share_button_agree">同意</string>
+    <string name="fcr_share_title_warning_tips">如无法正常使用远程控制功能，请关闭杀毒软件和电脑管家</string>
+
+    <!-- ****************** 保存板书savecanvas ****************** -->
+
+    <!-- 按钮 -->
+    <string name="fcr_savecanvas_button_save_canvas">保存板书</string>
+    <string name="fcr_savecanvas_button_save_to_local">保存到本地</string>
+    <string name="fcr_savecanvas_button_save_to_cloud">保存到云盘</string>
+    <string name="fcr_savecanvas_button_save_to_photo">保存到相册</string>
+
+    <!-- 标签 -->
+    <string name="fcr_savecanvas_title_save_to_photo">保存板书</string>
+    <string name="fcr_savecanvas_title_file_name">文件名</string>
+    <string name="fcr_savecanvas_title_save_to">保存到</string>
+
+    <!-- 提示 -->
+    <string name="fcr_savecanvas_tips_scroll_view_canvas">滑动查看完整板书</string>
+    <string name="fcr_savecanvas_tips_canvas_empty">板书内容为空</string>
+    <string name="fcr_savecanvas_tips_save_successfully">保存成功</string>
+    <string name="fcr_savecanvas_tips_save_failed">保存失败</string>
+    <string name="fcr_savecanvas_tips_save_failed_tips">请在系统的“设置-隐私-照片”选项中，允许灵动课堂访问你的手机照片</string>
+    <string name="fcr_savecanvas_tips_saveing">正在导出，请稍后...</string>
+
+    <!-- ****************** 截图screenshot ****************** -->
+
+    <!-- 按钮 -->
+    <string name="fcr_screenshot_button_screenshot">截图</string>
+    <string name="fcr_screenshot_button_screenshot_screenshot">截图</string>
+    <string name="fcr_screenshot_button_screenshot_hide_screenshot">隐藏教室截图</string>
+
+    <!-- 提示 -->
+    <string name="fcr_screenshot_tips_mouse">按住鼠标左键滑动可自由截图</string>
+    <string name="fcr_screenshot_tips_finger">触控屏可单指滑动自由截图</string>
+
+    <!-- ****************** 在线课件onlinecourseware ****************** -->
+
+    <!-- 按钮 -->
+    <string name="fcr_online_courseware_button_upload_online_file">上传在线课件</string>
+    <string name="fcr_online_courseware_button_upload">上传</string>
+    <string name="fcr_online_courseware_button_close">关闭</string>
+
+    <!-- 标签 -->
+    <string name="fcr_online_courseware_label_uploadpage">上传在线课件</string>
+    <string name="fcr_online_courseware_label_link">课件链接</string>
+    <string name="fcr_online_courseware_label_file_name">课件名</string>
+    <string name="fcr_online_courseware_label_file_type">外部分享课件</string>
+    <string name="fcr_online_courseware_label_online_courseware">在线课件</string>
+
+    <!-- ****************** 首页home ****************** -->
+
+    <!-- 链接 -->
+    <string name="fcr_home_link_products">产品介绍</string>
+    <string name="fcr_home_link_code_sample">示例代码</string>
+    <string name="fcr_home_link_past_classroom">历史教室</string>
+
+    <!-- 按钮 -->
+    <string name="fcr_home_button_sign_up">立即注册</string>
+
+    <!-- ****************** 注册登录 ****************** -->
+    <string name="fcr_alert_title">提示</string>
+    <string name="fcr_alert_submit">确认</string>
+    <string name="fcr_alert_cancel">取消</string>
+    <string name="fcr_settings_register">注册声网账号</string>
+    <string name="fcr_settings_logoff_detail">很遗憾，灵动课堂无法继续为您提供服务，感谢您一直以来的陪伴。
+确认账号注销后会产生以下效果：\n
+1.删除账号关联的课堂数据；\n
+2.删除账号及手机号信息；\n
+若需要再次使用请重新注册。</string>
+    <string name="fcr_settings_logout">退出登录</string>
+    <string name="fcr_settings_logout_alert">是否确认退出登录？</string>
+    <string name="fcr_settings_close_account">账号注销</string>
+    <string name="fcr_settings_logoff_agreenment">我已阅读并确认注销账号</string>
+    <string name="fcr_settings_logoff_submit">确认注销</string>
+    <string name="fcr_settings_logoff_alert">是否确认注销账号？</string>
+
+    <!-- ****************** 设置页settings ****************** -->
+
+    <!-- 选项 -->
+    <string name="fcr_settings_setting">设置</string>
+    <string name="fcr_settings_option_general">常规设置</string>
+    <string name="fcr_settings_option_about_us">关于我们</string>
+    <string name="fcr_settings_option_general_language_simplified">简体中文</string>
+    <string name="fcr_settings_option_general_language_traditional">繁体中文</string>
+    <string name="fcr_settings_option_general_language_english">English</string>
+    <string name="fcr_settings_option_region_na">NA</string>
+    <string name="fcr_settings_option_region_ap">AP</string>
+    <string name="fcr_settings_option_region_cn">CN</string>
+    <string name="fcr_settings_option_region_eu">EU</string>
+    <string name="fcr_settings_option_appearance_light">浅色</string>
+    <string name="fcr_settings_option_appearance_dark">深色</string>
+
+    <!-- 标签 -->
+    <string name="fcr_settings_label_language">语言设置</string>
+    <string name="fcr_settings_nickname">设置昵称</string>
+    <string name="fcr_settings_label_region">区域设置</string>
+    <string name="fcr_settings_theme">主题设置</string>
+    <string name="fcr_settings_theme_light">明亮</string>
+    <string name="fcr_settings_theme_dark">暗黑</string>
+    <string name="fcr_settings_label_appearance">外观</string>
+    <string name="fcr_settings_label_about_us_about_us">关于我们</string>
+    <string name="fcr_settings_label_about_us_fcr_ver">灵动课堂版本:ver %s</string>
+    <string name="fcr_settings_label_about_us_sdk_ver">SDK版本:ver %s</string>
+
+    <!-- 链接 -->
+    <string name="fcr_settings_link_about_us_privacy_policy">隐私条例</string>
+    <string name="fcr_settings_disclaimer">免责声明</string>
+    <string name="fcr_settings_link_about_us_user_agreement">用户协议</string>
+
+    <!-- ****************** 历史教室past ****************** -->
+
+    <!-- 标签 -->
+    <string name="fcr_past_label_past_classroom">历史教室</string>
+    <string name="fcr_past_label_room_ID">房间号</string>
+    <string name="fcr_past_label_type">类型</string>
+    <string name="fcr_past_label_time">时间</string>
+    <string name="fcr_past_label_record">课程录像</string>
+    <string name="fcr_past_label_record_processing">录像生成中</string>
+    <string name="fcr_past_label_not_recorded">未录制</string>
+
+    <!-- 链接 -->
+    <string name="fcr_past_link_Replay">查看录像</string>
+    <string name="fcr_past_link_attendance_tracking">示例代码</string>
+    <string name="fcr_past_link_engagement_tracking">示例代码</string>
+
+    <!-- 提示 -->
+    <string name="fcr_past_tips_room_id">请输入房间号</string>
+
+    <!-- 按钮 -->
+    <string name="fcr_past_button_query">查询</string>
+
+    <!-- 表格 -->
+    <string name="fcr_past_table_attendance_tracking_title">学生出席追踪</string>
+    <string name="fcr_past_table_engagement_tracking_title">课程参与度追踪</string>
+    <string name="fcr_past_table_column_student_name">学生名</string>
+    <string name="fcr_past_table_column_joined_time">加入时间</string>
+    <string name="fcr_past_table_column_time_in_class">在线时间</string>
+    <string name="fcr_past_table_column_raise_hand">举手次数</string>
+    <string name="fcr_past_table_column_correc">答题正确次数</string>
+    <string name="fcr_past_table_column_incorrect">答题错误次数</string>
+    <string name="fcr_past_table_column_Polling">参与投票次数</string>
+
+    <!-- ****************** 同声翻译subtitle ****************** -->
+
+    <!-- 标签 -->
+    <string name="fcr_subtitle_label_subtitle">字幕</string>
+    <string name="fcr_subtitle_label_subtitle_on">打开</string>
+    <string name="fcr_subtitle_label_subtitle_off">关闭</string>
+
+    <!-- 提示 -->
+    <string name="fcr_subtitle_tips_listen">正在聆听</string>
+
+    <!-- ****************** 扩展屏expansionscreen ****************** -->
+
+    <!-- 按钮 -->
+    <string name="fcr_expansion_screen_button_expansion_screen">扩展屏</string>
+    <string name="fcr_expansion_screen_button_settings">设置</string>
+    <string name="fcr_expansion_screen_button_confirm">确定</string>
+    <string name="fcr_expansion_screen_button_On">上台</string>
+    <string name="fcr_expansion_screen_button_Down">下台</string>
+
+    <!-- 标签 -->
+    <string name="fcr_expansion_screen_label_widow_layout">窗口布局</string>
+
+    <!-- 选项 -->
+    <string name="fcr_expansion_screen_option_2x2">2x2</string>
+    <string name="fcr_expansion_screen_option_3x3">3x3</string>
+    <string name="fcr_expansion_screen_option_3x4">3x4</string>
+    <string name="fcr_expansion_screen_option_4x4">4x4</string>
+    <string name="fcr_expansion_screen_option_5x5">5x5</string>
+    <string name="fcr_expansion_screen_option_6x6">6x6</string>
+    <string name="fcr_expansion_screen_option_7x7">7x7</string>
+
+    <!-- 提示 -->
+    <string name="fcr_expansion_screen_tips_close_group">请先关闭分组讨论</string>
+    <string name="fcr_expansion_screen_tips_close_expansion_screen">请先关闭扩展屏</string>
+    <string name="fcr_inshare_button_share_friends">分享给好友</string>
+    <string name="fcr_inshare_label_share">分享</string>
+    <string name="fcr_inshare_label_invitation">邀请:</string>
+    <string name="fcr_inshare_label_room_id">房间ID:</string>
+    <string name="fcr_inshare_button_sharelink">分享课堂</string>
+    <string name="fcr_join_copy_success">复制成功</string>
+    <string name="fcr_exteral_video_tips">老师正在浏览你的视频画面</string>
+    <string name="fcr_network_label_network_latency">网络延迟：</string>
+    <string name="fcr_network_label_packet_loss_rate">丢包率：</string>
+    <string name="fcr_network_label_network_quality_excellent">良好</string>
+    <string name="fcr_network_label_network_quality_poor">一般</string>
+    <string name="fcr_network_label_network_quality_bad">较差</string>
+    <string name="fcr_network_label_network_quality_down">网络已断开</string>
+
+    <!-- 删除云盘文件 -->
+    <string name="fcr_my_cloud_title">确认删除该文件吗？</string>
+    <string name="fcr_my_cloud_content">删除后，在云盘里将清除该文件信息。</string>
+    <string name="fcr_my_cloud_submit">删除</string>
+    <string name="fcr_my_cloud_cancel">取消</string>
+    <string name="fcr_my_cloud_upload_fail">上传失败</string>
+    <string name="fcr_my_cloud_delete_fail">删除失败</string>
+    <string name="fcr_my_cloud_select_image_fail">选择图片失败</string>
+    <string name="fcr_my_cloud_file_help_text">文件格式要求</string>
+    <string name="fcr_cloud_upload_file">上传文件</string>
+    <string name="fcr_cloud_upload_pictures">上传图片</string>
+    <string name="fcr_cloud_uploading">上传中)</string>
+    <string name="fcr_cloud_tips_delete_confirm_ok_text">删除</string>
+    <string name="fcr_cloud_fail_to_convert">转换失败</string>
+
+</resources>

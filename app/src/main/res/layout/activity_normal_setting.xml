@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_16"
+                android:src="@drawable/ic_back_gray" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="@string/fcr_settings_option_general"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_17" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/iv_back"
+                android:background="#EEEEF7" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_nickname_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_language_zh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_nickname"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_language_zh"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_language_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_language_en"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_label_language"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_language_en"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_region_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_language_zhhk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_label_region"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_language_zhhk"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_theme_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_theme_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_theme"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_theme_setting"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_person_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_person_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_label_user_info_notice"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_person_info"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_third_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_third_lib"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_label_data_share"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_third_lib"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_account_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_10">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_account_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:text="@string/fcr_settings_close_account"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tv_account_logout"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
