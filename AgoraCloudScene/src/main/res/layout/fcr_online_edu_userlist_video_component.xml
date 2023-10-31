@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_height="100dp">
+
+    <io.agora.online.component.MyRecyclerView
+        android:id="@+id/fcr_stu_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:layout_width="100dp"
+        tools:listitem="@layout/fcr_online_edu_userlist_video_item" />
+
+    <ImageView
+        android:id="@+id/iv_arrow_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/agora_userlist_arrow_bg"
+        android:padding="@dimen/padding_small"
+        android:scaleType="fitCenter"
+        android:src="@drawable/agora_userlist_arrow_left"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/iv_arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@drawable/agora_userlist_arrow_bg"
+        android:padding="@dimen/padding_small"
+        android:src="@drawable/agora_userlist_arrow_right"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</FrameLayout>

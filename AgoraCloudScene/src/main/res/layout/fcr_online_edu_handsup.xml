@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/option_item_handsup"
+        android:layout_width="@dimen/agora_option_item_w"
+        android:layout_height="@dimen/agora_option_item_w"
+        android:layout_gravity="right|center_vertical"
+        android:background="@drawable/fcr_option_icon_bg"
+        android:padding="@dimen/dp_6"
+        android:src="@drawable/agora_handsup_down_img2" />
+</FrameLayout>

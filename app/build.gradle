@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId "io.agora.education"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 10
+        versionName rootProject.ext.sdkVersion.appVersion
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a" //,"x86", "x86_64"
+        }
+
+        buildConfigField 'boolean', 'IS_NOT_NEED_LOGIN', isNotNeedLogin
+        buildConfigField 'String', 'RELEASE_TIME', String.format("\"%s\"", releaseTime())
+        buildConfigField 'String', 'RTC_VERSION', String.format("\"%s\"", rootProject.ext.android.rtcSDKVersion)
+        buildConfigField 'String', 'AppSDKVersion', String.format("\"%s\"", rootProject.ext.ClassSDK.versionName)
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/edu_release.kotlin_module'
+    }
+
+//    sourceSets{
+//        debug {
+//            java.srcDirs = ['src/main/java', 'build/generated/data_binding_base_class_source_out/debug']
+//        }
+//    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd HH:mm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //implementation 'com.tencent.bugly:crashreport:4.0.4'
+    implementation 'com.github.gzu-liyujiang.AndroidPicker:WheelPicker:4.1.9'
+    implementation  'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    implementation project(path: ':AgoraCloudScene')
+
+    implementation project(path: ':AgoraClassSDK')
+    implementation project(path: ':AgoraEduUIKit')
+    if (readyPublishGithub.toBoolean()) {
+        implementation "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+    } else {
+        implementation project(path: ':AgoraEduCore')
+    }
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+}

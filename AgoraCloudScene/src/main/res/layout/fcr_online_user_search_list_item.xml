@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <ImageView
+            android:id="@+id/user_acc_thumb"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="center" />
+
+        <TextView
+            android:id="@+id/user_acc_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:paddingStart="2dp"
+            android:paddingLeft="2dp"
+            android:paddingEnd="2dp"
+            android:paddingRight="2dp"
+            android:text="1212121212"
+            android:textColor="#586376"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/user_action_private"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/fcr_chat_blue_round_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/fcr_hyphenate_im_private_chat"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp_12" />
+
+
+        <TextView
+            android:id="@+id/user_private_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="4dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="4dp"
+            android:text="Private now"
+            android:textColor="#FFC700"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/user_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEF7" />
+</LinearLayout>
