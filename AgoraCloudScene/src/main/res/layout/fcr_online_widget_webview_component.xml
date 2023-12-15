@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <io.agora.online.view.FcrDragGroupView
+        android:id="@+id/fcr_drag"
+        android:layout_width="@dimen/fcr_wv_width"
+        android:layout_height="@dimen/fcr_wv_height"
+        android:layout_gravity="center"
+        android:background="@drawable/agora_edu_background_radius"
+        android:elevation="4dp">
+
+        <LinearLayout
+            android:id="@+id/fcr_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#F9F9FC"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_hidden"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/fcr_web_view_smaller" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#ECECF1" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fcr_title_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:src="@drawable/fcr_web_view_refresh" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#ECECF1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_full_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:scaleType="center"
+                    android:src="@drawable/fcr_web_view_zoom2" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_close"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:scaleType="center"
+                    android:src="@drawable/fcr_web_view_close"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/fcr_system_divider_color" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/fcr_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/fcr_system_foreground_color"
+                android:orientation="horizontal" />
+
+        </LinearLayout>
+    </io.agora.online.view.FcrDragGroupView>
+</FrameLayout>

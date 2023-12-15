@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_half_rect_white"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        android:paddingBottom="30dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:gravity="bottom"
+            android:paddingLeft="28dp"
+            android:layout_marginLeft="2dp"
+            android:paddingRight="27dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/frc_join_room"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/fcr_join_dialog_close" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="121dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="27dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_join_gray2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_room_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/fcr_v2_room_id" />
+
+                <EditText
+                    android:id="@+id/et_join_room_id"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fcr_join_input_room_id"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/fcr_room_id_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fcr_input_close"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EFEFEF" />
+
+            <LinearLayout
+                android:id="@+id/layout_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/fcr_v2_user_name" />
+
+                <EditText
+                    android:id="@+id/et_join_user_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fcr_join_input_your_name"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/fcr_nick_name_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fcr_input_close"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="27dp"
+            android:text="@string/fcr_join_role" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:id="@+id/tv_teacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_join_rect_light"
+                    android:gravity="center"
+                    android:text="@string/fcr_join_role_teacher"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_teacher_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:src="@drawable/fcr_mobile_check2"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:id="@+id/tv_student"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_join_rect_blue"
+                    android:gravity="center"
+                    android:text="@string/fcr_join_role_student"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_student_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="right"
+                    android:src="@drawable/fcr_mobile_check2"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="27dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_cancel"-->
+            <!--                android:layout_width="112dp"-->
+            <!--                android:layout_height="46dp"-->
+            <!--                android:layout_marginRight="15dp"-->
+            <!--                android:background="@drawable/bg_join_white_24"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="@string/frc_join_cancel"-->
+            <!--                android:textColor="@color/fcr_black"-->
+            <!--                android:textSize="16sp"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:id="@+id/tv_join"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:alpha="1"
+                android:background="@drawable/bg_join_blue"
+                android:gravity="center"
+                android:text="@string/join"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
+
+
+
