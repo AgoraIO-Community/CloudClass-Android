@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.ClassSDK.versionCode
+        versionName rootProject.ext.ClassSDK.versionName
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField 'String', 'AgoraClassSDKVersion', String.format("\"%s\"", rootProject.ext.ClassSDK.versionName)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:${rootProject.ext.dependencies.core_ktx}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+    implementation "com.google.android.material:material:${rootProject.ext.dependencies.material_material}"
+    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.dependencies.constraintlayout}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.dependencies.lifecycle_extensions}"
+
+    compileOnly project(path: ':AgoraEduUIKit')
+    if (readyPublishGithub.toBoolean()) {
+        compileOnly "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+    } else {
+        compileOnly project(path: ':AgoraEduCore')
+    }
+}
+
+if (readyPublishMaven.toBoolean()) {
+    def current_gradle_path = buildscript.sourceFile.parentFile.parent
+    def maven_gradle_path = "$current_gradle_path/module_Maven.gradle"
+    if (new File(maven_gradle_path).exists()) {
+        apply from: maven_gradle_path
+    } else {
+        def errMsg = "$maven_gradle_path is not exists, please check."
+        logger.log(LogLevel.ERROR, errMsg)
+        throw new StopExecutionException(errMsg)
+    }
+}

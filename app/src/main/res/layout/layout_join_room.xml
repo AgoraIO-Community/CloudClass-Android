@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="7dp"
+        android:background="@drawable/bg_create_join_rect_blue"
+        android:gravity="right" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fcr_left_rect_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/fcr_layout_input_room_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="28dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/fcr_input_min_width"
+                android:text="@string/fcr_login_free_label_room_id"
+                android:textColor="#586376"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fcr_input_room_id_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1.0"
+                android:background="@color/fcr_transparent"
+                android:ellipsize="end"
+                android:hint="@string/fcr_login_free_tips_room_id"
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="11"
+                android:textColor="@color/fcr_black"
+                android:textColorHint="#7B88A0"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/fcr_room_id_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="6dp"
+                android:src="@drawable/fcr_input_close"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:background="#EEEEF7" />
+
+        <LinearLayout
+            android:id="@+id/fcr_layout_input_nick_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="28dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="@dimen/fcr_input_min_width"
+                android:text="@string/fcr_login_free_label_nick_name"
+                android:textColor="#586376"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fcr_nick_name_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1.0"
+                android:background="@color/fcr_transparent"
+                android:ellipsize="end"
+                android:hint="@string/fcr_login_free_tips_nick_name"
+                android:lines="1"
+                android:maxLength="20"
+                android:textColorHint="#7B88A0"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/fcr_nick_name_clear1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="6dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/fcr_input_close"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:background="#EEEEF7" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="28dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fcr_login_free_label_role"
+                android:textColor="#586376"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <TextView
+                        android:id="@+id/fcr_tv_student"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/bg_join_rect_blue"
+                        android:gravity="center"
+                        android:text="@string/fcr_login_free_role_option_student"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/fcr_student_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="right"
+                        android:src="@drawable/fcr_mobile_check2"
+                        android:visibility="visible" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <TextView
+                        android:id="@+id/fcr_tv_teacher"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/bg_join_rect_white2"
+                        android:gravity="center"
+                        android:text="@string/fcr_login_free_role_option_teacher"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/fcr_teacher_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/fcr_mobile_check2"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="28dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fcr_login_free_label_role"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <TextView
+                        android:id="@+id/fcr_tv_audience"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/bg_join_rect_white2"
+                        android:gravity="center"
+                        android:text="@string/fcr_login_free_role_option_audience"
+                        android:visibility="gone"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/fcr_audience_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/fcr_mobile_check2"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/fcr_join_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginStart="@dimen/dp_30"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="@dimen/dp_30"
+                    android:background="@drawable/bg_btn_join2"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:text="@string/fcr_login_free_button_join"
+                    android:textAllCaps="false"
+                    android:textColor="@color/fcr_white"
+                    android:textSize="@dimen/sp_16" />
+
+                <LinearLayout
+                    android:id="@+id/fcr_layout_join_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="28dp"
+                    android:layout_marginBottom="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fcr_join_private_check"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginRight="4dp"
+                        android:src="@drawable/fcr_checkbox_img" />
+
+                    <TextView
+                        android:id="@+id/fcr_tv_join_private"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我已阅读并同意《用户协议》和 《隐私协议》"
+                        android:textColor="#586376"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fcr_layout_join_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/fcr_black_popup_bg"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="8dp"
+                android:text="@string/fcr_login_free_tips_read_agree_mobile"
+                android:textColor="@color/fcr_white"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="12dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginLeft="@dimen/fcr_join_create_space"
+                android:layout_marginRight="@dimen/fcr_join_create_space"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_join_rect_line" />
+
+            <TextView
+                android:id="@+id/fcr_join_join_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/fcr_login_free_option_join"
+                android:textColor="@color/fcr_v2_brand6"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/fcr_join_create_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/fcr_login_free_option_create"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_white">
+
+    <RelativeLayout
+        android:id="@+id/fcr_rl_region_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fcr_white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_16"
+            android:src="@drawable/ic_back_gray" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="@string/fcr_settings_label_region"
+            android:textColor="@color/fcr_black"
+            android:textSize="@dimen/sp_17" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/iv_back"
+            android:background="#EEEEF7" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fcr_rl_region_setting"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/fcr_rg_region_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_region_na"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:button="@null"
+                android:drawableEnd="@drawable/fcr_icon_select"
+                android:background="@drawable/btn_title_bg_selector"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_20"
+                android:text="@string/fcr_settings_option_region_na" />
+            <RadioButton
+                android:id="@+id/rb_region_ap"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:checked="true"
+                android:button="@null"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_20"
+                android:drawableEnd="@drawable/fcr_icon_select"
+                android:background="@drawable/btn_title_bg_selector"
+                android:text="@string/fcr_settings_option_region_ap" />
+            <RadioButton
+                android:id="@+id/rb_region_cn"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:checked="true"
+                android:button="@null"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_20"
+                android:drawableEnd="@drawable/fcr_icon_select"
+                android:background="@drawable/btn_title_bg_selector"
+                android:text="@string/fcr_settings_option_region_cn" />
+            <RadioButton
+                android:id="@+id/rb_region_eu"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:checked="true"
+                android:button="@null"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_20"
+                android:drawableEnd="@drawable/fcr_icon_select"
+                android:background="@drawable/btn_title_bg_selector"
+                android:text="@string/fcr_settings_option_region_eu" />
+        </RadioGroup>
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+

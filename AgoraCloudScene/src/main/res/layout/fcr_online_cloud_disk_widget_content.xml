@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="435dp"
+    android:layout_height="253dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/fcr_popup_bg2"
+    android:elevation="4dp">
+
+    <View
+        android:id="@+id/title_bg"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/title_bg"
+        app:layout_constraintStart_toStartOf="@id/title_bg"
+        app:layout_constraintTop_toTopOf="@id/title_bg">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close_Img"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="14dp"
+        android:src="@drawable/agora_userlist_close"
+        app:layout_constraintBottom_toBottomOf="@id/title_bg"
+        app:layout_constraintEnd_toEndOf="@id/title_bg"
+        app:layout_constraintTop_toTopOf="@id/title_bg" />
+
+    <View
+        android:id="@+id/line0"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <FrameLayout
+        android:id="@+id/cloud_disk_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
