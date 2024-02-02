@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_chat_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/agora_chat_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fcr_white_round_bg">
+        <RelativeLayout
+            android:id="@+id/agora_chat_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_message_title_layout_height">
+
+            <RelativeLayout
+                android:id="@+id/agora_chat_button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/fcr_rtm_im_message"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/fcr_text_level1_color"
+                    android:textSize="@dimen/text_size_smaller" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/agora_chat_icon_close"
+                    android:layout_width="@dimen/agora_message_icon_size"
+                    android:layout_height="@dimen/agora_message_icon_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/agora_chat_icon_unexpand" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/agora_chat_mute_icon"
+                    android:layout_width="@dimen/agora_message_icon_size"
+                    android:layout_height="@dimen/agora_message_icon_size"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/agora_chat_icon_close"
+                    android:layout_toLeftOf="@id/agora_chat_icon_close"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/agora_chat_group_mute_icon" />
+            </RelativeLayout>
+<!--            <io.agora.uikit.impl.chat.tabs.TabLayout-->
+<!--                android:id="@+id/agora_chat_tabs"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_marginRight="@dimen/margin_large"-->
+<!--                android:layout_marginEnd="@dimen/margin_large"/>-->
+        </RelativeLayout>
+        <View
+            android:id="@+id/agora_chat_title_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/stroke_small"
+            android:layout_below="@id/agora_chat_title_layout"
+            android:background="@color/fcr_system_divider_color"/>
+
+        <include
+            layout="@layout/fcr_online_chat_tab_public_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/agora_chat_input_layout"
+            android:layout_below="@id/agora_chat_title_divider"
+            android:layout_marginBottom="@dimen/margin_small" />
+
+        <RelativeLayout
+            android:id="@+id/agora_chat_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_message_input_layout_height"
+            android:layout_alignParentBottom="true">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/agora_chat_message_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/agora_chat_send_btn"
+                android:layout_toLeftOf="@id/agora_chat_send_btn"
+                android:layout_marginStart="@dimen/agora_message_input_margin_left"
+                android:layout_marginLeft="@dimen/agora_message_input_margin_left"
+                android:layout_marginEnd="@dimen/agora_message_input_margin_left"
+                android:layout_marginRight="@dimen/agora_message_input_margin_left"
+                android:lines="1"
+                android:singleLine="true"
+                android:imeOptions="actionSend"
+                android:hint="@string/fcr_rtm_im_input_placeholder"
+                android:textColorHint="@color/fcr_text_level3_color"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_chat_send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/agora_message_send_btn_height"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/agora_message_input_margin_left"
+                android:layout_marginRight="@dimen/agora_message_input_margin_right"
+                android:paddingLeft="@dimen/padding_medium"
+                android:paddingRight="@dimen/padding_medium"
+                android:paddingTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/margin_small"
+                android:gravity="center"
+                android:text="@string/fcr_rtm_im_send"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/text_size_smaller" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/agora_chat_hide_icon_layout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentBottom="true">-->
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:id="@+id/agora_chat_hide_icon"-->
+<!--            android:layout_width="@dimen/agora_message_hide_icon_size"-->
+<!--            android:layout_height="@dimen/agora_message_hide_icon_size"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:src="@drawable/agora_chat_hide_icon"/>-->
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/agora_chat_unread_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="@dimen/agora_message_unread_count_size"-->
+<!--            android:minWidth="@dimen/agora_message_unread_count_size"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:paddingStart="@dimen/margin_small"-->
+<!--            android:paddingLeft="@dimen/margin_small"-->
+<!--            android:paddingEnd="@dimen/margin_small"-->
+<!--            android:paddingRight="@dimen/margin_small"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/agora_chat_icon_red"-->
+<!--            android:textSize="@dimen/text_size_smallest"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:visibility="gone"/>-->
+<!--    </RelativeLayout>-->
+</RelativeLayout>

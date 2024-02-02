@@ -1,0 +1,88 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.EduUIKit.versionCode
+        versionName rootProject.ext.EduUIKit.versionName
+
+        buildConfigField 'String', 'AgoraEduUIKitVersion', String.format("\"%s\"", rootProject.ext.EduUIKit.versionName)
+        consumerProguardFiles "consumer-rules.pro"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res']
+        }
+    }
+}
+
+dependencies {
+    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:${rootProject.ext.dependencies.core_ktx}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+    implementation "com.google.android.material:material:${rootProject.ext.dependencies.material_material}"
+    api "com.github.bumptech.glide:glide:${rootProject.ext.dependencies.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.ext.dependencies.glide_compiler}"
+    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.dependencies.constraintlayout}"
+    implementation "com.github.netless-io:whiteboard-android:${rootProject.ext.dependencies.white_sdk_android}"
+    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.dependencies.recyclerview}"
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+    implementation 'com.guolindev.permissionx:permissionx:1.6.4'
+    implementation "androidx.activity:activity-ktx:1.2.2" // for ide hint
+
+    if (readyPublishGithub.toBoolean()) {
+        compileOnly "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+    } else {
+        compileOnly project(path: ':AgoraEduCore')
+    }
+
+    // for agora chat
+    implementation 'io.agora.rtc:chat-sdk:1.2.0'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+}
+
+if (readyPublishMaven.toBoolean()) {
+    def current_gradle_path = buildscript.sourceFile.parentFile.parent
+    def maven_gradle_path = "$current_gradle_path/module_Maven.gradle"
+    if (new File(maven_gradle_path).exists()) {
+        apply from: maven_gradle_path
+    } else {
+        def errMsg = "$maven_gradle_path is not exists, please check."
+        logger.log(LogLevel.ERROR, errMsg)
+        throw new StopExecutionException(errMsg)
+    }
+}

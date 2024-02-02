@@ -1,0 +1,8 @@
+include ':AgoraClassSDK'
+if (!readyPublishGithub.toBoolean()) {
+    include ':AgoraEduCore'
+}
+include ':AgoraEduUIKit'
+include ':AgoraCloudScene'
+include ':app'
+rootProject.name = 'CloudClass-Android'

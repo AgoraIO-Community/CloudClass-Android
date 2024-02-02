@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcr_colorPrimary">#F5F7F8</color>
+    <color name="fcr_colorPrimaryDark">#F5F7F8</color>
+    <color name="fcr_colorAccent">#44A2FC</color>
+
+    <color name="agora_def_color">#0073FF</color>
+    <color name="agora_wb_icon_def_color">#7B88A0</color>
+    <color name="agora_wb_icon_def_circle_color">#E1E1EA</color>
+    <color name="agora_wb_icon_gray_color">#e2e2ee</color>
+    <color name="agora_board_line_color">#ECECF1</color>
+
+    <color name="fcr_red_FF0D19">#FF0D19</color>
+    <color name="fcr_transparent">#00000000</color>
+
+    <color name="fcr_white">#FFFFFF</color>
+    <color name="fcr_black">#000000</color>
+
+    <color name="fcr_gray_333333">#333333</color>
+    <color name="fcr_gray_666666">#666666</color>
+    <color name="fcr_gray_EEEEEE">#EEEEEE</color>
+    <color name="fcr_gray_191919">#191919</color>
+    <color name="fcr_gray_D7D7E6">#D7D7E6</color>
+    <color name="fcr_gray_7D8798">#7D8798</color>
+
+    <color name="fcr_blue_357BF6">#357BF6</color>
+    <color name="fcr_blue_C0D6FF">#C0D6FF</color>
+
+
+    <!--  ClassToastManager  -->
+    <color name="toast_classtime_countdown_time">#FE313F</color>
+
+
+    <color name="fcr_white2">#0AFFFFFF</color>
+    <color name="fcr_deep_blue">#4D6277</color>
+    <color name="iclicker_answer_list_header">#F8F8FC</color>
+    <color name="iclicker_answer_list_stroke">#EBEBF6</color>
+    <color name="iclicker_answer_list_header_text">#7B88A0</color>
+    <color name="iclicker_answer_list_item_text">#191919</color>
+    <color name="iclicker_answer_list_item_error">#F04C36</color>
+    <color name="iclicker_answer_list_item_correct">#3AB449</color>
+    <color name="fcr_red">#ffff0000</color>
+    <color name="fcr_blue">#357BF6</color>
+    <color name="fcr_gray">@color/fcr_system_background_color</color>
+    <!-- Theme color -->
+    <color name="theme_blue_light">#357BF6</color>
+    <color name="theme_blue_gray">#639AFA</color>
+    <color name="theme_white">#FFFFFF</color>
+    <color name="theme_black">#000000</color>
+    <color name="theme_gray_light">#DEDEDE</color>
+    <color name="theme_gray_lighter">#F9F9FC</color>
+    <color name="theme_disable">#E2E2EE</color>
+    <color name="theme_gray_dialog_bg">#E1EBFC</color>
+    <color name="theme_gray_dark">#F9F9FC</color>
+
+    <!-- Theme text color -->
+    <color name="theme_text_color_black">#191919</color>
+    <color name="theme_text_color_dark_gray">#586376</color>
+    <color name="theme_text_color_dark_gray2">#BDBDCA</color>
+    <color name="theme_text_color_gray">#7B88A0</color>
+    <color name="theme_text_color_orange_red">#F04C36</color>
+    <color name="theme_text_color_class_time">#677386</color>
+    <color name="theme_hint_text_color">#677386</color>
+
+    <!-- Border Colors -->
+    <color name="theme_border_class_room">#ECECF1</color>
+    <color name="theme_border_class_room_container">#ECECF1</color>
+
+    <!-- UI Framework -->
+    <color name="theme_divider_color">#EEEEF7</color>
+
+    <!-- Messages -->
+    <color name="agora_chat_error_icon_color">#FF0D19</color>
+    <color name="theme_divider_color_gray">#EEEEF7</color>
+
+    <!-- Agora Board -->
+    <color name="agora_board_default_stroke">#0073FF</color>
+
+    <!-- Setting -->
+    <color name="setting_button_default_bg">#F4F4F8</color>
+    <color name="setting_button_text_color_default">#B5B5C9</color>
+
+    <!-- Video -->
+    <color name="agora_video_trophy_text_shadow_color">#cc0d1d3d</color>
+
+    <!--  NetworkDisk  -->
+    <color name="agora_network_disk_bg_color">#E3E3EC</color>
+
+    <!-- grouping class -->
+    <color name="agora_edu_pending_container_color">#F9F9FC</color>
+
+    <!--UI 规范-->
+    <color name="fcr_icon_normal_color">#8E8E8E</color>
+    <!--图标反色 应用于图标被选颜色，备用-->
+    <color name="fcr_icon_fill_color">#FFFFFF</color>
+    <!--线框按钮色-->
+    <color name="fcr_icon_line_color">#373737</color>
+
+    <!--图标被选背景色-->
+    <color name="fcr_system_component_highlight_color">#424242</color>
+    <color name="fcr_system_divider_color">#373737</color>
+    <!--组件背景色-->
+    <color name="fcr_system_component_color">#2F2F2F</color>
+
+    <!-- Text Color  -->
+    <color name="fcr_text_contrast_color">#FFFFFF</color>
+    <!--   80% -->
+    <color name="fcr_text_level1_color">#CCFFFFFF</color>
+    <!--    60% -->
+    <color name="fcr_text_level2_color">#99FFFFFF</color>
+    <color name="fcr_text_level3_color">#99FFFFFF</color>
+    <!--    38% -->
+    <color name="fcr_text_disabled_color">#61FFFFFF</color>
+    <color name="fcr_text_enabled_color">#317AF7</color>
+
+    <color name="fcr_message_et_bg">@color/fcr_system_background_color</color>
+</resources>
