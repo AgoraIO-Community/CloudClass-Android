@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/fcr_join_dialog_bg"
+        android:orientation="vertical"
+        android:paddingLeft="27dp"
+        android:paddingTop="35dp"
+        android:paddingRight="27dp"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tv_copy_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/fcr_join_share_link"
+            android:drawablePadding="9dp"
+            android:text="@string/fcr_copy_link"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_join_white"
+            android:gravity="center"
+            android:text="@string/frc_join_cancel"
+            android:textColor="@color/fcr_black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+</FrameLayout>
+
+
+

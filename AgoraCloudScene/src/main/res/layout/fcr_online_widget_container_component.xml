@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/allWidgetsContainer_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <io.agora.online.component.online.FcrWebViewWidgetComponent
+            android:id="@+id/fcr_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <io.agora.online.component.online.FcrPollingWidgetComponent
+            android:id="@+id/fcr_polling"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <io.agora.online.component.online.FcrCountDownWidgetComponent
+            android:id="@+id/fcr_countdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <io.agora.online.component.online.FcrQuizWidgetComponent
+            android:id="@+id/fcr_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/fcr_quick_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_marginLeft="@dimen/agora_wb_tools_margin_left"
+        android:layout_marginBottom="@dimen/agora_wb_tools_margin_bottom"
+        android:orientation="horizontal">
+
+        <!--for whiteboard control-->
+        <View
+            android:id="@+id/fcr_whiteboard_control"
+            android:layout_width="@dimen/fcr_quick_start_1"
+            android:layout_height="1dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/fcr_polling_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fcr_img_bg"
+            android:drawableLeft="@drawable/fcr_v2_vote"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="polling"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/fcr_webview_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fcr_img_bg"
+            android:drawableLeft="@drawable/fcr_v2_file"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="File(1)"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <dimen name="agora_small_video_w">92dp</dimen>
+    <dimen name="agora_small_video_h">52dp</dimen>
+    <dimen name="agora_option_item_w">33dp</dimen>
+    <dimen name="agora_large_video_w">115dp</dimen>
+    <dimen name="agora_large_video_h">95dp</dimen>
+    <dimen name="agora_userlist_dialog_w">460dp</dimen>
+    <dimen name="agora_userlist_dialog_h">253dp</dimen>
+    <dimen name="agora_userlist_dialog_large_w">280dp</dimen>
+    <dimen name="agora_userlist_dialog_large_h">214dp</dimen>
+
+    <dimen name="agora_c_1">6dp</dimen>
+    <dimen name="agora_c_2">8dp</dimen>
+    <dimen name="agora_c_3">12dp</dimen>
+    <dimen name="agora_c_4">16dp</dimen>
+    <dimen name="agora_c_5">20dp</dimen>
+
+    <dimen name="agora_edu_text_t_1">8dp</dimen>
+    <dimen name="agora_edu_text_t_2">10dp</dimen>
+    <dimen name="agora_edu_text_t_3">12dp</dimen>
+    <dimen name="agora_edu_text_t_4">14dp</dimen>
+
+    <dimen name="dp_0">0.0000dp</dimen>
+    <dimen name="dp_1">1.0000dp</dimen>
+    <dimen name="dp_2">2.0000dp</dimen>
+    <dimen name="dp_3">3.0000dp</dimen>
+    <dimen name="dp_4">4.0000dp</dimen>
+    <dimen name="dp_5">5.0000dp</dimen>
+    <dimen name="dp_6">6.0000dp</dimen>
+    <dimen name="dp_7">7.0000dp</dimen>
+    <dimen name="dp_8">8.0000dp</dimen>
+    <dimen name="dp_9">9.0000dp</dimen>
+    <dimen name="dp_10">10.0000dp</dimen>
+    <dimen name="dp_14">14.0000dp</dimen>
+    <dimen name="dp_16">16.0000dp</dimen>
+    <dimen name="dp_18">18.0000dp</dimen>
+    <dimen name="dp_20">20.0000dp</dimen>
+    <dimen name="dp_25">25.0000dp</dimen>
+    <dimen name="dp_30">30.0000dp</dimen>
+    <dimen name="dp_32">32.0000dp</dimen>
+    <dimen name="dp_33">33.0000dp</dimen>
+    <dimen name="dp_35">35.0000dp</dimen>
+    <dimen name="dp_40">40.0000dp</dimen>
+    <dimen name="dp_44">44.0000dp</dimen>
+    <dimen name="dp_48">48.0000dp</dimen>
+    <dimen name="dp_70">70.0000dp</dimen>
+    <dimen name="dp_72">72.0000dp</dimen>
+    <dimen name="dp_88">88.0000dp</dimen>
+    <dimen name="dp_100">100.0000dp</dimen>
+    <dimen name="dp_146">146.0000dp</dimen>
+    <dimen name="dp_150">150.0000dp</dimen>
+    <dimen name="dp_234">234.0000dp</dimen>
+    <dimen name="dp_320">320.0000dp</dimen>
+    <dimen name="dp_420">420.0000dp</dimen>
+    <dimen name="dp_450">450.0000dp</dimen>
+    <dimen name="sp_10">10.0000sp</dimen>
+    <dimen name="sp_12">12.0000sp</dimen>
+    <dimen name="sp_13">13.0000sp</dimen>
+    <dimen name="sp_14">14.0000sp</dimen>
+    <dimen name="sp_16">16.0000sp</dimen>
+    <dimen name="sp_17">17.0000sp</dimen>
+    <dimen name="sp_20">20.0000sp</dimen>
+    <dimen name="sp_24">24.0000sp</dimen>
+    <dimen name="agora_wb_tools_margin_left">12dp</dimen>
+    <dimen name="agora_wb_tools_margin_left_icon">56dp</dimen>
+    <dimen name="agora_wb_tools_margin_bottom">6dp</dimen>
+
+    <dimen name="agora_option_handsup_list_popup_w">200dp</dimen>
+    <dimen name="agora_option_handsup_list_popup_h">250dp</dimen>
+
+    <dimen name="agora_appliance_item_size_large">30dp</dimen>
+    <dimen name="agora_appliance_item_size_normal">28dp</dimen>
+    <dimen name="agora_appliance_item_margin">12dp</dimen>
+    <dimen name="agora_appliance_pen_m_margin">8dp</dimen>
+    <dimen name="agora_edu_wb_open_color_stroke">2dp</dimen>
+    <dimen name="agora_edu_wb_open_color_radius">4dp</dimen>
+    <dimen name="agora_option_item_appliance_bottom">12dp</dimen>
+    <dimen name="agora_edu_pen_color_size">22dp</dimen>
+    <dimen name="agora_edu_pen_color_select_size">24dp</dimen>
+    <dimen name="agora_edu_wb_tool_parent_width">213dp</dimen>
+    <dimen name="agora_edu_wb_tool_width">193dp</dimen>
+
+    <dimen name="agora_edu_chat_width">200dp</dimen>
+    <dimen name="agora_edu_chat_height">277dp</dimen>
+
+    <!-- theme dimensions -->
+    <dimen name="margin_larger">15dp</dimen>
+    <dimen name="margin_large">10dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_small">3dp</dimen>
+    <dimen name="margin_smaller">2dp</dimen>
+
+    <dimen name="padding_large">12dp</dimen>
+    <dimen name="padding_medium">10dp</dimen>
+    <dimen name="padding_small">6dp</dimen>
+    <dimen name="padding_smaller">4dp</dimen>
+    <dimen name="padding_smallest">2dp</dimen>
+
+    <dimen name="stroke_small">1dp</dimen>
+
+    <dimen name="corner_small">4dp</dimen>
+    <dimen name="corner_large">12dp</dimen>
+
+    <dimen name="divider_thinner">0.5dp</dimen>
+    <dimen name="divider_thin">1dp</dimen>
+
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_smaller">12sp</dimen>
+    <dimen name="fcr_text_size_smallest">8sp</dimen>
+    <dimen name="text_size_head_smallest">9sp</dimen>
+
+    <dimen name="shadow_width">2dp</dimen>
+
+    <dimen name="text_large">17sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_small">10sp</dimen>
+
+    <!-- Dialog -->
+    <dimen name="agora_dialog_width">280dp</dimen>
+    <dimen name="agora_dialog_icon_size">80dp</dimen>
+    <dimen name="agora_dialog_margin_top_medium">14dp</dimen>
+    <dimen name="agora_dialog_margin_top_large">20dp</dimen>
+
+    <dimen name="agora_kick_dialog_line_height">22dp</dimen>
+    <dimen name="agora_kick_dialog_option_text_size">16sp</dimen>
+    <dimen name="agora_kick_dialog_option_button_size">18dp</dimen>
+    <dimen name="agora_kick_dialog_option_margin_left">22dp</dimen>
+    <dimen name="agora_kick_dialog_option_text_margin_left">10dp</dimen>
+
+    <!-- toast -->
+    <dimen name="agora_toast_board_permission_bg_corner">15dp</dimen>
+    <dimen name="agora_toast_board_permission_img_w">24dp</dimen>
+    <dimen name="agora_toast_board_permission_img_h">32dp</dimen>
+    <dimen name="agora_toast_board_permission_content_layout_margin_start">10dp</dimen>
+    <dimen name="agora_toast_board_permission_content_layout_margin_top">4dp</dimen>
+    <dimen name="agora_toast_board_permission_content_layout_margin_bottom">4dp</dimen>
+    <dimen name="agora_toast_board_permission_content_margin_start">18dp</dimen>
+    <dimen name="agora_toast_board_permission_content_margin_end">10dp</dimen>
+    <dimen name="agora_toast_board_permission_content_size">10dp</dimen>
+
+    <!-- Message -->
+    <dimen name="agora_message_title_layout_height">32dp</dimen>
+    <dimen name="agora_message_icon_size">20dp</dimen>
+    <dimen name="agora_message_input_layout_height">40dp</dimen>
+    <dimen name="agora_message_input_layout_corner">10dp</dimen>
+    <dimen name="agora_message_no_content_icon_size">104dp</dimen>
+    <dimen name="agora_message_send_btn_width">40dp</dimen>
+    <dimen name="agora_message_send_btn_height">24dp</dimen>
+    <dimen name="agora_message_input_margin_left">6dp</dimen>
+    <dimen name="agora_message_input_margin_right">12dp</dimen>
+    <dimen name="agora_message_item_icon_size">20dp</dimen>
+    <dimen name="agora_message_item_message_min_margin">38dp</dimen>
+    <dimen name="agora_message_unread_count_size">4dp</dimen>
+    <dimen name="agora_message_unread_count_radius">2dp</dimen>
+    <dimen name="agora_message_caution_height">30dp</dimen>
+    <dimen name="agora_message_caution_icon_size">16dp</dimen>
+
+    <!-- Floating controll window -->
+    <dimen name="agora_floating_window_option_ic_size">16dp</dimen>
+<!--    <dimen name="agora_tool_popup_bg_width">176dp</dimen>-->
+<!--    <dimen name="agora_tool_popup_style_bg_height">54dp</dimen>-->
+    <dimen name="agora_tool_popup_layout_width">166dp</dimen>
+<!--    <dimen name="agora_tool_popup_layout_margin">6dp</dimen>-->
+<!--    <dimen name="agora_tool_popup_style_layout_height">46dp</dimen>-->
+
+    <!-- Status Bar -->
+    <dimen name="agora_status_bar_height">34dp</dimen>
+    <dimen name="agora_status_bar_icon_size">14dp</dimen>
+
+    <!-- Setting -->
+    <dimen name="agora_setting_dialog_switch_corner">13dp</dimen>
+
+    <!-- Setting Popup -->
+    <dimen name="agora_setting_popup_margin_horizontal">15dp</dimen>
+    <dimen name="agora_setting_popup_margin_vertical">12dp</dimen>
+    <dimen name="agora_setting_popup_text_size">12dp</dimen>
+    <dimen name="agora_setting_popup_switch_width">30dp</dimen>
+    <dimen name="agora_setting_popup_switch_height">15dp</dimen>
+    <dimen name="agora_setting_popup_switch_corner">12dp</dimen>
+    <dimen name="agora_setting_popup_line_height">22dp</dimen>
+    <dimen name="agora_setting_popup_facing_button_width">40dp</dimen>
+    <dimen name="agora_setting_popup_facing_button_height">22dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_size">16dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_side_padding">16dp</dimen>
+    <dimen name="agora_setting_popup_switch_thumb_padding">2dp</dimen>
+    <dimen name="agora_setting_popup_leave_button_height">30dp</dimen>
+    <dimen name="agora_setting_popup_leave_button_radius">6dp</dimen>
+
+    <!-- Board Window -->
+    <dimen name="agora_board_loading_img_w">40dp</dimen>
+    <dimen name="agora_board_loading_img_h">40dp</dimen>
+    <dimen name="agora_board_loading_view_corner_radius">8dp</dimen>
+    <dimen name="agora_board_loading_view_elevation">2dp</dimen>
+
+    <!-- Video Window -->
+    <dimen name="agora_video_view_corner">4dp</dimen>
+    <dimen name="agora_video_options_layout_margin">2dp</dimen>
+    <dimen name="agora_video_trophy_text_margin_start">4dp</dimen>
+    <dimen name="agora_video_trophy_text_size">12sp</dimen>
+    <dimen name="agora_video_name_text_h">17dp</dimen>
+    <dimen name="agora_video_name_margin_start">2dp</dimen>
+    <dimen name="agora_video_name_margin_top">4dp</dimen>
+    <dimen name="agora_video_name_text_size">10sp</dimen>
+    <dimen name="agora_video_text_shadow_dx">0</dimen>
+    <dimen name="agora_video_text_shadow_dy">1</dimen>
+    <dimen name="agora_video_text_shadow_radius">3</dimen>
+
+    <!-- UserList -->
+    <dimen name="agora_userlist_dialog_elevation">4dp</dimen>
+    <dimen name="agora_userlist_row_height">31dp</dimen>
+    <dimen name="agora_userlist_row_icon_height">22dp</dimen>
+
+    <!-- ScreenShare Window -->
+    <dimen name="agora_screen_share_view_corner">4dp</dimen>
+    <dimen name="agora_setting_popup_leave_button_width">172dp</dimen>
+    <dimen name="agora_setting_popup_margin_vertical_top">32dp</dimen>
+
+    <integer name="agora_board_default_font_size">18</integer>
+    <integer name="agora_board_default_thickness">16</integer>
+
+    <dimen name="agora_video_distance">2dp</dimen>
+
+    <!-- ease chat -->
+
+    <dimen name="avatar_size">20dp</dimen>
+    <dimen name="margin_normal">5dp</dimen>
+    <dimen name="margin_middle">10dp</dimen>
+    <dimen name="padding_normal">5dp</dimen>
+    <dimen name="padding_middle">10dp</dimen>
+
+    <dimen name="fcr_minSp">12sp</dimen>
+    <dimen name="fcr_textSize">13sp</dimen>
+    <dimen name="tab_textSize">16sp</dimen>
+    <dimen name="input_icon_size">34dp</dimen>
+    <dimen name="input_margin_right">16dp</dimen>
+    <dimen name="hide_icon_size">50dp</dimen>
+    <dimen name="unread_count_size">12dp</dimen>
+    <dimen name="nickName_max_width">100dp</dimen>
+    <dimen name="chat_view_icon_size">24dp</dimen>
+
+    <dimen name="input_height">32dp</dimen>
+    <dimen name="ease_chat_layout_w">200dp</dimen>
+    <dimen name="ease_chat_layout_h">287dp</dimen>
+
+    <!-- ease chat -->
+    <dimen name="fcr_avatar_size">20dp</dimen>
+    <dimen name="fcr_margin_normal">5dp</dimen>
+    <dimen name="fcr_margin_middle">10dp</dimen>
+    <dimen name="fcr_padding_normal">5dp</dimen>
+    <dimen name="fcr_padding_middle">10dp</dimen>
+    <dimen name="fcr_padding_high">15dp</dimen>
+
+
+    <dimen name="fcr_tab_textSize">16sp</dimen>
+    <dimen name="fcr_input_icon_size">34dp</dimen>
+    <dimen name="fcr_input_margin_right">16dp</dimen>
+    <dimen name="fcr_hide_icon_size">50dp</dimen>
+    <dimen name="fcr_unread_count_size">12dp</dimen>
+    <dimen name="fcr_nickName_max_width">100dp</dimen>
+    <dimen name="fcr_chat_view_icon_size">24dp</dimen>
+    <dimen name="fcr_default_layout_icon_size">80dp</dimen>
+    <dimen name="fcr_announcement_edit_height">130dp</dimen>
+
+    <dimen name="fcr_input_height">32dp</dimen>
+    <dimen name="fcr_ease_chat_layout_w">200dp</dimen>
+    <dimen name="fcr_ease_chat_layout_h">287dp</dimen>
+
+
+    <!--UI 规范-->
+    <dimen name="fcr_font_size1">9dp</dimen>
+    <dimen name="fcr_font_size2">10dp</dimen>
+    <dimen name="fcr_font_size3">11dp</dimen>
+    <dimen name="fcr_font_size4">12dp</dimen>
+    <dimen name="fcr_font_size5">13dp</dimen>
+    <dimen name="fcr_font_size6">17dp</dimen>
+
+    <dimen name="fcr_font_heading01">17dp</dimen>
+    <dimen name="fcr_font_heading02">14dp</dimen>
+    <dimen name="fcr_font_heading03">13dp</dimen>
+    <dimen name="fcr_font_heading04">12dp</dimen>
+    <dimen name="fcr_share_room_link_w">280dp</dimen>
+
+    <dimen name="fcr_snackbar_dis">100dp</dimen>
+    <dimen name="fcr_local_video_w">124dp</dimen>
+    <dimen name="fcr_local_video_h">70dp</dimen>
+    <dimen name="fcr_local_video_right">60dp</dimen>
+    <dimen name="fcr_local_video_bottom">15dp</dimen>
+    <dimen name="fcr_dialog_title_padding">30dp</dimen>
+    <dimen name="fcr_dialog_title_padding2">20dp</dimen>
+
+</resources>

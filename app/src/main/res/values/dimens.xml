@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fcr_join_move_distance">60dp</dimen>
+    <dimen name="fcr_link_input_height">100dp</dimen>
+    <dimen name="fcr_input_min_width">75dp</dimen>
+    <dimen name="fcr_join_create_space">28dp</dimen>
+</resources>

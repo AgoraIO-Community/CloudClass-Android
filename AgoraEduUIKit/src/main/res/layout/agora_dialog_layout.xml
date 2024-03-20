@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/agora_dialog_layout"
+    android:layout_width="@dimen/agora_dialog_width"
+    android:layout_height="wrap_content"
+    android:background="@drawable/agora_dialog_background"
+    android:elevation="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_dialog_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/agora_dialog_margin_top_large"
+        android:paddingLeft="@dimen/fcr_dialog_title_padding2"
+        android:paddingRight="@dimen/fcr_dialog_title_padding2"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="@dimen/text_large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/agora_dialog_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:src="@drawable/fcr_dialog_circle_close"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_dialog_icon"
+        android:layout_width="@dimen/agora_dialog_icon_size"
+        android:layout_height="@dimen/agora_dialog_icon_size"
+        android:layout_marginTop="@dimen/agora_dialog_margin_top_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agora_dialog_title_text" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/agora_dialog_margin_top_medium"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/fcr_text_level2_color"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agora_dialog_icon" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_thinner"
+        android:layout_marginTop="@dimen/agora_dialog_margin_top_large"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agora_dialog_message" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_dialog_negative_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        android:textColor="@color/fcr_text_enabled_color"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintEnd_toStartOf="@id/agora_dialog_positive_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_dialog_positive_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        android:textColor="@color/fcr_text_enabled_color"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/agora_dialog_negative_button"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="@dimen/divider_thinner"
+        android:layout_height="0dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintBottom_toBottomOf="@id/agora_dialog_positive_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

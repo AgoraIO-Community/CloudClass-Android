@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_setting_page_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:src="@drawable/ic_back_gray" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="@string/setting"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_17" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/iv_back"
+                android:background="#EEEEF7" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_normal_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingTop="@dimen/dp_16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/fcr_settings_option_general"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:src="@drawable/ic_next_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text2"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_about_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fcr_white"
+            android:paddingTop="@dimen/dp_16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/fcr_settings_label_about_us_about_us"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/text3"
+                android:layout_marginTop="@dimen/dp_14"
+                android:background="@color/fcr_gray_EEEEEE" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_fcr_logout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/fcr_logout_btn_bg"
+        android:gravity="center"
+        android:text="@string/fcr_login_logout"
+        android:textColor="#357BF6"
+        android:textSize="@dimen/dp_16" />
+
+
+</RelativeLayout>

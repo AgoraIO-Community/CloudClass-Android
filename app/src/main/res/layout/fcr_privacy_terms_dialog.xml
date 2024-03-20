@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/privacy_title"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/setting_title_user_agreement"
+        android:textColor="@color/privacy_title"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/rl_webview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_below="@+id/privacy_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="180dp">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:ignore="WebViewLayout" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/privacy_rect">
+
+        <CheckBox
+            android:id="@+id/termsCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:checked="false"
+            android:gravity="center"
+            android:nextFocusUp="@id/content"
+            android:text="@string/agree_the_terms"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="12sp"
+            android:theme="@style/fcrCheckBox"
+            app:useMaterialThemeColors="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_accept"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_below="@id/termsCheck"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:background="@drawable/bg_btn_join"
+            android:gravity="center"
+            android:text="@string/accept"
+            android:textColor="@color/fcr_white"
+            android:textSize="@dimen/sp_14" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_decline"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_below="@id/btn_accept"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:background="@color/fcr_transparent"
+            android:gravity="center"
+            android:text="@string/decline"
+            android:textColor="#8A8A9A"
+            android:textSize="@dimen/sp_14" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/agora_slide_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/agora_wb_control_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/agora_wb_add_backup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/agora_wb_add_backup" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="6dp"
+            android:background="@color/fcr_system_divider_color" />
+
+        <ImageView
+            android:id="@+id/agora_wb_pre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/agora_wb_page_pre" />
+
+        <TextView
+            android:id="@+id/agora_wb_page_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/fcr_agora_wb_page_count"
+            android:textColor="@color/fcr_text_level2_color"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/agora_wb_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/agora_wb_page_next" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/start_class_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/agora_wb_start_lesson"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="@string/fcr_room_start_class"
+        android:textColor="@color/fcr_text_contrast_color"
+        android:textSize="13sp" />
+</androidx.appcompat.widget.LinearLayoutCompat>
