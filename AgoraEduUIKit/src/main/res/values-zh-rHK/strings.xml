@@ -111,4 +111,9 @@
     <string name="fcr_user_tutor_left">外教已離開教室</string>
     <string name="fcr_user_waiting_student">等待学生进入教室</string>
     <string name="fcr_user_student_left">學生已離開教室</string>
+
+    <!--Hint Dialog-->
+    <string name="fcr_dialog_hint_title">提示</string>
+    <string name="fcr_dialog_hint_content">老師沒來超過10分鐘啦\n系統會在1小時內返還這節課時(不扣除課時)\n您現在可以退出教室了哦</string>
+    <string name="fcr_dialog_hint_btn">知道了</string>
 </resources>

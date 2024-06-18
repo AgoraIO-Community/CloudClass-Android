@@ -1,20 +1,30 @@
 package io.agora.classroom.ui
 
 import android.os.Bundle
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.agora.edu.component.helper.AgoraUIDeviceSetting
+import android.os.CountDownTimer
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.google.gson.Gson
 import io.agora.agoraclasssdk.databinding.ActivityAgoraClass1v1Binding
 import io.agora.agoraclasssdk.databinding.ActivityAgoraClass1v1VideoLeftBinding
-import io.agora.agoraeducore.core.context.*
+import io.agora.agoraeducore.core.context.AgoraEduContextClassState
+import io.agora.agoraeducore.core.context.AgoraEduContextStreamInfo
+import io.agora.agoraeducore.core.context.AgoraEduContextUserInfo
+import io.agora.agoraeducore.core.context.AgoraEduContextUserRole
+import io.agora.agoraeducore.core.context.EduContextCallback
+import io.agora.agoraeducore.core.context.EduContextError
+import io.agora.agoraeducore.core.context.EduContextRoomInfo
 import io.agora.agoraeducore.core.internal.base.ToastManager
 import io.agora.agoraeducore.core.internal.education.impl.Constants.AgoraLog
 import io.agora.agoraeducore.core.internal.framework.impl.handler.RoomHandler
 import io.agora.agoraeducore.core.internal.framework.impl.handler.StreamHandler
 import io.agora.agoraeducore.core.internal.framework.proxy.RoomType
+import io.agora.agoraeduuikit.R
+import io.agora.agoraeduuikit.component.dialog.AgoraUIDialogBuilder
+import io.agora.agoraeduuikit.component.dialog.AgoraUIHintDialogBuilder
 import io.agora.agoraeduuikit.component.toast.AgoraUIToast
 import io.agora.classroom.common.AgoraEduClassActivity
-import kotlin.collections.HashMap
 
 /**
  * author : hefeng
@@ -27,11 +37,22 @@ class AgoraClass1V1Activity : AgoraEduClassActivity() {
     lateinit var bindingLeft: ActivityAgoraClass1v1VideoLeftBinding
     private val directionLeft: String = "left"
 
+    //房间标记-教师是否进入过教师的key值
+    private val roomTagTeacherWhetherJoinRoomKey = "teacherWhetherJoinRoom"
+
     private val roomHandler = object : RoomHandler() {
         override fun onJoinRoomSuccess(roomInfo: EduContextRoomInfo) {
             super.onJoinRoomSuccess(roomInfo)
             AgoraLog?.d("$TAG->classroom ${roomInfo.roomUuid} joined success")
             setRecordProperties()
+
+            //房间加入成功，开始倒计时或者教师加入通知
+            if (AgoraEduContextUserRole.Teacher == eduCore()?.eduContextPool()?.userContext()?.getLocalUserInfo()?.role) {
+                eduCore()?.eduContextPool()?.roomContext()?.updateRoomProperties(mutableMapOf(Pair(roomTagTeacherWhetherJoinRoomKey, true)),
+                    mutableMapOf(Pair(roomTagTeacherWhetherJoinRoomKey, "change screen")), null)
+            }else{
+                startTimer()
+            }
         }
 
         override fun onJoinRoomFailure(roomInfo: EduContextRoomInfo, error: EduContextError) {
@@ -41,9 +62,29 @@ class AgoraClass1V1Activity : AgoraEduClassActivity() {
 
         }
 
+        override fun onRoomPropertiesUpdated(properties: Map<String, Any>, cause: Map<String, Any>?, operator: AgoraEduContextUserInfo?) {
+            super.onRoomPropertiesUpdated(properties, cause, operator)
+            //判断老师是否进了教室
+            var whetherJoin:Boolean? = null
+            if(properties.containsKey(roomTagTeacherWhetherJoinRoomKey)){
+                whetherJoin = properties[roomTagTeacherWhetherJoinRoomKey]?.toString()?.toBoolean()
+            }
+            if(whetherJoin == null){
+                if(true == eduCore()?.eduContextPool()?.roomContext()?.getRoomProperties()?.containsKey(roomTagTeacherWhetherJoinRoomKey)){
+                    whetherJoin = eduCore()?.eduContextPool()?.roomContext()?.getRoomProperties()?.get(roomTagTeacherWhetherJoinRoomKey)?.toString()?.toBoolean()
+                }
+            }
+            //接收到房间属性更新，从中取出数据更新视图
+            if (true == whetherJoin) {
+                releaseTimer()
+            }
+
+        }
+
         override fun onClassStateUpdated(state: AgoraEduContextClassState) {
             super.onClassStateUpdated(state)
             AgoraLog?.d("$TAG->class state updated: ${state.name}")
+            startTimer()
         }
     }
 
@@ -56,6 +97,11 @@ class AgoraClass1V1Activity : AgoraEduClassActivity() {
             }
         }
     }
+
+    /**
+     * 倒计时实例
+     */
+    private lateinit var countDownTimer: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +127,11 @@ class AgoraClass1V1Activity : AgoraEduClassActivity() {
                 finish()
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.releaseTimer()
     }
 
     private fun joinClassRoom() {
@@ -125,4 +176,57 @@ class AgoraClass1V1Activity : AgoraEduClassActivity() {
             join()
         }
     }
+
+    override fun onBackPressed() {
+        releaseTimer()
+        super.onBackPressed()
+    }
+
+    /**
+     * 开始倒计时
+     */
+    private fun startTimer() {
+        releaseTimer()
+        if(AgoraEduContextUserRole.Student == eduCore()?.eduContextPool()?.userContext()?.getLocalUserInfo()?.role) {
+            //教师是否进入过教室
+            var whetherJoin =
+                true == eduCore()?.eduContextPool()?.roomContext()?.getRoomProperties()?.get(roomTagTeacherWhetherJoinRoomKey)?.toString()?.toBoolean()
+            //课堂开始时间
+            val startTime = eduCore()?.eduContextPool()?.roomContext()?.getClassInfo()?.startTime
+            //剩余超时时间
+            val reduceTimeOut = 600000L - (System.currentTimeMillis() - (startTime ?: 0L))
+            if (!whetherJoin && reduceTimeOut > 0) {
+                countDownTimer = object : CountDownTimer(reduceTimeOut + 1000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+
+                    override fun onFinish() {
+                        //倒计时结束，获取当前教师是否进入课堂
+                        whetherJoin =
+                            true == eduCore()?.eduContextPool()?.roomContext()?.getRoomProperties()?.get(roomTagTeacherWhetherJoinRoomKey)?.toString()?.toBoolean()
+                        if (!whetherJoin) {
+                            //执行退出弹窗
+                            runOnUiThread {
+                                AgoraUIHintDialogBuilder(this@AgoraClass1V1Activity).title(resources.getString(R.string.fcr_dialog_hint_title))
+                                    .content(resources.getString(R.string.fcr_dialog_hint_content))
+                                    .buttonText(resources.getString(R.string.fcr_dialog_hint_btn)).build().show()
+                            }
+                        }
+                    }
+                }
+                countDownTimer.start()
+            }
+        }
+    }
+
+    /**
+     * 释放倒计时
+     */
+    private fun releaseTimer() {
+        // 取消计时器以避免内存泄漏
+        if (::countDownTimer.isInitialized) {
+            countDownTimer.cancel()
+        }
+    }
+
 }

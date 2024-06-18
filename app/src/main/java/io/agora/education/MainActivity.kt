@@ -595,14 +595,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         if (videoStreamKey == "" || encryptMode == AgoraEduEncryptMode.NONE.value) {
                             AgoraEduLaunchConfig(
                                 userName, userUuid, roomName, roomUuid,
-                                roleType, roomType, it.rtmToken, null, duration, roomRegion, directionStr,
+                                roleType, roomType, it.rtmToken, System.currentTimeMillis(), duration, roomRegion, directionStr,
                                 null, null, streamState,
                                 AgoraEduLatencyLevel.AgoraEduLatencyLevelLow, userProperties, null
                             )
                         } else {
                             AgoraEduLaunchConfig(
                                 userName, userUuid, roomName, roomUuid, roleType,
-                                roomType, it.rtmToken, null, duration, roomRegion, directionStr, null,
+                                roomType, it.rtmToken, System.currentTimeMillis(), duration, roomRegion, directionStr, null,
                                 AgoraEduMediaOptions(AgoraEduMediaEncryptionConfigs(videoStreamKey, encryptMode)),
                                 streamState, AgoraEduLatencyLevel.AgoraEduLatencyLevelUltraLow,
                                 userProperties, null

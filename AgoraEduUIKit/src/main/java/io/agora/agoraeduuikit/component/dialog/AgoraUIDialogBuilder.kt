@@ -108,3 +108,39 @@ class AgoraUICustomDialogBuilder(private val context: Context) {
         return dialog
     }
 }
+
+class AgoraUIHintDialogBuilder(private val context: Context) {
+    private var title: String? = null
+    private var content: String? = null
+    private var buttonText: String? = null
+    private var buttonClickListener: View.OnClickListener? = null
+
+    fun title(title: String): AgoraUIHintDialogBuilder {
+        this.title = title
+        return this
+    }
+
+    fun content(content: String): AgoraUIHintDialogBuilder {
+        this.content = content
+        return this
+    }
+
+    fun buttonText(buttonText: String): AgoraUIHintDialogBuilder {
+        this.buttonText = buttonText
+        return this
+    }
+
+    fun buttonClickListener(buttonClickListener: View.OnClickListener): AgoraUIHintDialogBuilder {
+        this.buttonClickListener = buttonClickListener
+        return this
+    }
+
+    fun build(): AgoraUIHintDialog {
+        val dialog = AgoraUIHintDialog(context)
+        title?.let { dialog.setTitle(it) }
+        content?.let { dialog.setContent(it) }
+        buttonText?.let { dialog.setButtonText(it) }
+        buttonClickListener?.let { dialog.buttonClickListener = it }
+        return dialog
+    }
+}

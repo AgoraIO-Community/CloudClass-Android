@@ -18,7 +18,7 @@ public interface BoardEventListener {
 
     void onRoomPhaseChanged(@NotNull RoomPhase phase);
 
-    void onGlobalStateChanged(@NotNull GlobalState state);
+    void onGlobalStateChanged( GlobalState state);
 
     void onSceneStateChanged(@NotNull SceneState state);
 

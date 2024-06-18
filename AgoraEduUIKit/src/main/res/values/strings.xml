@@ -128,4 +128,9 @@
     <string name="fcr_user_tutor_left">The tutor left the classroom</string>
     <string name="fcr_user_waiting_student">Waiting for student to enter the classroom</string>
     <string name="fcr_user_student_left">The student has left the classroom</string>
+
+    <!--Hint Dialog-->
+    <string name="fcr_dialog_hint_title">Notice</string>
+    <string name="fcr_dialog_hint_content">The tutor has been absent for over 10 minutes now.\n The system will refund this class period within 1 hour(Don\'t deduct class hours)\n You can exit the classroom now</string>
+    <string name="fcr_dialog_hint_btn">Got it</string>
 </resources>

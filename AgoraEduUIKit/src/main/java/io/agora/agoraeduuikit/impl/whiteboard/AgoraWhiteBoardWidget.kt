@@ -97,7 +97,7 @@ class AgoraWhiteBoardWidget : AgoraBaseWidget() {
     private val webChromeClient = object : WebChromeClient() {}
 
     private val boardEventListener = object : BoardEventListener {
-        override fun onJoinSuccess(state: GlobalState) {
+        override fun onJoinSuccess(state: GlobalState?) {
             loadingView.visibility = View.GONE
             AgoraLog?.i(tag + ":onJoinSuccess->" + Gson().toJson(state))
             initDrawingConfig(object : Promise<Unit> {
@@ -257,7 +257,7 @@ class AgoraWhiteBoardWidget : AgoraBaseWidget() {
             }
         }
 
-        override fun onGlobalStateChanged(state: GlobalState) {
+        override fun onGlobalStateChanged(state: GlobalState?) {
             (state as? BoardState)?.let { newState ->
                 AgoraLog?.d("$tag:onGlobalStateChanged->${state}")
 //                handleFullScreenState(curBoardState, newState)
@@ -761,7 +761,7 @@ class AgoraWhiteBoardWidget : AgoraBaseWidget() {
         }
     }
 
-    private fun initWriteableFollowLocalRole(state: GlobalState, promise: Promise<Boolean>) {
+    private fun initWriteableFollowLocalRole(state: GlobalState?, promise: Promise<Boolean>) {
         widgetInfo?.localUserInfo?.userRole?.let {
             (state as? BoardState)?.let { newState ->
                 var a = false
