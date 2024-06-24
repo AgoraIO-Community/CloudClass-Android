@@ -116,17 +116,6 @@ class FcrScreenDisplayManager(private val options: FcrScreenDisplayOptions) {
      * @param eduContext 总的配置信息
      */
     private fun setShowMoreScreenDisplay(areaViewGroup: LinearLayoutCompat, teacherVideoView: AgoraEduVideoComponent, eduContext: EduContextPool?) {
-        options.runOnUiThread {
-            this@FcrScreenDisplayManager.currentTeacherVideoPresentation!!.binding.nameText.text =
-                eduContext?.userContext()?.getUserList(AgoraEduContextUserRole.Teacher)?.let {
-                    return@let if (it.isNotEmpty()) {
-                        it[0].userName
-                    } else {
-                        ""
-                    }
-                }
-        }
-
         //判断新建
         val displayList = getDisplayList()
         if (displayList.size > 1 && showSecondDisplay && (currentTeacherVideoPresentation == null || !currentTeacherVideoPresentation!!.isShowing)) {
@@ -155,6 +144,8 @@ class FcrScreenDisplayManager(private val options: FcrScreenDisplayOptions) {
         } else {
             setHideMoreScreenDisplay(areaViewGroup, teacherVideoView, eduContext)
         }
+        //设置显示的用户信息
+        this.setShowUserInfo(eduContext)
     }
 
     /**
@@ -209,9 +200,25 @@ class FcrScreenDisplayManager(private val options: FcrScreenDisplayOptions) {
                         setHideMoreScreenDisplay(areaViewGroup, teacherVideoView, eduContext)
                     }
                 } catch (ignore: Exception) {
-                    LogX.e(TAG, "Reset ShowMore Display fail")
+                    LogX.e(TAG, ignore.message)
                 }
             }
+        }
+    }
+
+    /**
+     * 设置显示的用户信息
+     */
+    fun setShowUserInfo(eduContext: EduContextPool?) {
+        options.runOnUiThread {
+            this@FcrScreenDisplayManager.currentTeacherVideoPresentation?.binding?.nameText?.text =
+                eduContext?.userContext()?.getUserList(AgoraEduContextUserRole.Teacher)?.let {
+                    return@let if (it.isNotEmpty()) {
+                        it[0].userName
+                    } else {
+                        ""
+                    }
+                }
         }
     }
 

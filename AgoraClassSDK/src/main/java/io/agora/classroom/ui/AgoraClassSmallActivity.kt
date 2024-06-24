@@ -10,7 +10,11 @@ import com.agora.edu.component.teachaids.presenter.FCRSmallClassVideoPresenter
 import io.agora.agoraclasssdk.databinding.ActivityAgoraClassSmallBinding
 import io.agora.agoraeducore.core.context.*
 import io.agora.agoraeducore.core.internal.base.ToastManager
+import io.agora.agoraeducore.core.internal.education.impl.cmd.bean.OfflineUserInfo
+import io.agora.agoraeducore.core.internal.education.impl.cmd.bean.OnlineUserInfo
 import io.agora.agoraeducore.core.internal.framework.impl.handler.RoomHandler
+import io.agora.agoraeducore.core.internal.framework.impl.handler.UserHandler
+import io.agora.agoraeducore.core.internal.framework.proxy.EduLocalUser
 import io.agora.agoraeducore.core.internal.log.LogX
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetDefaultId
 import io.agora.agoraeduuikit.component.toast.AgoraUIToast
@@ -64,6 +68,19 @@ open class AgoraClassSmallActivity : AgoraEduClassActivity(), FcrScreenDisplayOp
         override fun onClassStateUpdated(state: AgoraEduContextClassState) {
             super.onClassStateUpdated(state)
             LogX.d(TAG, "class state updated: ${state.name}")
+        }
+    }
+
+    protected val smallUserHandler = object : UserHandler() {
+        override fun onRemoteUserLeft(user: AgoraEduContextUserInfo, operator: AgoraEduContextUserInfo?, reason: EduContextUserLeftReason) {
+            super.onRemoteUserLeft(user, operator, reason)
+            screenDisplayManager.setShowUserInfo(eduCore()?.eduContextPool())
+        }
+
+        override fun onUserOnLineUpdated(localUser: EduLocalUser, onlineUsers: MutableList<OnlineUserInfo>,
+            offlineUsers: MutableList<OfflineUserInfo>) {
+            super.onUserOnLineUpdated(localUser, onlineUsers, offlineUsers)
+            screenDisplayManager.setShowUserInfo(eduCore()?.eduContextPool())
         }
     }
 
@@ -132,6 +149,7 @@ open class AgoraClassSmallActivity : AgoraEduClassActivity(), FcrScreenDisplayOp
     open fun joinClassRoom() {
         runOnUiThread {
             eduCore()?.eduContextPool()?.let { context ->
+                context.userContext()?.addHandler(smallUserHandler)
                 context.roomContext()?.addHandler(roomHandler)
                 // header area
                 if (getUIConfig().isHeaderVisible) {
@@ -187,6 +205,7 @@ open class AgoraClassSmallActivity : AgoraEduClassActivity(), FcrScreenDisplayOp
         super.onDestroy()
         binding.agoraWaterMark.pauseScroll()
         eduCore()?.eduContextPool()?.roomContext()?.removeHandler(roomHandler)
+        eduCore()?.eduContextPool()?.userContext()?.removeHandler(smallUserHandler)
     }
 
     override fun onRelease() {
@@ -240,10 +259,10 @@ open class AgoraClassSmallActivity : AgoraEduClassActivity(), FcrScreenDisplayOp
         screenDisplayManager.resetShowMoreDisplay(allowShowMore, binding.agoraAreaVideo, binding.agoraClassTeacherVideo,
             eduCore()?.eduContextPool())
     }
-
-    override fun getApplicationContext(): Context {
-        return context.applicationContext
-    }
+//
+//    override fun getApplicationContext(): Context {
+//        return context.applicationContext
+//    }
 
     override fun getActivityContext(): Context {
         return context
