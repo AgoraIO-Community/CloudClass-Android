@@ -92,6 +92,8 @@
     <string name="fcr_user_tutor_left">外教已离开教室</string>
 
     <!-- ****************** 白板Netless Board ****************** -->
+    <string name="fcr_board_slide_retry">课件加载失败，正在重试</string>
+    <string name="fcr_board_slide_retry_failure">课件加载失败，请切换下一页或关闭课件后重新打开</string>
     <string name="fcr_netless_board_granted">你已被老师授权，请使用白板工具互动</string>
     <string name="fcr_netless_board_ungranted">你已被老师收回授权，无法使用白板工具互动</string>
 

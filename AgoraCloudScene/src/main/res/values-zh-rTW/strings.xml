@@ -87,6 +87,8 @@
     <string name="fcr_user_tutor_left">外教已離開教室</string>
 
     <!-- ****************** 白板Netless Board ****************** -->
+    <string name="fcr_board_slide_retry">課件加載失敗，正在重試</string>
+    <string name="fcr_board_slide_retry_failure">課件加載失敗，請切換下一頁或關閉課件后重新打開</string>
     <string name="fcr_netless_board_granted">你已被老師授權，請使用白板工具互動</string>
     <string name="fcr_netless_board_ungranted">你已被老師收回授權，無法使用白板工具互動</string>
 

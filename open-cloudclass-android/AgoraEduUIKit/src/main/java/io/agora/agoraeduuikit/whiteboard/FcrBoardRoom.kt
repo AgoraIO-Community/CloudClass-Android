@@ -25,12 +25,14 @@ import java.lang.reflect.Proxy
  * date : 2022/6/7
  * description :
  */
-class FcrBoardRoom(var whiteBoardView: WhiteboardView) {
+class FcrBoardRoom(var whiteBoardView: WhiteboardView) : SlideListener  {
     var whiteBoardSDKLog: FcrBoardSDKLog = FcrBoardSDKLog()
     lateinit var whiteSdk: WhiteSdk
     var context: Context = whiteBoardView.context
     var roomParams: RoomParams? = null
     val TAG = "WhiteBoardSDK"
+    var retryTime = 0
+    val handler = Handler(Looper.getMainLooper())
     var roomListener: FcrBoardRoomListener? = null
         set(value) {
             whiteBoardSDKLog.roomListener = value
@@ -71,6 +73,7 @@ class FcrBoardRoom(var whiteBoardView: WhiteboardView) {
         configuration.isUserCursor = true
         configuration.region = FcrWhiteboardConverter.convertStringToRegion(region)
         configuration.useMultiViews = true
+        configuration.isEnableAppliancePlugin = true;
 
         whiteSdk = WhiteSdk(
             whiteBoardView,
@@ -79,6 +82,41 @@ class FcrBoardRoom(var whiteBoardView: WhiteboardView) {
             whiteBoardSDKLog,
             AudioMixerBridgeImpl(whiteboardMixingBridgeListener)
         )
+        whiteSdk.setSlideListener(this);
+    }
+
+    override fun onSlideError(
+        errorType: SlideErrorType?,
+        errorMsg: String?,
+        slideId: String?,
+        slideIndex: Int
+    ) {
+        if (errorType == SlideErrorType.RESOURCE_ERROR || errorType == SlideErrorType.CANVAS_CRASH) {
+            if (this.retryTime == 0) {
+                this.retry(slideId!!, slideIndex)
+            } else if (this.retryTime < 5) {
+                handler.postDelayed({
+                    this.retry(slideId!!, slideIndex)
+                }, 5000)
+            } else {
+                this.retryTime = 0
+                ContextCompat.getMainExecutor(context).execute {
+                    ToastManager.showShort(context, R.string.fcr_board_slide_retry_failure)
+                }
+            }
+        } else if (errorType == SlideErrorType.RUNTIME_ERROR) {
+            this.whiteSdk.recoverSlide(slideId, slideIndex)
+        } else if(errorType == SlideErrorType.RUNTIME_WARN){
+            LogX.w(TAG, "slide page: ${slideIndex}, error: ${errorMsg.toString()}")
+        }
+    }
+
+    private fun retry(slideId: String, slideIndex: Int){
+        this.retryTime += 1
+        this.whiteSdk.recoverSlide(slideId, slideIndex)
+        ContextCompat.getMainExecutor(whiteBoardView.context).execute{
+            ToastManager.showShort(context.getString(R.string.fcr_board_slide_retry) + this.retryTime + "/5")
+        }
     }
 
     fun join(config: FcrBoardRoomJoinConfig) {
