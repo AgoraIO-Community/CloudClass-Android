@@ -91,6 +91,8 @@
     <string name="fcr_user_tutor_left">The teacher has left the classroom</string>
 
     <!-- ****************** 白板Netless Board ****************** -->
+    <string name="fcr_board_slide_retry">course load failure, retry now.</string>
+    <string name="fcr_board_slide_retry_failure">course load failure, please load next page or reopen.</string>
     <string name="fcr_netless_board_granted">You can now annotate on the whiteboard.</string>
     <string name="fcr_netless_board_ungranted">Your access to the whiteboard has been revoked by the teacher.</string>
 

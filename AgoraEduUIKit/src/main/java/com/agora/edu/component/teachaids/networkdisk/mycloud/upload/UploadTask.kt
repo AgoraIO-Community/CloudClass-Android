@@ -1,12 +1,11 @@
 package com.agora.edu.component.teachaids.networkdisk.mycloud.upload
 
 import com.agora.edu.component.teachaids.networkdisk.mycloud.MyCloudService
-import com.hyphenate.easeim.modules.manager.ThreadManager
+import com.hyphenate.easeimgroup.modules.manager.ThreadManager
 import io.agora.agoraeducore.core.internal.base.http.AppRetrofitManager
 import io.agora.agoraeducore.core.internal.edu.common.bean.ResponseBody
 import io.agora.agoraeducore.core.internal.education.impl.network.HttpBaseRes
 import io.agora.agoraeducore.core.internal.launch.AgoraEduSDK
-import io.agora.agoraeducore.core.internal.log.LogX
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -14,8 +13,6 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeoutException

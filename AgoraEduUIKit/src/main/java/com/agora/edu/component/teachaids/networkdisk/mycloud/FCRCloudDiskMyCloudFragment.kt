@@ -29,7 +29,7 @@ import com.agora.edu.component.teachaids.networkdisk.mycloud.req.MyCloudUserAndR
 import com.agora.edu.component.teachaids.networkdisk.mycloud.res.MyCloudCoursewareRes
 import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadCallback
 import com.agora.edu.component.teachaids.networkdisk.mycloud.upload.UploadTask
-import com.hyphenate.easeim.modules.utils.CommonUtil
+import com.hyphenate.easeimgroup.modules.utils.CommonUtil
 import com.permissionx.guolindev.PermissionX
 import io.agora.agoraeducore.core.context.EduContextCallback
 import io.agora.agoraeducore.core.context.EduContextError

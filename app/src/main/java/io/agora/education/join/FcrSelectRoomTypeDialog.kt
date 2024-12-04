@@ -1,15 +1,13 @@
 package io.agora.education.join
 
 import android.content.Context
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hyphenate.easeim.modules.view.ui.widget.RoomType
-import io.agora.agoraeducore.core.internal.launch.AgoraEduRoleType
+import com.hyphenate.easeimgroup.modules.view.ui.widget.RoomType
 import io.agora.education.R
 import io.agora.education.databinding.DialogSelectClassTypeBinding
 import io.agora.education.databinding.ItemSelectClassTypeBinding

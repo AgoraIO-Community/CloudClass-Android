@@ -13,8 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
-import com.hyphenate.easeim.modules.utils.CommonUtil
-import io.agora.agoraeducore.core.internal.framework.impl.managers.AgoraWidgetManager
+import com.hyphenate.easeimgroup.modules.utils.CommonUtil
 import io.agora.agoraeducore.core.internal.launch.courseware.AgoraEduCourseware
 import io.agora.agoraeduuikit.R
 import io.agora.agoraeduuikit.databinding.FcrCloudDiskResourceFragmentLayoutBinding

@@ -18,7 +18,7 @@ android {
             abiFilters "armeabi-v7a", "arm64-v8a" //,"x86", "x86_64"
         }
 
-        buildConfigField 'boolean', 'IS_NOT_NEED_LOGIN', isNotNeedLogin
+//        buildConfigField 'boolean', 'IS_NOT_NEED_LOGIN', isNotNeedLogin
         buildConfigField 'String', 'RELEASE_TIME', String.format("\"%s\"", releaseTime())
         buildConfigField 'String', 'RTC_VERSION', String.format("\"%s\"", rootProject.ext.android.rtcSDKVersion)
         buildConfigField 'String', 'AppSDKVersion', String.format("\"%s\"", rootProject.ext.ClassSDK.versionName)
@@ -47,10 +47,6 @@ android {
         jvmTarget = "1.8"
     }
 
-    kotlin {
-        jvmToolchain(17)
-    }
-
     packagingOptions {
         exclude 'META-INF/edu_release.kotlin_module'
     }
@@ -63,6 +59,7 @@ android {
     viewBinding {
         enabled = true
     }
+    namespace 'io.agora.education'
 }
 
 static def releaseTime() {
@@ -83,7 +80,7 @@ dependencies {
     implementation project(path: ':AgoraClassSDK')
     implementation project(path: ':AgoraEduUIKit')
     if (readyPublishGithub.toBoolean()) {
-        implementation "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+        implementation "io.github.agora-apaas:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
     } else {
         implementation project(path: ':AgoraEduCore')
     }

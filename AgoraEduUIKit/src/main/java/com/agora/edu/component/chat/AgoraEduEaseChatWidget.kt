@@ -72,7 +72,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     override fun init(container: ViewGroup) {
         super.init(container)
         mContext = container.context
-
+        LogX.i(TAG, ">>>ChatWidget init")
         LayoutInflater.from(mContext).inflate(R.layout.fcr_ease_chat_layout, null, false)?.let {
             layout = it
             contentLayout = it.findViewById(R.id.fragment_container)

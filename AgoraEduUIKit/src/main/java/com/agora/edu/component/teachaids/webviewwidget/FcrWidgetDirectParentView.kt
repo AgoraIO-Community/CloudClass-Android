@@ -8,7 +8,7 @@ import com.agora.edu.component.common.AbsAgoraEduComponent
 import com.agora.edu.component.common.IAgoraUIProvider
 import com.agora.edu.component.teachaids.component.FCRLargeWindowContainerComponent
 import com.agora.edu.component.view.FcrDragTouchGroupView
-import com.hyphenate.easeim.modules.utils.ScreenUtil
+import com.hyphenate.easeimgroup.modules.utils.ScreenUtil
 import io.agora.agoraeducore.core.context.AgoraEduContextUserRole
 import io.agora.agoraeducore.core.internal.framework.proxy.RoomType
 import io.agora.agoraeducore.core.internal.log.LogX

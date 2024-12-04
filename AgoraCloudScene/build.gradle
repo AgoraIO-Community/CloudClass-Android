@@ -25,8 +25,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.AgoraCloudScene.versionCode
-        versionName rootProject.ext.AgoraCloudScene.versionName
 
         buildConfigField 'String', 'AgoraCloudScene', String.format("\"%s\"", rootProject.ext.AgoraCloudScene.versionName)
         consumerProguardFiles "consumer-rules.pro"
@@ -55,6 +53,7 @@ android {
             res.srcDirs = ['src/main/res']
         }
     }
+    namespace 'io.agora.online'
 }
 
 dependencies {
@@ -72,7 +71,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.2.2" // for ide hint
 
     if (readyPublishGithub.toBoolean()) {
-        compileOnly "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+        compileOnly "io.github.agora-apaas:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
     } else {
         implementation project(path: ':AgoraEduCore')
     }

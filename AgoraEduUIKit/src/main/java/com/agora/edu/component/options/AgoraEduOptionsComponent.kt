@@ -14,7 +14,7 @@ import com.agora.edu.component.common.IAgoraUIProvider
 import com.agora.edu.component.common.UIUtils
 import com.agora.edu.component.whiteboard.data.AgoraEduApplianceData
 import com.google.gson.Gson
-import com.hyphenate.easeim.modules.utils.TAG
+import com.hyphenate.easeimgroup.modules.utils.TAG
 import io.agora.agoraeducore.core.AgoraEduCoreManager
 import io.agora.agoraeducore.core.context.AgoraEduContextUserInfo
 import io.agora.agoraeducore.core.context.AgoraEduContextUserRole

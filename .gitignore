@@ -9,3 +9,5 @@
 .cxx
 /app/normal/*
 /app/src/normal/java/io/agora/education/fetchtoken/
+app/release/app-release.apk
+app/release/output-metadata.json

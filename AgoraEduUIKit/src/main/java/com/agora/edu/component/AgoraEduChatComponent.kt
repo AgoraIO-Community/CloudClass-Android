@@ -5,12 +5,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.agora.edu.component.chat.AgoraEduEaseChatGroupWidget
 import com.agora.edu.component.chat.AgoraEduEaseChatWidget
 import com.agora.edu.component.common.AbsAgoraEduComponent
 import com.agora.edu.component.common.IAgoraUIProvider
 import io.agora.agoraeducore.core.context.AgoraEduContextUserRole
 import io.agora.agoraeducore.core.context.EduContextRoomInfo
 import io.agora.agoraeducore.core.internal.framework.impl.handler.RoomHandler
+import io.agora.agoraeducore.core.internal.framework.proxy.EduRoom
 import io.agora.agoraeducore.core.internal.framework.proxy.RoomType
 import io.agora.agoraeducore.core.internal.launch.AgoraEduLog
 import io.agora.agoraeducore.core.internal.log.LogX
@@ -43,9 +45,16 @@ class AgoraEduChatComponent : AbsAgoraEduComponent {
                 chatWidget?.let { popup ->
                     ContextCompat.getMainExecutor(context).execute {
                         rootContainer?.let {
-                            (popup as? AgoraEduEaseChatWidget)?.setInputViewParent(it)
-                            (popup as? AgoraEduEaseChatWidget)?.isNeedRoomMutedStatus =
-                                eduContext?.userContext()?.getLocalUserInfo()?.role != AgoraEduContextUserRole.Teacher
+                            if(roomInfo.roomType == RoomType.LARGE_CLASS){
+                                (popup as? AgoraEduEaseChatGroupWidget)?.setInputViewParent(it)
+                                (popup as? AgoraEduEaseChatGroupWidget)?.isNeedRoomMutedStatus =
+                                    eduContext?.userContext()?.getLocalUserInfo()?.role != AgoraEduContextUserRole.Teacher
+                            }else{
+                                (popup as? AgoraEduEaseChatWidget)?.setInputViewParent(it)
+                                (popup as? AgoraEduEaseChatWidget)?.isNeedRoomMutedStatus =
+                                    eduContext?.userContext()?.getLocalUserInfo()?.role != AgoraEduContextUserRole.Teacher
+                            }
+
                         }
                         popup.token = eduCore?.config?.rtmToken
                         popup.init(this@AgoraEduChatComponent)

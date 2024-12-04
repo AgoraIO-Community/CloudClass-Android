@@ -194,9 +194,11 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
 
         tipsUserName = findViewById(R.id.tips_userName)
         roomTypeLayout = findViewById(R.id.roomType_Layout)
+        roomTypeLayout.visibility = GONE
         roomTypeLayout.setOnClickListener(this)
         icDownUp = findViewById(R.id.ic_down0)
         roleTypeLayout = findViewById(R.id.roleType_Layout)
+        roleTypeLayout.visibility=GONE
         roleTypeLayout.setOnClickListener(this)
         tvRoomType = findViewById(R.id.tv_roomType)
         tvRoleType = findViewById(R.id.tv_roleType)
@@ -606,27 +608,30 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
 
         val type: String = tvRoomType.text.toString()
         val roleTypeStr: String = tvRoleType.text.toString()
-        if (TextUtils.isEmpty(type)) {
-            Toast.makeText(this, R.string.room_type_should_not_be_empty, Toast.LENGTH_SHORT).show()
-            notifyBtnJoinEnable(true)
-            return
-        }
+//        if (TextUtils.isEmpty(type)) {
+//            Toast.makeText(this, R.string.room_type_should_not_be_empty, Toast.LENGTH_SHORT).show()
+//            notifyBtnJoinEnable(true)
+//            return
+//        }
 
         agoraLoading.show()
 
-        val roomType = getRoomType(type)
-        val roleType = getRoleType(roleTypeStr)
+        //val roomType = getRoomType(type)
+        //val roleType = getRoleType(roleTypeStr)
+        val roomType = 2
+        val roleType = 2
 //        val roomUuid = roomName.plus(roomType)
-        val roomUuid = HashUtil.md5(roomName).plus(roomType).lowercase()
-        val userUuid = HashUtil.md5(userName).plus(roleType).lowercase()
+
+//        val roomUuid = HashUtil.md5(roomName).plus(roomType).lowercase()
+//        val userUuid = HashUtil.md5(userName).plus(roleType).lowercase()
         val roomRegion = getRoomRegion(regionStr)
         val videoStreamKey: String = edVideoStreamKey.text.toString()
 
         ConfigUtil.getV3Config(
             AppHostUtil.getAppHostUrl(roomRegion),
-            roomUuid,
+            roomName,
             roleType,
-            userUuid,
+            userName,
             object : EduCallback<ConfigData> {
                 override fun onSuccess(info: ConfigData?) {
                     // Use authentication info from server instead
@@ -640,9 +645,9 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
 
                         val config = AgoraEduLaunchConfig(
                             userName,
-                            userUuid,
+                            userName,
                             roomName,
-                            roomUuid,
+                            roomName,
                             roleType,
                             roomType,
                             it.token,
@@ -831,9 +836,9 @@ class FcrMainActivity : BaseActivity(), View.OnClickListener {
     private fun notifyBtnJoinEnable(enable: Boolean) {
         runOnUiThread {
             if (tvRoomType.text == getString(R.string.large_class_vocational)) {
-                btnJoin.isEnabled = enable && roomNameValid && userNameNameValid && roomTypeValid && roleTypeValid && serviceTypeValid
+                btnJoin.isEnabled = enable && roomNameValid && userNameNameValid && serviceTypeValid
             } else {
-                btnJoin.isEnabled = enable &&  roomTypeValid && roleTypeValid
+                btnJoin.isEnabled = enable
             }
         }
     }

@@ -1,7 +1,7 @@
 package io.agora.education.join.presenter
 
 import android.content.Context
-import com.hyphenate.easeim.modules.view.ui.widget.RoomType
+import com.hyphenate.easeimgroup.modules.view.ui.widget.RoomType
 import io.agora.education.R
 import io.agora.education.join.FcrSelectRoomTypeDialog
 

@@ -2,6 +2,7 @@ package io.agora.classroom.sdk
 
 import android.content.Context
 import com.agora.edu.component.chat.AgoraChatRTMWidget
+import com.agora.edu.component.chat.AgoraEduEaseChatGroupWidget
 import com.agora.edu.component.chat.AgoraEduEaseChatWidget
 import com.agora.edu.component.teachaids.AgoraTeachAidCountDownWidget
 import com.agora.edu.component.teachaids.AgoraTeachAidIClickerWidget
@@ -11,6 +12,7 @@ import com.agora.edu.component.teachaids.webviewwidget.FcrWebViewWidget
 import io.agora.agoraeducore.core.AgoraEduCore
 import io.agora.agoraeducore.core.ClassInfoCache
 import io.agora.agoraeducore.core.internal.framework.impl.managers.AgoraWidgetManager.Companion.registerDefault
+import io.agora.agoraeducore.core.internal.framework.proxy.EduRoom
 import io.agora.agoraeducore.core.internal.framework.proxy.RoomType
 import io.agora.agoraeducore.core.internal.launch.*
 import io.agora.agoraeducore.core.internal.log.LogX
@@ -57,6 +59,7 @@ object AgoraClassroomSDK {
         LogX.e(TAG, "AgoraClassSdk launch=${launchConfig.roomName}")
         SpUtil.init(context)
         launchConfig.appId = this.config.appId
+        injectChatWidget(launchConfig)
         injectRtmMessageWidget(launchConfig)
         replaceClassRoomByServiceType(launchConfig.roomType, launchConfig.serviceType)
         AgoraEduCore.launch(context, launchConfig, callback)
@@ -122,7 +125,6 @@ object AgoraClassroomSDK {
 
     private fun getWidgetConfigList(appIdExtraInfo: MutableMap<String, Any>): MutableList<AgoraWidgetConfig> {
         val widgetConfigs = mutableListOf<AgoraWidgetConfig>()
-        widgetConfigs.add(AgoraWidgetConfig(AgoraEduEaseChatWidget::class.java, AgoraWidgetDefaultId.Chat.id, extraInfo = appIdExtraInfo))
         widgetConfigs.add(AgoraWidgetConfig(AgoraWhiteBoardWidget::class.java, AgoraWidgetDefaultId.WhiteBoard.id))
         widgetConfigs.add(AgoraWidgetConfig(AgoraUILargeVideoWidget::class.java, AgoraWidgetDefaultId.LargeWindow.id))
         widgetConfigs.add(AgoraWidgetConfig(FcrWebViewWidget::class.java, AgoraWidgetDefaultId.FcrWebView.id))
@@ -187,6 +189,16 @@ object AgoraClassroomSDK {
                 newMap["default"] = it
             }
             widgetConfig.extraInfo = newMap
+        }
+    }
+
+    private fun injectChatWidget(config: AgoraEduLaunchConfig) {
+        val appIdExtraInfo = mutableMapOf<String, Any>()
+        appIdExtraInfo["appId"] = AgoraClassroomSDK.config.appId
+        if(config.roomType == RoomType.LARGE_CLASS.value){
+            config.widgetConfigs?.add(AgoraWidgetConfig(AgoraEduEaseChatGroupWidget::class.java, AgoraWidgetDefaultId.Chat.id, extraInfo = appIdExtraInfo))
+        }else{
+            config.widgetConfigs?.add(AgoraWidgetConfig(AgoraEduEaseChatWidget::class.java, AgoraWidgetDefaultId.Chat.id, extraInfo = appIdExtraInfo))
         }
     }
 }
