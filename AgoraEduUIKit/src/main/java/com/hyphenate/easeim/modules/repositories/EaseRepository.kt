@@ -1,12 +1,20 @@
 package com.hyphenate.easeim.modules.repositories
 
 import com.hyphenate.easeim.modules.constant.EaseConstant
+import com.hyphenate.easeim.modules.exception.ChatError
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.view.`interface`.EaseOperationListener
 import io.agora.CallBack
+import io.agora.Error
 import io.agora.ValueCallBack
 import io.agora.chat.*
 import io.agora.util.EMLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class EaseRepository {
     companion object {
@@ -32,25 +40,57 @@ class EaseRepository {
     var roomUuid = ""
     var userName = ""
     var userUuid = ""
-
+    var recvRoomIds: List<String> = emptyList()
     /**
      * 加载本地消息
      */
     fun loadMessages() {
         if (isInit) {
-            val conversation = ChatClient.getInstance().chatManager()
-                    .getConversation(chatRoomId, Conversation.ConversationType.ChatRoom, true)
-            val msgList = conversation?.allMessages
             val norMsgList = mutableListOf<ChatMessage>()
-            msgList?.forEach { message ->
-                val msgType = message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
-                if (msgType == EaseConstant.NORMAL_MSG)
-                    norMsgList.add(message)
+            recvRoomIds.forEach { roomId->
+                val conversation = ChatClient.getInstance().chatManager()
+                    .getConversation(roomId, Conversation.ConversationType.ChatRoom, true)
+                val msgList = conversation?.allMessages
+                msgList?.forEach { message ->
+                    val msgType = message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG)
+                    if (msgType == EaseConstant.NORMAL_MSG)
+                        norMsgList.add(message)
+                }
             }
+            norMsgList.sortBy { msg-> msg.msgTime}
             for (listener in listeners) {
                 listener.loadMessageFinish(norMsgList)
             }
         }
+    }
+
+
+
+
+    suspend fun getHistoryMsgs(roomId:String):List<ChatMessage> = suspendCoroutine { cont ->
+        ChatClient.getInstance().chatManager().asyncFetchHistoryMessage(roomId, Conversation.ConversationType.ChatRoom, 50, "", object : ValueCallBack<CursorResult<ChatMessage>> {
+            override fun onSuccess(value: CursorResult<ChatMessage>?) {
+                cont.resume(value?.data ?: emptyList())
+            }
+
+            override fun onError(error: Int, errorMsg: String?) {
+                val message = "loadHistoryMessages failed: $error = $errorMsg"
+                cont.resumeWithException(ChatError(error, message))
+                EMLog.e(TAG, message)
+            }
+
+        })
+    }
+
+    private suspend fun batchGetHistoryMsgs(roomIds:List<String>):List<ChatMessage> {
+        val list = mutableListOf<ChatMessage>()
+        roomIds.forEach { i->
+            val item = getHistoryMsgs(i)
+            item.forEach { j->
+                list.add(j)
+            }
+        }
+        return list
     }
 
     /**
@@ -58,54 +98,49 @@ class EaseRepository {
      */
     fun loadHistoryMessages() {
         EMLog.e(TAG, "loadHistoryMessages")
-        ChatClient.getInstance().chatManager().asyncFetchHistoryMessage(chatRoomId, Conversation.ConversationType.ChatRoom, 50, "", object : ValueCallBack<CursorResult<ChatMessage>> {
-            override fun onSuccess(value: CursorResult<ChatMessage>?) {
-                value?.data?.forEach { message ->
-                    if (message.type == ChatMessage.Type.CMD) {
-                        val body = message.body as CmdMessageBody
-                        val notifyMessage = ChatMessage.createSendMessage(ChatMessage.Type.CUSTOM)
-                        val notifyBody = CustomMessageBody(EaseConstant.NOTIFY)
-                        when (body.action()) {
-                            EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
-                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
 
-                            }
-                            EaseConstant.DEL -> {
-                                val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
-                                deleteMessage(chatRoomId, msgId)
-                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
-                            }
-                            EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
-                                val member = message.getStringAttribute(EaseConstant.MUTE_MEMEBER, "")
-                                if (!member.equals(ChatClient.getInstance().currentUser))
-                                    return@forEach
-                                notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
-                            }
+        CoroutineScope(Dispatchers.Main).launch {
+            val msgs = batchGetHistoryMsgs(recvRoomIds)
+            msgs.forEach { message->
+                if (message.type == ChatMessage.Type.CMD) {
+                    val body = message.body as CmdMessageBody
+                    val notifyMessage = ChatMessage.createSendMessage(ChatMessage.Type.CUSTOM)
+                    val notifyBody = CustomMessageBody(EaseConstant.NOTIFY)
+                    when (body.action()) {
+                        EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
+                            notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+
                         }
-                        notifyMessage.body = notifyBody
-                        notifyMessage.to = chatRoomId
-                        notifyMessage.chatType = ChatMessage.ChatType.ChatRoom
-                        notifyMessage.setStatus(ChatMessage.Status.SUCCESS)
-                        notifyMessage.msgTime = message.msgTime
-                        notifyMessage.msgId = message.msgId
-                        notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
-                        ChatClient.getInstance().chatManager().saveMessage(notifyMessage)
+                        EaseConstant.DEL -> {
+                            val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
+                            deleteMessage(chatRoomId, msgId)
+                            notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                        }
+                        EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
+                            val member = message.getStringAttribute(EaseConstant.MUTE_MEMEBER, "")
+                            if (!member.equals(ChatClient.getInstance().currentUser))
+                                return@forEach
+                            notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+                        }
                     }
-                }
-                ThreadManager.instance.runOnMainThread {
-                    val conversation = ChatClient.getInstance().chatManager().getConversation(chatRoomId, Conversation.ConversationType.ChatRoom, true)
-                    conversation.loadMoreMsgFromDB("", 50)
-                    for (listener in listeners) {
-                        listener.loadHistoryMessageFinish()
-                    }
+                    notifyMessage.body = notifyBody
+                    notifyMessage.to = chatRoomId
+                    notifyMessage.chatType = ChatMessage.ChatType.ChatRoom
+                    notifyMessage.setStatus(ChatMessage.Status.SUCCESS)
+                    notifyMessage.msgTime = message.msgTime
+                    notifyMessage.msgId = message.msgId
+                    notifyMessage.setAttribute(EaseConstant.NICK_NAME, message.getStringAttribute(EaseConstant.NICK_NAME, message.from))
+                    ChatClient.getInstance().chatManager().saveMessage(notifyMessage)
                 }
             }
-
-            override fun onError(error: Int, errorMsg: String?) {
-                EMLog.e(TAG, "loadHistoryMessages failed: $error = $errorMsg")
+            ThreadManager.instance.runOnMainThread {
+                val conversation = ChatClient.getInstance().chatManager().getConversation(chatRoomId, Conversation.ConversationType.ChatRoom, true)
+                conversation.loadMoreMsgFromDB("", 50)
+                for (listener in listeners) {
+                    listener.loadHistoryMessageFinish()
+                }
             }
-
-        })
+        }
     }
 
     fun refreshLastMessageId() {

@@ -6,6 +6,7 @@ object EaseConstant {
     const val NORMAL_MSG = 0
 
     const val ROLE = "role"
+    const val CHAT_GROUP_UUIDS = "chatGroupUuids"
     const val ROLE_TEACHER = 1
     const val ROLE_STUDENT = 2
     const val ROLE_ASSISTANT = 3

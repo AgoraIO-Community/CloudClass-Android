@@ -47,6 +47,9 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     private var appKey = ""
     private var role = EaseConstant.ROLE_STUDENT
     private var easeChatId = "" // 环信ID
+    private var _recvRoomIds:List<*>? = null
+    private var _sendRoomIds:List<*>? = null
+    private var _chatGroupUuids:List<*>? = null
     private var userUuid = ""
     private var mChatRoomId = ""
     private var nickName = ""
@@ -55,6 +58,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     private var chatViewPager: ChatViewPager? = null
     private var contentLayout: FrameLayout? = null
     private var inputView: InputView? = null
+    private var _chatGroupMap: MutableMap<*, *>? = null
 
     // specified input`s parentView
     private var specialInputViewParent: ViewGroup? = null
@@ -68,6 +72,47 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
     private var initLoginEaseIM = false
 
     var isNeedRoomMutedStatus = true //是否需要判断禁言状态
+
+
+    val sendRoomIds: List<String>
+        get() {
+            val list = mutableListOf<String>()
+            _sendRoomIds?.forEach {
+                list.add(it.toString())
+            }
+            return list
+        }
+
+    val recvRoomIds: List<String>
+        get() {
+            val list = mutableListOf<String>()
+            _recvRoomIds?.forEach {
+                list.add(it.toString())
+            }
+            return list
+        }
+
+    val chatGroupUuids: List<String>
+        get() {
+            val list = mutableListOf<String>()
+            _chatGroupUuids?.forEach {
+                list.add(it.toString())
+            }
+            return list
+        }
+
+    val userRoomIds: List<String>
+        get() {
+            val list = mutableListOf<String>()
+            _chatGroupUuids?.forEach {
+                val groupUuid = it.toString()
+                val chatRoomId = _chatGroupMap?.get(groupUuid).toString()
+                list.add(chatRoomId)
+            }
+            return list
+        }
+
+
 
     override fun init(container: ViewGroup) {
         super.init(container)
@@ -109,6 +154,10 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
                 it.setCloseable(false)
                 it.setAvatarUrl(avatarUrl)
                 it.setChatRoomId(mChatRoomId)
+                it.setRecvRoomIds(recvRoomIds)
+                it.setSendRoomIds(sendRoomIds)
+                it.setUserRoomIds(userRoomIds)
+                it.setChatGroupUuids(chatGroupUuids)
                 it.setNickName(nickName)
                 it.setRoomUuid(roomUuid)
                 it.setUserName(easeChatId)
@@ -184,6 +233,7 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
         }
     }
 
+
     private fun parseEaseConfigProperties(): Boolean {
 //        val properties = eduContext?.widgetContext2()?.getWidgetProperties(WidgetType.IM)
         val extraProperties = this.widgetInfo?.roomProperties as? MutableMap<*, *>
@@ -192,12 +242,17 @@ class AgoraEduEaseChatWidget : ChatPopupWidget(), InputMsgListener, ChatPagerLis
             appName = it["appName"] as? String ?: ""
             mChatRoomId = it["chatRoomId"] as? String ?: mChatRoomId
             appKey = it["appKey"] as? String ?: ""
+            val chatGroup = it["chatGroup"] as? MutableMap<*, *>
+            _chatGroupMap = chatGroup?.get("groups") as? MutableMap<*, *>
             role = this.widgetInfo?.localUserInfo?.userRole ?: EaseConstant.ROLE_STUDENT
             EaseRepository.instance.role = role
         }
 
         this.widgetInfo?.localUserProperties?.let {
             easeChatId = it[userIdKey].toString()
+            _sendRoomIds = it[sendRoomIdKey] as? List<*>
+            _recvRoomIds = it[recvRoomIdKey] as? List<*>
+            _chatGroupUuids = it[chatGroupUuidsKey] as? List<*>
         }
         return !TextUtils.isEmpty(easeChatId)
             && !TextUtils.isEmpty(orgName)

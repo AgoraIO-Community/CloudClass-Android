@@ -8,6 +8,9 @@ abstract class ChatWidget : AgoraBaseWidget() {
     protected val userIdKey = "userId"
     protected val appNameKey = "appName"
     protected val chatRoomIdKey = "chatRoomId"
+    protected val sendRoomIdKey = "sendChatRoomIds"
+    protected val recvRoomIdKey = "receiveChatRoomIds"
+    protected val chatGroupUuidsKey = "chatGroupUuids"
 
     var hideIconSize = 0
 

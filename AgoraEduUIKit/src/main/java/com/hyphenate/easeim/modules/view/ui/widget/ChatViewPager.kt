@@ -17,27 +17,33 @@ import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import io.agora.agoraeduuikit.R
 import com.hyphenate.easeim.modules.constant.EaseConstant
+import com.hyphenate.easeim.modules.exception.ChatError
 import com.hyphenate.easeim.modules.manager.ThreadManager
 import com.hyphenate.easeim.modules.repositories.EaseRepository
 import com.hyphenate.easeim.modules.utils.CommonUtil
 import com.hyphenate.easeim.modules.utils.ScreenUtil
+import com.hyphenate.easeim.modules.view.adapter.ChatViewPagerAdapter
 import com.hyphenate.easeim.modules.view.`interface`.ChatPagerListener
 import com.hyphenate.easeim.modules.view.`interface`.ViewEventListener
-import com.hyphenate.easeim.modules.view.adapter.ChatViewPagerAdapter
 import io.agora.*
+import io.agora.agoraeduuikit.R
 import io.agora.chat.*
 import io.agora.util.EMLog
 import io.agora.util.FileHelper
 import io.agora.util.VersionUtils
-import io.agora.Error
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.Executors
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attributeSet, defStyleAttr), MessageListener, ChatRoomChangeListener, ViewEventListener, ConnectionListener {
@@ -47,7 +53,10 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     companion object {
         private const val TAG = "ChatViewPager"
     }
-
+    private var userRoomIds: List<String> = emptyList()
+    private var sendRoomIds: List<String> = emptyList()
+    private var recvRoomIds: List<String> = emptyList()
+    private var chatGroupUuids: List<String> = emptyList()
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
     private lateinit var iconHidden: ImageView
@@ -78,6 +87,23 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     private lateinit var receiver:BroadcastReceiver
     private val selectImageResultCode = 78
     private var executor = Executors.newScheduledThreadPool(1)
+
+    val joinRoomIds:List<String>
+        get() {
+            val list = mutableListOf<String>()
+            list.add(chatRoomId)
+            sendRoomIds.forEach {
+                if(list.indexOf(it) == -1){
+                    list.add(it)
+                }
+            }
+            recvRoomIds.forEach {
+                if(list.indexOf(it) == -1){
+                    list.add(it)
+                }
+            }
+            return list
+        }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.fcr_chat_total_layout, this)
@@ -195,13 +221,19 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onMessageReceived(messages: MutableList<ChatMessage>?) {
         messages?.let {
             for (message in messages) {
-                if (message.getIntAttribute(EaseConstant.MSG_TYPE, EaseConstant.NORMAL_MSG) == EaseConstant.NORMAL_MSG) {
-                    ThreadManager.instance.runOnMainThread {
-                        if (chooseTab != chatTab) {
-                            showUnread(chatTab)
+                if (message.chatType == ChatMessage.ChatType.ChatRoom && recvRoomIds.indexOf(message.to) != -1) {
+                    if (message.getIntAttribute(
+                            EaseConstant.MSG_TYPE,
+                            EaseConstant.NORMAL_MSG
+                        ) == EaseConstant.NORMAL_MSG
+                    ) {
+                        ThreadManager.instance.runOnMainThread {
+                            if (chooseTab != chatTab) {
+                                showUnread(chatTab)
+                            }
+                            showOuterLayerUnread()
+                            refreshUI()
                         }
-                        showOuterLayerUnread()
-                        refreshUI()
                     }
                 }
             }
@@ -212,17 +244,34 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     override fun onCmdMessageReceived(messages: MutableList<ChatMessage>?) {
         messages?.forEach { message ->
-            if (message.chatType == ChatMessage.ChatType.ChatRoom && message.to == chatRoomId) {
+            if (message.chatType == ChatMessage.ChatType.ChatRoom && recvRoomIds.indexOf(message.to) != -1) {
                 val body = message.body as CmdMessageBody
                 val notifyMessage = ChatMessage.createSendMessage(ChatMessage.Type.CUSTOM)
                 val notifyBody = CustomMessageBody(EaseConstant.NOTIFY)
                 when (body.action()) {
                     EaseConstant.SET_ALL_MUTE, EaseConstant.REMOVE_ALL_MUTE -> {
                         notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+
+                        val isMuted = body.action() == EaseConstant.SET_ALL_MUTE
+                        EaseRepository.instance.allMuted = isMuted
+                        ThreadManager.instance.runOnMainThread {
+                            if (isMuted) {
+                                chatView.showMutedView()
+                                chatPagerListener?.onMuted(isMuted)
+                            } else {
+                                if (EaseRepository.instance.singleMuted) {
+                                    chatView.showMutedView()
+                                } else {
+                                    chatView.hideMutedView()
+                                    chatPagerListener?.onMuted(isMuted)
+                                }
+                            }
+                        }
                     }
                     EaseConstant.DEL -> {
                         val msgId = message.getStringAttribute(EaseConstant.MSG_ID, "")
-                        EaseRepository.instance.deleteMessage(chatRoomId, msgId)
+
+                        EaseRepository.instance.deleteMessage(message.to, msgId)
                         notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
                     }
                     EaseConstant.MUTE, EaseConstant.UN_MUTE -> {
@@ -230,10 +279,21 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                         if (!member.equals(userName))
                             return@forEach
                         notifyBody.params = mutableMapOf(Pair(EaseConstant.OPERATION, body.action()))
+
+                        val isMuted = body.action() == EaseConstant.MUTE
+                        EaseRepository.instance.singleMuted = isMuted
+                        ThreadManager.instance.runOnMainThread {
+                            if(isMuted){
+                                chatView.showMutedView()
+                            }else{
+                                chatView.hideMutedView()
+                            }
+                            chatPagerListener?.onMuted(isMuted)
+                        }
                     }
                 }
                 notifyMessage.body = notifyBody
-                notifyMessage.to = chatRoomId
+                notifyMessage.to = message.to
                 notifyMessage.chatType = ChatMessage.ChatType.ChatRoom
                 notifyMessage.setStatus(ChatMessage.Status.SUCCESS)
                 notifyMessage.msgTime = message.msgTime
@@ -289,28 +349,11 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         mutes: MutableList<String>?,
         expireTime: Long
     ) {
-        mutes?.forEach {
-            if (it == userName) {
-                EaseRepository.instance.singleMuted = true
-                ThreadManager.instance.runOnMainThread {
-                    chatView.showMutedView()
-                    chatPagerListener?.onMuted(true)
-                }
-            }
-        }
     }
 
     override fun onMuteListRemoved(chatRoomId: String?, mutes: MutableList<String>?) {
         mutes?.forEach {
-            if (it == userName) {
-                EaseRepository.instance.singleMuted = false
-                ThreadManager.instance.runOnMainThread {
-                    if (!EaseRepository.instance.allMuted) {
-                        chatView.hideMutedView()
-                        chatPagerListener?.onMuted(false)
-                    }
-                }
-            }
+
         }
     }
 
@@ -323,20 +366,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     override fun onAllMemberMuteStateChanged(chatRoomId: String?, isMuted: Boolean) {
-        EaseRepository.instance.allMuted = isMuted
-        ThreadManager.instance.runOnMainThread {
-            if (isMuted) {
-                chatView.showMutedView()
-                chatPagerListener?.onMuted(isMuted)
-            } else {
-                if (EaseRepository.instance.singleMuted) {
-                    chatView.showMutedView()
-                } else {
-                    chatView.hideMutedView()
-                    chatPagerListener?.onMuted(isMuted)
-                }
-            }
-        }
+
     }
 
     override fun onAdminAdded(chatRoomId: String?, admin: String?) {
@@ -490,6 +520,7 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 info.avatarUrl = avatarUrl
                 val extJson = JSONObject()
                 extJson.put(EaseConstant.ROLE, EaseConstant.ROLE_STUDENT)
+                extJson.put(EaseConstant.CHAT_GROUP_UUIDS, chatGroupUuids)
                 info.ext = extJson.toString()
                 EaseRepository.instance.updateOwnInfo(info)
                 joinChatRoom()
@@ -512,40 +543,53 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         })
     }
 
+
+    suspend fun joinRoom(roomId:String):ChatRoom = suspendCoroutine { cont ->
+        ChatClient.getInstance().chatroomManager().joinChatRoom(roomId, object : ValueCallBack<ChatRoom?> {
+            override fun onSuccess(value: ChatRoom?) {
+                cont.resume(value!!)
+
+            }
+
+            override fun onError(error: Int, errorMsg: String) {
+                cont.resumeWithException(ChatError(error, errorMsg))
+            }
+        })
+    }
+
+
+    suspend fun batchJoinRoom(roomIds: List<String>):List<ChatRoom> {
+        val list = mutableListOf<ChatRoom>()
+        roomIds.forEach {
+            val room = joinRoom(it)
+            list.add(room)
+        }
+        return list
+    }
+
     /**
      * 加入聊天室
      */
     private fun joinChatRoom() {
-        joinLimit++
-        ChatClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : ValueCallBack<ChatRoom?> {
-            override fun onSuccess(value: ChatRoom?) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                batchJoinRoom(joinRoomIds)
                 EMLog.e("Login:", "join success")
                 ThreadManager.instance.runOnMainThread {
                     EaseRepository.instance.isLogin = true
                     initIMListener()
                     chatView.initData()
                 }
-            }
-
-            override fun onError(error: Int, errorMsg: String) {
-                EMLog.e(TAG, "join failed: $error:$errorMsg")
-                if (error == Error.CHATROOM_ALREADY_JOINED) {
+            }catch (e:ChatError){
+                if (e.code == Error.CHATROOM_ALREADY_JOINED) {
                     ThreadManager.instance.runOnMainThread {
                         EaseRepository.instance.isLogin = true
                         initIMListener()
                         chatView.initData()
                     }
-                    return
                 }
-                if (joinLimit == 2) {
-                    ThreadManager.instance.runOnMainThread {
-                        Toast.makeText(context, context.getString(R.string.fcr_hyphenate_im_login_chat_failed)+"--"+context.getString(R.string.fcr_hyphenate_im_join_chat_room_failed)+":$error:$errorMsg", Toast.LENGTH_SHORT).show()
-                    }
-                    return
-                }
-                joinChatRoom()
             }
-        })
+        }
     }
 
     override fun onAnnouncementClick() {
@@ -590,19 +634,20 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     override fun onConnected() {
         EMLog.e(TAG, "onConnected")
         if(EaseRepository.instance.isInit && EaseRepository.instance.isLogin){
-            ChatClient.getInstance().chatroomManager().joinChatRoom(chatRoomId, object : ValueCallBack<ChatRoom> {
-                override fun onSuccess(value: ChatRoom?) {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    batchJoinRoom(joinRoomIds)
                     EaseRepository.instance.reconnectionLoadMessages()
                     EaseRepository.instance.fetchChatRoomMutedStatus()
-                }
-
-                override fun onError(error: Int, errorMsg: String?) {
-                    if (error == Error.CHATROOM_ALREADY_JOINED) {
-                        EaseRepository.instance.reconnectionLoadMessages()
-                        EaseRepository.instance.fetchChatRoomMutedStatus()
+                }catch (e:ChatError){
+                    if (e.code == Error.CHATROOM_ALREADY_JOINED) {
+                        ThreadManager.instance.runOnMainThread {
+                            EaseRepository.instance.reconnectionLoadMessages()
+                            EaseRepository.instance.fetchChatRoomMutedStatus()
+                        }
                     }
                 }
-            })
+            }
         }
 
     }
@@ -666,34 +711,51 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     fun sendTextMessage(content: String) {
-        val message = ChatMessage.createTxtSendMessage(content, chatRoomId)
-        sendMessage(message)
-    }
-
-    fun sendImageMessage(uri: Uri) {
-        val message = ChatMessage.createImageSendMessage(uri, false, chatRoomId)
-        sendMessage(message)
-    }
-
-    private fun sendMessage(message: ChatMessage) {
-        if (!(EaseRepository.instance.isInit && EaseRepository.instance.isLogin)) {
-            Toast.makeText(context, context.getString(R.string.fcr_hyphenate_im_send_message_failed) + ":" + context.getString(R.string.fcr_hyphenate_im_login_chat_failed), Toast.LENGTH_SHORT).show()
-            return
-        }
-        setExtBeforeSend(message)
-        message.chatType = ChatMessage.ChatType.ChatRoom
-        message.setMessageStatusCallback(object : CallBack {
-            override fun onSuccess() {
-
-            }
-
-            override fun onError(code: Int, error: String?) {
-                if (code == Error.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val msg = ChatMessage.createSendMessage(ChatMessage.Type.TXT)
+                val txtBody = TextMessageBody(content)
+                msg.addBody(txtBody)
+                batchSendMsg(sendRoomIds, msg)
+            } catch (e: ChatError) {
+                if (e.code == Error.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
                     ThreadManager.instance.runOnMainThread {
                         Toast.makeText(context, context.getString(R.string.fcr_hyphenate_im_message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
                     }
                 }
-                EMLog.e(TAG, "onMessageError:$code = $error")
+            }
+        }
+    }
+
+    fun sendImageMessage(uri: Uri) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val img = FileHelper.getInstance().formatInUri(uri)
+                val message = ChatMessage.createSendMessage(ChatMessage.Type.IMAGE)
+                val body = ImageMessageBody(img)
+                body.isSendOriginalImage = false
+                message.addBody(body)
+                batchSendMsg(sendRoomIds, message)
+            } catch (e: ChatError) {
+                if (e.code == Error.MESSAGE_INCLUDE_ILLEGAL_CONTENT) {
+                    ThreadManager.instance.runOnMainThread {
+                        Toast.makeText(context, context.getString(R.string.fcr_hyphenate_im_message_incloud_illegal_content), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun sendMsg(message: ChatMessage) = suspendCoroutine { cont ->
+        setExtBeforeSend(message)
+        message.chatType = ChatMessage.ChatType.ChatRoom
+        message.setMessageStatusCallback(object : CallBack {
+            override fun onSuccess() {
+                cont.resume(message)
+            }
+
+            override fun onError(code: Int, error: String?) {
+                cont.resumeWithException(ChatError(code, error ?: ""))
             }
 
             override fun onProgress(progress: Int, status: String?) {
@@ -701,7 +763,19 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             }
         })
         ChatClient.getInstance().chatManager().sendMessage(message)
+    }
+
+    private suspend fun batchSendMsg(roomIds: List<String>, message:ChatMessage):List<ChatMessage> {
+        val list = mutableListOf<ChatMessage>()
+        roomIds.forEach {
+            val msg = ChatMessage.createSendMessage(message.type)
+            msg.to = it
+            msg.addBody(message.body)
+            val ret = sendMsg(msg)
+            list.add(ret)
+        }
         refreshUI()
+        return list
     }
 
     private fun setExtBeforeSend(message: ChatMessage) {
@@ -759,5 +833,23 @@ class ChatViewPager(context: Context, attributeSet: AttributeSet?, defStyleAttr:
             context.registerReceiver(receiver, intentFilter)
         }
 
+    }
+
+    fun setRecvRoomIds(recvRoomIds: List<String>) {
+        this.recvRoomIds = recvRoomIds
+        EaseRepository.instance.recvRoomIds = recvRoomIds
+
+    }
+
+    fun setSendRoomIds(sendRoomIds: List<String>) {
+        this.sendRoomIds = sendRoomIds
+    }
+
+    fun setUserRoomIds(userRoomIds: List<String>) {
+        this.userRoomIds = userRoomIds
+    }
+
+    fun setChatGroupUuids(chatGroupUuids: List<String>) {
+        this.chatGroupUuids = chatGroupUuids
     }
 }

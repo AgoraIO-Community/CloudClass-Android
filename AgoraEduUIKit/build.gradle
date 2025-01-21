@@ -15,8 +15,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.EduUIKit.versionCode
-        versionName rootProject.ext.EduUIKit.versionName
 
         buildConfigField 'String', 'AgoraEduUIKitVersion', String.format("\"%s\"", rootProject.ext.EduUIKit.versionName)
         consumerProguardFiles "consumer-rules.pro"
@@ -45,6 +43,7 @@ android {
             res.srcDirs = ['src/main/res']
         }
     }
+    namespace 'io.agora.agoraeduuikit'
 }
 
 dependencies {
@@ -62,9 +61,9 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.2.2" // for ide hint
 
     if (readyPublishGithub.toBoolean()) {
-        compileOnly "io.github.agoraio-community:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+        compileOnly "io.github.agora-apaas:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
     } else {
-        compileOnly project(path: ':AgoraEduCore')
+        implementation project(path: ':AgoraEduCore')
     }
 
     // for agora chat

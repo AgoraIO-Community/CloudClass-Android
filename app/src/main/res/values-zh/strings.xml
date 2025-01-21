@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">声网灵动课堂</string>
-    <string name="room_name">房间</string>
+    <string name="room_name">房间号</string>
     <string name="room_name_Id">房间Id</string>
-    <string name="user_name">昵称</string>
+    <string name="user_name">用户名</string>
     <string name="user_id">用户Id</string>
     <string name="room_type">类型</string>
     <string name="role_type">角色</string>
-    <string name="hint_room_name">请输入房间名</string>
+    <string name="hint_room_name">请输入房间号</string>
     <string name="hint_room_uuid">请输入房间Id</string>
-    <string name="hint_your_name">请输入昵称</string>
+    <string name="hint_your_name">请输入用户名</string>
     <string name="hint_your_uuid">请输入用户Id</string>
     <string name="hint_room_type">请选择课堂类型</string>
     <string name="hint_role_type">请选择角色类型</string>
