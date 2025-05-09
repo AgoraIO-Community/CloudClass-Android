@@ -583,11 +583,17 @@ class RttOptionsManager(internal val rttOptions: IRttOptions) {
     private var localIsChangeTarget = false
 
     /**
+     * 房间属性
+     */
+    private var roomProperties: FcrRttChangeOptionsData? = null
+
+    /**
      * 房间widget属性更新
      */
     fun onWidgetRoomPropertiesUpdated(properties: MutableMap<String, Any>, operator: EduBaseUserInfo?) {
         if ("server" != operator?.userUuid) {
             GsonUtil.jsonToObject<FcrRttChangeOptionsData>(GsonUtil.toJson(properties))?.let {
+                roomProperties = it
                 operator?.let { userInfo ->
                     LogX.i(TAG, "onWidgetRoomPropertiesUpdated result=${GsonUtil.toJson(properties)}__user=${GsonUtil.toJson(operator)}")
                     //剩余体验时间
@@ -642,7 +648,12 @@ class RttOptionsManager(internal val rttOptions: IRttOptions) {
     fun onWidgetRoomPropertiesInit(properties: MutableMap<String, Any>?) {
         if (properties != null) {
             GsonUtil.jsonToObject<FcrRttChangeOptionsData>(GsonUtil.toJson(properties))?.let {
+                roomProperties = it
                 LogX.i(TAG, "onWidgetRoomPropertiesInit result=${GsonUtil.toJson(properties)}}")
+                if (1 == it.transcribe) {
+                    this.localIsChangeTranscribeState = false
+                    conversionManager.initOpenConversion(1 == it.transcribe)
+                }
                 //剩余体验时间
                 useManager.setExperienceReduceTime(useManager.rttExperienceDefaultTime - (it.duration * 1000))
                 //声源语言
@@ -1235,7 +1246,7 @@ private class RttSubtitlesManager(private val rttOptionsManager: RttOptionsManag
                 }
             })
         }
-        openSuccess = false
+//        openSuccess = false
         listener.subtitlesViewReset(false)
     }
 
