@@ -122,6 +122,10 @@ class AgoraEduRttOptionsComponent : AbsAgoraEduComponent {
                     binding.fcrOnlineEduRttConversionDialogTimeLimitReduce.text =
                         MessageFormat.format(resources.getString(R.string.fcr_dialog_rtt_subtitles_dialog_time_limit_end),
                             rttExperienceDefaultTime / 60000)
+                    setShowStatusInfo(
+                        showProgress = false, showIcon = false,
+                        text = context.getString(R.string.fcr_dialog_rtt_time_limit_status_not_allow_use)
+                    )
                 } else {
                     binding.fcrOnlineEduRttConversionDialogTimeLimitHint.setText(R.string.fcr_dialog_rtt_time_limit)
                     binding.fcrOnlineEduRttConversionDialogTimeLimitReduce.text = MessageFormat.format(
@@ -144,6 +148,7 @@ class AgoraEduRttOptionsComponent : AbsAgoraEduComponent {
         runOnUIThread {
             binding.agoraFcrRttTextDialogLayoutStatus.visibility = View.VISIBLE
             binding.agoraFcrRttTextDialogLayoutText.visibility = View.GONE
+            binding.agoraFcrRttTextDialogStatusText.visibility = View.VISIBLE
             binding.agoraFcrRttTextDialogStatusText.text = text
             binding.agoraFcrRttTextDialogProgress.visibility = if (showProgress) VISIBLE else GONE
             binding.agoraFcrRttTextDialogIcon.visibility = if (showIcon) VISIBLE else GONE

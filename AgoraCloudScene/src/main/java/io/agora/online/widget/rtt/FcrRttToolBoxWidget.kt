@@ -121,26 +121,30 @@ class FcrRttToolBoxWidget : AgoraBaseWidget() {
 
             override fun audioStateNotAllowUse() {
                 super.audioStateNotAllowUse()
-                if (rttOptionsManager.experienceReduceTimeZero()) {
-                    subtitleView?.resetShowPosition()
-                    subtitleView?.visibility = View.GONE
-                } else {
-                    subtitleView?.resetShowPosition()
-                    subtitleView?.visibility = View.VISIBLE
-                    subtitleView?.setShowStatusInfo(
-                        showProgress = false, showIcon = false,
-                        text = container.context.getString(R.string.fcr_dialog_rtt_time_limit_status_not_allow_use)
-                    )
+                if(rttOptionsManager.isOpenSubtitles()) {
+                    if (rttOptionsManager.experienceReduceTimeZero()) {
+                        subtitleView?.resetShowPosition()
+                        subtitleView?.visibility = View.GONE
+                    } else {
+                        subtitleView?.resetShowPosition()
+                        subtitleView?.visibility = View.VISIBLE
+                        subtitleView?.setShowStatusInfo(
+                            showProgress = false, showIcon = false,
+                            text = container.context.getString(R.string.fcr_dialog_rtt_time_limit_status_not_allow_use)
+                        )
+                    }
                 }
             }
 
             override fun audioStateNoSpeaking() {
                 super.audioStateNoSpeaking()
-                subtitleView?.visibility = View.VISIBLE
-                subtitleView?.setShowStatusInfo(
-                    showProgress = false, showIcon = false,
-                    text = container.context.getString(R.string.fcr_dialog_rtt_subtitles_text_no_one_speaking)
-                )
+                if(rttOptionsManager.isOpenSubtitles()) {
+                    subtitleView?.visibility = View.VISIBLE
+                    subtitleView?.setShowStatusInfo(
+                        showProgress = false, showIcon = false,
+                        text = container.context.getString(R.string.fcr_dialog_rtt_subtitles_text_no_one_speaking)
+                    )
+                }
             }
 
             override fun audioStateNoSpeakingMoreTime() {
@@ -168,18 +172,22 @@ class FcrRttToolBoxWidget : AgoraBaseWidget() {
 
             override fun audioStateSpeaking() {
                 super.audioStateSpeaking()
-                subtitleView?.visibility = View.VISIBLE
-                subtitleView?.setShowStatusInfo(
-                    showProgress = false, showIcon = true,
-                    text = container.context.getString(R.string.fcr_dialog_rtt_subtitles_text_listening)
-                )
+                if(rttOptionsManager.isOpenSubtitles()) {
+                    subtitleView?.visibility = View.VISIBLE
+                    subtitleView?.setShowStatusInfo(
+                        showProgress = false, showIcon = true,
+                        text = container.context.getString(R.string.fcr_dialog_rtt_subtitles_text_listening)
+                    )
+                }
             }
 
             override fun onMessageChange(currentData: RttRecordItem?) {
                 super.onMessageChange(currentData)
-                subtitleView?.visibility = View.VISIBLE
-                val showText = currentData?.getShowText()
-                subtitleView?.setShowTranslatorsInfo(currentData?.userHeader ?: "", currentData?.userName ?: "", showText!![0] ?: "", showText[1])
+                if(rttOptionsManager.isOpenSubtitles()) {
+                    subtitleView?.visibility = View.VISIBLE
+                    val showText = currentData?.getShowText()
+                    subtitleView?.setShowTranslatorsInfo(currentData?.userHeader ?: "", currentData?.userName ?: "", showText!![0] ?: "", showText[1])
+                }
             }
         }
 

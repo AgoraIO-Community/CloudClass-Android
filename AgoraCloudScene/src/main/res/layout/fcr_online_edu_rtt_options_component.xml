@@ -63,7 +63,9 @@
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintRight_toLeftOf="@+id/agora_fcr_rtt_text_dialog_icon"
                app:layout_constraintTop_toTopOf="parent"
-               android:layout_marginEnd="@dimen/dp_10"/>
+               android:layout_marginEnd="@dimen/dp_10"
+               android:visibility="gone"
+               tools:visibility="visible"/>
 
            <androidx.appcompat.widget.AppCompatImageView
                android:id="@+id/agora_fcr_rtt_text_dialog_icon"
@@ -76,7 +78,9 @@
                app:layout_constraintTop_toTopOf="parent"
                android:src="@drawable/agora_options_icon_rtt_subtitles_listening"
                android:scaleType="centerCrop"
-               android:layout_marginEnd="@dimen/dp_10"/>
+               android:layout_marginEnd="@dimen/dp_10"
+               android:visibility="gone"
+               tools:visibility="visible"/>
 
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/agora_fcr_rtt_text_dialog_status_text"
@@ -89,7 +93,9 @@
                app:layout_constraintTop_toTopOf="parent"
                android:textSize="@dimen/fcr_font_size4"
                android:textColor="@color/fcr_white"
-               tools:text="Turn Subtitles on ..."/>
+               tools:text="Turn Subtitles on ..."
+               android:visibility="gone"
+               tools:visibility="visible"/>
        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!--翻译字幕-->
@@ -98,7 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dp_6"
-            tools:paddingTop="50dp">
+            tools:paddingTop="50dp"
+            android:visibility="gone"
+            tools:visibility="visible">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/agora_fcr_rtt_text_dialog_user_header"
                 android:layout_width="@dimen/dp_18"
