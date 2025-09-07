@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/fcr_rtt_text_dialog_width"
+    android:layout_height="wrap_content"
+    android:background="@drawable/agora_solid_radius_6"
+    android:backgroundTint="@color/fcr_gray_light_cc">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/agora_fcr_rtt_text_dialog_hint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fcr_online_edu_rtt_conversion_dialog_time_limit_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/agora_options_rtt_time_limit_bg"
+            android:textColor="@color/fcr_white"
+            android:textSize="@dimen/sp_11"
+            android:textStyle="bold"
+            android:text="@string/fcr_dialog_rtt_time_limit"
+            android:paddingHorizontal="@dimen/dp_9"
+            android:paddingVertical="@dimen/dp_2"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fcr_online_edu_rtt_conversion_dialog_time_limit_reduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/fcr_blue_4262"
+            android:textSize="@dimen/sp_11"
+            android:paddingHorizontal="7dp"
+            android:text="@string/fcr_dialog_rtt_subtitles_dialog_time_limit_reduce"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/agora_fcr_rtt_text_dialog_hint_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/agora_solid_radius_6"
+        android:backgroundTint="#99000000">
+
+        <!--状态变动-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/agora_fcr_rtt_text_dialog_layout_status"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+            android:minHeight="34dp">
+           <ProgressBar
+               android:id="@+id/agora_fcr_rtt_text_dialog_progress"
+               android:layout_width="@dimen/dp_20"
+               android:layout_height="@dimen/dp_20"
+               style="?android:attr/progressBarStyle"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintHorizontal_chainStyle="packed"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintRight_toLeftOf="@+id/agora_fcr_rtt_text_dialog_icon"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginEnd="@dimen/dp_10"/>
+
+           <androidx.appcompat.widget.AppCompatImageView
+               android:id="@+id/agora_fcr_rtt_text_dialog_icon"
+               android:layout_width="@dimen/dp_20"
+               android:layout_height="@dimen/dp_20"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintHorizontal_chainStyle="packed"
+               app:layout_constraintLeft_toRightOf="@id/agora_fcr_rtt_text_dialog_progress"
+               app:layout_constraintRight_toLeftOf="@+id/agora_fcr_rtt_text_dialog_status_text"
+               app:layout_constraintTop_toTopOf="parent"
+               android:src="@drawable/agora_options_icon_rtt_subtitles_listening"
+               android:scaleType="centerCrop"
+               android:layout_marginEnd="@dimen/dp_10"/>
+
+           <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/agora_fcr_rtt_text_dialog_status_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintHorizontal_chainStyle="packed"
+               app:layout_constraintLeft_toRightOf="@+id/agora_fcr_rtt_text_dialog_icon"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:textSize="@dimen/fcr_font_size4"
+               android:textColor="@color/fcr_white"
+               tools:text="Turn Subtitles on ..."/>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--翻译字幕-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/agora_fcr_rtt_text_dialog_layout_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_6"
+            tools:paddingTop="50dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_fcr_rtt_text_dialog_user_header"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:src="@drawable/agora_userlist_desktop_on"
+                android:background="@drawable/agora_solid_radius_max"
+                android:backgroundTint="@color/fcr_white"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_fcr_rtt_text_dialog_user_header_text"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:textSize="@dimen/fcr_font_size2"
+                android:textColor="@color/fcr_white"
+                android:background="@drawable/agora_solid_radius_max"
+                android:backgroundTint="@color/theme_blue_gray"
+                android:gravity="center"
+                tools:text="尹希尔"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_fcr_rtt_text_dialog_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/agora_fcr_rtt_text_dialog_user_header"
+                app:layout_constraintBottom_toBottomOf="@id/agora_fcr_rtt_text_dialog_user_header"
+                app:layout_constraintLeft_toRightOf="@id/agora_fcr_rtt_text_dialog_user_header"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:textSize="@dimen/fcr_font_size2"
+                android:textColor="@color/fcr_white"
+                tools:text="尹希尔"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_fcr_rtt_text_dialog_text_origin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@+id/agora_fcr_rtt_text_dialog_user_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/agora_fcr_rtt_text_dialog_user_name"
+                android:layout_marginEnd="12dp"
+                android:textSize="@dimen/fcr_font_size5"
+                android:textColor="@color/fcr_white"
+                tools:text="No one is currently speakingNo one is currently speakingNo one is currently speakingNo one is currently speaking"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_fcr_rtt_text_dialog_text_result"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@+id/agora_fcr_rtt_text_dialog_text_origin"
+                app:layout_constraintRight_toRightOf="@id/agora_fcr_rtt_text_dialog_text_origin"
+                app:layout_constraintTop_toBottomOf="@id/agora_fcr_rtt_text_dialog_text_origin"
+                android:textSize="@dimen/fcr_font_size5"
+                android:textColor="@color/fcr_v2_yellow"
+                tools:text="No one is currently speakingNo one is currently speakingNo one is currently speakingNo one is currently speaking"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--关闭按钮-->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/agora_fcr_rtt_text_dialog_close"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/dp_4"
+            android:background="@drawable/agora_solid_radius_max"
+            android:backgroundTint="#66000000"
+            android:src="@drawable/ext_app_icon_countdown_close"
+            android:scaleType="centerCrop"
+            android:tint="@color/fcr_white"
+            android:padding="@dimen/dp_2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

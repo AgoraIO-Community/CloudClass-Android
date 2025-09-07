@@ -583,4 +583,8 @@
     <string name="fcr_room_tips_lower_hand">老师放下你的手</string>
     <string name="fcr_room_tips_lower_all_hand">所有学生都放下手</string>
     <string name="fcr_room_tips_end_poll">老师已结束投票</string>
+
+    <!--云课堂弹窗-->
+    <string name="fcr_dialog_rtt_subtitles">字幕</string>
+    <string name="fcr_dialog_rtt_conversion">实时转写</string>
 </resources>

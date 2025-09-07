@@ -1,17 +1,20 @@
 package io.agora.online.sdk
 
 import android.content.Context
-import io.agora.online.component.chat.AgoraChatRTMWidget
-import io.agora.online.component.chat.AgoraEduEaseChatWidget
 import io.agora.agoraeducore.core.AgoraEduCore
 import io.agora.agoraeducore.core.ClassInfoCache
 import io.agora.agoraeducore.core.internal.framework.impl.managers.AgoraWidgetManager.Companion.registerDefault
-import io.agora.agoraeducore.core.internal.framework.impl.managers.UserOnlineManager
 import io.agora.agoraeducore.core.internal.framework.proxy.RoomType
-import io.agora.agoraeducore.core.internal.launch.*
+import io.agora.agoraeducore.core.internal.launch.AgoraEduLaunchCallback
+import io.agora.agoraeducore.core.internal.launch.AgoraEduLaunchConfig
+import io.agora.agoraeducore.core.internal.launch.AgoraEduRegion
+import io.agora.agoraeducore.core.internal.launch.AgoraEduSDK
+import io.agora.agoraeducore.core.internal.launch.AgoraServiceType
 import io.agora.agoraeducore.core.internal.log.LogX
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetConfig
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetDefaultId
+import io.agora.online.component.chat.AgoraChatRTMWidget
+import io.agora.online.component.chat.AgoraEduEaseChatWidget
 import io.agora.online.component.teachaids.AgoraTeachAidCountDownWidget
 import io.agora.online.component.teachaids.AgoraTeachAidIClickerWidget
 import io.agora.online.component.teachaids.networkdisk.FCRCloudDiskWidget
@@ -19,9 +22,11 @@ import io.agora.online.component.teachaids.vote.AgoraTeachAidVoteWidget
 import io.agora.online.component.teachaids.webviewwidget.FcrWebViewWidget
 import io.agora.online.impl.video.AgoraUILargeVideoWidget
 import io.agora.online.impl.whiteboard.AgoraWhiteBoardWidget
-import io.agora.online.util.SpUtil
 import io.agora.online.sdk.common.AgoraBaseClassActivity
 import io.agora.online.sdk.helper.FCRLauncherManager
+import io.agora.online.util.SpUtil
+import io.agora.online.widget.FcrWidgetManager.WIDGETS_RTT_ID
+import io.agora.online.widget.rtt.FcrRttToolBoxWidget
 
 /**
  * 一键拉起教室
@@ -157,6 +162,7 @@ object AgoraOnlineClassroomSDK {
             )
         )
         widgetConfigs.add(AgoraWidgetConfig(FCRCloudDiskWidget::class.java, AgoraWidgetDefaultId.AgoraCloudDisk.id))
+        widgetConfigs.add(AgoraWidgetConfig(FcrRttToolBoxWidget::class.java, WIDGETS_RTT_ID, extraInfo = mutableMapOf<String, Any>()))
         return widgetConfigs
     }
 

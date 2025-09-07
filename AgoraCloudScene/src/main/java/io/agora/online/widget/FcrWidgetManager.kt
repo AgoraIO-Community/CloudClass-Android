@@ -12,6 +12,7 @@ object FcrWidgetManager {
     val WIDGET_WEBVIEW_RUL = "webViewUrl"
     val WIDGET_WEBVIEW_TITLE = "webviewTitle"
     val WIDGET_WEBVIEW_MEDIAPLAYER = "mediaPlayer"
+    val WIDGETS_RTT_ID = "rtt"
 
     fun isWebViewWidget(widgetId: String): Boolean {
         return widgetId.contains(WIDGET_WEBVIEW) || widgetId.contains(WIDGET_WEBVIEW_MEDIAPLAYER)

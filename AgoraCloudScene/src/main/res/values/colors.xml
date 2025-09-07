@@ -22,6 +22,7 @@
     <color name="fcr_gray_191919">#191919</color>
     <color name="fcr_gray_D7D7E6">#D7D7E6</color>
     <color name="fcr_gray_7D8798">#7D8798</color>
+    <color name="fcr_gray_787676">#CC787676</color>
 
     <color name="fcr_blue_357BF6">#357BF6</color>
     <color name="fcr_blue_C0D6FF">#C0D6FF</color>
@@ -30,6 +31,11 @@
     <!--  ClassToastManager  -->
     <color name="toast_classtime_countdown_time">#FE313F</color>
     <color name="fcr_v2_yellow">#FFC700</color>
+    <color name="fcr_v1_blue">#D9DFF7</color>
+    <color name="fcr_v2_black">#373C42</color>
+    <color name="fcr_black_BBBBBB">#BBBBBB</color>
+    <color name="fcr_black_CC787676">#CC787676</color>
+    <color name="fcr_black_66000000">#66000000</color>
 
     <color name="fcr_white2">#0AFFFFFF</color>
     <color name="fcr_deep_blue">#4D6277</color>
@@ -42,7 +48,12 @@
     <color name="fcr_red">#ffff0000</color>
     <color name="fcr_blue">#357BF6</color>
     <color name="fcr_blue_4262">#4262FF</color>
+    <color name="fcr_blue_1FDACF">#1FDACF</color>
+    <color name="fcr_blue_EEF2FA">#EEF2FA</color>
     <color name="fcr_gray">#BDBDBD</color>
+    <color name="fcr_gray_F1F3F8">#F1F3F8</color>
+    <color name="fcr_gray_616161">#616161</color>
+    <color name="fcr_gray_959595">#959595</color>
     <!-- Theme color -->
     <color name="theme_blue_light">#357BF6</color>
     <color name="theme_blue_gray">#639AFA</color>
@@ -53,6 +64,7 @@
     <color name="theme_disable">#E2E2EE</color>
     <color name="theme_gray_dialog_bg">#E1EBFC</color>
     <color name="theme_gray_dark">#F9F9FC</color>
+    <color name="theme_orange">#FC4C14</color>
 
     <!-- Theme text color -->
     <color name="theme_text_color_black">#191919</color>
@@ -98,6 +110,7 @@
     <color name="fcr_teal_700">#FF018786</color>
     <color name="fcr_gray_normal">#666667</color>
     <color name="fcr_gray_light">#F2F2F2</color>
+    <color name="fcr_gray_light_cc">#CCF2F2F2</color>
     <color name="fcr_normal_bg">#CEE3F6</color>
     <color name="fcr_announcement_bg">#F5ECCE</color>
     <color name="fcr_message_et_bg">#fff2f2f2</color>
@@ -129,4 +142,7 @@
     <color name="fcr_im_input_bg">#F9F9FC</color>
     <color name="fcr_im_input_bg_line">#E3E7EF</color>
     <color name="fcr_text_red">#F5655C</color>
+    <color name="fcr_text_red_0_1">#1AF5655C</color>
+
+    <color name="fcr_bg_9BFFA5">#809BFFA5</color>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.SpannableString
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -59,6 +60,13 @@ class AgoraUIDialog(context: Context) : Dialog(context, R.style.agora_full_scree
     fun setMessage(message: String) {
         this.message.visibility = View.VISIBLE
         this.message.text = message
+    }
+    fun setMessage(message: SpannableString) {
+        this.message.visibility = View.VISIBLE
+        this.message.text = message
+    }
+    fun setMessagePaddingHorizontal(messagePaddingHorizontal: Int) {
+        this.message.setPadding(messagePaddingHorizontal,this.message.paddingTop,messagePaddingHorizontal,this.message.paddingBottom)
     }
 
     fun setIconResource(iconResource: Int) {

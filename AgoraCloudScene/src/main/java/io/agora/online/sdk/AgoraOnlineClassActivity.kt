@@ -4,32 +4,38 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import io.agora.online.component.common.UIUtils
-import io.agora.online.helper.AgoraUIDeviceSetting
-import io.agora.online.helper.FcrHandsUpManager
-import io.agora.online.helper.RoomPropertiesHelper
-import io.agora.agoraeducore.core.context.*
+import io.agora.agoraeducore.core.context.AgoraEduContextClassState
+import io.agora.agoraeducore.core.context.AgoraEduContextSystemDevice
+import io.agora.agoraeducore.core.context.AgoraEduContextUserInfo
+import io.agora.agoraeducore.core.context.EduContextCallback
+import io.agora.agoraeducore.core.context.EduContextError
+import io.agora.agoraeducore.core.context.EduContextRoomInfo
+import io.agora.agoraeducore.core.context.FcrCustomMessage
 import io.agora.agoraeducore.core.internal.base.ToastManager
 import io.agora.agoraeducore.core.internal.framework.impl.handler.RoomHandler
 import io.agora.agoraeducore.core.internal.log.LogX
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetDefaultId
 import io.agora.online.R
+import io.agora.online.component.common.UIUtils
 import io.agora.online.component.dialog.AgoraUIDialog
 import io.agora.online.component.dialog.AgoraUIDialogBuilder
 import io.agora.online.component.teachaids.presenter.FCRSmallClassVideoPresenter
 import io.agora.online.component.toast.AgoraUIToast
+import io.agora.online.databinding.ActivityAgoraOnlineClassBinding
+import io.agora.online.helper.AgoraUIDeviceSetting
+import io.agora.online.helper.FcrHandsUpManager
+import io.agora.online.helper.RoomPropertiesHelper
 import io.agora.online.impl.whiteboard.bean.AgoraBoardInteractionPacket
 import io.agora.online.impl.whiteboard.bean.AgoraBoardInteractionSignal
 import io.agora.online.sdk.common.AgoraEduClassActivity
 import io.agora.online.sdk.presenter.AgoraClassVideoPresenter
-import io.agora.online.databinding.ActivityAgoraOnlineClassBinding
 
 /**
  * author : hefeng
  * date : 2022/1/24
  * description : 小班课（200）
  */
-open class AgoraOnlineClassActivity : AgoraEduClassActivity() {
+open class AgoraOnlineClassActivity : AgoraEduClassActivity(){
     override var TAG = "AgoraOnlineClassActivity"
     var agoraClassVideoPresenter: AgoraClassVideoPresenter? = null
     private lateinit var binding: ActivityAgoraOnlineClassBinding
@@ -226,6 +232,7 @@ open class AgoraOnlineClassActivity : AgoraEduClassActivity() {
 
                     // tool bar
                     binding.agoraEduOptions.initView(uuid, binding.root, binding.agoraEduOptionsItemContainer, this)
+                    binding.agoraEduOptions.initRtt(binding.agoraAreaBoardConversionStatus,binding.agoraRttOptions)
                     launchConfig?.shareUrl?.let {
                         binding.agoraEduOptions.setShareRoomLink(it)
                     }
@@ -246,6 +253,8 @@ open class AgoraOnlineClassActivity : AgoraEduClassActivity() {
                 UIUtils.setViewVisible(binding.agoraClassUserListVideo, getUIConfig().isStageVisible)
                 UIUtils.setViewVisible(binding.agoraEduWhiteboard, getUIConfig().isEngagementVisible)
                 UIUtils.setViewVisible(binding.agoraEduOptions, getUIConfig().isEngagementVisible)
+                //初始化管理器
+//                rttOptionsManager.initView(binding.agoraAreaBoardConversionStatus,binding.agoraRttOptions,this)
             }
             join()
         }
@@ -303,4 +312,5 @@ open class AgoraOnlineClassActivity : AgoraEduClassActivity() {
         super.cancelHandsUp()
         binding.agoraEduOptions.cancelHandsUp()
     }
+
 }

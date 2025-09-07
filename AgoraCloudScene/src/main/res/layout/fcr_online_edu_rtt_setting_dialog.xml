@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agora_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99909090">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="@dimen/fcr_rtt_setting_dialog_width"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/agora_solid_radius_10"
+        android:backgroundTint="@color/fcr_v1_blue"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_goneMarginTop="@dimen/dp_20">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/agora_fcr_rtt_setting_dialog_close"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/agora_solid_radius_max"
+                android:backgroundTint="@color/fcr_white"
+                android:padding="@dimen/dp_4"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fcr_share_room_close"
+                android:tint="@color/fcr_black"
+                app:layout_constraintBottom_toBottomOf="@id/agora_fcr_rtt_setting_dialog_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/agora_fcr_rtt_setting_dialog_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_fcr_rtt_setting_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center"
+                android:text="@string/fcr_dialog_rtt_setting_dialog_title"
+                android:textColor="@color/fcr_v2_black"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/agora_fcr_rtt_setting_dialog_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/agora_solid_radius_10"
+            android:backgroundTint="#F7F5F6FA"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_20" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

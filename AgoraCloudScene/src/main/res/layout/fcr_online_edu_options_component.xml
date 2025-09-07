@@ -32,6 +32,18 @@
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/option_item_rtt"
+        android:layout_width="@dimen/agora_option_item_w"
+        android:layout_height="@dimen/agora_option_item_w"
+        android:layout_margin="@dimen/dp_5"
+        android:background="@drawable/fcr_option_icon_bg"
+        android:elevation="@dimen/dp_5"
+        android:padding="@dimen/dp_6"
+        android:src="@drawable/agora_option_icon_rtt"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/option_item_toolbox"
         android:layout_width="@dimen/agora_option_item_w"
         android:layout_height="@dimen/agora_option_item_w"

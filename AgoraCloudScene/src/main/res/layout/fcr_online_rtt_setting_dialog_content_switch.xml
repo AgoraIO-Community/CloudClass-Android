@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_10"
+    android:background="@drawable/agora_solid_radius_6"
+    android:backgroundTint="#F2FFFFFF"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingEnd="23dp"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingVertical="@dimen/dp_18"
+    tools:ignore="ResourceName">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fcr_online_rtt_setting_dialog_content_switch_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/fcr_v2_black"
+        android:textSize="@dimen/sp_14"
+        tools:text="同时显示双语" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fcr_online_rtt_setting_dialog_content_switch_icon"
+        android:layout_width="@dimen/agora_setting_popup_switch_width"
+        android:layout_height="@dimen/agora_setting_popup_switch_height"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/agora_option_popup_setting_switch" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

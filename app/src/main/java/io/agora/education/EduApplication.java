@@ -54,7 +54,7 @@ public class EduApplication extends Application {
 //        }
 
         // TODO test XXX
-        // setTestDev();
+         setTestDev();
 
         setDevHost();
         setDarkMode();

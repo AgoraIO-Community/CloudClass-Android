@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package Agora.SpeechToText;
+
+option objc_class_prefix = "Rtt";
+
+option csharp_namespace = "AgoraRTTSample.Protobuf";
+
+option java_package = "io.agora.rtc.speech2text";
+option java_outer_classname = "AgoraSpeech2TextProtobuffer";
+
+message Text {
+  int32 vendor = 1;                 // Not used
+  int32 version = 2;                // Not used
+  int32 seqnum = 3;                 // Not used
+  int64 uid = 4;                    // 转写内容对应的Rtc uid
+  int32 flag = 5;                   // Not used
+  int64 time = 6;                   // 该句转写的开始时间（只在isFinal为true时有值，其他时候为0）
+  int32 lang = 7;                   // Not used
+  int32 starttime = 8;              //
+  int32 offtime = 9;                //
+  repeated Word words = 10;         // 转写的结果Array
+  bool end_of_segment = 11;         //
+  int32 duration_ms = 12;           // 转写消耗时间
+  string data_type = 13;            // transcribe（转写）, translate（翻译）
+  repeated Translation trans = 14;  // 翻译结果的Array
+  string culture = 15;              // 该句RTT的转写目标语言
+  int64 text_ts = 16;               // 转写的时间戳，用于对齐翻译
+}
+message Word {
+  string text = 1;                  // 转写结果
+  int32 start_ms = 2;               //
+  int32 duration_ms = 3;            //
+  bool is_final = 4;                // 是否最终结果
+  double confidence = 5;            // 置信度
+}
+message Translation {
+  bool is_final = 1;                // 是否最终结果
+  string lang = 2;                  // 翻译目标语言
+  repeated string texts = 3;        // 翻译的结果
+}

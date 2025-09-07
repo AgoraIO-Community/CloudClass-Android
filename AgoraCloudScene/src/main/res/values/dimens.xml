@@ -10,6 +10,8 @@
     <dimen name="agora_userlist_dialog_h">253dp</dimen>
     <dimen name="agora_userlist_dialog_large_w">280dp</dimen>
     <dimen name="agora_userlist_dialog_large_h">214dp</dimen>
+    <dimen name="agora_edu_options_rtt_dialog_w">180dp</dimen>
+    <dimen name="agora_edu_options_rtt_dialog_h">90dp</dimen>
 
     <dimen name="agora_c_1">6dp</dimen>
     <dimen name="agora_c_2">8dp</dimen>
@@ -45,6 +47,7 @@
     <dimen name="dp_40">40.0000dp</dimen>
     <dimen name="dp_44">44.0000dp</dimen>
     <dimen name="dp_48">48.0000dp</dimen>
+    <dimen name="dp_50">50.0000dp</dimen>
     <dimen name="dp_70">70.0000dp</dimen>
     <dimen name="dp_72">72.0000dp</dimen>
     <dimen name="dp_88">88.0000dp</dimen>
@@ -56,9 +59,11 @@
     <dimen name="dp_420">420.0000dp</dimen>
     <dimen name="dp_450">450.0000dp</dimen>
     <dimen name="sp_10">10.0000sp</dimen>
+    <dimen name="sp_11">11.0000sp</dimen>
     <dimen name="sp_12">12.0000sp</dimen>
     <dimen name="sp_13">13.0000sp</dimen>
     <dimen name="sp_14">14.0000sp</dimen>
+    <dimen name="sp_15">15.0000sp</dimen>
     <dimen name="sp_16">16.0000sp</dimen>
     <dimen name="sp_17">17.0000sp</dimen>
     <dimen name="sp_20">20.0000sp</dimen>
@@ -294,5 +299,9 @@
     <dimen name="fcr_quick_start_2">230dp</dimen>
     <dimen name="agora_head_h_small">14dp</dimen>
     <dimen name="agora_class_options_margin">6dp</dimen>
+
+    <!--rtt text dialog-->
+    <dimen name="fcr_rtt_text_dialog_width">490dp</dimen>
+    <dimen name="fcr_rtt_setting_dialog_width">375dp</dimen>
 
 </resources>

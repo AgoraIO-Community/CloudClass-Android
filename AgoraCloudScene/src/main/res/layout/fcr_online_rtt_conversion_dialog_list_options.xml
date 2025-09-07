@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingVertical="@dimen/dp_10"
+    tools:ignore="ResourceName">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fcr_online_rtt_conversion_dialog_list_options_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/agora_solid_radius_max"
+        android:backgroundTint="@color/fcr_blue_EEF2FA"
+        android:paddingHorizontal="@dimen/dp_16"
+        android:paddingVertical="@dimen/dp_7"
+        android:textColor="@color/fcr_v2_black"
+        android:textSize="@dimen/sp_12"
+        tools:text="开启翻译识别内容" />
+
+</FrameLayout>

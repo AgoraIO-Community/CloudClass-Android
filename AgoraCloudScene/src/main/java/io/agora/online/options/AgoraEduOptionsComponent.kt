@@ -8,12 +8,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import io.agora.online.component.AgoraEduChatComponent
-import io.agora.online.component.AgoraEduSettingComponent
-import io.agora.online.component.common.AbsAgoraEduConfigComponent
-import io.agora.online.component.common.IAgoraUIProvider
-import io.agora.online.component.common.UIUtils
-import io.agora.online.component.whiteboard.data.AgoraEduApplianceData
 import com.google.gson.Gson
 import io.agora.agoraeducore.core.AgoraEduCoreManager
 import io.agora.agoraeducore.core.context.AgoraEduContextUserInfo
@@ -38,7 +32,14 @@ import io.agora.agoraeducore.core.internal.transport.OnAgoraTransportListener
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetDefaultId
 import io.agora.agoraeducore.extensions.widgets.bean.AgoraWidgetMessageObserver
 import io.agora.online.R
+import io.agora.online.component.AgoraEduChatComponent
+import io.agora.online.component.AgoraEduSettingComponent
+import io.agora.online.component.FcrRttToolBoxComponent
+import io.agora.online.component.common.AbsAgoraEduConfigComponent
+import io.agora.online.component.common.IAgoraUIProvider
+import io.agora.online.component.common.UIUtils
 import io.agora.online.component.toast.AgoraUIToast
+import io.agora.online.component.whiteboard.data.AgoraEduApplianceData
 import io.agora.online.config.FcrUIConfig
 import io.agora.online.databinding.FcrOnlineEduOptionsComponentBinding
 import io.agora.online.impl.chat.ChatPopupWidgetListener
@@ -59,12 +60,12 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
     lateinit var rootContainer: ViewGroup  // 给IM用的,view root
     lateinit var itemContainer: ViewGroup  // 显示侧边栏
 
-    private var binding: FcrOnlineEduOptionsComponentBinding =
-        FcrOnlineEduOptionsComponentBinding.inflate(LayoutInflater.from(context), this, true)
+    private var binding: FcrOnlineEduOptionsComponentBinding = FcrOnlineEduOptionsComponentBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var agroSettingWidget: AgoraEduSettingComponent? = null
     private var popupViewRoster: AgoraEduRosterComponent? = null
     private var popupViewChat: AgoraEduChatComponent? = null
+    private var rttToolBoxWidget: FcrRttToolBoxComponent? = null
     private lateinit var optionPresenter: AgoraEduOptionPresenter
     var onExitListener: (() -> Unit)? = null // 退出
     private var isRequestHelp = false // 分组是否请求了帮助
@@ -75,10 +76,15 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
         AgoraTransportManager.addListener(AgoraTransportEventId.EVENT_ID_OPTIONS_PANEL, this)
     }
 
-    fun initView(uuid: String, rootContainer: ViewGroup, itemContainer: ViewGroup, agoraUIProvider: IAgoraUIProvider) {
+    fun initView(
+        uuid: String, rootContainer: ViewGroup, itemContainer: ViewGroup,
+        agoraUIProvider: IAgoraUIProvider,
+    ) {
         this.uuid = uuid
         this.itemContainer = itemContainer
         this.rootContainer = rootContainer
+//        this.rttOptionsManager = rttOptionsManager
+//        this.rttOptionsManager.setEduOptionsComponent(this)
         initView(agoraUIProvider)
     }
 
@@ -142,12 +148,23 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
         }
         binding.optionItemSetting.setOnClickListener {
             //LogX.e(TAG,">>>${eduContext?.userContext()?.getCoHostList()}")
-            if (!binding.optionItemSetting.isActivated) {
+            if (!it.isActivated) {
                 showItem(agroSettingWidget)
                 setIconActivated(binding.optionItemSetting)
             } else {
                 hiddenItem()
-                binding.optionItemSetting.isActivated = false
+                it.isActivated = false
+            }
+        }
+        binding.optionItemRtt.setOnClickListener {
+            //LogX.e(TAG,">>>${eduContext?.userContext()?.getCoHostList()}")
+            if (!it.isActivated) {
+                rttToolBoxWidget!!.resetEduRttToolBoxStatus()
+                showItem(rttToolBoxWidget, R.dimen.agora_edu_options_rtt_dialog_w, R.dimen.agora_userlist_dialog_large_h)
+                setIconActivated(binding.optionItemRtt)
+            } else {
+                hiddenItem()
+                it.isActivated = false
             }
         }
         binding.optionItemRoster.setOnClickListener {
@@ -415,6 +432,27 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
         binding.optionItemChatNews.visibility = View.GONE
     }
 
+    /**
+     * 初始化Rtt
+     */
+    fun initRtt(conversionStatusView: ViewGroup, subtitleView: AgoraEduRttOptionsComponent) {
+        //初始化聊天组件
+        if (rttToolBoxWidget == null) {
+            rttToolBoxWidget = FcrRttToolBoxComponent(context)
+            rttToolBoxWidget?.initView(agoraUIProvider,this, conversionStatusView, subtitleView)
+        }
+    }
+
+    /**
+     * 隐藏rtt相关的
+     */
+    fun hiddenRtt() {
+        post {
+            hiddenItem()
+            binding.optionItemRtt.isActivated = false
+        }
+    }
+
     fun setHandsupTimeout(seconds: Int) {
         //binding.optionItemHandup.setHandsupTimeout(seconds)
     }
@@ -435,14 +473,24 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
             binding.optionItemSetting -> {
                 binding.optionItemRoster.isActivated = false
                 binding.optionItemChat.isActivated = false
+                binding.optionItemRtt.isActivated = false
             }
+
+            binding.optionItemRtt -> {
+                binding.optionItemRoster.isActivated = false
+                binding.optionItemChat.isActivated = false
+            }
+
             binding.optionItemRoster -> {
                 binding.optionItemSetting.isActivated = false
                 binding.optionItemChat.isActivated = false
+                binding.optionItemRtt.isActivated = false
             }
+
             binding.optionItemChat -> {
                 binding.optionItemRoster.isActivated = false
                 binding.optionItemSetting.isActivated = false
+                binding.optionItemRtt.isActivated = false
             }
         }
     }
@@ -492,6 +540,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
             when (roomType) {
                 RoomType.ONE_ON_ONE -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemChat.visibility = View.VISIBLE
                     binding.optionItemRoster.visibility = View.GONE
@@ -499,8 +548,10 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
                     binding.optionItemWhiteboardTool.visibility = GONE
                     initChat()
                 }
+
                 RoomType.SMALL_CLASS -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.VISIBLE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.VISIBLE
                     binding.optionItemHandup.visibility = View.VISIBLE
@@ -509,17 +560,21 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
                     binding.optionItemChat.visibility = View.VISIBLE
                     initChat()
                 }
+
                 RoomType.LARGE_CLASS -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemChat.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.GONE
                     binding.optionItemHandup.visibility = View.VISIBLE
                     binding.optionItemWhiteboardTool.visibility = GONE
                 }
+
                 RoomType.GROUPING_CLASS -> {
                     binding.optionItemAsking.visibility = View.VISIBLE
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.VISIBLE
                     binding.optionItemHandup.visibility = View.VISIBLE
@@ -538,6 +593,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
                     binding.optionItemRoster.visibility = View.GONE
                     binding.optionItemHandup.visibility = View.GONE
                 }
+
                 RoomType.SMALL_CLASS -> {
                     binding.optionItemRoster.visibility = View.VISIBLE
                     binding.optionItemHandup.visibility = View.VISIBLE
@@ -545,6 +601,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
                     binding.optionItemChat.visibility = View.VISIBLE
                     initChat()
                 }
+
                 RoomType.LARGE_CLASS -> {
                     binding.optionItemChat.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.VISIBLE
@@ -555,6 +612,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
             }
 
             binding.optionItemToolbox.visibility = View.GONE
+            binding.optionItemRtt.visibility = View.GONE
             binding.optionItemSetting.visibility = View.VISIBLE
             //setWhiteboardViewTool(AgoraEduApplianceData.isGrantBoard(eduCore))
         } else {
@@ -562,6 +620,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
             when (roomType) {
                 RoomType.ONE_ON_ONE -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemChat.visibility = View.VISIBLE
                     initChat()
@@ -569,8 +628,10 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
                     binding.optionItemHandup.visibility = View.GONE
                     binding.optionItemWhiteboardTool.visibility = GONE
                 }
+
                 RoomType.SMALL_CLASS -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.GONE
                     binding.optionItemHandup.visibility = View.GONE
@@ -582,6 +643,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
 
                 RoomType.LARGE_CLASS -> {
                     binding.optionItemSetting.visibility = View.VISIBLE
+                    binding.optionItemRtt.visibility = View.GONE
                     binding.optionItemToolbox.visibility = View.GONE
                     binding.optionItemChat.visibility = View.GONE
                     binding.optionItemRoster.visibility = View.GONE
@@ -633,6 +695,7 @@ class AgoraEduOptionsComponent : AbsAgoraEduConfigComponent<FcrUIConfig>, IWhite
         super.release()
         popupViewChat?.release()
         agroSettingWidget?.release()
+        rttToolBoxWidget?.release()
         popupViewRoster?.release()
         eduContext?.roomContext()?.removeHandler(roomHandler)
         eduContext?.userContext()?.removeHandler(userHandler)

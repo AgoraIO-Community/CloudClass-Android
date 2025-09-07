@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/agora_edu_options_rtt_dialog_w"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fcr_popup_bg2"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_20">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fcr_online_edu_rtt_conversion_dialog_time_limit_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_6"
+        android:background="@drawable/agora_options_rtt_time_limit_bg"
+        android:paddingHorizontal="@dimen/dp_9"
+        android:paddingVertical="@dimen/dp_2"
+        android:text="@string/fcr_dialog_rtt_time_limit"
+        android:textColor="@color/fcr_white"
+        android:textSize="@dimen/sp_11"
+        android:textStyle="bold" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/agora_rtt_dialog_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/agora_rtt_dialog_subtitles"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/agora_rtt_dialog_conversion"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_rtt_dialog_subtitles_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/agora_options_icon_rtt_subtitles_bg"
+                android:padding="@dimen/dp_4"
+                android:src="@drawable/agora_option_icon_rtt_subtitles" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="9dp"
+                android:text="@string/fcr_dialog_rtt_subtitles"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_10" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/agora_rtt_dialog_conversion"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/agora_rtt_dialog_subtitles"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_rtt_dialog_conversion_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/agora_options_icon_rtt_subtitles_bg"
+                android:padding="@dimen/dp_4"
+                android:src="@drawable/agora_option_icon_rtt_conversion" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="9dp"
+                android:text="@string/fcr_dialog_rtt_conversion"
+                android:textColor="@color/fcr_black"
+                android:textSize="@dimen/sp_10" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
