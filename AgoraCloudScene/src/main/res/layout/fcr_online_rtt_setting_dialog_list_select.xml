@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_50"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingEnd="23dp"
+    tools:ignore="ResourceName">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_rtt_select_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/fcr_v2_black"
+        android:textSize="@dimen/sp_14"
+        tools:text="同时显示双语" />
+
+    <FrameLayout
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dialog_rtt_select_item_icon_checked"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/agora_radio_icon_checked" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dialog_rtt_select_item_icon_default"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/agora_radio_icon_default" />
+
+    </FrameLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -2,7 +2,7 @@ ext {
     //def fcrApaasVersion = "2.8.0"
 
     sdkVersion = [//  TODO versionName 如果以'-SNAPSHOT'结尾，aar将会被发送到SNAPSHOT仓库
-         'appVersion':"2.8.102"
+         'appVersion':"2.8.111-SNAPSHOT"
     ]
 
     maven = [

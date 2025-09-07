@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/dp_20"
+    android:paddingVertical="@dimen/dp_10"
+    tools:ignore="ResourceName">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_fcr_rtt_text_dialog_user_header"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/agora_userlist_desktop_on"
+        android:background="@drawable/agora_solid_radius_max"
+        android:backgroundTint="@color/theme_blue_gray"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_fcr_rtt_text_dialog_user_header_text"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/fcr_white"
+        android:textStyle="bold"
+        android:background="@drawable/agora_solid_radius_max"
+        android:backgroundTint="@color/theme_orange"
+        android:gravity="center"
+        tools:text="尹"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_fcr_rtt_text_dialog_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/agora_fcr_rtt_text_dialog_user_header"
+        app:layout_constraintLeft_toRightOf="@id/agora_fcr_rtt_text_dialog_user_header"
+        android:layout_marginStart="11dp"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/fcr_v2_black"
+        tools:text="尹希尔"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_fcr_rtt_text_dialog_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/agora_fcr_rtt_text_dialog_user_name"
+        app:layout_constraintBottom_toBottomOf="@id/agora_fcr_rtt_text_dialog_user_name"
+        app:layout_constraintLeft_toRightOf="@id/agora_fcr_rtt_text_dialog_user_name"
+        android:layout_marginStart="7dp"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/fcr_black_BBBBBB"
+        tools:text="2024-12-12 23:00"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_fcr_rtt_text_dialog_text_origin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/agora_fcr_rtt_text_dialog_user_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agora_fcr_rtt_text_dialog_user_name"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/fcr_v2_black"
+        android:textStyle="bold"
+        android:lineSpacingExtra="2dp"
+        tools:text="No one is currently speakingNo one is currently speakingNo one is currently speakingNo one is currently speaking"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_fcr_rtt_text_dialog_text_result"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/agora_fcr_rtt_text_dialog_text_origin"
+        app:layout_constraintRight_toRightOf="@id/agora_fcr_rtt_text_dialog_text_origin"
+        app:layout_constraintTop_toBottomOf="@id/agora_fcr_rtt_text_dialog_text_origin"
+        android:paddingTop="@dimen/dp_8"
+        android:textSize="@dimen/sp_14"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/fcr_black_CC787676"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="No one is currently speakingNo one is currently speakingNo one is currently speakingNo one is currently speaking"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

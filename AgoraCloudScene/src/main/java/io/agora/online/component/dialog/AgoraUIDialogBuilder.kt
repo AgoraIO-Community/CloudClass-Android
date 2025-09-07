@@ -1,14 +1,17 @@
 package io.agora.online.component.dialog
 
 import android.content.Context
+import android.text.SpannableString
 import android.view.View
 
 class AgoraUIDialogBuilder(private val context: Context) {
     private var title: String? = null
     private var message: String? = null
+    private var messageSpan: SpannableString? = null
     private var positiveText: String? = null
     private var negativeText: String? = null
     private var iconResource: Int? = null
+    private var messagePaddingHorizontal: Int? = null
     private var positiveListener: View.OnClickListener? = null
     private var negativeListener: View.OnClickListener? = null
     private var mCancelable: Boolean? = null
@@ -25,6 +28,16 @@ class AgoraUIDialogBuilder(private val context: Context) {
 
     fun message(message: String): AgoraUIDialogBuilder {
         this.message = message
+        return this
+    }
+
+    fun message(message: SpannableString): AgoraUIDialogBuilder {
+        this.messageSpan = message
+        return this
+    }
+
+    fun messagePaddingHorizontal(messagePaddingHorizontal: Int): AgoraUIDialogBuilder {
+        this.messagePaddingHorizontal = messagePaddingHorizontal
         return this
     }
 
@@ -57,6 +70,8 @@ class AgoraUIDialogBuilder(private val context: Context) {
         val dialog = AgoraUIDialog(context)
         title?.let { dialog.setTitle(it) }
         message?.let { dialog.setMessage(it) }
+        messageSpan?.let { dialog.setMessage(it) }
+        messagePaddingHorizontal?.let { dialog.setMessagePaddingHorizontal(it) }
         positiveText?.let { dialog.setPositiveButtonText(it) }
         positiveListener?.let { dialog.setPositiveClick(it) }
         negativeText?.let { dialog.setNegativeButtonText(it) }
@@ -136,6 +151,30 @@ class AgoraUICustomDialogBuilder(private val context: Context) {
             dialog.setCanceledOnTouchOutside(it)
             dialog.setCancelable(it)
         }
+        return dialog
+    }
+}
+
+class AgoraUIRttSettingBuilder(private val context: Context) {
+    private var listener: AgoraUIRttSettingDialogListener? = null
+    fun build(): AgoraUIRttSettingDialog {
+        val dialog = AgoraUIRttSettingDialog(context)
+        listener?.let { dialog.setListener(it) }
+        return dialog
+    }
+
+    /**
+     * 设置监听
+     */
+    fun setListener(listener: AgoraUIRttSettingDialogListener): AgoraUIRttSettingBuilder {
+        this.listener = listener
+        return this
+    }
+}
+
+class AgoraUIRttConversionDialogBuilder(private val context: Context) {
+    fun build(): AgoraUIRttConversionDialog {
+        val dialog = AgoraUIRttConversionDialog(context)
         return dialog
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
+import android.text.SpannableString
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ object AgoraUIToast {
     private const val LEVEL_INFO = 1
     private const val LEVEL_WARN = 2
     private const val LEVEL_ERROR = 3
+    private const val LEVEL_NONE = 4
 
 //    private var COLOR_INFO = Color.parseColor("#FAFFFF")
 //    private var COLOR_WARN = Color.parseColor("#FFFBF4")
@@ -119,20 +121,48 @@ object AgoraUIToast {
     }
 
     /**
+     * 显示默认弹窗
+     */
+    fun showDefaultToast(context: Context, message: String, duration: Int = LENGTH_SHORT) {
+        showDefaultToast(context, SpannableString(message), duration)
+    }
+
+    /**
+     * 显示默认弹窗
+     */
+    fun showDefaultToast(context: Context, message: SpannableString, duration: Int = LENGTH_SHORT) {
+        ContextCompat.getMainExecutor(context).execute {
+            computeValues()
+            val toastLayout = LayoutInflater.from(context).inflate(R.layout.fcr_online_toast_layout_default, null, false)
+            toastLayout.findViewById<AppCompatTextView>(R.id.tvText)?.let { msgView ->
+                msgView.text = message
+            }
+            val toast = Toast(context.applicationContext)
+            toast.view = toastLayout
+            toast.duration = duration
+            toast.setGravity(Gravity.TOP, 0, 200)
+            toast.show()
+        }
+    }
+
+    /**
      * Display the toast below the target anchor view
      * @param anchor tells how to position this toast on the screen,
      * if null, display the toast at the system default position
      */
     @SuppressLint("InflateParams")
-    private fun showToast(context: Context, level: Int, anchor: View?, text: String, duration: Int) {
+    private fun showToast(context: Context, level: Int, anchor: View?, text: CharSequence, duration: Int) {
         ContextCompat.getMainExecutor(context).execute {
             computeValues()
-            val toastLayout = LayoutInflater.from(context).inflate(
-                R.layout.fcr_online_toast_layout, null, false)
+            val toastLayout = LayoutInflater.from(context).inflate(R.layout.fcr_online_toast_layout, null, false)
 
             toastLayout.findViewById<AppCompatImageView>(R.id.agora_toast_icon)?.let { icon ->
-                getToastIconRes(level)?.let { iconRes ->
-                    icon.setImageResource(iconRes)
+                val res = getToastIconRes(level)
+                if(res !=null){
+                    icon.visibility = View.VISIBLE
+                    icon.setImageResource(res)
+                }else{
+                    icon.visibility = View.GONE
                 }
             }
 
@@ -157,26 +187,30 @@ object AgoraUIToast {
         }
     }
 
+
     private fun computeValues() {
 
     }
 
-    private fun buildToastBgDrawable(context: Context,level: Int): Drawable? {
+    private fun buildToastBgDrawable(context: Context, level: Int): Drawable? {
         val bgColor: Int
         val borderColor: Int
         when (level) {
             LEVEL_INFO -> {
-                bgColor = ContextCompat.getColor(context,R.color.fcr_system_safe_color)
+                bgColor = ContextCompat.getColor(context, R.color.fcr_system_safe_color)
                 borderColor = COLOR_INFO_BORDER
             }
+
             LEVEL_WARN -> {
-                bgColor = ContextCompat.getColor(context,R.color.fcr_system_warning_color)
+                bgColor = ContextCompat.getColor(context, R.color.fcr_system_warning_color)
                 borderColor = COLOR_WARN_BORDER
             }
+
             LEVEL_ERROR -> {
-                bgColor = ContextCompat.getColor(context,R.color.fcr_system_error_color)
+                bgColor = ContextCompat.getColor(context, R.color.fcr_system_error_color)
                 borderColor = COLOR_ERROR_BORDER
             }
+
             else -> {
                 return null
             }
