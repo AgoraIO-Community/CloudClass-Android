@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_white"
+    tools:context=".setting.FcrTestRoomActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fcr_white"
+            tools:context=".setting.FcrTestRoomActivity">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/loginBg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                android:background="@drawable/img_login_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/logo_guideline"
+                android:layout_width="0dp"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/dp_35"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginBg" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:src="@drawable/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="@id/logo_guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ic_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:src="@drawable/ic_about_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="@string/app_name"
+                android:textColor="@color/fcr_white"
+                android:textSize="@dimen/sp_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_about" />
+
+            <RelativeLayout
+                android:id="@+id/roomName_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/roomName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/room_name"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_roomName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@id/roomName"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/hint_room_name"
+                    android:maxLength="50"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:singleLine="true"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_roomName"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/roomName"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tips_roomName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bl_roomName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:text="@string/tips_input_type"
+                    android:textColor="@color/fcr_red_FF0D19"
+                    android:textSize="@dimen/sp_10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userName_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roomName_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/user_name"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@id/userName"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/hint_your_name"
+                    android:maxLength="50"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:singleLine="true"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/ed_userName"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tips_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bl_userName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:text="@string/tips_input_type_username"
+                    android:textColor="@color/fcr_red_FF0D19"
+                    android:textSize="@dimen/sp_10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/roomType_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userName_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/roomType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/room_type"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_down0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_down_up" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_roomType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toStartOf="@id/ic_down0"
+                    android:layout_toEndOf="@id/roomType"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/hint_room_type"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_roomType"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/tv_roomType"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/serviceType_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roomType_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/serviceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/service_type"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_serivce_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_down_up" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_serviceType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toStartOf="@id/ic_serivce_down"
+                    android:layout_toEndOf="@id/serviceType"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/hint_service_type"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_serviceType"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/tv_serviceType"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/roleType_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/serviceType_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/roleType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:clickable="false"
+                    android:text="@string/role_type"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_down9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="false"
+                    android:src="@drawable/ic_down_new" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_roleType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toStartOf="@id/ic_down9"
+                    android:layout_toEndOf="@id/roleType"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/hint_role_type"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_roleType"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/tv_roleType"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/videoStream_mode_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roleType_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/videoStream_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/video_mode"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_down2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_down_new" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ed_videoStream_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toStartOf="@id/ic_down2"
+                    android:layout_toEndOf="@id/videoStream_mode"
+                    android:background="@drawable/bg_ed"
+                    android:hint="@string/video_stream_mode"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:singleLine="true"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_videoStream_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/ed_videoStream_mode"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tips_videoStream_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bl_videoStream_mode"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:text="@string/tips_input_type"
+                    android:textColor="@color/fcr_red_FF0D19"
+                    android:textSize="@dimen/sp_10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/videoStream_key_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/videoStream_mode_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/videoStream_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/video_key"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_videoStream_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@id/videoStream_key"
+                    android:background="@drawable/bg_ed"
+                    android:digits="@string/video_key_pattern"
+                    android:hint="@string/video_stream_key"
+                    android:maxLength="20"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:singleLine="true"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_videoStream_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/ed_videoStream_key"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tips_videoStream_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bl_videoStream_key"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:text="@string/tips_input_type"
+                    android:textColor="@color/fcr_red_FF0D19"
+                    android:textSize="@dimen/sp_10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/roomDuration_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:paddingTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/videoStream_key_Layout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/roomDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/room_duration"
+                    android:textColor="#8A8A8A"
+                    android:textSize="@dimen/sp_14" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/ed_roomDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@id/roomDuration"
+                    android:background="@drawable/bg_ed"
+                    android:editable="false"
+                    android:hint="@string/room_duration1"
+                    android:maxLength="20"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:singleLine="true"
+                    android:textColor="@color/fcr_black"
+                    android:textColorHint="#BDBDCA"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:id="@+id/bl_roomDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/roomDuration"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_ed_baseline" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tips_roomDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bl_roomDuration"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:text="@string/tips_input_type"
+                    android:textColor="@color/fcr_red_FF0D19"
+                    android:textSize="@dimen/sp_10"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_join"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:background="@drawable/bg_btn_join"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/join_room"
+                android:textColor="@color/fcr_white"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roomDuration_Layout" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_room_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/fcr_white"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roomType_Layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_9"
+                    android:paddingBottom="@dimen/dp_7">
+                    <include layout="@layout/normal_class_layout"/>
+                    <include layout="@layout/art_class_layout"/>
+                    <include layout="@layout/vocational_class_layout"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_role_type"
+                android:layout_width="@dimen/dp_320"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/fcr_white"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roleType_Layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_9"
+                    android:paddingBottom="@dimen/dp_7">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_role_student"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_44"
+                        android:gravity="center"
+                        android:text="@string/role_student"
+                        android:textColor="@color/fcr_gray_333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/fcr_gray_EEEEEE" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_role_teacher"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_44"
+                        android:gravity="center"
+                        android:text="@string/role_teacher"
+                        android:textColor="@color/fcr_gray_333333"
+                        android:textSize="@dimen/sp_14" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/fcr_gray_EEEEEE" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_role_audience"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_44"
+                        android:gravity="center"
+                        android:text="@string/role_audience"
+                        android:textColor="@color/fcr_gray_333333"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_encrypt_mode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/fcr_white"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/videoStream_mode_Layout">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_146"
+                    android:paddingStart="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_9"
+                    android:paddingBottom="@dimen/dp_7">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/none"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_44"
+                            android:gravity="center"
+                            android:text="@string/none"
+                            android:textColor="@color/fcr_gray_333333"
+                            android:textSize="@dimen/sp_14" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:background="@color/fcr_gray_EEEEEE" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/sm4_128_ecb"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_44"
+                            android:gravity="center"
+                            android:text="@string/sm4_128_ecb"
+                            android:textColor="@color/fcr_gray_333333"
+                            android:textSize="@dimen/sp_14" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:background="@color/fcr_gray_EEEEEE" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/aes_128_gcm"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_44"
+                            android:gravity="center"
+                            android:text="@string/aes_128_gcm"
+                            android:textColor="@color/fcr_gray_333333"
+                            android:textSize="@dimen/sp_14" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:background="@color/fcr_gray_EEEEEE" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/aes_256_gcm"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_44"
+                            android:gravity="center"
+                            android:text="@string/aes_256_gcm"
+                            android:textColor="@color/fcr_gray_333333"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_service_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_30"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/fcr_white"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/serviceType_Layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/dp_9"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingEnd="@dimen/dp_9"
+                    android:paddingBottom="@dimen/dp_7">
+                    <include layout="@layout/serivce_type_layout"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_flexibleVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Version: Flexible_Classroom_2.2.0"
+                android:textColor="#7D8798"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintTop_toBottomOf="@id/btn_join"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/entry_param_state"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginBg"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

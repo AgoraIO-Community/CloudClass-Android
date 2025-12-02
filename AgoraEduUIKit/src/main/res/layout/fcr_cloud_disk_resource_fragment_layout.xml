@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_transparent">
+
+    <View
+        android:id="@+id/view0"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/refresh_img"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/fcr_cloud_refresh"
+        app:layout_constraintBottom_toBottomOf="@id/view0"
+        app:layout_constraintStart_toStartOf="@id/view0"
+        app:layout_constraintTop_toTopOf="@id/view0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cur_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/fcr_cloud_private_resource"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/refresh_img"
+        app:layout_constraintStart_toEndOf="@id/refresh_img"
+        app:layout_constraintTop_toTopOf="@id/refresh_img" />
+
+    <View
+        android:id="@+id/search_bg"
+        android:layout_width="160dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/fcr_clod_disk_search_layout_bg"
+        app:layout_constraintBottom_toBottomOf="@id/view0"
+        app:layout_constraintEnd_toEndOf="@id/view0"
+        app:layout_constraintTop_toTopOf="@id/view0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search_img"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="6dp"
+        android:src="@drawable/fcr_cloud_search"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintStart_toStartOf="@id/search_bg"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clear_img"
+        android:layout_width="28dp"
+        android:layout_height="22dp"
+        android:scaleType="center"
+        android:src="@drawable/fcr_cloud_disk_search_clear"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintEnd_toEndOf="@id/search_bg"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search_ed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="2dp"
+        android:layout_marginVertical="2dp"
+        android:background="@drawable/agora_widget_countdown_duration_edittext_bg"
+        android:hint="@string/fcr_cloud_search"
+        android:imeActionLabel="@string/fcr_cloud_search"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textColorHint="@color/fcr_gray_7D8798"
+        android:textCursorDrawable="@drawable/fcr_cloud_disk_search_text_cursor"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintEnd_toStartOf="@id/clear_img"
+        app:layout_constraintStart_toEndOf="@id/search_img"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <View
+        android:id="@+id/line0"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view0" />
+
+    <View
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@color/fcr_system_component_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line0" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/fcr_cloud_file_name"
+        android:textColor="@color/fcr_icon_normal_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="@id/header"
+        app:layout_constraintTop_toTopOf="@id/header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/clould_bottom_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1"
+        tools:itemCount="4"
+        tools:listitem="@layout/fcr_cloud_disk_list_item_layout" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/clould_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/dp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/my_clould_bottome_layout"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@color/fcr_system_foreground_color"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/my_clould_upload_file_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/centerLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@mipmap/my_clould_uploadfile_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:text="@string/fcr_cloud_upload_file"
+                                android:textColor="@color/fcr_text_level1_color"
+                                android:textSize="@dimen/sp_12" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/progress_file_bar_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/centerLayout"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="("
+                                android:textColor="#7D8798"
+                                android:textSize="12dp" />
+
+                            <ImageView
+                                android:id="@+id/progress_file_bar"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginTop="1dp"
+                                android:src="@mipmap/my_cloud_progress_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fcr_cloud_uploading"
+                                android:textColor="#7D8798"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/mycloud_help_img"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="13dp"
+                    android:src="@mipmap/my_clould_help_cion" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#E3E3EC" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/centerLayout"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/my_clould_upload_img_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/my_clould_uploadimg_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="@string/fcr_cloud_upload_pictures"
+                        android:textColor="@color/fcr_text_level1_color"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/progress_img_bar_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/my_clould_upload_img_layout"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="("
+                        android:textColor="@color/fcr_text_level2_color"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/progress_img_bar"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@mipmap/my_cloud_progress_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fcr_cloud_uploading"
+                        android:textColor="@color/fcr_text_level2_color"
+                        android:textSize="12dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_clould_delete_layout"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@color/fcr_system_foreground_color"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/my_cloud_delete_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="@string/fcr_cloud_tips_delete_confirm_ok_text"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

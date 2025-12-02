@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/agora_dialog_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/agora_snackbar_bg"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fcr_gou_alart" />
+
+        <TextView
+            android:id="@+id/fcr_s_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="10dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/fcr_exteral_video_tips"
+            android:textColor="@color/theme_white"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/fcr_gou_alart_line" />
+
+        <ImageView
+            android:id="@+id/fcr_s_close"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/fcr_gou_close" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

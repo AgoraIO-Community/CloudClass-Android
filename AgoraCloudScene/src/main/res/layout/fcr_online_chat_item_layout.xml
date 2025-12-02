@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_large"
+    android:paddingLeft="@dimen/margin_large"
+    android:paddingTop="@dimen/margin_medium"
+    android:paddingEnd="@dimen/margin_large"
+    android:paddingRight="@dimen/margin_large"
+    android:paddingBottom="@dimen/margin_medium"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_large" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_chat_item_user_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:maxEms="6"
+        android:singleLine="true"
+        android:textColor="@color/theme_text_color_dark_gray"
+        android:textSize="@dimen/text_size_smaller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_chat_item_message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:padding="@dimen/margin_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@id/guide_line"
+        app:layout_constraintTop_toBottomOf="@id/agora_chat_item_user_name"
+        app:layout_constraintWidth_default="wrap"
+        android:textSize="@dimen/text_size_small"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/agora_chat_send_fail_button"
+        android:layout_width="@dimen/agora_message_item_icon_size"
+        android:layout_height="@dimen/agora_message_item_icon_size"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:background="@drawable/agora_chat_icon_red"
+        android:gravity="center"
+        android:text="@string/fcr_agora_message_item_error_text"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_smaller"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/agora_chat_item_message"
+        app:layout_constraintEnd_toStartOf="@id/agora_chat_item_message" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/agora_chat_item_loading"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="@dimen/agora_message_item_icon_size"
+        android:layout_height="@dimen/agora_message_item_icon_size"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:indeterminate="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/agora_chat_item_message"
+        app:layout_constraintEnd_toStartOf="@id/agora_chat_item_message" />
+</androidx.constraintlayout.widget.ConstraintLayout>

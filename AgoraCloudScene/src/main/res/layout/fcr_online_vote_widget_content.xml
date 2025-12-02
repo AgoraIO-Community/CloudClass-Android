@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="4dp"
+    android:background="@drawable/fcr_popup_bg2"
+    android:elevation="4dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/fcr_vote_hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/fcr_web_view_smaller"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/fcr_poll_title"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/vote_selection_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/vote_selection_mode_bg"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="6dp"
+            android:text="@string/fcr_poll_single"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_icon_fill_color"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="1dp" />
+
+        <ImageView
+            android:id="@+id/close_Img"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
+            android:scaleType="center"
+            android:src="@drawable/ext_app_icon_countdown_close"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+<!--    <View-->
+<!--        android:id="@+id/title_bg"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/fcr_vote_hidden"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="14dp"-->
+<!--        android:layout_marginRight="4dp"-->
+<!--        android:src="@drawable/fcr_web_view_smaller"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/vote"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:text="@string/fcr_poll_title"-->
+<!--        android:textAlignment="gravity"-->
+<!--        android:textColor="@color/fcr_text_level1_color"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/title_bg"-->
+<!--        app:layout_constraintLeft_toLeftOf="@id/fcr_vote_hidden"-->
+<!--        app:layout_constraintTop_toTopOf="@id/title_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/vote_selection_mode"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="16dp"-->
+<!--        android:layout_marginLeft="6dp"-->
+<!--        android:background="@drawable/vote_selection_mode_bg"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:paddingHorizontal="6dp"-->
+<!--        android:text="@string/fcr_poll_single"-->
+<!--        android:textAlignment="gravity"-->
+<!--        android:textColor="@color/fcr_icon_fill_color"-->
+<!--        android:textSize="10sp"-->
+<!--        android:visibility="gone"-->
+<!--        tools:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/vote"-->
+<!--        app:layout_constraintStart_toEndOf="@id/vote"-->
+<!--        app:layout_constraintTop_toTopOf="@id/vote" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/close_Img"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:layout_marginEnd="9dp"-->
+<!--        android:layout_marginRight="9dp"-->
+<!--        android:scaleType="center"-->
+<!--        android:src="@drawable/ext_app_icon_countdown_close"-->
+<!--        android:visibility="gone"-->
+<!--        tools:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/vote"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/vote" />-->
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bg" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vote_tile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="@id/divider"
+        app:layout_constraintStart_toStartOf="@id/divider"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <TextView
+            android:id="@+id/vote_title_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/vote_title_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/agora_widget_vote_title_edittext_bg"
+            android:gravity="top"
+            android:hint="@string/fcr_poll_vote_title"
+            android:maxLength="30"
+            android:minLines="2"
+            android:padding="6dp"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textColorHint="@color/fcr_text_level2_color"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vote_selection_mode_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="@id/vote_tile_layout"
+        app:layout_constraintTop_toBottomOf="@id/vote_tile_layout">
+
+        <TextView
+            android:id="@+id/multi_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fcr_poll_multi"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/multi_Img"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/agora_widget_vote_selection_mode_bg"
+            app:layout_constraintBottom_toBottomOf="@id/multi_Text"
+            app:layout_constraintEnd_toStartOf="@id/multi_Text"
+            app:layout_constraintTop_toTopOf="@id/multi_Text" />
+
+        <TextView
+            android:id="@+id/single_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@string/fcr_poll_single"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/multi_Img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/single_Img"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/agora_widget_vote_selection_mode_bg"
+            app:layout_constraintBottom_toBottomOf="@id/single_Text"
+            app:layout_constraintEnd_toStartOf="@id/single_Text"
+            app:layout_constraintTop_toTopOf="@id/single_Text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vote_choices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="8dp"
+        android:maxHeight="152dp"
+        android:scrollbarSize="8dp"
+        android:scrollbarThumbVertical="@drawable/agora_edu_thumb_bg"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/vote_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="152dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vote_selection_mode_layout"
+        app:layout_goneMarginBottom="10dp"
+        tools:itemCount="5" />
+
+    <Button
+        android:id="@+id/vote_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/agora_cilcker_btn_bg"
+        android:enabled="false"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="6dp"
+        android:text="@string/fcr_poll_submit"
+        android:textAlignment="gravity"
+        android:textAllCaps="false"
+        android:textColor="@color/fcr_text_contrast_color"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/vote_choices"
+        app:layout_constraintStart_toStartOf="@id/vote_choices"
+        app:layout_constraintTop_toBottomOf="@id/vote_choices" />
+
+    <ImageView
+        android:id="@+id/increment_Img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ext_app_iclicker_plus"
+        app:layout_constraintBottom_toBottomOf="@id/vote_btn"
+        app:layout_constraintEnd_toStartOf="@id/vote_btn"
+        app:layout_constraintTop_toTopOf="@id/vote_btn" />
+
+    <ImageView
+        android:id="@+id/decrement_Img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/ext_app_iclicker_surplus"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/vote_btn"
+        app:layout_constraintStart_toEndOf="@id/vote_btn"
+        app:layout_constraintTop_toTopOf="@id/vote_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

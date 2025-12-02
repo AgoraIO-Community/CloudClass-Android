@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcr_system_brand_color">#357BF6</color>
+    <color name="fcr_system_background_color">#F9F9FC</color>
+    <color name="fcr_system_foreground_color">#FFFFFF</color>
+    <color name="fcr_system_error_color">#F5655C</color>
+    <color name="fcr_system_warning_color">#FFB554</color>
+    <color name="fcr_system_safe_color">#64BB5C</color>
+</resources>

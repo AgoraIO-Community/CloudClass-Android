@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/student_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="20dp">
+
+    <GridView
+        android:id="@+id/answers_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:columnWidth="40dp"
+        android:horizontalSpacing="16dp"
+        android:numColumns="4"
+        android:verticalSpacing="10dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/submit_Btn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/agora_cilcker_btn_bg"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/fcr_popup_quiz_post"
+        android:textAlignment="gravity"
+        android:textColor="@color/iclicker_btn_text_color"
+        android:textSize="13sp" />
+
+</LinearLayout>

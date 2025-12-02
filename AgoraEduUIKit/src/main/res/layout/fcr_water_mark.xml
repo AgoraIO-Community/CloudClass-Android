@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.agora.edu.component.view.FcrMarqueeTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fcr_water_mark"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.15"
+    android:singleLine="true"
+    android:text="Agora"
+    android:textColor="@color/fcr_text_level1_color"
+    android:textSize="30sp"
+    app:scroll_first_delay="0"
+    app:scroll_interval="2000"
+    app:scroll_mode="mode_forever" />

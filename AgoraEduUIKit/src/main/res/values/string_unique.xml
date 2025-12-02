@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="fcr_toast_classtime_default" translatable="false">--:--</string>
+    <string name="fcr_toast_classtime_until_class_close_0_args" translatable="false">%sm%ss</string>
+    <string name="fcr_toast_classtime_until_class_close_0_arg" translatable="false">%s minutes</string>
+    <string name="fcr_chat_window_select_image_action" translatable="false">.Select_Image</string>
+    <string name="fcr_chat_window_select_image_key" translatable="false">data</string>
+    <string name="fcr_reward_window_classtime0" translatable="false">%02d:%02d</string>
+    <string name="fcr_reward_window_classtime1" translatable="false">%02d:%02d:%02d</string>
+    <string name="fcr_duration_digits" translatable="false">1234567890</string>
+    <string name="fcr_start_time" translatable="false">00:00:00</string>
+    <string name="fcr_respondentsnum" translatable="false">%d/%d</string>
+    <string name="fcr_accuracynum" translatable="false">%d%%</string>
+    <string name="fcr_votetitle" translatable="false">%d. %s</string>
+    <string name="fcr_votechoiceid" translatable="false">%d. </string>
+    <string name="fcr_agora_wb_page_count" translatable="false">%d / %d</string>
+    <string name="fcr_agora_message_item_error_text" translatable="false">!</string>
+    <string name="fcr_agora_message_item_role_tip" translatable="false">[%s]</string>
+    <string name="fcr_agora_video_reward" translatable="false">&#215;%d</string>
+    <string name="fcr_total_count" translatable="false">/500</string>
+    <!-- 我的云盘-->
+    <string name="my_clould_select_image_action" translatable="false">.My_Clould_Select_Image</string>
+    <string name="my_clould_select_file_action" translatable="false">.My_Clould_Select_File</string>
+    <string name="my_clould_select_image_key" translatable="false">data</string>
+
+</resources>

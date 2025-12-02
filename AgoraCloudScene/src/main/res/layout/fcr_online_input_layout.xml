@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/input_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        style="@style/im_white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/fcr_gray" />
+
+        <LinearLayout
+            android:id="@+id/bottom_root"
+            style="@style/im_white_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:gravity="center_vertical"
+            android:minHeight="52dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/fcr_padding_middle">
+
+            <FrameLayout
+                android:id="@+id/layout_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/fcr_ease_send_message_et_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edit_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/fcr_hyphenate_im_say_something"
+                    android:gravity="center_vertical"
+                    android:background="@color/fcr_transparent"
+                    android:textColorHint="@color/fcr_text_level3_color"
+                    android:imeOptions="actionSend|flagNoExtractUi"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:minHeight="30dp"
+                    android:maxLength="300"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="@color/fcr_text_level1_color"
+                    android:textSize="@dimen/fcr_textSize" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_input_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/fcr_text_level3_color"
+                        android:textSize="@dimen/fcr_textSize" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:text="/300"
+                        android:textColor="@color/fcr_text_level3_color"
+                        android:textSize="@dimen/fcr_textSize" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/face_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/face_normal"
+                    android:layout_width="@dimen/fcr_input_icon_size"
+                    android:layout_height="@dimen/fcr_input_icon_size"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/fcr_emoji_normal" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/face_checked"
+                    android:layout_width="@dimen/fcr_input_icon_size"
+                    android:layout_height="@dimen/fcr_input_icon_size"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/fcr_keyboard_normal"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_image"
+                android:layout_width="@dimen/fcr_input_icon_size"
+                android:layout_height="@dimen/fcr_input_icon_size"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:src="@mipmap/fcr_pic_normal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_send"
+                style="@style/blue_bg_white_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fcr_input_margin_right"
+                android:layout_marginRight="@dimen/fcr_input_margin_right"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/fcr_hyphenate_im_send"
+                android:textSize="@dimen/fcr_textSize" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/emoji_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bottom_root"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:fadingEdge="none"
+            android:gravity="center"
+            android:horizontalSpacing="6dp"
+            android:listSelector="@android:color/transparent"
+            android:paddingBottom="10dp"
+            android:scrollbars="none"
+            android:verticalSpacing="6dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

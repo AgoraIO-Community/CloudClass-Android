@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Agora Flexible Classroom</string>
+    <string name="room_name">Room&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="room_name_Id">ClassroomId</string>
+    <string name="user_name">Name&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="user_id">UserId</string>
+    <string name="room_type">Type&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="role_type">Role&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="hint_room_name">Please input classroom name</string>
+    <string name="hint_room_uuid">Please input classroom id</string>
+    <string name="hint_your_name">Please input your name</string>
+    <string name="hint_your_uuid">Please input your id</string>
+    <string name="hint_room_type">Please select class type</string>
+    <string name="hint_role_type">Please select role type</string>
+    <string name="hint_service_type">Please select voice and video service type</string>
+    <string name="tips_input_type">Between 6 and 50 letter or number only</string>
+    <string name="tips_input_type_username">Between 6 and 50 letter , number, space only</string>
+    <string name="join_room">Enter</string>
+    <string name="disclaimers0">Product Disclaimer</string>
+    <string name="disclaimers1">&#160;&#160;Agora Live (\"this product\") is a product provided by Agora . Agora enjoys the copyright and ownership of this product. It is hereby granted free of charge to anyone who obtains a copy of this product and related documentation (hereinafter referred to as \"software\") to try the software without limitation, including but not limited to trial, copy, modify, merge, publish, distribute, but this product shall not be used For any commercial use, you may not sublicense and / or sell copies of the software.\n\n&#160;&#160;This product is provided \"as is\" without any express warranty, including but not limited to guarantees of suitability, suitability for specific purposes, and non-infringement. Whether it is due to any contract, infringement or other forms of conduct related to this product or the trial of this product or other methods, Agora will not be responsible for any claims, damages or other liabilities.\n\n&#160;&#160;You are free to choose whether to try the services provided by this product. If you download, install, or try the services provided in this product, it means that you trust the owner of the product, and Agora shall not be responsible for any form of loss or injury caused by yourself or others when you try the services provided in this product for any reason. </string>
+    <string name="close">Close</string>
+    <string name="about">About</string>
+    <string name="fcr_theme_setting">Theme Setting</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms_of_service_url">https://www.agora.io/en/terms-of-service/</string>
+    <string name="register_account">Sign up Agora.io</string>
+    <string name="version_time">Version Time</string>
+    <string name="sdk_version">SDK Version</string>
+    <string name="flexible_version">Flexible Classroom Version</string>
+    <string name="flexible_version1" translatable="false">Version: Flexible_Classroom_%s</string>
+    <string name="version1" translatable="false">Ver&#160;%s</string>
+    <string name="region">Region&#160;&#160;&#160;</string>
+    <string name="cn0" translatable="false">CN</string>
+    <string name="na0" translatable="false">NA</string>
+    <string name="eu0" translatable="false">EU</string>
+    <string name="ap0" translatable="false">AP</string>
+    <string name="privacy_url">https://www.agora.io/en/privacy-policy/</string>
+    <string name="signup_url">https://sso.agora.io/en/signup</string>
+    <string name="room_duration">Duration</string>
+    <string name="room_duration1">30mins</string>
+    <string name="video_stream_key">Please input your key</string>
+    <string name="video_key">Key&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="video_stream_mode">Please select your mode</string>
+    <string name="video_mode">Mode&#160;&#160;&#160;&#160;</string>
+    <string name="none" translatable="false">none</string>
+    <string name="aes_128_xts" translatable="false">aes-128-xts</string>
+    <string name="aes_128_ecb" translatable="false">aes-128-ecb</string>
+    <string name="aes_256_xts" translatable="false">aes-256-xts</string>
+    <string name="sm4_128_ecb" translatable="false">sm4-128-ecb</string>
+    <string name="aes_128_gcm" translatable="false">aes-128-gcm</string>
+    <string name="aes_256_gcm" translatable="false">aes-256-gcm</string>
+    <string name="video_key_pattern">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"!#$%()+-:;=.?@[]^_{}|~,</string>
+
+    <string name="powered_by_agora_io" translatable="false">Powered by agora.io</string>
+    <string name="your_name_should_not_be_empty">Your name should not be empty.</string>
+    <string name="your_uuid_should_not_be_empty">Your uuid should not be empty.</string>
+    <string name="room_name_should_not_be_empty">Room name should not be empty.</string>
+    <string name="room_uuid_should_not_be_empty">Room uuid should not be empty.</string>
+    <string name="room_type_should_not_be_empty">Room type should not be empty.</string>
+    <string name="one2one_class">One to One Classroom</string>
+    <string name="small_class">Interactive Small Classroom</string>
+    <string name="small_class_art">Art Small Classroom</string>
+    <string name="large_class_art">Art Lecture Hall</string>
+    <string name="large_class_vocational">Vocational Lecture Hall</string>
+    <string name="large_class">Lecture Hall</string>
+    <string name="role_student">Student</string>
+    <string name="role_teacher">Teacher</string>
+    <string name="role_audience">Audience</string>
+    <string name="breakout">Breakout Classroom</string>
+    <string name="intermediate">Medium Classroom</string>
+    <string name="debug">Debug Page</string>
+    <string name="eye_care_mode">Eye protection</string>
+    <string name="join">Join</string>
+    <string name="setting">Setting</string>
+    <string name="no_enough_permissions">No enough permissions</string>
+    <string name="version" translatable="false">App:v%s   AgoraEduSDK:v%s</string>
+
+    <string name="service_type">Service</string>
+    <string name="service_live_premium">Interactive Live Streaming Premium</string>
+    <string name="service_live_standard">Interactive Live Streaming Standard</string>
+    <string name="service_cdn">Standard Latency Streaming(CDN)</string>
+    <string name="service_fusion">Fusion Streaming</string>
+    <string name="service_screen_share">Screen Share Streaming</string>
+    <string name="service_hosting_scene">Hosting Scene</string>
+    <string name="join_forbidden_title">Join Forbidden</string>
+    <string name="join_forbidden_message">You are not allowed to join the classroom!</string>
+    <string name="join_forbidden_button_confirm">Confirm</string>
+    <string name="join_large_for_teacher_fail">The teacher\'s lecture Hall has not been opened. Coming soon</string>
+    <string name="fcr_theme_light">light</string>
+    <string name="fcr_theme_night">night</string>
+
+    <string name="agree_the_terms">I have read the terms</string>
+
+    <!-- privacy -->
+    <string name="setting_title_user_agreement">Agora Privacy And Terms of Service</string>
+    <string name="got_it">GOT IT</string>
+    <string name="decline">DECLINE</string>
+    <string name="accept">ACCEPT</string>
+
+    <string name="fcr_join_state_before">Upcoming</string>
+    <string name="fcr_join_state_join">Live now</string>
+    <string name="fcr_join_state_after">Closed</string>
+    <string name="fcr_join_join_room">Join</string>
+    <string name="fcr_join_create_room">Create</string>
+    <string name="fcr_join_my_room_list">My Room List</string>
+    <string name="fcr_join_enter_room">Enter</string>
+    <string name="fcr_join_room_closed_tips">This message will be removed 7 days after the end of the course.</string>
+    <string name="fcr_join_copy_success">Copy Success</string>
+    <string name="frc_join_cancel">Cancel</string>
+    <string name="fcr_join_sure">Join</string>
+    <string name="fcr_join_create">Create</string>
+    <string name="fcr_join_create_classroom">Create Classroom</string>
+    <string name="fcr_join_input_room_name">Input Room Name</string>
+    <string name="fcr_create_start_time">Start Time</string>
+    <string name="fcr_create_end_time">End Time</string>
+    <string name="fcr_create_default_time_tips">Default 30mins</string>
+    <string name="fcr_create_room_one_to_many">Small Class</string>
+    <string name="fcr_create_room_lecture_hall">Lecture Hall</string>
+    <string name="fcr_create_room_one_to_one">One to One</string>
+    <string name="fcr_login_free_class_mode_option_cloud_class">Cloud Classroom</string>
+    <string name="fcr_login_free_tips_app_support_role">The cloud classroom only supports role of student to join the classroom.</string>
+    <string name="fcr_create_room_one_to_many_desc">Interactive</string>
+    <string name="fcr_create_room_lecture_hall_desc">Broadcast</string>
+    <string name="fcr_create_room_one_to_one_desc">Interactive</string>
+    <string name="frc_join_room">Join Room</string>
+    <string name="fcr_join_room_id">Room ID</string>
+    <string name="fcr_join_input_room_id">Input Room ID</string>
+    <string name="fcr_join_name">Name</string>
+    <string name="fcr_join_input_your_name">Input Your Name</string>
+    <string name="fcr_join_role">Role</string>
+    <string name="fcr_join_role_teacher">Teacher</string>
+    <string name="fcr_join_role_student">Student</string>
+    <string name="fcr_create_label_servicetype_RTC">Interractive Premium</string>
+    <string name="fcr_create_label_servicetype_Standard">Interractive Standard</string>
+    <string name="fcr_create_label_servicetype_CDN">Fusion CDN</string>
+    <string name="fcr_create_label_latency_RTC">&#060; 400ms latency</string>
+    <string name="fcr_create_label_latency_Standard">1500ms latency</string>
+    <string name="fcr_create_label_latency_CDN">6000ms latency</string>
+    <string name="fcr_create_label_moresettings">More Settings</string>
+    <string name="fcr_create_label_playback">Live&#038;Playback</string>
+    <string name="fcr_create_label_security">Security ·</string>
+    <string name="fcr_create_watermark">Watermark</string>
+    <string name="fcr_create_table_time_format">HH:ss,MMM d</string>
+    <string name="fcr_create_picker_time_format">MMM d EEE</string>
+    <string name="fcr_create_label_today">Today</string>
+    <string name="fcr_create_tips_starttime">The class start time must be earlier than the current time</string>
+    <string name="fcr_create_room_success_tips">You have created a room successfully</string>
+    <string name="fcr_home_label_no_records">No course records by now</string>
+    <string name="fcr_create_tips_roomid">Please input your playbacks link</string>
+    <string name="fcr_create_label_current_time">Current Time</string>
+    <string name="fcr_joinroom_tips_roomid_empty">The Room ID cannot be empty</string>
+    <string name="fcr_joinroom_tips_username_empty">The User Name cannot be empty</string>
+    <string name="fcr_create_label_roomname_empty">The Room Name cannot  be empty</string>
+    <string name="fcr_joinroom_tips_cdn_character">Only role student can use CDN services in mobile classroom</string>
+    <string name="fcr_create_room_end">\'s Classroom</string>
+    <string name="fcr_joinroom_tips_emptyid">The Room ID doesn\'t exist</string>
+    <string name="fcr_settings_close_account">Delete Account</string>
+    <string name="fcr_startup_button_startup">Get Started</string>
+    <string name="fcr_duration_time_unit">mins</string>
+    <string name="fcr_copy_link">Copy Link</string>
+    <string name="fcr_login_s">Login Success</string>
+    <string name="fcr_login_logout">Logout</string>
+    <string name="fcr_login_free_tips_login_guide_sign_in">Sign in</string>
+    <string name="fcr_login_free_option_create">Create Room</string>
+    <string name="fcr_login_free_option_join">Join Room</string>
+    <string name="fcr_login_free_label_room_id">Room ID</string>
+    <string name="fcr_login_free_tips_room_id">Please input your room ID</string>
+    <string name="fcr_login_free_tips_login_guide">Quick start can‘t save your course information and recordings. If you want to experience the full demo functionality, please register for a Agora account first.</string>
+    <string name="fcr_login_free_label_nick_name">Nick Name</string>
+    <string name="fcr_login_free_tips_nick_name">What we should call you?</string>
+    <string name="fcr_login_free_button_join">Quick Join Now</string>
+    <string name="fcr_login_free_label_role">Role</string>
+    <string name="fcr_login_free_role_option_student">Student</string>
+    <string name="fcr_login_free_role_option_teacher">Teacher</string>
+    <string name="fcr_login_free_role_option_audience">Audience</string>
+    <string name="fcr_login_free_tips_login_guide_title">Experience the full demo functionality</string>
+    <string name="fcr_login_free_label_room_name">Room Name</string>
+    <string name="fcr_login_free_label_class_mode">Class Mode</string>
+    <string name="fcr_login_free_button_create">Quick Create Now</string>
+    <string name="fcr_login_free_tips_room_name">Please input room name</string>
+    <string name="fcr_login_free_class_mode_option_small_classroom">Small Classroom</string>
+    <string name="fcr_login_free_class_mode_option_lecture_hall">Lecture Hall</string>
+    <string name="fcr_login_free_class_mode_option_1on1">One on One</string>
+    <string name="fcr_login_free_class_mode_label_choose">Choose a classroom mode</string>
+    <string name="fcr_login_free_tips_duration_time">30mins</string>
+    <string name="fcr_login_free_label_duration_time">Duration Time</string>
+    <string name="fcr_login_free_option_read_agree">I have read and agree</string>
+    <string name="fcr_login_free_option_read_agree_and">and</string>
+    <string name="fcr_login_label_terms_of_service">Terms of service</string>
+    <string name="fcr_login_label_privacy_policy">Privacy Policy</string>
+    <string name="fcr_login_popup_window_label_title">Terms of service</string>
+    <string name="fcr_login_popup_window_button_agree">Agree</string>
+    <string name="fcr_login_popup_window_button_disagree">Disagree</string>
+    <string name="fcr_login_free_tips_read_agree_mobile">Please check and agree</string>
+    <string name="fcr_login_popup_window_label_content">Thank you for trusting and using flexible classroom.We will use the "Terms of service" to help you understand how we collect, use, and store your personal information, as well as the related rights you have.When you use flexible classroom, we will collect information such as your device information and operating logs. Additionally, to ensure a better class experience, you will need to grant flexible classroom access to your device\'s camera and microphone.You can learn more by reading the complete "Terms of service".</string>
+    <string name="fcr_login_popup_window_label_content1">Thank you for trusting and using flexible classroom.We will use the</string>
+    <string name="fcr_login_popup_window_label_content2">to help you understand how we collect, use, and store your personal information, as well as the related rights you have.When you use flexible classroom, we will collect information such as your device information and operating logs. Additionally, to ensure a better class experience, you will need to grant flexible classroom access to your device\'s camera and microphone.You can learn more by reading the complete</string>
+    <string name="fcr_login_popup_window_label_content3">。</string>
+    <string name="fcr_login_popup_window_label_content4">&#160;</string>
+    <string name="fcr_login_popup_window_label_content5">&#160;</string>
+    <string name="fcr_login_free_tips_content_length">Please enter content with 2-20 characters in length</string>
+    <string name="fcr_login_free_tips_num_length">Please enter 9-digit number</string>
+    <string name="fcr_login_popup_window_again_button_agree">Agree</string>
+    <string name="fcr_login_popup_window_again_button_disagree">Exit</string>
+    <string name="fcr_login_popup_window_label_title_again">You need to agree to the "Terms of service" to continue using the flexible classroom.</string>
+    <string name="fcr_login_popup_window_label_content_again">Please carefully read the "Terms of service" once again.If you do not agree to the Privacy Policy and User Agreement, we regret to inform you that we will be unable to provide our services to you.</string>
+    <string name="fcr_login_popup_window_label_content_again1">Please carefully read the</string>
+    <string name="fcr_login_popup_window_label_content_again2">once again.If you do not agree to the Privacy Policy and User Agreement, we regret to inform you that we will be unable to provide our services to you.</string>
+    <string name="fcr_settings_label_user_info_notice">Personal Information Collection Notice</string>
+    <string name="fcr_settings_label_data_share">Third-Party Information Data Sharing</string>
+
+</resources>

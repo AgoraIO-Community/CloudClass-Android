@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_join_gray_gradient"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:id="@+id/privacy_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:text="@string/fcr_login_popup_window_label_title"
+            android:textColor="@color/privacy_title"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fcr_tv_private_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/fcr_login_popup_window_label_content" />
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/bg_btn_join2"
+            android:gravity="center"
+            android:text="@string/fcr_login_popup_window_button_agree"
+            android:textAllCaps="false"
+            android:textColor="@color/fcr_white"
+            android:textSize="@dimen/sp_14" />
+
+        <Button
+            android:id="@+id/btn_decline"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/fcr_transparent"
+            android:gravity="center"
+            android:text="@string/fcr_login_popup_window_button_disagree"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+</LinearLayout>

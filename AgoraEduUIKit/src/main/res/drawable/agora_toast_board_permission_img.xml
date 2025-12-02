@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false"
+        android:drawable="@drawable/agora_toast_board_permission_disable_img">
+    </item>
+
+    <item android:state_enabled="true"
+        android:drawable="@drawable/agora_toast_board_permission_enable_img">
+    </item>
+
+</selector>

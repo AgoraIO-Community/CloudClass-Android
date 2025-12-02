@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_join_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_join_class_state_before"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="18dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="18dp">
+    <!--tools:alpha="0.5f"-->
+    <LinearLayout
+        android:id="@+id/layout_join_alpha_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:alpha="1f">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_join_class_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/fcr_join_online"
+                android:gravity="center"
+                android:text="@string/fcr_join_state_before"
+                android:textColor="@color/fcr_join_text_black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view_join_room_line"
+                android:layout_width="0.5dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/fcr_join_text_black" />
+
+            <TextView
+                android:id="@+id/tv_join_class_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="ID"
+                android:textColor="@color/fcr_join_text_black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_join_class_id_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/fcr_join_copy2"
+                android:gravity="center"
+                android:text="000 000 000"
+                android:textColor="@color/fcr_join_text_black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1.0" />
+
+            <ImageView
+                android:id="@+id/iv_join_class_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fcr_join_share" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_join_class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="@color/fcr_join_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_join_class_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableLeft="@drawable/fcr_join_time"
+                    android:drawablePadding="6dp"
+                    android:textSize="11sp"
+                    android:text="2022-12-10, 23:00"
+                    android:textColor="#4D547A" />
+
+                <TextView
+                    android:id="@+id/tv_join_class_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/fcr_join_label"
+                    android:drawablePadding="6dp"
+                    android:textSize="11sp"
+                    android:text="Small classroom"
+                    android:textColor="#4D547A" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_join_class_enter"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_join_blue"
+                android:text="@string/fcr_join_enter_room"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@color/fcr_join_text_white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_join_class_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/fcr_join_room_closed_tips"
+            android:textSize="10sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>
+
+

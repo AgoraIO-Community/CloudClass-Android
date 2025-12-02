@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="#CC000000"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fcr_link_input_height"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_create_input_gradient"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/bg_fcr_input_gradient">
+
+            <EditText
+                android:id="@+id/fcr_et_input_playback_link"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@id/fcr_input_count"
+                android:background="@drawable/bg_fcr_input_gradient"
+                android:hint="@string/fcr_create_tips_roomid"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="14dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/fcr_input_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/fcr_input_close"
+                android:text="12"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/fcr_input_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/dp_5"
+                android:background="@drawable/fcr_icon_close" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_confirm"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_join_rect_blue"
+            android:padding="12dp"
+            android:src="@drawable/fcr_input_ok" />
+    </FrameLayout>
+</FrameLayout>
+
+

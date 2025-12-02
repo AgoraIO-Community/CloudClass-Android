@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/agora_edu_wb_tool_parent_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/fcr_popup_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!--    最上面的list    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agora_options_top_list"
+        android:layout_width="@dimen/agora_edu_wb_tool_width"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/agora_option_divider1"
+        android:layout_width="173dp"
+        android:layout_height="@dimen/divider_thin"
+        android:background="@color/fcr_system_divider_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agora_options_center_list"
+        android:layout_width="@dimen/agora_edu_wb_tool_width"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/agora_option_divider2"
+        android:layout_width="173dp"
+        android:layout_height="@dimen/divider_thin"
+        android:background="@color/fcr_system_divider_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agora_options_bottom_list"
+        android:layout_width="@dimen/agora_edu_wb_tool_width"
+        android:layout_height="wrap_content" />
+</androidx.appcompat.widget.LinearLayoutCompat>

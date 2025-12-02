@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:countdownClock="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_Layout"
+    android:layout_width="210dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/fcr_popup_bg2"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/countdown_title"
+        android:layout_width="match_parent"
+        android:layout_height="32dp">
+
+        <TextView
+            android:id="@+id/countdown_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginLeft="9dp"
+            android:gravity="center_vertical"
+            android:text="@string/fcr_tool_box_count_down"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level1_color" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close_Img"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
+            android:scaleType="center"
+            android:src="@drawable/ext_app_icon_countdown_close" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:background="@color/fcr_icon_line_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.agora.edu.component.teachaids.CountDownClock
+            android:id="@+id/countdown_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            countdownClock:almostFinishedCallbackTimeInSeconds="3"
+            countdownClock:animationDuration="320"
+            countdownClock:countdownTickInterval="250"
+            countdownClock:digitBottomDrawable="@drawable/agora_edu_background_bottom"
+            countdownClock:digitDividerColor="@color/fcr_white2"
+            countdownClock:digitPadding="4dp"
+            countdownClock:digitSplitterColor="@color/fcr_text_level2_color"
+            countdownClock:digitTextColor="@color/fcr_text_level2_color"
+            countdownClock:digitTextSize="40dp"
+            countdownClock:digitTopDrawable="@drawable/agora_edu_background_top"
+            countdownClock:digitWidth="34dp"
+            countdownClock:halfDigitHeight="25dp"
+            countdownClock:resetSymbol="0"
+            countdownClock:splitterPadding="4dp" />
+
+        <RelativeLayout
+            android:id="@+id/duration_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/countdown_clock"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ext_app_countdown_duration_bg"
+            android:padding="4dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:digits="@string/fcr_tool_box_unit_second"
+                android:text="@string/fcr_tool_box_unit_second"
+                android:textColor="@color/fcr_black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/duration_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/second"
+                android:layout_toLeftOf="@id/second"
+                android:background="@drawable/agora_widget_countdown_duration_edittext_bg"
+                android:digits="@string/fcr_duration_digits"
+                android:enabled="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:textColor="@color/fcr_black"
+                android:textCursorDrawable="@drawable/ext_app_countdown_duration_edittext_cursor_bg"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_Btn"
+            android:layout_width="80dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/duration_Layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ext_app_countdown_action_bg"
+            android:gravity="center"
+            android:text="@string/fcr_tool_box_start"
+            android:textColor="@color/fcr_white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

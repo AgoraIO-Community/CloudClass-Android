@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/agora_userlist_row_height"
+    android:clipChildren="false"
+    android:gravity="center_vertical">
+
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding_large"
+        android:singleLine="true"
+        android:textColor="@color/theme_text_color_black"
+        android:textSize="@dimen/text_size_smaller"
+        tools:text="Lazy CatLazy CatLazy CatLazy CatLazy Cat" />
+
+
+    <CheckedTextView
+        android:id="@+id/ctv_camera"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/agora_userlist_row_icon_height"
+        android:layout_weight="3"
+        android:checked="true"
+        android:drawableTop="@drawable/agora_userlist_camera_switch"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@null" />
+
+    <CheckedTextView
+        android:id="@+id/ctv_mic"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/agora_userlist_row_icon_height"
+        android:layout_weight="3"
+        android:checked="false"
+        android:drawableTop="@drawable/agora_userlist_mic_switch"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@null" />
+
+    <CheckedTextView
+        android:id="@+id/ctv_silence"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/agora_userlist_row_icon_height"
+        android:layout_weight="3"
+        android:checked="false"
+        android:drawableTop="@drawable/agora_userlist_silence_switch"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@null" />
+
+
+</LinearLayout>

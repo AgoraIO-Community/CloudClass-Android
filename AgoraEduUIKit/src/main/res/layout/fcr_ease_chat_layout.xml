@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/chat_hide_icon_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/chat_hide_icon"
+            android:layout_width="@dimen/fcr_hide_icon_size"
+            android:layout_height="@dimen/fcr_hide_icon_size"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/fcr_chat_hide_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chat_unread_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fcr_unread_count_size"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/fcr_chat_icon_red"
+            android:gravity="center"
+            android:minWidth="@dimen/fcr_unread_count_size"
+            android:paddingStart="@dimen/margin_small"
+            android:paddingLeft="@dimen/margin_small"
+            android:paddingEnd="@dimen/margin_small"
+            android:paddingRight="@dimen/margin_small"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/fcr_text_size_smallest"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</RelativeLayout>

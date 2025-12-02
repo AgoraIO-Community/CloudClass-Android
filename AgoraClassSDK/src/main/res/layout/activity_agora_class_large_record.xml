@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_class_room_bg"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.agora.edu.component.common.AgoraEduLinearContainerView
+                android:id="@+id/agora_area_header"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:background="@drawable/fcr_status_bar_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.agora.edu.component.AgoraEduHeadComponent
+                    android:id="@+id/agora_class_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.agora.edu.component.common.AgoraEduLinearContainerView>
+
+            <com.agora.edu.component.AgoraEduChatComponent
+                android:id="@+id/agora_class_chat"
+                android:layout_width="@dimen/agora_class_teacher_w"
+                android:layout_height="match_parent"
+                android:layout_below="@id/agora_area_header"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/agora_class_margin"
+                android:layout_marginTop="@dimen/agora_class_margin" />
+
+            <FrameLayout
+                android:id="@+id/agora_class_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/agora_area_header"
+                android:layout_marginTop="@dimen/agora_class_margin"
+                android:layout_toStartOf="@id/agora_class_chat"
+                android:background="@android:color/white">
+
+                <FrameLayout
+                    android:id="@+id/agora_class_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/agora_class_player_placeholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/fcr_mix_stream_null_video" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <com.agora.edu.component.FcrWaterMarkComponent
+            android:id="@+id/agora_water_mark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

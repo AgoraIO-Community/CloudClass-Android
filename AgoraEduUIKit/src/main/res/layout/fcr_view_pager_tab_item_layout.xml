@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="34dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/fcr_hyphenate_im_chat"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="@dimen/fcr_minSp" />
+
+    <ImageView
+        android:id="@+id/iv_tips"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_toEndOf="@id/title"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@mipmap/fcr_icon_unread"
+        android:visibility="invisible"
+        />
+</RelativeLayout>

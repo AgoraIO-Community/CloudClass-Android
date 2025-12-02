@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.agora.online.component.AgoraEduVideoComponent xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_edu_video"
+    android:layout_width="@dimen/agora_large_video_w"
+    android:layout_height="@dimen/agora_large_video_h" />

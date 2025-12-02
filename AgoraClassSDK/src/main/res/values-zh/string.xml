@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parametererror">参数错误:%s</string>
+    <string name="room_full">加入教室失败，教室人数已满！</string>
+    <string name="room_end">加入教室失败，教室已结束！</string>
+</resources>

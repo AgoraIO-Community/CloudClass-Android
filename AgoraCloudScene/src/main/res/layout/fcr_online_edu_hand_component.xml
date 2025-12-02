@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_option_item_handsup"
+        android:layout_width="@dimen/agora_option_item_w"
+        android:layout_height="@dimen/agora_option_item_w">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/option_item_handsup"
+            android:layout_width="@dimen/agora_option_item_w"
+            android:layout_height="@dimen/agora_option_item_w"
+            android:background="@drawable/fcr_option_icon_bg"
+            android:padding="@dimen/dp_6"
+            android:src="@drawable/agora_option_icon_handsup" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/waving_count_text"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/waving_list_icon_red"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="8sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_handsup_countdown"
+        android:layout_width="@dimen/agora_option_item_w"
+        android:layout_height="@dimen/agora_option_item_w">
+
+        <TextView
+            android:id="@+id/tv_count_down_text"
+            android:layout_width="@dimen/agora_option_item_w"
+            android:layout_height="@dimen/agora_option_item_w"
+            android:layout_gravity="center"
+            android:background="@drawable/fcr_option_icon_bg_active"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@color/fcr_white"
+            android:visibility="gone" />
+    </FrameLayout>
+</RelativeLayout>

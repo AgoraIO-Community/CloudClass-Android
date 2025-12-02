@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="files_root"
+        path="Android/data/${applicationId}/" />
+    <external-path
+        name="download"
+        path="Download/" />
+    <external-path path="Android/data/com/hyphenate/easeim/" name="files_root" />
+    <external-path path="." name="external_storage_root" />
+</paths>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="agora_tool_color_plate">
+        <item>#9B9B9B</item>
+        <item>#4A4A4A</item>
+        <item>#000000</item>
+        <item>#D0021B</item>
+        <item>#F5A623</item>
+        <item>#F8E71C</item>
+        <item>#7ED321</item>
+        <item>#EB47A2</item>
+        <item>#9013FE</item>
+        <item>#50E3C2</item>
+        <item>#0073FF</item>
+        <item>#FFC8E2</item>
+    </string-array>
+
+    <array name="answer_item">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+    </array>
+
+    <integer-array name="agora_board_font_sizes">
+        <item>20</item>
+        <item>28</item>
+        <item>36</item>
+        <item>48</item>
+    </integer-array>
+</resources>

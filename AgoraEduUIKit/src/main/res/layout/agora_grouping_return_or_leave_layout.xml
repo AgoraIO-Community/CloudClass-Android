@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/agora_dialog_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#F9F9FC">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/grouping_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="Exit"
+            android:textSize="7dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_6"
+            android:layout_alignParentRight="true"
+            android:layout_marginVertical="@dimen/dp_7"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@drawable/ext_app_icon_countdown_close" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/agora_return_main_room_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/agora_kick_dialog_line_height"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:layout_marginEnd="@dimen/dp_35">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_return_main_room_button"
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/agora_radio_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/agora_kick_dialog_option_text_margin_left"
+            android:layout_marginLeft="@dimen/agora_kick_dialog_option_text_margin_left"
+            android:layout_toEndOf="@id/agora_return_main_room_button"
+            android:layout_toRightOf="@id/agora_return_main_room_button"
+            android:text="@string/fcr_group_back_to_main_room"
+            android:textColor="@color/agora_kick_dialog_option_text_color"
+            android:textSize="@dimen/dp_6" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/agora_grouping_leave_class_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/agora_kick_dialog_line_height"
+
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:layout_marginEnd="@dimen/dp_35">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_grouping_leave_class_button"
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/agora_radio_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/agora_kick_dialog_option_text_margin_left"
+            android:layout_marginLeft="@dimen/agora_kick_dialog_option_text_margin_left"
+            android:layout_toEndOf="@id/agora_grouping_leave_class_button"
+            android:layout_toRightOf="@id/agora_grouping_leave_class_button"
+            android:text="@string/fcr_group_exit_room"
+            android:textColor="@color/agora_kick_dialog_option_text_color"
+            android:textSize="@dimen/dp_6" />
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/grouping_cancel"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_14"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/agora_cilcker_btn_bg"
+            android:gravity="center"
+            android:text="@string/fcr_user_kick_out_cancel"
+            android:textColor="@color/fcr_white"
+            android:textSize="7sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/grouping_confirm"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_14"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/agora_cilcker_btn_bg"
+            android:gravity="center"
+            android:text="@string/fcr_user_kick_out_submit"
+            android:textColor="@color/fcr_white"
+            android:textSize="7sp" />
+    </RelativeLayout>
+
+</LinearLayout>

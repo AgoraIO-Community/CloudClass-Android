@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/studentAnswerResult_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="55dp"
+    android:paddingVertical="25dp"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
+            android:text="@string/fcr_popup_quiz_submission"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/number_of_respondents"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:text="@string/fcr_popup_quiz_accuracy"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:text="@string/fcr_popup_quiz_correct"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/correct_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="4dp"
+            android:text="@string/fcr_popup_quiz_my_answer"
+            android:textColor="@color/fcr_text_level3_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/my_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/iclicker_answer_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

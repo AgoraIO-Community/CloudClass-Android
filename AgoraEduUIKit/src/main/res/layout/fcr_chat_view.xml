@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/announcement_view"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/fcr_system_background_color"
+        android:gravity="center"
+        android:paddingStart="@dimen/fcr_padding_normal"
+        tools:ignore="RtlSymmetry"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/fcr_icon_announcement" />
+
+        <TextView
+            android:id="@+id/tv_announcement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/fcr_text_level2_color"
+            android:lines="1"
+            android:textSize="@dimen/fcr_minSp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/input_view"
+        android:layout_below="@+id/announcement_view"
+        android:padding="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/default_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/input_view"
+        android:layout_below="@+id/announcement_view"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/fcr_icon_chat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fcr_hyphenate_im_no_message"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="@dimen/fcr_textSize" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/input_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/fcr_system_divider_color" />
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fcr_input_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/fcr_margin_normal"
+            android:layout_toStartOf="@+id/mute_view"
+            >
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/fcr_margin_middle"
+                android:background="@null"
+                android:ellipsize="end"
+                android:lines="1"
+                android:hint="@string/fcr_hyphenate_im_enter_contents"
+                android:textColorHint="@color/fcr_text_level2_color"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/fcr_textSize" />
+
+            <ImageView
+                android:id="@+id/iv_face"
+                android:layout_width="@dimen/fcr_chat_view_icon_size"
+                android:layout_height="@dimen/fcr_chat_view_icon_size"
+                android:layout_marginStart="@dimen/fcr_margin_normal"
+                android:src="@mipmap/fcr_emoji" />
+
+            <ImageView
+                android:id="@+id/iv_picture"
+                android:layout_width="@dimen/fcr_chat_view_icon_size"
+                android:layout_height="@dimen/fcr_chat_view_icon_size"
+                android:layout_marginStart="@dimen/fcr_margin_normal"
+                android:src="@mipmap/fcr_icon_pic" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/mute_view"
+            android:layout_width="@dimen/fcr_input_height"
+            android:layout_height="@dimen/fcr_input_height"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_alignParentEnd="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_mute"
+                android:layout_width="@dimen/fcr_chat_view_icon_size"
+                android:layout_height="@dimen/fcr_chat_view_icon_size"
+                android:layout_gravity="center"
+                android:src="@mipmap/fcr_icon_mute"
+                android:visibility="gone"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_unmute"
+                android:layout_width="@dimen/fcr_chat_view_icon_size"
+                android:layout_height="@dimen/fcr_chat_view_icon_size"
+                android:layout_gravity="center"
+                android:src="@mipmap/fcr_icon_unmute" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

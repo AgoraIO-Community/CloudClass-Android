@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/fcr_join_dialog_bg"
+        android:orientation="vertical"
+        android:paddingLeft="27dp"
+        android:paddingTop="24dp"
+        android:paddingRight="27dp"
+        android:paddingBottom="30dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="选择开始时间"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/fcr_join_dialog_close" />
+        </RelativeLayout>
+
+        <com.github.gzuliyujiang.wheelpicker.widget.LinkageWheelLayout
+            android:id="@+id/time_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:layout_gravity="center_horizontal"
+            app:wheel_curtainColor="#1A8A8A8A"
+            app:wheel_curtainEnabled="true"
+            app:wheel_curtainRadius="24dp"
+            app:wheel_indicatorEnabled="false"
+            app:wheel_itemSpace="200dp"
+            app:wheel_itemTextAlign="center"
+            app:wheel_itemTextBoldSelected="false"
+            app:wheel_itemTextColor="#757575"
+            app:wheel_itemTextColorSelected="@android:color/black"
+            app:wheel_itemTextSizeSelected="18sp"
+            app:wheel_itemTextSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="112dp"
+                android:layout_height="46dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_join_white_24"
+                android:gravity="center"
+                android:text="@string/frc_join_cancel"
+                android:textColor="@color/fcr_black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:alpha="0.7"
+                android:background="@drawable/bg_join_blue"
+                android:gravity="center"
+                android:text="@string/fcr_join_sure"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
+
+
+

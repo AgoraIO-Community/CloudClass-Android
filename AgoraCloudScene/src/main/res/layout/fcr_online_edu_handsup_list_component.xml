@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.agora.online.options.AgoraEduHandsUpListComponent xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/agora_handsup_list_widget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />

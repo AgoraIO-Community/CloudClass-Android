@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="agora_head_h">23dp</dimen>
+    <dimen name="agora_head_h_small">14dp</dimen>
+    <dimen name="agora_head_h_large">34dp</dimen>
+    <dimen name="agora_class_margin">2dp</dimen>
+    <dimen name="agora_large_right_w">200dp</dimen>
+    <dimen name="agora_large_video_list_h">95dp</dimen>
+    <dimen name="agora_large_video_list_dis">97dp</dimen>
+    <dimen name="agora_class_1v1_group_w">170dp</dimen>
+    <dimen name="agora_class_1v1_group_right_dis">172dp</dimen>
+    <dimen name="agora_class_head_h">23dp</dimen>
+    <dimen name="agora_class_options_margin">6dp</dimen>
+    <dimen name="agora_class_teacher_w">170dp</dimen>
+    <dimen name="agora_class_teacher_h">95dp</dimen>
+    <dimen name="agora_small_video_w">92dp</dimen>
+    <dimen name="agora_small_video_h">52dp</dimen>
+    <dimen name="acadsoc_view_stroke_w">2dp</dimen>
+    <dimen name="acadsoc_logo_height">32dp</dimen>
+    <dimen name="padding_small">6dp</dimen>
+    <dimen name="padding_mini">1dp</dimen>
+    <dimen name="agora_small_video_h_exclude_padding">52dp</dimen>
+    <dimen name="corner_small">4dp</dimen>
+</resources>

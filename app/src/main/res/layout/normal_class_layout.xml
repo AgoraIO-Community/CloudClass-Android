@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/class_type_normal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_one2one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/one2one_class"
+        android:background="@drawable/text_underline"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_small_class"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/small_class"
+        android:background="@drawable/text_underline"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_large_class"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/large_class"
+        android:background="@drawable/text_underline"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_cloud_class"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:text="@string/fcr_login_free_class_mode_option_cloud_class"
+        android:background="@drawable/text_underline"
+        android:textColor="@color/fcr_gray_333333"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
+</LinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parametererror">parameter error:%s</string>
+    <string name="room_full">Room is full!</string>
+    <string name="room_end">Room is end!</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fcr_file_item"
+    android:layout_width="wrap_content"
+    android:layout_height="28dp"
+    android:layout_gravity="center"
+    android:background="#ECECF1"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/fcr_file_name"
+        android:layout_width="56dp"
+        android:layout_height="28dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:text="@string/fcr_online_courseware_label_online_courseware"
+        android:textAlignment="gravity"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="10sp" />
+
+    <View
+        android:id="@+id/fcr_file_line"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/fcr_system_divider_color" />
+
+</LinearLayout>

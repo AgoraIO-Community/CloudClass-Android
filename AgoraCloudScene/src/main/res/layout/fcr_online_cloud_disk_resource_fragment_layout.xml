@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fcr_transparent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/view0"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/refresh_img"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/fcr_cloud_refresh"
+        app:layout_constraintBottom_toBottomOf="@id/view0"
+        app:layout_constraintStart_toStartOf="@id/view0"
+        app:layout_constraintTop_toTopOf="@id/view0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cur_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/fcr_cloud_private_resource"
+        android:textColor="@color/fcr_text_level1_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/refresh_img"
+        app:layout_constraintStart_toEndOf="@id/refresh_img"
+        app:layout_constraintTop_toTopOf="@id/refresh_img" />
+
+    <View
+        android:id="@+id/search_bg"
+        android:layout_width="160dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/fcr_clod_disk_search_layout_bg"
+        app:layout_constraintBottom_toBottomOf="@id/view0"
+        app:layout_constraintEnd_toEndOf="@id/view0"
+        app:layout_constraintTop_toTopOf="@id/view0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/search_img"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="6dp"
+        android:src="@drawable/fcr_cloud_search"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintStart_toStartOf="@id/search_bg"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clear_img"
+        android:layout_width="28dp"
+        android:layout_height="22dp"
+        android:scaleType="center"
+        android:visibility="gone"
+        android:src="@drawable/fcr_cloud_disk_search_clear"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintEnd_toEndOf="@id/search_bg"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search_ed"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textNoSuggestions"
+        android:layout_marginHorizontal="2dp"
+        android:imeOptions="actionSearch"
+        android:imeActionLabel="@string/fcr_cloud_search"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:layout_marginVertical="2dp"
+        android:hint="@string/fcr_cloud_search"
+        android:textSize="12sp"
+        android:background="@drawable/agora_widget_countdown_duration_edittext_bg"
+        android:textCursorDrawable="@drawable/fcr_cloud_disk_search_text_cursor"
+        android:textColorHint="@color/fcr_gray_7D8798"
+        android:textColor="@color/fcr_text_level1_color"
+        app:layout_constraintBottom_toBottomOf="@id/search_bg"
+        app:layout_constraintEnd_toStartOf="@id/clear_img"
+        app:layout_constraintStart_toEndOf="@id/search_img"
+        app:layout_constraintTop_toTopOf="@id/search_bg" />
+
+    <View
+        android:id="@+id/line0"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view0"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@color/fcr_system_component_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line0"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/fcr_system_divider_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/fcr_cloud_file_name"
+        android:textColor="@color/fcr_icon_normal_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="@id/header"
+        app:layout_constraintTop_toTopOf="@id/header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/fcr_online_cloud_disk_list_item_layout"
+        tools:itemCount="4"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

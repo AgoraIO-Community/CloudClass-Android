@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/fcr_margin_normal"
+    >
+
+    <ScrollView
+        android:id="@+id/sv_announcement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fcr_margin_normal"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/announcement_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/fcr_margin_normal"
+                android:layout_marginTop="@dimen/fcr_margin_normal"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/fcr_minSp" />
+
+            <LinearLayout
+                android:id="@+id/perm_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/announcement_content"
+                android:layout_marginTop="@dimen/fcr_margin_normal"
+                >
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_update"
+                    android:layout_width="@dimen/fcr_chat_view_icon_size"
+                    android:layout_height="@dimen/fcr_chat_view_icon_size"
+                    android:src="@drawable/fcr_announcement_icon_modify"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_remove"
+                    android:layout_width="@dimen/fcr_chat_view_icon_size"
+                    android:layout_height="@dimen/fcr_chat_view_icon_size"
+                    android:src="@drawable/fcr_announcement_icon_delete"
+                    android:layout_marginStart="@dimen/fcr_margin_normal"
+                    android:layout_marginEnd="@dimen/fcr_margin_normal"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/default_layout"
+        style="@style/white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/fcr_default_layout_icon_size"
+                android:layout_height="@dimen/fcr_default_layout_icon_size"
+                android:src="@mipmap/fcr_icon_horn" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_issue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fcr_margin_normal"
+                    android:text="@string/fcr_hyphenate_im_no_announcement_teacher"
+                    android:textColor="@color/fcr_text_enabled_color"
+                    android:textSize="@dimen/fcr_minSp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/issue_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        style="@style/white_bg"
+        >
+        <FrameLayout
+            android:id="@+id/notice_root"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fcr_announcement_edit_height"
+            android:background="@drawable/fcr_announcement_white_round_corner_bg"
+            android:paddingStart="@dimen/fcr_padding_normal"
+            >
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="@dimen/fcr_announcement_edit_height"
+                android:imeOptions="actionSearch|flagNoExtractUi"
+                android:background="@null"
+                android:maxLength="500"
+                android:textSize="@dimen/fcr_minSp"
+                android:inputType="textMultiLine"
+                />
+
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/notice_root"
+            android:layout_below="@+id/notice_root"
+            android:text="@string/fcr_hyphenate_im_notice_up_to"
+            android:textColor="@color/fcr_system_error_color"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/notice_root"
+            android:layout_below="@+id/notice_root"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fcr_hyphenate_im_notice_cancel"
+            android:layout_below="@+id/tv_count"
+            android:layout_alignStart="@+id/notice_root"
+            style="@style/blue_bg_white_style"
+            android:paddingStart="@dimen/fcr_padding_high"
+            android:paddingTop="@dimen/fcr_padding_normal"
+            android:paddingEnd="@dimen/fcr_padding_high"
+            android:paddingBottom="@dimen/fcr_padding_normal"
+            android:layout_marginStart="@dimen/fcr_padding_high"
+            android:layout_marginTop="@dimen/fcr_margin_middle"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter"
+            style="@style/blue_bg_white_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_count"
+            android:layout_alignEnd="@+id/notice_root"
+            android:layout_marginTop="@dimen/fcr_margin_middle"
+            android:layout_marginEnd="@dimen/fcr_padding_high"
+            android:paddingStart="@dimen/fcr_padding_high"
+            android:paddingTop="@dimen/fcr_padding_normal"
+            android:paddingEnd="@dimen/fcr_padding_high"
+            android:paddingBottom="@dimen/fcr_padding_normal"
+            android:text="@string/fcr_hyphenate_im_notice_send" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

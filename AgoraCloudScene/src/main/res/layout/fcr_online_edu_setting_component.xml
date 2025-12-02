@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="202dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_5"
+    android:background="@drawable/fcr_popup_bg2">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/agora_setting_dialog_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/agora_share_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/agora_share_link_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="12dp"
+            android:text="@string/fcr_inshare_button_sharelink"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level2_color"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/agora_share_link_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_thin"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginBottom="8dp"
+            android:background="@color/fcr_system_divider_color"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_popup_camera_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/fcr_media_camera"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.0" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_setting_popup_camera_switch"
+                android:layout_width="32dp"
+                android:layout_height="16dp"
+                android:background="@drawable/agora_option_popup_setting_switch" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/fcr_media_camera_direction"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.0" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_popup_camera_front"
+                android:layout_width="@dimen/agora_setting_popup_facing_button_width"
+                android:layout_height="@dimen/agora_setting_popup_facing_button_height"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginRight="@dimen/margin_medium"
+                android:background="@drawable/agora_setting_button_bg"
+                android:gravity="center"
+                android:text="@string/fcr_media_camera_direction_front"
+                android:textAlignment="gravity"
+                android:textColor="@color/agora_setting_button_text_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_popup_camera_back"
+                android:layout_width="@dimen/agora_setting_popup_facing_button_width"
+                android:layout_height="@dimen/agora_setting_popup_facing_button_height"
+                android:background="@drawable/agora_setting_button_bg"
+                android:gravity="center"
+                android:text="@string/fcr_media_camera_direction_back"
+                android:textAlignment="gravity"
+                android:textColor="@color/agora_setting_button_text_color"
+                android:textSize="13sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/agora_setting_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_thin"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@color/fcr_system_divider_color" />
+
+        <RelativeLayout
+            android:id="@+id/agora_setting_popup_mic_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/agora_setting_divider"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="@dimen/agora_setting_popup_margin_vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_mic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/fcr_media_mic"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_setting_popup_mic_switch"
+                android:layout_width="32dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/agora_setting_popup_margin_horizontal"
+                android:layout_marginRight="@dimen/agora_setting_popup_margin_horizontal"
+                android:background="@drawable/agora_option_popup_setting_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/agora_setting_volume_layout"
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:layout_below="@id/agora_setting_popup_mic_layout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="@dimen/agora_setting_popup_margin_vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_volume_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/fcr_media_speaker"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level2_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/agora_setting_popup_volume_switch"
+                android:layout_width="32dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/agora_setting_popup_margin_horizontal"
+                android:layout_marginRight="@dimen/agora_setting_popup_margin_horizontal"
+                android:background="@drawable/agora_option_popup_setting_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/agora_setting_exit_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/agora_setting_popup_margin_vertical_top"
+            android:layout_marginBottom="14dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/agora_setting_exit_button"
+                android:layout_width="@dimen/agora_setting_popup_leave_button_width"
+                android:layout_height="@dimen/agora_setting_popup_leave_button_height"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/agora_setting_popup_margin_horizontal"
+                android:layout_marginLeft="@dimen/agora_setting_popup_margin_horizontal"
+                android:layout_marginEnd="@dimen/agora_setting_popup_margin_horizontal"
+                android:layout_marginRight="@dimen/agora_setting_popup_margin_horizontal"
+                android:background="@drawable/agora_option_setting_leave_btn_bg"
+                android:gravity="center"
+                android:text="@string/fcr_room_leave_room"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_contrast_color"
+                android:textSize="@dimen/agora_setting_popup_text_size" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

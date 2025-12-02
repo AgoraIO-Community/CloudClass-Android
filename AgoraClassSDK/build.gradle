@@ -1,0 +1,110 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+//import com.vanniktech.maven.publish.AndroidMultiVariantLibrary
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id("com.vanniktech.maven.publish") version("0.29.0")
+}
+
+android {
+    namespace "io.agora.agoraclasssdk"
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.ClassSDK.versionCode
+        versionName rootProject.ext.ClassSDK.versionName
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField 'String', 'AgoraClassSDKVersion', String.format("\"%s\"", rootProject.ext.ClassSDK.versionName)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:${rootProject.ext.dependencies.core_ktx}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.dependencies.appcompat}"
+    implementation "com.google.android.material:material:${rootProject.ext.dependencies.material_material}"
+    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.dependencies.constraintlayout}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.dependencies.lifecycle_extensions}"
+
+    compileOnly project(path: ':AgoraEduUIKit')
+    if (readyPublishGithub.toBoolean()) {
+        compileOnly "io.github.agora-apaas:AgoraEduCore:${rootProject.ext.dependencies.EduCore}"
+    } else {
+        compileOnly project(path: ':AgoraEduCore')
+    }
+}
+
+//if (readyPublishMaven.toBoolean()) {
+//    def current_gradle_path = buildscript.sourceFile.parentFile.parent
+//    def maven_gradle_path = "$current_gradle_path/module_Maven.gradle"
+//    if (new File(maven_gradle_path).exists()) {
+//        apply from: maven_gradle_path
+//    } else {
+//        def errMsg = "$maven_gradle_path is not exists, please check."
+//        logger.log(LogLevel.ERROR, errMsg)
+//        throw new StopExecutionException(errMsg)
+//    }
+//}
+
+mavenPublishing {
+    coordinates(rootProject.ext.maven.group, "AgoraClassSDK", rootProject.ext.ClassSDK.versionName)
+    //configure(AndroidMultiVariantLibrary(false, false))
+    //configure(AndroidSingleVariantLibrary("release", false, false))
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+
+    pom {
+        name.set("AgoraClassSDK")
+        description.set("Agora Lib")
+        url.set("https://www.shengwang.cn/")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("Agora")
+                name.set("Agora")
+                url.set("https://www.shengwang.cn/")
+            }
+        }
+        scm {
+            url.set("https://www.shengwang.cn/")
+            connection.set("https://www.shengwang.cn/")
+            developerConnection.set("https://www.shengwang.cn/")
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agora_appliance_item"
+    android:layout_width="@dimen/agora_appliance_item_size_large"
+    android:layout_height="@dimen/agora_appliance_item_size_large">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/agora_appliance_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        tools:src="@drawable/agora_wb_s" />
+</RelativeLayout>

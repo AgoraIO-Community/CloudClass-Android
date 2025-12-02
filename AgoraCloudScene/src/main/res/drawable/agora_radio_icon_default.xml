@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/fcr_white"/>
+    <stroke android:color="@color/theme_text_color_gray" android:width="@dimen/stroke_small"/>
+    <size android:width="@dimen/agora_kick_dialog_option_button_size"
+        android:height="@dimen/agora_kick_dialog_option_button_size"/>
+</shape>

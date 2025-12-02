@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/agora_toast_board_permission_img_w"
+            android:layout_height="@dimen/agora_toast_board_permission_img_h"
+            android:src="@drawable/agora_toast_board_permission_img" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/img"
+            android:layout_alignBottom="@id/img"
+            android:layout_marginStart="@dimen/agora_toast_board_permission_content_layout_margin_start"
+            android:layout_marginTop="@dimen/agora_toast_board_permission_content_layout_margin_top"
+            android:layout_marginBottom="@dimen/agora_toast_board_permission_content_layout_margin_bottom"
+            android:alpha="0.8"
+            android:background="@drawable/agora_toast_board_permission_bg"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/agora_toast_board_permission_content_margin_start"
+                android:layout_marginEnd="@dimen/agora_toast_board_permission_content_margin_end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/theme_white"
+                android:textSize="@dimen/agora_toast_board_permission_content_size" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

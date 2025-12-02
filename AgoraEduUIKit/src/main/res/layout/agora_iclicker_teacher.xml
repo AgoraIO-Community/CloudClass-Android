@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/teacher_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/preset_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp">
+
+        <GridView
+            android:id="@+id/preset_answers_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:columnWidth="40dp"
+            android:horizontalSpacing="16dp"
+            android:numColumns="4"
+            android:verticalSpacing="10dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/plus_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ext_app_iclicker_plus" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/start_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toEndOf="@id/plus_Img"
+                android:layout_toRightOf="@id/plus_Img"
+                android:background="@drawable/agora_cilcker_btn_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingHorizontal="24dp"
+                android:text="@string/fcr_popup_quiz_start_answer"
+                android:textAlignment="gravity"
+                android:textColor="@color/iclicker_btn_text_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/surplus_Img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toEndOf="@id/start_answer"
+                android:layout_toRightOf="@id/start_answer"
+                android:src="@drawable/ext_app_iclicker_surplus" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/answering_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/iclicker_answer_list_header_bg"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="@string/fcr_popup_quiz_student_name"
+                android:textColor="@color/iclicker_answer_list_header_text"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="@string/fcr_popup_quiz_answer_time"
+                android:textColor="@color/iclicker_answer_list_header_text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:text="@string/fcr_popup_quiz_student_answer"
+                android:textColor="@color/iclicker_answer_list_header_text"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/student_results_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/iclicker_answer_list_bg"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/fcr_iclicker_answer_list_item" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/respondents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fcr_popup_quiz_submission"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/respondents_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/respondents"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/accuracy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="@string/fcr_popup_quiz_accuracy"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/respondents_TextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/accuracy_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/accuracy"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/correct_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/fcr_popup_quiz_correct"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/respondents"
+                app:layout_constraintTop_toBottomOf="@id/respondents" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/correct_answers_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/correct_answers"
+                app:layout_constraintTop_toTopOf="@id/correct_answers" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/action_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/agora_cilcker_btn_bg"
+            android:enabled="true"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:text="@string/fcr_popup_quiz_end_answer"
+            android:textAlignment="gravity"
+            android:textColor="@color/iclicker_btn_text_color"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

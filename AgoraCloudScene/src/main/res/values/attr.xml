@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  Custom attribute for AgoraEduVideoGroupComponent  -->
+    <declare-styleable name="AgoraEduVideoGroupComponent">
+        <attr name="videoMode" format="enum">
+            <enum name="Single" value="0" />
+            <enum name="Pair" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AlignedTextView">
+        <attr name="alignment" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CountDownClock">
+        <attr name="resetSymbol" format="string"/>
+        <!---->
+        <attr name="digitDividerColor" format="color"/> <!-- 中间的分割线-->
+        <attr name="digitTopDrawable" format="integer"/>
+        <attr name="digitBottomDrawable" format="integer"/>
+        <attr name="digitSplitterColor" format="color"/> <!--maohao-->
+        <attr name="digitTextColor" format="color"/>
+        <attr name="halfDigitHeight" format="dimension"/>
+        <attr name="digitWidth" format="dimension"/>
+        <attr name="digitTextSize" format="dimension"/>
+        <attr name="digitPadding" format="dimension"/>
+        <attr name="splitterPadding" format="dimension"/>
+
+        <attr name="animationDuration" format="integer"/>
+
+        <attr name="almostFinishedCallbackTimeInSeconds" format="integer"/>
+        <attr name="countdownTickInterval" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="MarqueeTextView">
+        <attr name="scroll_interval" format="integer" />
+        <attr name="scroll_first_delay" format="integer"/>
+        <attr name="scroll_mode">
+            <enum name="mode_forever" value="100"/>
+            <enum name="mode_once" value="101"/>
+        </attr>
+    </declare-styleable>
+</resources>

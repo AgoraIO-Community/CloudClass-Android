@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".setting.FcrSettingTestActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fcr_white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/agora_test_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_back_gray" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="Test Page"
+            android:textColor="@color/fcr_black"
+            android:textSize="@dimen/sp_17" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:gravity="center_vertical"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="6dp"
+            android:text="tips：\n1、切换环境，要杀掉App，其他区域没有测试环境\n 2、课前只有CN区域服务，其他区域没有"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/agora_test_version"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
+            android:text="SDK 版本号：2.2.0（ Debug 包）"
+            android:textColor="#333" />
+
+        <TextView
+            android:id="@+id/agora_test_room"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
+            android:text="进入教室(V1)"
+            android:textColor="#333" />
+
+
+        <TextView
+            android:id="@+id/agora_start"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
+            android:text="进入教室(V2)"
+            android:textColor="#333" />
+
+        <CheckBox
+            android:id="@+id/agora_fast_room"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:text="开启极速直播" />
+
+        <CheckBox
+            android:id="@+id/agora_enter_room"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:text="开启免登录进教室" />
+
+        <CheckBox
+            android:id="@+id/agora_night_mode"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:text="开启暗黑模式" />
+
+        <CheckBox
+            android:id="@+id/agora_test_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:text="开启测试模式后\n1、切换环境才会生效\n2、才会显示全部区域\n3、Crash后，会写入到Sdcard（需要重启app）"
+            android:textColor="@color/fcr_red" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_ed_baseline"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前环境："
+                android:textColor="#333" />
+
+            <RadioGroup
+                android:id="@+id/agora_test_env"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/agora_test_env_dev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="dev" />
+
+                <RadioButton
+                    android:id="@+id/agora_test_env_pre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="pre" />
+
+                <RadioButton
+                    android:id="@+id/agora_test_env_prod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="prod" />
+            </RadioGroup>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- <CheckBox
+             android:id="@+id/agora_test_audio"
+             android:layout_width="match_parent"
+             android:layout_height="40dp"
+             android:layout_marginBottom="6dp"
+             android:background="@drawable/bg_ed_baseline"
+             android:text="开启采集音频数据" />-->
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

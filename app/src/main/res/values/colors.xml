@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teams_color_error">#fd3e3f</color>
+    <color name="text_selected">#357bf6</color>
+    <color name="privacy_title">#191919</color>
+    <color name="fcr_join_text_black">@android:color/black</color>
+    <color name="fcr_join_text_white">@android:color/white</color>
+    <color name="fcr_join_text_color">#4D547A</color>
+    <color name="fcr_type_desc_color">#757575</color>
+    <color name="fcr_v2_brand6">#4262FF</color>
+    <color name="fcr_v2_light_text1">#F2F2FA</color>
+</resources>

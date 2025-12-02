@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/carousel"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/fcr_text_level3_color"
+        android:textSize="@dimen/text_size_smaller"
+        android:text="@string/fcr_user_list_carousel_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/margin_medium"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/student_carousel_component"
+        android:layout_gravity="center_vertical"
+        android:layout_width="@dimen/agora_setting_popup_switch_width"
+        android:layout_height="@dimen/agora_setting_popup_switch_height"
+        android:background="@drawable/agora_option_popup_setting_switch" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

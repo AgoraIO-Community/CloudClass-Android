@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_6"
+    android:background="@drawable/fcr_popup_bg">
+
+    <RelativeLayout
+        android:id="@+id/user_list_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/user_list_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_userlist_row_height"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/fcr_roster_top_bg"
+            android:paddingStart="@dimen/margin_larger"
+            android:paddingLeft="@dimen/margin_larger"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/agora_userlist_row_height"
+                android:gravity="center_vertical"
+                android:text="@string/fcr_user_list"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/text_size_smaller" />
+        </FrameLayout>
+
+    <View
+        android:id="@+id/user_list_divider_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_thin"
+        android:layout_below="@id/user_list_title_layout"
+        android:background="@color/fcr_system_divider_color" />
+
+        <RelativeLayout
+            android:id="@+id/user_list_teacher_layout"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_below="@id/user_list_divider_1"
+            android:paddingStart="@dimen/margin_larger"
+            android:paddingLeft="@dimen/margin_larger"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium">
+
+            <TextView
+                android:id="@+id/teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/fcr_user_list_teacher_name"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:id="@+id/tv_teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/teacher"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small"
+                android:singleLine="true"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level1_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <io.agora.online.component.AgoraEduCarouselControlComponent
+                android:id="@+id/student_carousel_component"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+    <View
+        android:id="@+id/user_list_divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_thin"
+        android:layout_below="@id/user_list_teacher_layout"
+        android:background="@color/fcr_system_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/user_list_content_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/agora_userlist_row_height"
+            android:layout_below="@id/user_list_divider_2"
+            android:background="@color/fcr_system_component_highlight_color"
+            android:paddingStart="@dimen/margin_larger"
+            android:paddingLeft="@dimen/margin_larger"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center|left"
+                android:text="@string/fcr_user_list_student_name"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:id="@+id/userlist_title_cohost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_stage"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:id="@+id/userlist_title_whiteboard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_auth"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_video"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_audio"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:id="@+id/userlist_title_reward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_reward"
+                android:textAlignment="gravity"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+
+            <TextView
+                android:id="@+id/userlist_title_kickout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/fcr_user_list_ban"
+                android:textColor="@color/fcr_text_level3_color"
+                android:textSize="@dimen/text_size_smaller" />
+        </LinearLayout>
+
+    <View
+        android:id="@+id/user_list_divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_thin"
+        android:layout_below="@id/user_list_content_title_layout"
+        android:background="@color/fcr_system_divider_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/roster_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_list_divider_3"
+            android:layout_alignParentBottom="true"
+            android:scrollbarStyle="insideInset"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/fcr_online_userlist_dialog_list_item" />
+    </RelativeLayout>
+</RelativeLayout>

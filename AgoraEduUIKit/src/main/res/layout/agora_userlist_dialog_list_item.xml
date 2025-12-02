@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:paddingStart="@dimen/margin_larger"
+    android:paddingLeft="@dimen/margin_larger"
+    android:paddingRight="@dimen/padding_medium"
+    android:paddingEnd="@dimen/padding_medium">
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_name_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <TextView
+            android:id="@+id/roster_item_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="Lazily"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_level1_color"
+            android:textSize="@dimen/text_size_smaller" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_desktop_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+        <io.agora.agoraeduuikit.component.SquareRelativeLayout
+            android:id="@+id/roster_item_desktop_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_desktop_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/agora_userlist_desktop_switch" />
+        </io.agora.agoraeduuikit.component.SquareRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_access_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+        <io.agora.agoraeduuikit.component.SquareRelativeLayout
+            android:id="@+id/roster_access_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_access_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/agora_userlist_access_switch" />
+        </io.agora.agoraeduuikit.component.SquareRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_camera_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+        <io.agora.agoraeduuikit.component.SquareRelativeLayout
+            android:id="@+id/roster_item_camera_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_camera_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/agora_userlist_camera_switch_cohost" />
+        </io.agora.agoraeduuikit.component.SquareRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_mic_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+        <io.agora.agoraeduuikit.component.SquareRelativeLayout
+            android:id="@+id/roster_item_mic_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_mic_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:src="@drawable/agora_userlist_mic_switch_cohost"
+                android:scaleType="fitXY" />
+        </io.agora.agoraeduuikit.component.SquareRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_star_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/star_icon"
+            android:layout_width="@dimen/agora_userlist_row_icon_height"
+            android:layout_height="@dimen/agora_userlist_row_icon_height"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:checked="false"
+            android:enabled="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/agora_userlist_star_icon" />
+
+        <CheckedTextView
+            android:id="@+id/roster_item_star_icon_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/star_icon"
+            android:checked="false"
+            android:drawablePadding="@dimen/margin_smaller"
+            android:enabled="true"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:textColor="@color/fcr_text_disabled_color"
+            android:textSize="@dimen/text_size_smaller"
+            tools:text="x1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/agora_roster_list_item_kickout_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+        <io.agora.agoraeduuikit.component.SquareRelativeLayout
+            android:id="@+id/roster_item_kickout_touch_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roster_item_kickout_icon"
+                android:layout_width="@dimen/agora_userlist_row_icon_height"
+                android:layout_height="@dimen/agora_userlist_row_icon_height"
+                android:layout_centerInParent="true"
+                android:checked="false"
+                android:enabled="true"
+                android:src="@drawable/agora_userlist_kickout_icon"
+                android:scaleType="fitXY"/>
+        </io.agora.agoraeduuikit.component.SquareRelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
