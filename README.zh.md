@@ -11,10 +11,10 @@
 - Android 设备。部分模拟机可能存在功能缺失或者性能问题，所以推荐使用真机。
 
 ## 运行示例项目
-- https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android
+- https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/quick-start
 
 ## 手动接入SDK
-- 参考[快速接入](https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android)
+- 参考[快速接入](https://doc.shengwang.cn/doc/flexible-classroom/android/get-started/integrate)
 
 
 ## 联系我们

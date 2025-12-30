@@ -14,10 +14,10 @@ Only for ASIA region.
 
 ## Run the sample project
 
-- https://docs.agora.io/cn/agora-class/agora_class_quickstart_android?platform=Android
+- https://github.com/AgoraIO-Community/CloudClass-Android
 
 ## Manually access the SDK
-- Reference [Quick Access](https://docs.agora.io/en/agora-class/agora_class_quickstart_android?platform=Android)
+- Reference [Quick Access](https://docs.agora.io/en/flexible-classroom/get-started/demo-quickstart?platform=android)
 
 ## Connect us
 
