@@ -6,7 +6,7 @@ Only for ASIA region.
 
 ## Prerequisites 
 
-- Make sure you have made the preparations mentioned in the [Agora e-Education Guide](https://github.com/AgoraIO-Usecase/eEducation).
+- Make sure you have made the preparations mentioned in the [Agora e-Education Guide](https://docs.agora.io/en/flexible-classroom/overview/product-overview).
 - Prepare the development environment:
   - JDK
   - Android Studio
