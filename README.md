@@ -23,7 +23,6 @@ Only for ASIA region.
 
 - You can read the full set of documentations and API reference at [Agora Developer Portal](https://docs.agora.io/en/).
 - You can ask for technical support by submitting tickets in [Agora Console](https://dashboard.agora.io/). 
-- You can submit an [issue](https://github.com/AgoraIO-Usecase/eEducation/issues) if you find any bug in the sample project. 
 
 ## License
 
